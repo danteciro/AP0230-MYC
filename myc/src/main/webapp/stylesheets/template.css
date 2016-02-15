@@ -1,0 +1,70 @@
+.ui-widget-header .pui-inputtext, .ui-widget-content .pui-inputtext {
+    background: none repeat scroll 0 0 #FFFFFF !important;
+    font-weight: normal;
+}
+.ui-jqgrid .ui-paging-info {
+    font-size: 12px;
+   
+}
+.ui-button {
+	font-size: 0.8em !important;
+	font-size: 9.5px !important;
+	padding: 0;
+}
+.ui-jqgrid .ui-pg-input {
+    font-size: 0.8em;
+    height: 13px;
+    margin: 0;
+    width: 20px;
+}
+#header{
+	background: url('/myc/images/banner_nuevo.png') no-repeat; 
+	background-size:100%; 
+	padding: 5px 0px 0px 0px; 
+	position: relative;
+	width: 100% !important;
+	height: 100% !important;
+        min-width: 1000px;
+}
+#logoWrapper{
+	width:30%;
+	text-align:left;
+}
+#logo{
+	width: 100%;
+}
+#userWrapper{
+	position:absolute; 
+	right:0px; 
+	bottom:0px; 
+	height:60px; 
+	overflow:hidden; 
+	color:white !important;
+}
+.scrollPanel{
+  	
+        min-height:400px;
+	clear: both;
+}
+
+/*.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year {
+    width: 90px !important;
+}*/
+
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+    font-family: Calibri,Arial,sans-serif;
+}
+.ui-myicon-search { background-image: url(/myc/images/search.png) !important; }
+.ui-myicon-add{ background-image: url(/myc/images/add1.png) !important; }
+.ui-myicon-return{ background-image: url(/myc/images/arrow-return.png) !important; }
+.ui-myicon-edit{ background-image: url(/myc/images/edit.png) !important; }
+.ui-myicon-cancel{ background-image: url(/myc/images/cancel2.png) !important; }
+.ui-myicon-save{ background-image: url(/myc/images/save.png) !important; }
+.ui-myicon-clear{ background-image: url(/myc/images/edit-clear.png) !important; }
+.ui-myicon-arrow-4-diag{ background-image: url(/myc/images/arrow-4-diag.png) !important; }.ui-myicon-clear{ background-image: url(/siguoweb/images/edit-clear.png) !important; }
+.ui-myicon-go-find{ background-image: url(/myc/images/find-cyan.png) !important; }
+
+.btnBuscar{
+	padding: 0px 0px;
+	width: 40px;
+}

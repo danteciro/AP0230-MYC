@@ -1,0 +1,22 @@
+<div id="header">
+    <div id="logoWrapper">
+            <img id="logo" alt="logo" src="/myc/images/osinergminLogo.png">
+    </div>
+    <div id="userWrapper">
+        <table>
+            <tr>
+                <td>${usuario}</td> 
+            </tr>
+            <tr>
+                <td>${fecha}</td>
+            </tr>
+            <tr>
+                <td>
+                    <ul id="ulOpciones">
+                        <li><a id="aSalir">Salir</a></li> 
+                    </ul>  
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
