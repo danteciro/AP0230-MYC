@@ -1,3 +1,3 @@
 SET SERVEROUTPUT ON
-@pase/02_script_dml_osi.sql
+@pase/01_script_ddl_osi.sql
 commit;
