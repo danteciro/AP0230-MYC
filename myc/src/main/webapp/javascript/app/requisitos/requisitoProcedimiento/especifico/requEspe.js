@@ -336,6 +336,34 @@ function limpiarTodosEspe() {
 //    limpiaZonificacionEspe();
     limpiaTramiteEspe();
 }
+function armaPermisosSeguridadEsp(){
+	var permisos = $('#permisosSeguridad').val();
+	var permiso = permisos.split("/");	
+	console.log(permiso);
+	var existeIn = false;
+	var existeEl = false;
+	for (var i = 0; i < permiso.length; i++) {
+		console.log(permiso[i]);
+		if(permiso[i]=="IN"){
+			existeIn = true;
+		}
+		if(permiso[i]=="EL"){
+			existeEl = true;
+		}
+	}	
+	console.log(existeIn);
+	console.log(existeEl);
+	if(!existeIn){
+		$('#espeRequ .btns').map(function(){
+			$(this).find('span:eq(0)').css('display','none');
+		});
+	}
+	if(!existeEl){
+		$('#espeRequ .btns').map(function(){
+			$(this).find('span:eq(1)').css('display','none');
+		});
+	}
+}
 function armaEspecificosRequisitos(reqEspe) {
     var html = "";
     $.each(reqEspe, function(key, val) {
@@ -414,6 +442,7 @@ function armaEspecificosRequisitos(reqEspe) {
     $( "ul[id^='sortableEspeRequProc']" ).sortable({
         update: function( event, ui ) {evalOrdenRequisitos('#'+$(this).attr('id'),buscarRequEspe);}
     });
+    armaPermisosSeguridadEsp();
 }
 
 function obtenerCamposValorParaDinaRequEspe(camposx,valoresParaDina){

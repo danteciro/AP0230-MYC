@@ -262,22 +262,56 @@ var busquedaBaseLegal = (function() {
                     	$('#linkVerObligacionBA').css('display','');
                     	$('#linkEditarObligacionBA').css('display','');
                     }
-                    $('#linkVerBaseLegal').attr('onClick', 'busquedaBaseLegal.verBaseLegal("' + rowid + '")');/*function: busquedaBaseLegal.verBaseLegal*/
-                    $('#linkObtenerBaseLegal').attr('onClick', 'busquedaBaseLegal.obtenerBaseLegal("' + rowid + '")');/*function: busquedaBaseLegal.editarBaseLegal*/
-                    $('#linkVerObligacionBA').attr('onClick', 'busquedaBaseLegal.verBaseLegalDetalle("' + rowid + '")');/*function: busquedaBaseLegal.verBaseLegal*/
+                    $('#linkVerBaseLegal').attr('onClick', 'busquedaBaseLegal.verBaseLegal("' + rowid + '")');
+                    $('#linkObtenerBaseLegal').attr('onClick', 'busquedaBaseLegal.obtenerBaseLegal("' + rowid + '")');
+                    $('#linkVerObligacionBA').attr('onClick', 'busquedaBaseLegal.verBaseLegalDetalle("' + rowid + '")');
                     $('#linkEditarObligacionBA').attr('onClick', 'busquedaBaseLegal.obtenerBaseLegalDetalle("' + rowid +'")');
+
+	                if($('#divEnlaceTagVerNormaLegal input').html()!=null){
+	                    $('#contextMenuBasesLegales li a[value="CO-NORMALEGAL"]').html($('#divEnlaceTagVerNormaLegal').html());
+	                   } else {
+	                  	  $('#contextMenuBasesLegales li a[value="CO-NORMALEGAL"]').remove();
+	                   }
+	                
+	                if($('#divEnlaceTagEditarNormaLegal input').html()!=null){
+	                    $('#contextMenuBasesLegales li a[value="MO-NORMALEGAL"]').html($('#divEnlaceTagEditarNormaLegal').html());
+	                   } else {
+	                 	  $('#contextMenuBasesLegales li a[value="MO-NORMALEGAL"]').remove();
+	                   }                    
                 },
                 loadComplete: function(data) {
                     $('#contextMenuBasesLegales').parent().remove();
                     $('#divContextMenuBasesLegales').html("<ul id='contextMenuBasesLegales'>"
-                            + "<li> <a id='linkVerBaseLegal' data-icon='ui-icon-search' title='Ver Norma Legal'>Ver Norma Legal</a> </li>"
-                            //+ "<li> <a id='linkVerHistoricoBaseLegal' data-icon='ui-icon-note' title='Ver Histórico Base Legal'>Ver Histórico Base Legal</a></li>"
-                            + "<li> <a id='linkObtenerBaseLegal' data-icon='ui-icon-pencil' title='Editar Norma Legal'>Editar Norma Legal</a></li>"
-    //                        + "<li> <a id='linkEliminarBaseLegal' data-icon='ui-icon-trash' title='Eliminar Base Legal'>Eliminar Base Legal</a></li>"
-                            + "<li> <a id='linkVerObligacionBA' data-icon='ui-icon-search' title='Ver Base Legal'>Ver Base Legal</a> </li>"
-                            + "<li> <a id='linkEditarObligacionBA' data-icon='ui-icon-pencil' title='Editar Base Legal'>Editar Base Legal</a></li>"                            
+                            + "<li> <a value='CO-NORMALEGAL'></a> </li>"
+                            + "<li> <a value='MO-NORMALEGAL'></a></li>"                            
                             + "</ul>");
-                    $('#contextMenuBasesLegales').puicontextmenu({target: $('#gridBasesLegales')});
+                    $('#contextMenuBasesLegales').puicontextmenu({target: $('#gridBasesLegales')});                
+//                onRightClickRow: function(rowid, iRow, iCol, e) {
+//                	$('#linkVerBaseLegal,#linkObtenerBaseLegal,#linkVerObligacionBA,#linkEditarObligacionBA').css('display','none');
+//                	var row=$('#gridBasesLegales').getRowData(rowid); 
+//                    if(row.flagPadre=='P'){
+//                    	$('#linkVerBaseLegal').css('display','');
+//                    	$('#linkObtenerBaseLegal').css('display','');                    	
+//                    }else{
+//                    	$('#linkVerObligacionBA').css('display','');
+//                    	$('#linkEditarObligacionBA').css('display','');
+//                    }
+//                    $('#linkVerBaseLegal').attr('onClick', 'busquedaBaseLegal.verBaseLegal("' + rowid + '")');/*function: busquedaBaseLegal.verBaseLegal*/
+//                    $('#linkObtenerBaseLegal').attr('onClick', 'busquedaBaseLegal.obtenerBaseLegal("' + rowid + '")');/*function: busquedaBaseLegal.editarBaseLegal*/
+//                    $('#linkVerObligacionBA').attr('onClick', 'busquedaBaseLegal.verBaseLegalDetalle("' + rowid + '")');/*function: busquedaBaseLegal.verBaseLegal*/
+//                    $('#linkEditarObligacionBA').attr('onClick', 'busquedaBaseLegal.obtenerBaseLegalDetalle("' + rowid +'")');
+//                },
+//                loadComplete: function(data) {
+//                    $('#contextMenuBasesLegales').parent().remove();
+//                    $('#divContextMenuBasesLegales').html("<ul id='contextMenuBasesLegales'>"
+//                            + "<li> <a id='linkVerBaseLegal' data-icon='ui-icon-search' title='Ver Norma Legal'>Ver Norma Legal</a> </li>"
+//                            //+ "<li> <a id='linkVerHistoricoBaseLegal' data-icon='ui-icon-note' title='Ver Histórico Base Legal'>Ver Histórico Base Legal</a></li>"
+//                            + "<li> <a id='linkObtenerBaseLegal' data-icon='ui-icon-pencil' title='Editar Norma Legal'>Editar Norma Legal</a></li>"
+//    //                        + "<li> <a id='linkEliminarBaseLegal' data-icon='ui-icon-trash' title='Eliminar Base Legal'>Eliminar Base Legal</a></li>"
+//                            + "<li> <a id='linkVerObligacionBA' data-icon='ui-icon-search' title='Ver Base Legal'>Ver Base Legal</a> </li>"
+//                            + "<li> <a id='linkEditarObligacionBA' data-icon='ui-icon-pencil' title='Editar Base Legal'>Editar Base Legal</a></li>"                            
+//                            + "</ul>");
+//                    $('#contextMenuBasesLegales').puicontextmenu({target: $('#gridBasesLegales')});
                     
                     var fila = $('#gridBasesLegales').jqGrid('getRowData');
                     for (var i = 0; i < fila.length; i++) {
@@ -342,22 +376,52 @@ var busquedaBaseLegal = (function() {
                         	var tabla = subgrid_table_id;
                             var row = jQuery("#" + subgrid_table_id).jqGrid('getRowData', rowid);
                             $('#txtIdBaseSeleccionada').attr('value',rowid);
-                            $('#linkVerHistoricoObligacion').attr('onClick', 'busquedaBaseLegal.abrirHistoricoObligacion("' + rowid + '")');/*function: busquedaBaseLegal.historicoBaseLegal*/
-                            $('#linkVerObligacion').attr('onClick', 'busquedaBaseLegal.verBaseLegalDetalle("' + rowid + '")');/*function: busquedaBaseLegal.verBaseLegal*/
-                            $('#linkEditarObligacion').attr('onClick', 'busquedaBaseLegal.obtenerBaseLegalDetalle("' + rowid +'")');/*function: busquedaBaseLegal.editarBaseLegal*/
-                            $('#linkEliminarObligacion').attr('onClick', 'busquedaBaseLegal.confirmEliminarObligacion("' + rowid + '")');/*function: busquedaBaseLegal.confirmEliminarBaseLegal*/
+                            $('#linkVerHistoricoObligacion').attr('onClick', 'busquedaBaseLegal.abrirHistoricoObligacion("' + rowid + '")');
+                            $('#linkVerObligacion').attr('onClick', 'busquedaBaseLegal.verBaseLegalDetalle("' + rowid + '")');
+                            $('#linkEditarObligacion').attr('onClick', 'busquedaBaseLegal.obtenerBaseLegalDetalle("' + rowid +'")');
+                            $('#linkEliminarObligacion').attr('onClick', 'busquedaBaseLegal.confirmEliminarObligacion("' + rowid + '")');
+                            
+                            if($('#divEnlaceTagVerBaseLegal input').html()!=null){
+                                $('#contextMenuObligaciones li a[value="CO-BASELEGAL"]').html($('#divEnlaceTagVerBaseLegal').html());
+                             } else {  
+                                $('#contextMenuObligaciones li a[value="CO-BASELEGAL"]').remove();
+                             }
+                            
+                            if($('#divEnlaceTagEditarBaseLegal input').html()!=null){
+                                $('#contextMenuObligaciones li a[value="MO-BASELEGAL"]').html($('#divEnlaceTagEditarBaseLegal').html());
+                             } else {  
+                                $('#contextMenuObligaciones li a[value="MO-BASELEGAL"]').remove();
+                             }
                         },
                         loadComplete: function(data) {
                             $('#contextMenuObligaciones').parent().remove();
                             $('#divContextMenuObligaciones').html("<ul id='contextMenuObligaciones'>"
-                                    + "<li> <a id='linkVerObligacion' data-icon='ui-icon-search' title='Ver Base Legal'>Ver Base Legal</a> </li>"
-                                    //+ "<li> <a id='linkVerHistoricoObligacion' data-icon='ui-icon-note' title='Historico Obligación'>Ver Histórico Obligación</a></li>"
-                                    + "<li> <a id='linkEditarObligacion' data-icon='ui-icon-pencil' title='Editar Base Legal'>Editar Base Legal</a></li>"
-                                    //+ "<li> <a id='linkEliminarObligacion' data-icon='ui-icon-trash' title='Eliminar Obligación'>Eliminar Obligación</a></li>"
+                                    + "<li> <a value='CO-BASELEGAL'></a> </li>"
+                                    + "<li> <a value='MO-BASELEGAL'></a></li>"
                                     + "</ul>");
                             $('#contextMenuObligaciones').puicontextmenu({
                                 target: $('#gridBasesLegales .ui-subgrid')
-                            });
+                            });                        
+//                        onRightClickRow: function(rowid, iRow, iCol, e) {
+//                        	var tabla = subgrid_table_id;
+//                            var row = jQuery("#" + subgrid_table_id).jqGrid('getRowData', rowid);
+//                            $('#txtIdBaseSeleccionada').attr('value',rowid);
+//                            $('#linkVerHistoricoObligacion').attr('onClick', 'busquedaBaseLegal.abrirHistoricoObligacion("' + rowid + '")');/*function: busquedaBaseLegal.historicoBaseLegal*/
+//                            $('#linkVerObligacion').attr('onClick', 'busquedaBaseLegal.verBaseLegalDetalle("' + rowid + '")');/*function: busquedaBaseLegal.verBaseLegal*/
+//                            $('#linkEditarObligacion').attr('onClick', 'busquedaBaseLegal.obtenerBaseLegalDetalle("' + rowid +'")');/*function: busquedaBaseLegal.editarBaseLegal*/
+//                            $('#linkEliminarObligacion').attr('onClick', 'busquedaBaseLegal.confirmEliminarObligacion("' + rowid + '")');/*function: busquedaBaseLegal.confirmEliminarBaseLegal*/
+//                        },
+//                        loadComplete: function(data) {
+//                            $('#contextMenuObligaciones').parent().remove();
+//                            $('#divContextMenuObligaciones').html("<ul id='contextMenuObligaciones'>"
+//                                    + "<li> <a id='linkVerObligacion' data-icon='ui-icon-search' title='Ver Base Legal'>Ver Base Legal</a> </li>"
+//                                    //+ "<li> <a id='linkVerHistoricoObligacion' data-icon='ui-icon-note' title='Historico Obligación'>Ver Histórico Obligación</a></li>"
+//                                    + "<li> <a id='linkEditarObligacion' data-icon='ui-icon-pencil' title='Editar Base Legal'>Editar Base Legal</a></li>"
+//                                    //+ "<li> <a id='linkEliminarObligacion' data-icon='ui-icon-trash' title='Eliminar Obligación'>Eliminar Obligación</a></li>"
+//                                    + "</ul>");
+//                            $('#contextMenuObligaciones').puicontextmenu({
+//                                target: $('#gridBasesLegales .ui-subgrid')
+//                            });
                         }
                     });
                 }
@@ -727,22 +791,56 @@ var busquedaBaseLegal = (function() {
                     	$('#linkVerObligacionBA').css('display','');
                     	$('#linkEditarObligacionBA').css('display','');
                     }
-                    $('#linkVerBaseLegal').attr('onClick', 'busquedaBaseLegal.verBaseLegal("' + rowid + '")');/*function: busquedaBaseLegal.verBaseLegal*/
-                    $('#linkObtenerBaseLegal').attr('onClick', 'busquedaBaseLegal.obtenerBaseLegal("' + rowid + '")');/*function: busquedaBaseLegal.editarBaseLegal*/
-                    $('#linkVerObligacionBA').attr('onClick', 'busquedaBaseLegal.verBaseLegalDetalle("' + rowid + '")');/*function: busquedaBaseLegal.verBaseLegal*/
+                    $('#linkVerBaseLegal').attr('onClick', 'busquedaBaseLegal.verBaseLegal("' + rowid + '")');
+                    $('#linkObtenerBaseLegal').attr('onClick', 'busquedaBaseLegal.obtenerBaseLegal("' + rowid + '")');
+                    $('#linkVerObligacionBA').attr('onClick', 'busquedaBaseLegal.verBaseLegalDetalle("' + rowid + '")');
                     $('#linkEditarObligacionBA').attr('onClick', 'busquedaBaseLegal.obtenerBaseLegalDetalle("' + rowid +'")');
+                    
+	                if($('#divEnlaceTagVerNormaLegal input').html()!=null){
+	                    $('#contextMenuBasesLegales li a[value="CO-NORMALEGAL"]').html($('#divEnlaceTagVerNormaLegal').html());
+	                   } else {
+	                  	  $('#contextMenuBasesLegales li a[value="CO-NORMALEGAL"]').remove();
+	                   }
+	                
+	                if($('#divEnlaceTagEditarNormaLegal input').html()!=null){
+	                    $('#contextMenuBasesLegales li a[value="MO-NORMALEGAL"]').html($('#divEnlaceTagEditarNormaLegal').html());
+	                   } else {
+	                 	  $('#contextMenuBasesLegales li a[value="MO-NORMALEGAL"]').remove();
+	                   }
                 },
                 loadComplete: function(data) {
                     $('#contextMenuBasesLegales').parent().remove();
                     $('#divContextMenuBasesLegales').html("<ul id='contextMenuBasesLegales'>"
-                            + "<li> <a id='linkVerBaseLegal' data-icon='ui-icon-search' title='Ver Norma Legal'>Ver Norma Legal</a> </li>"
-                            //+ "<li> <a id='linkVerHistoricoBaseLegal' data-icon='ui-icon-note' title='Ver Histórico Base Legal'>Ver Histórico Base Legal</a></li>"
-                            + "<li> <a id='linkObtenerBaseLegal' data-icon='ui-icon-pencil' title='Editar Norma Legal'>Editar Norma Legal</a></li>"
-    //                        + "<li> <a id='linkEliminarBaseLegal' data-icon='ui-icon-trash' title='Eliminar Base Legal'>Eliminar Base Legal</a></li>"
-                            + "<li> <a id='linkVerObligacionBA' data-icon='ui-icon-search' title='Ver Base Legal'>Ver Base Legal</a> </li>"
-                            + "<li> <a id='linkEditarObligacionBA' data-icon='ui-icon-pencil' title='Editar Base Legal'>Editar Base Legal</a></li>"                            
+                            + "<li> <a value='CO-NORMALEGAL'></a> </li>"
+                            + "<li> <a value='MO-NORMALEGAL'></a></li>"
                             + "</ul>");
                     $('#contextMenuBasesLegales').puicontextmenu({target: $('#gridBasesLegales')});
+//                onRightClickRow: function(rowid, iRow, iCol, e) {
+//                	$('#linkVerBaseLegal,#linkObtenerBaseLegal,#linkVerObligacionBA,#linkEditarObligacionBA').css('display','none');
+//                	var row=$('#gridBasesLegales').getRowData(rowid); 
+//                    if(row.flagPadre=='P'){
+//                    	$('#linkVerBaseLegal').css('display','');
+//                    	$('#linkObtenerBaseLegal').css('display','');                    	
+//                    }else{
+//                    	$('#linkVerObligacionBA').css('display','');
+//                    	$('#linkEditarObligacionBA').css('display','');
+//                    }
+//                    $('#linkVerBaseLegal').attr('onClick', 'busquedaBaseLegal.verBaseLegal("' + rowid + '")');/*function: busquedaBaseLegal.verBaseLegal*/
+//                    $('#linkObtenerBaseLegal').attr('onClick', 'busquedaBaseLegal.obtenerBaseLegal("' + rowid + '")');/*function: busquedaBaseLegal.editarBaseLegal*/
+//                    $('#linkVerObligacionBA').attr('onClick', 'busquedaBaseLegal.verBaseLegalDetalle("' + rowid + '")');/*function: busquedaBaseLegal.verBaseLegal*/
+//                    $('#linkEditarObligacionBA').attr('onClick', 'busquedaBaseLegal.obtenerBaseLegalDetalle("' + rowid +'")');
+//                },
+//                loadComplete: function(data) {
+//                    $('#contextMenuBasesLegales').parent().remove();
+//                    $('#divContextMenuBasesLegales').html("<ul id='contextMenuBasesLegales'>"
+//                            + "<li> <a id='linkVerBaseLegal' data-icon='ui-icon-search' title='Ver Norma Legal'>Ver Norma Legal</a> </li>"
+//                            //+ "<li> <a id='linkVerHistoricoBaseLegal' data-icon='ui-icon-note' title='Ver Histórico Base Legal'>Ver Histórico Base Legal</a></li>"
+//                            + "<li> <a id='linkObtenerBaseLegal' data-icon='ui-icon-pencil' title='Editar Norma Legal'>Editar Norma Legal</a></li>"
+//    //                        + "<li> <a id='linkEliminarBaseLegal' data-icon='ui-icon-trash' title='Eliminar Base Legal'>Eliminar Base Legal</a></li>"
+//                            + "<li> <a id='linkVerObligacionBA' data-icon='ui-icon-search' title='Ver Base Legal'>Ver Base Legal</a> </li>"
+//                            + "<li> <a id='linkEditarObligacionBA' data-icon='ui-icon-pencil' title='Editar Base Legal'>Editar Base Legal</a></li>"                            
+//                            + "</ul>");
+//                    $('#contextMenuBasesLegales').puicontextmenu({target: $('#gridBasesLegales')});
                     
                     var fila = $('#gridBasesLegales').jqGrid('getRowData');
                     for (var i = 0; i < fila.length; i++) {
@@ -807,22 +905,52 @@ var busquedaBaseLegal = (function() {
                         	var tabla = subgrid_table_id;
                             var row = jQuery("#" + subgrid_table_id).jqGrid('getRowData', rowid);
                             $('#txtIdBaseSeleccionada').attr('value',rowid);
-                            $('#linkVerHistoricoObligacion').attr('onClick', 'busquedaBaseLegal.abrirHistoricoObligacion("' + rowid + '")');/*function: busquedaBaseLegal.historicoBaseLegal*/
-                            $('#linkVerObligacion').attr('onClick', 'busquedaBaseLegal.verBaseLegalDetalle("' + rowid + '")');/*function: busquedaBaseLegal.verBaseLegal*/
-                            $('#linkEditarObligacion').attr('onClick', 'busquedaBaseLegal.obtenerBaseLegalDetalle("' + rowid +'")');/*function: busquedaBaseLegal.editarBaseLegal*/
-                            $('#linkEliminarObligacion').attr('onClick', 'busquedaBaseLegal.confirmEliminarObligacion("' + rowid + '")');/*function: busquedaBaseLegal.confirmEliminarBaseLegal*/
+                            $('#linkVerHistoricoObligacion').attr('onClick', 'busquedaBaseLegal.abrirHistoricoObligacion("' + rowid + '")');
+                            $('#linkVerObligacion').attr('onClick', 'busquedaBaseLegal.verBaseLegalDetalle("' + rowid + '")');
+                            $('#linkEditarObligacion').attr('onClick', 'busquedaBaseLegal.obtenerBaseLegalDetalle("' + rowid +'")');
+                            $('#linkEliminarObligacion').attr('onClick', 'busquedaBaseLegal.confirmEliminarObligacion("' + rowid + '")');
+                            
+                            if($('#divEnlaceTagVerBaseLegal input').html()!=null){
+                                $('#contextMenuObligaciones li a[value="CO-BASELEGAL"]').html($('#divEnlaceTagVerBaseLegal').html());
+                             } else {  
+                                $('#contextMenuObligaciones li a[value="CO-BASELEGAL"]').remove();
+                             }
+                            
+                            if($('#divEnlaceTagEditarBaseLegal input').html()!=null){
+                                $('#contextMenuObligaciones li a[value="MO-BASELEGAL"]').html($('#divEnlaceTagEditarBaseLegal').html());
+                             } else {  
+                                $('#contextMenuObligaciones li a[value="MO-BASELEGAL"]').remove();
+                             }
                         },
                         loadComplete: function(data) {
                             $('#contextMenuObligaciones').parent().remove();
                             $('#divContextMenuObligaciones').html("<ul id='contextMenuObligaciones'>"
-                                    + "<li> <a id='linkVerObligacion' data-icon='ui-icon-search' title='Ver Base Legal'>Ver Base Legal</a> </li>"
-                                    //+ "<li> <a id='linkVerHistoricoObligacion' data-icon='ui-icon-note' title='Historico Obligación'>Ver Histórico Obligación</a></li>"
-                                    + "<li> <a id='linkEditarObligacion' data-icon='ui-icon-pencil' title='Editar Base Legal'>Editar Base Legal</a></li>"
-                                    //+ "<li> <a id='linkEliminarObligacion' data-icon='ui-icon-trash' title='Eliminar Obligación'>Eliminar Obligación</a></li>"
+                                    + "<li> <a value='CO-BASELEGAL'></a> </li>"
+                                    + "<li> <a value='MO-BASELEGAL'></a></li>"
                                     + "</ul>");
                             $('#contextMenuObligaciones').puicontextmenu({
                                 target: $('#gridBasesLegales .ui-subgrid')
                             });
+//                        onRightClickRow: function(rowid, iRow, iCol, e) {
+//                        	var tabla = subgrid_table_id;
+//                            var row = jQuery("#" + subgrid_table_id).jqGrid('getRowData', rowid);
+//                            $('#txtIdBaseSeleccionada').attr('value',rowid);
+//                            $('#linkVerHistoricoObligacion').attr('onClick', 'busquedaBaseLegal.abrirHistoricoObligacion("' + rowid + '")');/*function: busquedaBaseLegal.historicoBaseLegal*/
+//                            $('#linkVerObligacion').attr('onClick', 'busquedaBaseLegal.verBaseLegalDetalle("' + rowid + '")');/*function: busquedaBaseLegal.verBaseLegal*/
+//                            $('#linkEditarObligacion').attr('onClick', 'busquedaBaseLegal.obtenerBaseLegalDetalle("' + rowid +'")');/*function: busquedaBaseLegal.editarBaseLegal*/
+//                            $('#linkEliminarObligacion').attr('onClick', 'busquedaBaseLegal.confirmEliminarObligacion("' + rowid + '")');/*function: busquedaBaseLegal.confirmEliminarBaseLegal*/
+//                        },
+//                        loadComplete: function(data) {
+//                            $('#contextMenuObligaciones').parent().remove();
+//                            $('#divContextMenuObligaciones').html("<ul id='contextMenuObligaciones'>"
+//                                    + "<li> <a id='linkVerObligacion' data-icon='ui-icon-search' title='Ver Base Legal'>Ver Base Legal</a> </li>"
+//                                    //+ "<li> <a id='linkVerHistoricoObligacion' data-icon='ui-icon-note' title='Historico Obligación'>Ver Histórico Obligación</a></li>"
+//                                    + "<li> <a id='linkEditarObligacion' data-icon='ui-icon-pencil' title='Editar Base Legal'>Editar Base Legal</a></li>"
+//                                    //+ "<li> <a id='linkEliminarObligacion' data-icon='ui-icon-trash' title='Eliminar Obligación'>Eliminar Obligación</a></li>"
+//                                    + "</ul>");
+//                            $('#contextMenuObligaciones').puicontextmenu({
+//                                target: $('#gridBasesLegales .ui-subgrid')
+//                            });
                         }
                     });
                 }

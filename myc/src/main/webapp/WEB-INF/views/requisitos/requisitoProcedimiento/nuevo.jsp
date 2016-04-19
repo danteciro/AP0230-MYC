@@ -22,6 +22,7 @@
         </div>
         <div>
             <div id="form_registro" accept-charset="utf-8" method="post" action="#">
+            	<input id="permisosSeguridad" type="hidden" value="${xxp}" />
                 <input id="idProcedimento" type="hidden" value="${idProcedimiento}">
                 <input id="itemP" type="hidden" value="${item}">
                 <div class="container" style="position: relative;">

@@ -10,7 +10,7 @@
         <script type="text/javascript" src='<c:url value="/javascript/app/requisitos/procedimiento/mantenimiento.js" />' charset="utf-8"></script>
     </jsp:attribute>
     <jsp:attribute name="bodyArea">
-        <div id="form_registro">
+        <div id="form_registro">        	
             <div class="container">
                 <div class="pui-panel ui-widget-content" id="buscarProcedimiento">
                     <div class="pui-panel-titlebar ui-corner-all">
@@ -92,6 +92,30 @@
                             <div id="divContextMenuProcedimiento"></div>
                             <div id="divContextMenuProcedimientoSub"></div>
                         </div>
+                        <!-- PR0013 - Inicio -->
+                        <div id="divTagEnlaces" style="display:none;" >
+							<div id="divEnlaceTagConsultar">
+								<span class="pui-menuitem-icon ui-icon ui-icon-search"></span>
+								<seg:enlaceTag id='linkVerProcedimiento' code='CO' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+								<span>Consultar</span>
+							</div>
+							<div id="divEnlaceTagEditar">
+								<span class="pui-menuitem-icon ui-icon ui-icon-pencil"></span>
+								<seg:enlaceTag id='linkEditarProcedimiento' code='MO' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+								<span>Editar</span>
+							</div>
+							<div id="divEnlaceTagEliminar">
+								<span class="pui-menuitem-icon ui-icon ui-icon-trash"></span>
+								<seg:enlaceTag id='linkEliminarProcedimiento' code='EL' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+								<span>Eliminar</span>
+							</div>
+							<div id="divEnlaceTagGestionar">
+								<span class="pui-menuitem-icon ui-icon ui-icon-clipboard"></span>
+								<seg:enlaceTag id='linkGestionarRequisitosProcedimiento' code='CO' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+								<span>Gestionar Requisitos</span>
+							</div>
+						</div>
+                        <!-- PR0013 - Fin -->
                         
                     </div>
                 </div>

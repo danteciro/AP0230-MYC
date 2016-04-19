@@ -52,6 +52,25 @@
                             <div id="divContextMenuParametroDinamico"></div>
                         </div>
                         
+						<!-- PR0013 - Inicio -->                           
+            			<div id="divTagEnlaces" style="display:none;">
+							<div id="divEnlaceTagEditar">
+								<span class="pui-menuitem-icon ui-icon ui-icon-pencil"></span>
+								<seg:enlaceTag id='linkEditarProcedimiento' code='MO' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+								<span>Editar</span>
+							</div>
+							<div id="divEnlaceTagEliminar">
+								<span class="pui-menuitem-icon ui-icon ui-icon-trash"></span>
+								<seg:enlaceTag id='linkEliminarProcedimiento' code='EL' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+								<span>Eliminar</span>
+							</div>
+							<div id="divEnlaceTagValores">
+								<span class="pui-menuitem-icon ui-icon ui-icon-note"></span>
+								<seg:enlaceTag id='linkAgregarActProcedimiento' code='CO' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+								<span>Valores</span>
+							</div>
+						</div>
+						<!-- PR0013 - Fin -->
                     </div>
                     
                 </div>
@@ -172,6 +191,20 @@
                     <div id="gridContenedorValoresParametroDinamico"></div>
                     <div id="divContextMenuValoresParametroDinamico"></div>
                 </div>
+	            <!-- PR0013 - Inicio -->
+				<div id="divTagEnlaces" style="display:none;">
+					<div id="divEnlaceTagEditarValoPara">
+						<span class="pui-menuitem-icon ui-icon ui-icon-pencil"></span>
+						<seg:enlaceTag id='linkEditarValoPara' code='MO' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+						<span>Editar</span>
+					</div>
+					<div id="divEnlaceTagEliminarValoPara">
+						<span class="pui-menuitem-icon ui-icon ui-icon-trash"></span>
+						<seg:enlaceTag id='linkEliminarValoPara' code='EL' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+						<span>Eliminar</span>
+					</div>
+				</div>
+	            <!-- PR0013 - Fin -->
             </div>
             <div id="botones">
 <!--                 <button id="btnNuevoValoPara" type="button" title="Nuevo Valor">Nuevo</button> -->

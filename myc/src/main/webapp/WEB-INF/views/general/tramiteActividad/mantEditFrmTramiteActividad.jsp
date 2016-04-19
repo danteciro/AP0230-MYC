@@ -51,7 +51,8 @@
                                 </select>
                             </div>
                             <div>
-                        		<input id="btnNuevaEtapa" class="btn_a btn_small" type="button" value="Agregar" title="Agregar">
+                            	<seg:botonTag code="IN" value="Agregar" styleClass="btn_a btn_small" id="btnNuevaEtapa" title="Agregar" onclick=""/>
+<!--                         		<input id="btnNuevaEtapa" class="btn_a btn_small" type="button" value="Agregar" title="Agregar"> -->
                         	</div>
                         </div>
                         <div class="filaForm">
@@ -65,13 +66,15 @@
                                 </select>
                             </div>
                               <div>
-                        		<input id="btnNuevoTramite" class="btn_a btn_small" type="button" value="Agregar" title="Agregar">
+                        		<seg:botonTag code="IN" value="Agregar" styleClass="btn_a btn_small" id="btnNuevoTramite" title="Agregar" onclick=""/>
+<!--                         		<input id="btnNuevoTramite" class="btn_a btn_small" type="button" value="Agregar" title="Agregar"> -->
                         	</div>
                         </div>
                       
                         <div class="filaForm">
                             <!--div class="lbla vam"><label>SELECCIONE ACTIVIDADES:</label></div-->
-                            <input id="btnAgregarActividad" type="button" value="AGREGAR RUBROS" class="button_2">
+                            <seg:botonTag code="IN" value="AGREGAR RUBROS" styleClass="btn_a btn_mediun" id="btnAgregarActividad" title="AGREGAR RUBROS" onclick=""/>
+<!--                             <input id="btnAgregarActividad" type="button" value="AGREGAR RUBROS" class="button_2"> -->
                         </div>
                         <div id="popupArbolActi" class="filaFormMarg" style="display:none;" title="SELECCIONAR RUBROS">
                             <div id="arbolActividadesEdit" style="height: 160px;">

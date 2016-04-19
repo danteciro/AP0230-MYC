@@ -39,17 +39,52 @@
                                 </div>
                             </div>
                             <div id="botones">
-                                <button id="btnBuscarMaesColu" title="Buscar Maestro Columna" class="btnSimple">Buscar</button>
+                            <seg:botonTag code="CO" value="Buscar" styleClass="btn_a btn_small" id="btnBuscarMaesColu" title="Buscar Maestro Columna" onclick=""/>
+<!--                                 <button id="btnBuscarMaesColu" title="Buscar Maestro Columna" class="btnSimple">Buscar</button> -->
 <!--                                <button id="btnLimpiarBuscarMaesColu" title="Limpiar" class="btnSimple">Limpiar</button>-->
                             </div>
                         </fieldset>
                         <div id="botonesDerecha">
-                            <button id="btnNuevoMaesColu" title="Nuevo Maestro Columna">Nuevo</button> 
+                        <seg:botonTag code="IN" value="Nuevo" styleClass="btn_a btn_small" id="btnNuevoMaesColu" title="Nuevo Maestro Columna" onclick=""/>
+<!--                             <button id="btnNuevoMaesColu" title="Nuevo Maestro Columna">Nuevo</button>  -->
                         </div>
                         <div class="gridMargin">
                             <div id="gridContenedorMaestroColumna"></div>
                             <div id="divContextMenuMaestroColumna"></div>
                         </div>
+                        <div id="divTagEnlaces" style="display:none;">
+					       	<div id="divEnlaceTagEditarMaestroColumna">
+					            <span class="pui-menuitem-icon ui-icon ui-icon-pencil"></span>
+					            <seg:enlaceTag id="linkEditarMaestroColumna" code="MO" enlace="" value="" onclick="" styleClass="a-ipt"></seg:enlaceTag>
+					            <span>Editar</span>
+					       	</div>
+					       	<div id="divEnlaceTagEliminarMaestroColumna">
+								<span class="pui-menuitem-icon ui-icon ui-icon-trash"></span>
+					            <seg:enlaceTag id="linkEliminarMaestroColumna" code="EL" enlace="" value="" onclick="" styleClass="a-ipt"></seg:enlaceTag>
+					            <span>Eliminar</span>
+							</div>
+							
+							<div id="divEnlaceTagEditarMaestroColumnaMant">
+					            <span class="pui-menuitem-icon ui-icon ui-icon-pencil"></span>
+					            <seg:enlaceTag id="linkEditarMaesColuMant" code="MO" enlace="" value="" onclick="" styleClass="a-ipt"></seg:enlaceTag>
+					            <span>Editar</span>
+					       	</div>
+					       	<div id="divEnlaceTagEliminarMaestroColumnaMant">
+								<span class="pui-menuitem-icon ui-icon ui-icon-trash"></span>
+					            <seg:enlaceTag id="linkEliminarMaesColuMant" code="EL" enlace="" value="" onclick="" styleClass="a-ipt"></seg:enlaceTag>
+					            <span>Eliminar</span>
+							</div>
+							<div id="divEnlaceTagEditarMaestroTablaMant">
+					            <span class="pui-menuitem-icon ui-icon ui-icon-pencil"></span>
+					            <seg:enlaceTag id="linkEditarMaesTabMant" code="MO" enlace="" value="" onclick="" styleClass="a-ipt"></seg:enlaceTag>
+					            <span>Editar</span>
+					       	</div>
+					       	<div id="divEnlaceTagSeleccionarMaestroTablaMant">
+								<span class="pui-menuitem-icon ui-icon ui-icon-check"></span>
+					            <seg:enlaceTag id="linkSeleccionarMaesTabMant" code="MO" enlace="" value="" onclick="" styleClass="a-ipt"></seg:enlaceTag>
+					            <span>Seleccionar</span>
+							</div>
+						</div>
                     </div>
                 </div>
             </div>

@@ -35,7 +35,8 @@
                                 </div>
                             </div>
                             <div id="botones">
-                                <button id="btnBuscarAutoAyuda" title="Buscar AutoAyuda" class="btnSimple">Buscar</button>
+                                <seg:botonTag code="CO" value="Buscar" styleClass="btn_a btn_small" id="btnBuscarAutoAyuda" title="Buscar AutoAyuda" onclick=""/>
+<!--                                 <button id="btnBuscarAutoAyuda" title="Buscar AutoAyuda" class="btnSimple">Buscar</button> -->
                                 <button id="btnLimpiarBuscarAutoAyuda" title="Limpiar" class="btnSimple">Limpiar</button>
                             </div>
                         </fieldset>
@@ -43,6 +44,15 @@
                             <div id="gridContenedorAutoAyuda"></div>
                             <div id="divContextMenuAutoAyuda"></div>
                         </div>
+                        <!-- PR0013 - Inicio -->                           
+		                <div id="divTagEnlaces" style="display:none;">
+							<div id="divEnlaceTagEditarAutoAyuda">
+								<span class="pui-menuitem-icon ui-icon ui-icon-pencil"></span>
+								<seg:enlaceTag id='linkEditarAutoAyuda' code='MO' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+								<span>Editar</span>
+							</div>
+						</div>
+						<!-- PR0013 - Fin -->
                     </div>
                 </div>
             </div>

@@ -197,17 +197,51 @@ function procesarGridTipificacion(flg_load){
             $('#linkVerTipificacion').attr('onClick', 'abrirMantTipificacion("view","'+rowid+'")');
             $('#linkEditarTipificacion').attr('onClick', 'abrirMantTipificacion("edit","'+rowid+'")');
             $('#linkEliminarTipificacion').attr('onClick', 'eliminarTipificacion("'+rowid+'")');
+            
+            if($('#divEnlaceTagVerTipificacion input').html()!=null){
+                $('#contextMenuTipificacion li a[value="CO-TIPIFICACION"]').html($('#divEnlaceTagVerTipificacion').html());
+             } else {  
+                $('#contextMenuTipificacion li a[value="CO-TIPIFICACION"]').remove();
+             }
+            
+            if($('#divEnlaceTagEditarTipificacion input').html()!=null){
+                $('#contextMenuTipificacion li a[value="MO-TIPIFICACION"]').html($('#divEnlaceTagEditarTipificacion').html());
+             } else {  
+                $('#contextMenuTipificacion li a[value="MO-TIPIFICACION"]').remove();
+             }
+            
+            if($('#divEnlaceTagEliminarTipificacion input').html()!=null){
+                $('#contextMenuTipificacion li a[value="EL-TIPIFICACION"]').html($('#divEnlaceTagEliminarTipificacion').html());
+             } else {  
+                $('#contextMenuTipificacion li a[value="EL-TIPIFICACION"]').remove();
+             }
         },
         loadComplete: function(data) {
             $('#contextMenuTipificacion').parent().remove();
             $('#divContextMenuTipificacion').html("<ul id='contextMenuTipificacion'>"
-                    + "<li> <a id='linkVerTipificacion' data-icon='ui-icon-search' title='Ver Detalle'>Consultar</a> </li>"
-                    + "<li> <a id='linkEditarTipificacion' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
-                    + "<li> <a id='linkEliminarTipificacion' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
+                    + "<li> <a value='CO-TIPIFICACION'>Consultar</a> </li>"
+                    + "<li> <a value='MO-TIPIFICACION'>Editar</a></li>"
+                    + "<li> <a value='EL-TIPIFICACION'>Eliminar</a></li>"
                     + "</ul>");
             $('#contextMenuTipificacion').puicontextmenu({
                 target: $('#gridTipificacion')
             });
+//        onRightClickRow: function(rowid, iRow, iCol, e) {
+//            var row = grid.jqGrid('getRowData', rowid);
+//            $('#linkVerTipificacion').attr('onClick', 'abrirMantTipificacion("view","'+rowid+'")');
+//            $('#linkEditarTipificacion').attr('onClick', 'abrirMantTipificacion("edit","'+rowid+'")');
+//            $('#linkEliminarTipificacion').attr('onClick', 'eliminarTipificacion("'+rowid+'")');
+//        },
+//        loadComplete: function(data) {
+//            $('#contextMenuTipificacion').parent().remove();
+//            $('#divContextMenuTipificacion').html("<ul id='contextMenuTipificacion'>"
+//                    + "<li> <a id='linkVerTipificacion' data-icon='ui-icon-search' title='Ver Detalle'>Consultar</a> </li>"
+//                    + "<li> <a id='linkEditarTipificacion' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
+//                    + "<li> <a id='linkEliminarTipificacion' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
+//                    + "</ul>");
+//            $('#contextMenuTipificacion').puicontextmenu({
+//                target: $('#gridTipificacion')
+//            });
         },
         //SUBGRID
         subGrid: true, 

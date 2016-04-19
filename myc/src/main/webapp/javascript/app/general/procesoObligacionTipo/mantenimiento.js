@@ -91,17 +91,44 @@ function procesarGridObligacionProceso(flg_load) {
             $('#linkVerObligacionProceso').attr('onClick', 'abrirMantObligacionProceso("view","' + rowid + '")');
             $('#linkEditarObligacionProceso').attr('onClick', 'abrirMantObligacionProceso("edit","' + rowid + '")');
             $('#linkEliminarObligacionProceso').attr('onClick', 'eliminarObligacionProceso("' + rowid + '")');
+            
+            if($('#divEnlaceTagVerObliTipo input').html()!=null){
+                $('#contextMenuObligacionProceso li a[value="CO-OBLIGACIONPROC"]').html($('#divEnlaceTagVerObliTipo').html());
+             } else {  
+                $('#contextMenuObligacionProceso li a[value="CO-OBLIGACIONPROC"]').remove();
+             }
+            
+            if($('#divEnlaceTagEliminarObliTipo input').html()!=null){
+                $('#contextMenuObligacionProceso li a[value="EL-OBLIGACIONPROC"]').html($('#divEnlaceTagEliminarObliTipo').html());
+             } else {  
+                $('#contextMenuObligacionProceso li a[value="EL-OBLIGACIONPROC"]').remove();
+             }
         },
         loadComplete: function(data) {
             $('#contextMenuObligacionProceso').parent().remove();
             $('#divContextMenuObligacionProceso').html("<ul id='contextMenuObligacionProceso'>"
-            		+ "<li> <a id='linkVerObligacionProceso' data-icon='ui-icon-search' title='Ver Detalle'>Consultar</a> </li>"
-            		//+ "<li> <a id='linkEditarObligacionProceso' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
-                    + "<li> <a id='linkEliminarObligacionProceso' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
+            		+ "<li> <a value='CO-OBLIGACIONPROC'>Consultar</a> </li>"
+                    + "<li> <a value='EL-OBLIGACIONPROC'>Eliminar</a></li>"
                     + "</ul>");
             $('#contextMenuObligacionProceso').puicontextmenu({
                 target: $('#gridObligacionProceso')
             });
+//        onRightClickRow: function(rowid, iRow, iCol, e) {
+//            var row = grid.jqGrid('getRowData', rowid);
+//            $('#linkVerObligacionProceso').attr('onClick', 'abrirMantObligacionProceso("view","' + rowid + '")');
+//            $('#linkEditarObligacionProceso').attr('onClick', 'abrirMantObligacionProceso("edit","' + rowid + '")');
+//            $('#linkEliminarObligacionProceso').attr('onClick', 'eliminarObligacionProceso("' + rowid + '")');
+//        },
+//        loadComplete: function(data) {
+//            $('#contextMenuObligacionProceso').parent().remove();
+//            $('#divContextMenuObligacionProceso').html("<ul id='contextMenuObligacionProceso'>"
+//            		+ "<li> <a id='linkVerObligacionProceso' data-icon='ui-icon-search' title='Ver Detalle'>Consultar</a> </li>"
+//            		//+ "<li> <a id='linkEditarObligacionProceso' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
+//                    + "<li> <a id='linkEliminarObligacionProceso' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
+//                    + "</ul>");
+//            $('#contextMenuObligacionProceso').puicontextmenu({
+//                target: $('#gridObligacionProceso')
+//            });
         }
     });
 }

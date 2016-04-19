@@ -41,19 +41,38 @@
                                 </div>
                             </div>
                             <div id="botones">
-                                <button id="btnBuscarConcurso" title="Buscar Concurso" class="btnSimple">Buscar</button>
-                                <!--seg:botonTag code="CO" value="Buscar" styleClass="btn_a btn_small" id="btnBuscarConcurso" title="Buscar Zonificación Detalle" onclick=""/-->
+<!--                                 <button id="btnBuscarConcurso" title="Buscar Concurso" class="btnSimple">Buscar</button> -->
+                                <seg:botonTag code="CO" value="Buscar" styleClass="btn_a btn_small" id="btnBuscarConcurso" title="Buscar Zonificación Detalle" onclick=""/>
                                 <button id="btnLimpiarBuscarConcurso" title="Limpiar" class="btnSimple">Limpiar</button>
                             </div>
                         </fieldset>
                         <div id="botonesDerecha">
-                            <button id="btnNuevoConcurso" title="Nuevo Concurso">Nuevo</button> 
-                            <!--seg:botonTag code="IN" value="Nuevo" styleClass="btn_a btn_small" id="btnNuevoConcurso" title="Nuevo Detalle Zonificación" onclick=""/-->
+<!--                             <button id="btnNuevoConcurso" title="Nuevo Concurso">Nuevo</button>  -->
+                            <seg:botonTag code="IN" value="Nuevo" styleClass="btn_a btn_small" id="btnNuevoConcurso" title="Nuevo Detalle Zonificación" onclick=""/>
                         </div>
                         <div class="gridMargin">
                             <div id="gridContenedorConcurso"></div>
                             <div id="divContextMenuConcurso"></div>
                         </div>
+						<!-- PR0013 - Inicio -->                           
+		                <div id="divTagEnlaces" style="display:none;">
+							<div id="divEnlaceTagEditarConcurso">
+								<span class="pui-menuitem-icon ui-icon ui-icon-pencil"></span>
+								<seg:enlaceTag id='linkEditarConcurso' code='MO' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+								<span>Editar</span>
+							</div>
+							<div id="divEnlaceTagEliminarConcurso">
+								<span class="pui-menuitem-icon ui-icon ui-icon-trash"></span>
+								<seg:enlaceTag id='linkEliminarConcurso' code='EL' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+								<span>Eliminar</span>
+							</div>
+							<div id="divEnlaceTagDocAdjuntosConcurso">
+								<span class="pui-menuitem-icon ui-icon ui-icon-folder-collapsed"></span>
+								<seg:enlaceTag id='linkDocumentosAdjuntos' code='CO' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+								<span>Documentos Adjuntos</span>
+							</div>
+						</div>
+						<!-- PR0013 - Fin -->
                     </div>
                 </div>
             </div>

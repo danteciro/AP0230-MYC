@@ -253,22 +253,58 @@ function procesarGridRequisito(flg_load){
             grid.resetSelection();
         },
         onRightClickRow: function(rowid, iRow, iCol, e) {
-            var row = grid.jqGrid('getRowData', rowid);
-            $('#linkVerRequisito').attr('onClick', 'abrirMantRequisito("view","'+rowid+'")');
-            $('#linkEditarRequisito').attr('onClick', 'abrirMantRequisito("edit","'+rowid+'")');
-            $('#linkEliminarRequisito').attr('onClick', 'eliminarRequisito("'+rowid+'")');
-        },
-        loadComplete: function(data) {
-            $('#contextMenuRequisito').parent().remove();
-            $('#divContextMenuRequisito').html("<ul id='contextMenuRequisito'>"
-                    + "<li> <a id='linkVerRequisito' data-icon='ui-icon-search' title='Ver Detalle'>Consultar</a> </li>"
-                    + "<li> <a id='linkEditarRequisito' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
-                    + "<li> <a id='linkEliminarRequisito' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
-                    + "</ul>");
-            $('#contextMenuRequisito').puicontextmenu({
-                target: $('#gridRequisito')
-            });
-        }
+           var row = grid.jqGrid('getRowData', rowid);
+           $('#linkVerRequisito').attr('onClick', 'abrirMantRequisito("view","'+rowid+'")');
+           $('#linkEditarRequisito').attr('onClick', 'abrirMantRequisito("edit","'+rowid+'")');
+           $('#linkEliminarRequisito').attr('onClick', 'eliminarRequisito("'+rowid+'")');
+           
+           if($('#divEnlaceTagEliminar input').html()!=null){
+               $('#contextMenuRequisito li a[value="EL-GRIDREQUISITO"]').html($('#divEnlaceTagEliminar').html());               
+              } else {
+            	  $('#contextMenuRequisito li a[value="EL-GRIDREQUISITO"]').remove();
+              }
+           if($('#divEnlaceTagEditar input').html()!=null){ 
+              	$('#contextMenuRequisito li a[value="MO-GRIDREQUISITO"]').html($('#divEnlaceTagEditar').html());
+           } else {
+        	   $('#contextMenuRequisito li a[value="MO-GRIDREQUISITO"]').remove();
+           }
+           
+           if($('#divEnlaceTagConsultar input').html()!=null){
+              $('#contextMenuRequisito li a[value="CO-GRIDREQUISITO"]').html($('#divEnlaceTagConsultar').html());
+           } else {  
+              $('#contextMenuRequisito li a[value="CO-GRIDREQUISITO"]').remove();
+           }
+       },
+       loadComplete: function(data) {
+           $('#contextMenuRequisito').parent().remove();
+           $('#divContextMenuRequisito').html("<ul id='contextMenuRequisito'>"
+                   + "<li> <a value='CO-GRIDREQUISITO'></a></li>"
+                   + "<li> <a value='MO-GRIDREQUISITO'></a></li>"
+                   + "<li> <a value='EL-GRIDREQUISITO'></a></li>"
+                   + "</ul>");
+           $('#contextMenuRequisito').puicontextmenu({
+               target: $('#gridRequisito')
+           });
+       }
+/* PR0013 - Inicio */
+//        onRightClickRow: function(rowid, iRow, iCol, e) {
+//            var row = grid.jqGrid('getRowData', rowid);
+//            $('#linkVerRequisito').attr('onClick', 'abrirMantRequisito("view","'+rowid+'")');
+//            $('#linkEditarRequisito').attr('onClick', 'abrirMantRequisito("edit","'+rowid+'")');
+//            $('#linkEliminarRequisito').attr('onClick', 'eliminarRequisito("'+rowid+'")');
+//        },
+//        loadComplete: function(data) {
+//            $('#contextMenuRequisito').parent().remove();
+//            $('#divContextMenuRequisito').html("<ul id='contextMenuRequisito'>"
+//                  + "<li> <a id='linkVerRequisito' data-icon='ui-icon-search' title='Ver Detalle'>Consultar</a> </li>"
+//                  + "<li> <a id='linkEditarRequisito' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
+//                  + "<li> <a id='linkEliminarRequisito' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
+//                  + "</ul>");
+//            $('#contextMenuRequisito').puicontextmenu({
+//                target: $('#gridRequisito')
+//            });
+//        }
+/* PR0013 - Fin */
     });
 }
 //function descargarPlantillaRequisito(nombre) {

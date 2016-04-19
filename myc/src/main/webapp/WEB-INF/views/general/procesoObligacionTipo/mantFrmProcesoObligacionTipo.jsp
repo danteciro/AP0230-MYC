@@ -45,12 +45,14 @@
                             </select>
                         </div>
                         <div>
-                            <input id="btnNuevaObligacionTipo" class="btn_a btn_small" type="button" value="Agregar" title="Agregar">
+                        	<seg:botonTag code="IN" value="Agregar" styleClass="btn_a btn_small" id="btnNuevaObligacionTipo" title="Agregar" onclick=""/>
+<!--                             <input id="btnNuevaObligacionTipo" class="btn_a btn_small" type="button" value="Agregar" title="Agregar"> -->
                         </div>
                     </div>
 
                     <div class="filaForm">
-                        <input id="btnAgregarActividad" type="button" value="AGREGAR RUBROS" class="button_2">
+                    	<seg:botonTag code="IN" value="AGREGAR RUBROS" styleClass="btn_a btn_mediun" id="btnAgregarActividad" title="AGREGAR RUBROS" onclick=""/>
+<!--                         <input id="btnAgregarActividad" type="button" value="AGREGAR RUBROS" class="button_2"> -->
                     </div>
                     <div id="popupArbolActi" class="filaFormMarg" style="display:none;" title="SELECCIONAR RUBROS">
                         <div id="arbolActividades" style="height: 160px;">

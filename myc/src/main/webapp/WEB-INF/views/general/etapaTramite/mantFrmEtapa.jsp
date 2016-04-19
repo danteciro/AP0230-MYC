@@ -51,5 +51,24 @@
             <div id="divContextMenuEtapa"></div>
             <div id="gridContenedorEtapa"></div>
         </div>
+		<!-- PR0013 - Inicio -->                           
+		<div id="divTagEnlaces" style="display:none;">
+					<div id="divEnlaceTagEditarEpata">
+						<span class="pui-menuitem-icon ui-icon ui-icon-pencil"></span>
+						<seg:enlaceTag id='linkEditarEtapaUtil' code='MO' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+						<span>Editar</span>
+					</div>
+					<div id="divEnlaceTagEliminarEpata">
+						<span class="pui-menuitem-icon ui-icon ui-icon-trash"></span>
+						<seg:enlaceTag id='linkEliminarEtapaUtil' code='EL' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+						<span>Eliminar</span>
+					</div>
+					<div id="divEnlaceTagSeleccionarEpata">
+						<span class="pui-menuitem-icon ui-icon ui-icon-check"></span>
+						<seg:enlaceTag id='linkSeleccionarEtapaUtil' code='CO' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+						<span>Seleccionar</span>
+					</div>
+				</div>
+			<!-- PR0013 - Fin -->        
     </body>
 </html>

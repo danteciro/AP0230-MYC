@@ -152,7 +152,8 @@
         </form>
         <!--<div id="obligatorio">(*) Campos obligatorios</div>-->
         <div id="botones">
-            <button id="btnBuscarBusqAvanBL" title="Buscar" >Buscar</button>
+            <seg:botonTag code="CO" value="Buscar" styleClass="btn_a btn_small" id="btnBuscarBusqAvanBL" title="Buscar" onclick=""/>
+<!--             <button id="btnBuscarBusqAvanBL" title="Buscar" >Buscar</button> -->
             <button id="btnLimpiarBusqAvanBL" title="Limpiar" class="btnSimple">Limpiar</button>
             <button title="Cerrar" class="btnCloseDialog">Cerrar</button>
         </div>

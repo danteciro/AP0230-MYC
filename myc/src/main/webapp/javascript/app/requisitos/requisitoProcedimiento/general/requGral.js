@@ -134,6 +134,34 @@ function procAgregarRequisitoGeneral() {
 				error : errorAjax
 			});
 }
+function armaPermisosSeguridadGral(){
+	var permisos = $('#permisosSeguridad').val();
+	var permiso = permisos.split("/");	
+	console.log(permiso);
+	var existeIn = false;
+	var existeEl = false;
+	for (var i = 0; i < permiso.length; i++) {
+		console.log(permiso[i]);
+		if(permiso[i]=="IN"){
+			existeIn = true;
+		}
+		if(permiso[i]=="EL"){
+			existeEl = true;
+		}
+	}	
+	console.log(existeIn);
+	console.log(existeEl);
+	if(!existeIn){
+		$('#gralRequ .btns').map(function(){
+			$(this).find('span:eq(0)').css('display','none');
+		});
+	}
+	if(!existeEl){
+		$('#gralRequ .btns').map(function(){
+			$(this).find('span:eq(1)').css('display','none');
+		});
+	}
+}
 function armaGeneralesRequisitos(reqGralx) {
     var html = "";
     $.each(reqGralx,function(key, val) {
@@ -146,7 +174,7 @@ function armaGeneralesRequisitos(reqGralx) {
             html += "<div class='desc ilb vat' title='"
                             + val.requisito.descripcion + "'>"
                             + val.requisito.descripcion + "</div>";
-
+            
             html += "<div class='btns ilb vat tar'>";
             html += " <span class='ui-icon ui-icon-plusthick' title='AGREGAR SUBREQUISITO' onclick='btnAgregarSubRequisitoGral(\"gralRequProc"
                             + val.idRequisitoProcedimiento
@@ -171,7 +199,7 @@ function armaGeneralesRequisitos(reqGralx) {
             html += "<ul id='sortableGralRequProc" + val.idRequisitoProcedimiento + "'></ul>";
             html += "</div>";
             html += "</li>";
-        }
+        }        
     });
     $('#sortableGralRequ').html(html);
     // ingresando hijos 2do nivel
@@ -219,6 +247,7 @@ function armaGeneralesRequisitos(reqGralx) {
     $( "ul[id^='sortableGralRequProc']" ).sortable({
         update: function( event, ui ) {evalOrdenRequisitos('#'+$(this).attr('id'),buscarRequGral);}
     });
+    armaPermisosSeguridadGral();
 }
 
 function obtenerCamposValorParaDinaRequGral(camposx, valoresParaDina) {

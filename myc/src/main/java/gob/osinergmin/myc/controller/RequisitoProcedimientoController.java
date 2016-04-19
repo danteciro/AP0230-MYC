@@ -53,9 +53,10 @@ public class RequisitoProcedimientoController {
     private ZonificacionServiceNeg zonificacionServiceNeg;
     
     @RequestMapping(method = RequestMethod.GET)
-    public String inicio(Model model,HttpServletRequest request) {
+    public String inicio(Model model,HttpSession session,HttpServletRequest request) {
         model.addAttribute("fecha", ConstantesWeb.getFECHA());
         model.addAttribute("usuario", ConstantesWeb.getUSUARIO(request));
+        model.addAttribute("xxp",session.getAttribute("xxp"));
         return ConstantesWeb.Navegacion.PAGE_REQUISITOS_CONF_REQUISITOXPROCEDIMIENTO;
     }
     

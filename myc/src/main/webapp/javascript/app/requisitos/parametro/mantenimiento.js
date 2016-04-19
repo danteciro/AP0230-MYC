@@ -412,18 +412,56 @@ function procesarGridParametroDinamico(flg_load) {
             $('#linkEditarProcedimiento').attr('onClick', 'editarParametroDinamico("' + rowid + '")');
             $('#linkEliminarProcedimiento').attr('onClick', 'eliminarParametroDinamico("' + rowid + '")');
             $('#linkAgregarActProcedimiento').attr('onClick', 'mostrarValorParametroDinamico("' + rowid + '","' + row.nombre + '")');
+            
+            
+            if($('#divEnlaceTagEditar input').html()!=null){
+            	$('#contextMenuParametroDinamico li a[value="MO-PARADINA"]').html($('#divEnlaceTagEditar').html());               
+               } else {
+             	  $('#contextMenuParametroDinamico li a[value="MO-PARADINA"]').remove();
+               }
+            
+            if($('#divEnlaceTagEliminar input').html()!=null){
+            	$('#contextMenuParametroDinamico li a[value="EL-PARADINA"]').html($('#divEnlaceTagEliminar').html());               
+               } else {
+             	  $('#contextMenuParametroDinamico li a[value="EL-PARADINA"]').remove();
+               }
+            
+            if($('#divEnlaceTagValores input').html()!=null){
+            	$('#contextMenuParametroDinamico li a[value="CO-PARADINA"]').html($('#divEnlaceTagValores').html());               
+               } else {
+             	  $('#contextMenuParametroDinamico li a[value="CO-PARADINA"]').remove();
+               }
         },
         loadComplete: function(data) {
             $('#contextMenuParametroDinamico').parent().remove();
             $('#divContextMenuParametroDinamico').html("<ul id='contextMenuParametroDinamico'>"
-                    + "<li> <a id='linkEditarProcedimiento' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
-                    + "<li> <a id='linkEliminarProcedimiento' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
-                    + "<li> <a id='linkAgregarActProcedimiento' data-icon='ui-icon-note' title='Valores'>Valores</a></li>"
+                    + "<li> <a value='MO-PARADINA'></a></li>"
+                    + "<li> <a value='EL-PARADINA'></a></li>"
+                    + "<li> <a value='CO-PARADINA'></a></li>"
                     + "</ul>");
             $('#contextMenuParametroDinamico').puicontextmenu({
                 target: $('#gridParametroDinamico')
             });
         }
+        
+//        onRightClickRow: function(rowid, iRow, iCol, e) {
+//            var row = grid.jqGrid('getRowData', rowid);
+//            $('#linkVerProcedimiento').attr('onClick', 'verParametroDinamico("' + rowid + '")');
+//            $('#linkEditarProcedimiento').attr('onClick', 'editarParametroDinamico("' + rowid + '")');
+//            $('#linkEliminarProcedimiento').attr('onClick', 'eliminarParametroDinamico("' + rowid + '")');
+//            $('#linkAgregarActProcedimiento').attr('onClick', 'mostrarValorParametroDinamico("' + rowid + '","' + row.nombre + '")');
+//        },
+//        loadComplete: function(data) {
+//            $('#contextMenuParametroDinamico').parent().remove();
+//            $('#divContextMenuParametroDinamico').html("<ul id='contextMenuParametroDinamico'>"
+//                    + "<li> <a id='linkEditarProcedimiento' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
+//                    + "<li> <a id='linkEliminarProcedimiento' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
+//                    + "<li> <a id='linkAgregarActProcedimiento' data-icon='ui-icon-note' title='Valores'>Valores</a></li>"
+//                    + "</ul>");
+//            $('#contextMenuParametroDinamico').puicontextmenu({
+//                target: $('#gridParametroDinamico')
+//            });
+//        }
     });
 }
 function procesarGridValoresParametroDinamico(rowid) {
@@ -474,17 +512,49 @@ function procesarGridValoresParametroDinamico(rowid) {
             var row = grid.jqGrid('getRowData', rowid);
             $('#linkEditarValoPara').attr('onClick', 'editarValorParametroDinamico("' + rowid + '")');
             $('#linkEliminarValoPara').attr('onClick', 'eliminarValorParametroDinamico("' + rowid + '")');
+            
+            if($('#divEnlaceTagEditar input').html()!=null){
+            	$('#contextMenuValoresParametroDinamico li a[value="MO-GRIDVALOPARA"]').html($('#divEnlaceTagEditarValoPara').html());               
+               } else {
+             	  $('#contextMenuValoresParametroDinamico li a[value="MO-GRIDVALOPARA"]').remove();
+               }
+            
+            if($('#divEnlaceTagEliminar input').html()!=null){
+            	$('#contextMenuValoresParametroDinamico li a[value="EL-GRIDVALOPARA"]').html($('#divEnlaceTagEliminarValoPara').html());               
+               } else {
+             	  $('#contextMenuValoresParametroDinamico li a[value="EL-GRIDVALOPARA"]').remove();             	 
+               }
+            if($('#divEnlaceTagEliminar input').html()==null && $('#divEnlaceTagEditar input').html()==null){
+            	$('#contextMenuValoresParametroDinamico').parent().css('opacity',0);
+            }
+            
         },
         loadComplete: function(data) {
+        	$('#contextMenuValoresParametroDinamico').parent().css('opacity',1);
             $('#contextMenuValoresParametroDinamico').parent().remove();
             $('#divContextMenuValoresParametroDinamico').html("<ul id='contextMenuValoresParametroDinamico'>"
-                    + "<li><a id='linkEditarValoPara' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
-                    + "<li><a id='linkEliminarValoPara' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
+            		+ "<li> <a value='MO-GRIDVALOPARA'></a></li>"
+                    + "<li> <a value='EL-GRIDVALOPARA'></a></li>"
                     + "</ul>");
             $('#contextMenuValoresParametroDinamico').puicontextmenu({
                 target: $('#gridValoresParametroDinamico')
             });
         }
+//        onRightClickRow: function(rowid, iRow, iCol, e) {
+//            var row = grid.jqGrid('getRowData', rowid);
+//            $('#linkEditarValoPara').attr('onClick', 'editarValorParametroDinamico("' + rowid + '")');
+//            $('#linkEliminarValoPara').attr('onClick', 'eliminarValorParametroDinamico("' + rowid + '")');
+//        },
+//        loadComplete: function(data) {
+//            $('#contextMenuValoresParametroDinamico').parent().remove();
+//            $('#divContextMenuValoresParametroDinamico').html("<ul id='contextMenuValoresParametroDinamico'>"
+//                    + "<li><a id='linkEditarValoPara' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
+//                    + "<li><a id='linkEliminarValoPara' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
+//                    + "</ul>");
+//            $('#contextMenuValoresParametroDinamico').puicontextmenu({
+//                target: $('#gridValoresParametroDinamico')
+//            });
+//        }
     });
 }
 function valorDefecto(nombre) {

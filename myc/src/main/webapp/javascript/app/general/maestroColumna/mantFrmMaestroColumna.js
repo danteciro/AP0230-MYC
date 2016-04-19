@@ -144,12 +144,30 @@ function procesarGridMaesColuMant(flg_load) {
         onRightClickRow: function(rowid, iRow, iCol, e) {
             $('#linkEditarMaesColuMant').attr('onClick', 'editarMaesColuMant("'+rowid+'")');
             $('#linkEliminarMaesColuMant').attr('onClick', 'eliminarMaesColuMant("'+rowid+'")');
+            
+            if($('#divEnlaceTagEditarMaestroColumnaMant input').html()!=null){
+                $('#contextMenuMaesColuMant li a[value="MO-GRIDEDITARMAESTROCOLUMNAMANT"]').html($('#divEnlaceTagEditarMaestroColumnaMant').html());
+             } else {  
+                $('#contextMenuMaesColuMant li a[value="MO-GRIDEDITARMAESTROCOLUMNAMANT"]').remove();
+             }
+            
+            if($('#divEnlaceTagEliminarMaestroColumnaMant input').html()!=null){
+                $('#contextMenuMaesColuMant li a[value="EL-GRIDELIMINARMAESTROCOLUMNAMANT"]').html($('#divEnlaceTagEliminarMaestroColumnaMant').html());
+             } else {  
+                $('#contextMenuMaesColuMant li a[value="EL-GRIDELIMINARMAESTROCOLUMNAMANT"]').remove();
+             }
+            if($('#divEnlaceTagEditarMaestroColumnaMant input').html()==null && $('#divEnlaceTagEliminarMaestroColumnaMant input').html()==null){
+            	$('#contextMenuMaesColuMant').parent().css('opacity',0);
+            }
         },
         loadComplete: function(data) {
+        	$('#contextMenuMaesColuMant').parent().css('opacity',1);
             $('#contextMenuMaesColuMant').parent().remove();
             $('#divContextMenuMaesColuMant').html("<ul id='contextMenuMaesColuMant'>"
-                    + "<li> <a id='linkEditarMaesColuMant' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
-                    + "<li> <a id='linkEliminarMaesColuMant' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
+            		+"<li> <a value='MO-GRIDEDITARMAESTROCOLUMNAMANT'></a></li>"
+            		+"<li> <a value='EL-GRIDELIMINARMAESTROCOLUMNAMANT'></a></li>"
+//                    + "<li> <a id='linkEditarMaesColuMant' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
+//                    + "<li> <a id='linkEliminarMaesColuMant' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
                     + "</ul>");
             $('#contextMenuMaesColuMant').puicontextmenu({
                 target: $('#gridMaesColuMant')

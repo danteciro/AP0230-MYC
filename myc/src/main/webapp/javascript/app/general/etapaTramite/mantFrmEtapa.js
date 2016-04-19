@@ -180,17 +180,52 @@ function procesarGridEtapaUtil(flg_load,idProceso) {
             
             $('#linkSeleccionarEtapaUtil').attr('onClick', 'seleccionarEtapaUtil("' + rowid+'")');
             $('#linkGestionarTramite').attr('onClick', 'gestionarTramite("' + rowid + '")');
+            
+            if($('#divEnlaceTagEditarEpata input').html()!=null){
+                $('#contextMenuEtapa li a[value="MO-ETAPA"]').html($('#divEnlaceTagEditarEpata').html());
+             } else {
+                $('#contextMenuEtapa li a[value="MO-ETAPA"]').remove();
+             }
+            
+            if($('#divEnlaceTagEliminarEpata input').html()!=null){
+                $('#contextMenuEtapa li a[value="EL-ETAPA"]').html($('#divEnlaceTagEliminarEpata').html());
+             } else {
+                $('#contextMenuEtapa li a[value="EL-ETAPA"]').remove();
+             }
+            
+            if($('#divEnlaceTagSeleccionarEpata input').html()!=null){
+                $('#contextMenuEtapa li a[value="CO-ETAPA"]').html($('#divEnlaceTagSeleccionarEpata').html());
+             } else {
+                $('#contextMenuEtapa li a[value="CO-ETAPA"]').remove();
+             }
         },
         loadComplete: function(data) {
             $('#contextMenuEtapa').parent().remove();
             $('#divContextMenuEtapa').html("<ul id='contextMenuEtapa'>"
-            		+ "<li> <a id='linkEditarEtapaUtil' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
-            		+ "<li> <a id='linkEliminarEtapaUtil' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
-            		+ "<li> <a id='linkSeleccionarEtapaUtil' data-icon='ui-icon-check' title='Seleccionar'>Seleccionar</a></li>"
+            		+ "<li> <a value='MO-ETAPA'></a></li>"
+            		+ "<li> <a value='EL-ETAPA'></a></li>"
+            		+ "<li> <a value='CO-ETAPA'></a></li>"
                     + "</ul>");
             $('#contextMenuEtapa').puicontextmenu({
                 target: $('#gridEtapaUtil')
             });
+//        onRightClickRow: function(rowid, iRow, iCol, e) {
+//            $('#linkEditarEtapaUtil').attr('onClick','editarEtapaUtil("'+rowid+'")');
+//            $('#linkEliminarEtapaUtil').attr('onClick', 'eliminarEtapaUtil("' + rowid + '")');
+//            
+//            $('#linkSeleccionarEtapaUtil').attr('onClick', 'seleccionarEtapaUtil("' + rowid+'")');
+//            $('#linkGestionarTramite').attr('onClick', 'gestionarTramite("' + rowid + '")');
+//        },
+//        loadComplete: function(data) {
+//            $('#contextMenuEtapa').parent().remove();
+//            $('#divContextMenuEtapa').html("<ul id='contextMenuEtapa'>"
+//            		+ "<li> <a id='linkEditarEtapaUtil' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
+//            		+ "<li> <a id='linkEliminarEtapaUtil' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
+//            		+ "<li> <a id='linkSeleccionarEtapaUtil' data-icon='ui-icon-check' title='Seleccionar'>Seleccionar</a></li>"
+//                    + "</ul>");
+//            $('#contextMenuEtapa').puicontextmenu({
+//                target: $('#gridEtapaUtil')
+//            });
         }
     });
 }

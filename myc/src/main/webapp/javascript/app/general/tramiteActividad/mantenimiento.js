@@ -372,21 +372,56 @@ function procesarGridTramRubr(flg_load) {
             $('#linkVerTramiteActividad').attr('onClick', 'abrirMantEditTramiteActividad("view","'+rowid+'")');
             $('#linkEditarTramiteActividad').attr('onClick', 'abrirMantEditTramiteActividad("edit","'+rowid+'")');
             $('#linkEliminarTramiteActividad').attr('onClick', 'eliminarTramiteActividad("'+rowid+'")');
-            //$('#linkAgregarActProcedimiento').attr('onClick', 'agregarActProcedimiento("'+rowid+'","'+row.item+'","'+fxGrilla.limpiaPtos(row.denominacion)+'")');
-            //$('#linkVerActProcedimiento').attr('onClick', 'verActProcedimiento("'+rowid+'","'+row.item+'","'+fxGrilla.limpiaPtos(row.denominacion)+'")');
-          
+            
+            if($('#divEnlaceTagConsultar input').html()!=null){
+                $('#contextMenuTramiteActividad li a[value="CO-TRAMITEACT"]').html($('#divEnlaceTagConsultar').html());
+             } else {  
+                $('#contextMenuTramiteActividad li a[value="CO-TRAMITEACT"]').remove();
+             }
+            
+            if($('#divEnlaceTagEditar input').html()!=null){
+                $('#contextMenuTramiteActividad li a[value="MO-TRAMITEACT"]').html($('#divEnlaceTagEditar').html());
+             } else {  
+                $('#contextMenuTramiteActividad li a[value="MO-TRAMITEACT"]').remove();
+             }
+            
+            if($('#divEnlaceTagEliminar input').html()!=null){
+                $('#contextMenuTramiteActividad li a[value="EL-TRAMITEACT"]').html($('#divEnlaceTagEliminar').html());
+             } else {  
+                $('#contextMenuTramiteActividad li a[value="EL-TRAMITEACT"]').remove();
+             }
         },
         loadComplete: function(data) {
             $('#contextMenuTramiteActividad').parent().remove();
             $('#divContextMenuTramiteActividad').html("<ul id='contextMenuTramiteActividad'>"
-                    + "<li> <a id='linkVerTramiteActividad' data-icon='ui-icon-search' title='Ver Detalle'>Consultar</a> </li>"
-                    + "<li> <a id='linkEditarTramiteActividad' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
-                    + "<li> <a id='linkEliminarTramiteActividad' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
+                    + "<li> <a value='CO-TRAMITEACT'></a> </li>"
+                    + "<li> <a value='MO-TRAMITEACT'></a></li>"
+                    + "<li> <a value='EL-TRAMITEACT'></a></li>"
                    
                     + "</ul>");
             $('#contextMenuTramiteActividad').puicontextmenu({
                 target: $('#gridTramiteActividad')
             });
+//        onRightClickRow: function(rowid) {
+//            var row = grid.jqGrid('getRowData', rowid);
+//            $('#linkVerTramiteActividad').attr('onClick', 'abrirMantEditTramiteActividad("view","'+rowid+'")');
+//            $('#linkEditarTramiteActividad').attr('onClick', 'abrirMantEditTramiteActividad("edit","'+rowid+'")');
+//            $('#linkEliminarTramiteActividad').attr('onClick', 'eliminarTramiteActividad("'+rowid+'")');
+//            //$('#linkAgregarActProcedimiento').attr('onClick', 'agregarActProcedimiento("'+rowid+'","'+row.item+'","'+fxGrilla.limpiaPtos(row.denominacion)+'")');
+//            //$('#linkVerActProcedimiento').attr('onClick', 'verActProcedimiento("'+rowid+'","'+row.item+'","'+fxGrilla.limpiaPtos(row.denominacion)+'")');
+//          
+//        },
+//        loadComplete: function(data) {
+//            $('#contextMenuTramiteActividad').parent().remove();
+//            $('#divContextMenuTramiteActividad').html("<ul id='contextMenuTramiteActividad'>"
+//                    + "<li> <a id='linkVerTramiteActividad' data-icon='ui-icon-search' title='Ver Detalle'>Consultar</a> </li>"
+//                    + "<li> <a id='linkEditarTramiteActividad' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
+//                    + "<li> <a id='linkEliminarTramiteActividad' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
+//                   
+//                    + "</ul>");
+//            $('#contextMenuTramiteActividad').puicontextmenu({
+//                target: $('#gridTramiteActividad')
+//            });
         },
         loadError: function(jqXHR) {
             errorAjax(jqXHR);

@@ -119,17 +119,50 @@ function procesarGridConcurso(flg_load) {
             $('#linkEditarConcurso').attr('onClick', 'editarConcurso("' + rowid + '")');
             $('#linkEliminarConcurso').attr('onClick', 'eliminarConcurso("' + rowid + '")');
             $('#linkDocumentosAdjuntos').attr('onClick', 'AbrirAdjuntarDocumentosConcurso("' + rowid + '")');
+            
+            if($('#divEnlaceTagEditarConcurso input').html()!=null){
+                $('#contextMenuConcurso li a[value="MO-CONCURSO"]').html($('#divEnlaceTagEditarConcurso').html());
+             } else {  
+                $('#contextMenuConcurso li a[value="MO-CONCURSO"]').remove();
+             }
+            
+            if($('#divEnlaceTagEliminarConcurso input').html()!=null){
+                $('#contextMenuConcurso li a[value="EL-CONCURSO"]').html($('#divEnlaceTagEliminarConcurso').html());
+             } else {  
+                $('#contextMenuConcurso li a[value="EL-CONCURSO"]').remove();
+             }
+            
+            if($('#divEnlaceTagDocAdjuntosConcurso input').html()!=null){
+                $('#contextMenuConcurso li a[value="CO-CONCURSO"]').html($('#divEnlaceTagDocAdjuntosConcurso').html());
+             } else {  
+                $('#contextMenuConcurso li a[value="CO-CONCURSO"]').remove();
+             }
         },
         loadComplete: function(data) {
             $('#contextMenuConcurso').parent().remove();
             $('#divContextMenuConcurso').html("<ul id='contextMenuConcurso'>"
-                    + "<li> <a id='linkEditarConcurso' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
-                    + "<li> <a id='linkEliminarConcurso' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
-                    + "<li> <a id='linkDocumentosAdjuntos' data-icon='ui-icon-folder-collapsed' title='Documentos Adjuntos'>Documentos Adjuntos</a></li>"
+                    + "<li> <a value='MO-CONCURSO'></a></li>"
+                    + "<li> <a value='EL-CONCURSO'></a></li>"
+                    + "<li> <a value='CO-CONCURSO'></a></li>"
                     + "</ul>");
             $('#contextMenuConcurso').puicontextmenu({
                 target: $('#gridConcurso')
             });
+//        onRightClickRow: function(rowid, iRow, iCol, e) {
+//            $('#linkEditarConcurso').attr('onClick', 'editarConcurso("' + rowid + '")');
+//            $('#linkEliminarConcurso').attr('onClick', 'eliminarConcurso("' + rowid + '")');
+//            $('#linkDocumentosAdjuntos').attr('onClick', 'AbrirAdjuntarDocumentosConcurso("' + rowid + '")');
+//        },
+//        loadComplete: function(data) {
+//            $('#contextMenuConcurso').parent().remove();
+//            $('#divContextMenuConcurso').html("<ul id='contextMenuConcurso'>"
+//                    + "<li> <a id='linkEditarConcurso' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
+//                    + "<li> <a id='linkEliminarConcurso' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
+//                    + "<li> <a id='linkDocumentosAdjuntos' data-icon='ui-icon-folder-collapsed' title='Documentos Adjuntos'>Documentos Adjuntos</a></li>"
+//                    + "</ul>");
+//            $('#contextMenuConcurso').puicontextmenu({
+//                target: $('#gridConcurso')
+//            });
         },
         loadError: function(jqXHR) {
             errorAjax(jqXHR);

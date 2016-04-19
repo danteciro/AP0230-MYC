@@ -96,30 +96,85 @@
                             </div>
                         </form>
                         <div id="botones">
-                            <button id="btnBuscarBaseLegal" title="Buscar" class="btnSimple">Buscar</button>
+                             <seg:botonTag code="CO" value="Buscar" styleClass="btn_a btn_small" id="btnBuscarBaseLegal" title="Buscar" onclick=""/>
+<!--                             <button id="btnBuscarBaseLegal" title="Buscar" class="btnSimple">Buscar</button> -->
                             <button id="btnLimpiarBaseLegal" title="Limpiar" class="btnSimple">Limpiar</button>
-                            <button id="btnBusquedaAvanzadaBaseLegal" title="Busqueda Avanzada Base Legal" class="btnSimple">Busqueda Avanzada</button>
+                            <seg:botonTag code="CO" value="Busqueda Avanzada" styleClass="btn_a btn_mediun" id="btnBusquedaAvanzadaBaseLegal" title="Busqueda Avanzada Base Legal" onclick=""/>
+<!--                            <button id="btnBusquedaAvanzadaBaseLegal" title="Busqueda Avanzada Base Legal" class="btnSimple">Busqueda Avanzada</button> -->
                         </div>
 
                     </fieldset>
                     <div id="botonesDerecha">
                         <input type="text" id="txtIdNormaSeleccionada" style="display:none" />
                         <input type="text" id="txtIdBaseSeleccionada" style="display:none" />
-                        <button title="Crear Base Legal" id="btnMantenimientoBaseLegal">Nuevo</button>
+						<seg:botonTag code="IN" value="Nuevo" styleClass="btn_a btn_small" id="btnMantenimientoBaseLegal" title="Crear Base Legal" onclick=""/>
+<!--                         <button title="Crear Base Legal" id="btnMantenimientoBaseLegal">Nuevo</button> -->
                     </div>
                     <div id="divContGridBusqBaseLegal">
                     <div id="gridContenedorBasesLegales"></div>
                     <div id="divContextMenuBasesLegales"></div>
                     <div id="divContextMenuObligaciones"></div>
+					<!-- PR0013 - Inicio -->
+                    <div id="divTagEnlacesNormaLegal" style="display:none;">
+						<div id="divEnlaceTagVerNormaLegal">
+							<span class="pui-menuitem-icon ui-icon ui-icon-search"></span>
+							<seg:enlaceTag id='linkVerBaseLegal' code='CO' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+							<span>Ver Norma Legal</span>
+						</div>
+						<div id="divEnlaceTagEditarNormaLegal">
+							<span class="pui-menuitem-icon ui-icon ui-icon-pencil"></span>
+							<seg:enlaceTag id='linkObtenerBaseLegal' code='MO' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+							<span>Editar Norma Legal</span>
+						</div>
+					</div>
+					<!-- PR0013 - Fin -->
                     </div>
                     <div id="divContGridBusqObli">
                     <div id="gridContenedorBusqAvanObligaciones"></div>
                     <div id="divContextMenuBusqAvanObligaciones"></div>
                     <div id="divContextMenuBusqAvanBaseLegal"></div>
+					<!-- PR0013 - Inicio -->
+					<div id="divTagEnlacesBaseLegal" style="display:none;">	
+						<div id="divEnlaceTagVerBaseLegal">
+							<span class="pui-menuitem-icon ui-icon ui-icon-search"></span>
+							<seg:enlaceTag id='linkVerObligacion' code='CO' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+							<span>Ver Base Legal</span>
+						</div>
+						<div id="divEnlaceTagEditarBaseLegal">
+							<span class="pui-menuitem-icon ui-icon ui-icon-pencil"></span>
+							<seg:enlaceTag id='linkEditarObligacion' code='MO' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+							<span>Editar Base Legal</span>
+						</div>
+						<!-- Enlaces Obligaciones vs Tipificaciones -->
+						<div id="divEnlaceTagEliminarTipificacionObligacion">
+							<span class="pui-menuitem-icon ui-icon ui-icon-trash"></span>
+							<seg:enlaceTag id='linkEliminarTipificacion' code='EL' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+							<span>Eliminar</span>
+						</div>
+						<!-- Enlaces Obligaciones vs Criterios -->
+						<div id="divEnlaceTagEliminarCriterioObligacion">
+							<span class="pui-menuitem-icon ui-icon ui-icon-trash"></span>
+							<seg:enlaceTag id='linkEliminarCriterio' code='EL' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+							<span>Eliminar</span>
+						</div>
+						<!-- Enlaces Obligaciones vs Bases Legales Referenciadas -->
+						<div id="divEnlaceTagEliminarReferenciaObligacion">
+							<span class="pui-menuitem-icon ui-icon ui-icon-trash"></span>
+							<seg:enlaceTag id='linkEliminarBaseAsociada' code='EL' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+							<span>Eliminar</span>
+						</div>
+						<!-- Enlaces Obligaciones vs Configuracion -->
+						<div id="divEnlaceTagEliminarConfiguracionObligacion">
+							<span class="pui-menuitem-icon ui-icon ui-icon-trash"></span>
+							<seg:enlaceTag id='linkEliminarCnf' code='EL' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+							<span>Eliminar</span>
+						</div>
+					</div>
+					<!-- PR0013 - Fin -->
                     </div>
                 </div>
             </div>
-        </div>    
+        </div>        
         <!--Contenedores-->
         <!--Contenedor Búsqueda Avanzada--> 
         <div id="divOcultaContainerBusquedaAvanzada" style="display:none;"><div id="containerDialogBusquedaAvanzadaBaseLegal" title="Busqueda Avanzada Base Legal"></div></div>

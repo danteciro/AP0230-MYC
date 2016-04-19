@@ -54,8 +54,10 @@
                                         <input id="txtCodigoBaseLegalNuevo" name="" value="${CodigoBaseLegal}${baseLegal.codigoBaseLegal}" validate="" type="text" maxlength="100" style="display: inline-block;"/>
 <!-- 3 -->                                         
                                     </div>
-                                    <div style="float:right;"><input id="btnEliminarBaseLegal" type="button" value="Eliminar" class="btn_a btn_small" ></div>
-                                    <div style="float:right;"><input id="btnEliminarBaseLegalPadre" type="button" value="Eliminar" class="btn_a btn_small" style="display:none;"></div>
+<!--                                     <div style="float:right;"><input id="btnEliminarBaseLegal" type="button" value="Eliminar" class="btn_a btn_small" ></div> -->
+										 <div style="float:right;"><seg:botonTag code="EL" value="Eliminar" styleClass="btn_a btn_small" id="btnEliminarBaseLegal" title="Eliminar" onclick=""/></div>
+<!--                                     <div style="float:right;"><input id="btnEliminarBaseLegalPadre" type="button" value="Eliminar" class="btn_a btn_small" style="display:none;"></div> -->
+										 <div style="float:right;"><seg:botonTag code="EL" value="Eliminar"  styleClass="btn_a btn_small a-ipt-a" id="btnEliminarBaseLegalPadre" title="Eliminar" onclick=""/></div>
                                 </div> 
                                 <div class="filaForm">
                                 <div class="lblc" style="width:140px;" ></div>
@@ -254,7 +256,10 @@
 								<div class="filaForm"></div>
                                 <div id="divDescripcionObligacionConcordancia" style="display: none;" >
                                 	<div class="titCustomize">
-	                                	<div class="filaForm"><a id="btnAsociaBaseLegalConcordancia">Asociar</a></div>
+	                                	<div class="filaForm">
+											<seg:botonTag id="btnAsociaBaseLegalConcordancia" code="IN" value="Asociar" onclick="" styleClass="a-ipt-r"><span class="pui-button-icon-left ui-icon ui-icon-document"></span></seg:botonTag>
+<!-- 	                                	<a id="btnAsociaBaseLegalConcordancia">Asociar</a> -->
+	                                	</div>
 	                                	<div id="gridContenedorObligConcordancia"></div>
 	                                    <div id="divContextMenuObligConcordancia"></div>
                                     </div>
@@ -287,13 +292,34 @@
 									<div class="filaForm"></div>
 	                                <div id="divCrearObligacionUnica" style="display: none;">
 	                                   <div class="titCustomize">
-	                                    	<div class="filaForm">	                                    		
-	                                        	<a id="btnNuevaObligacionNormativa">Nuevo</a>	                                     		
-	                                        	<a id="btnAsociarObligacionNormativa">Asociar</a>
+	                                    	<div class="filaForm">	   
+	                                    		<seg:botonTag id="btnNuevaObligacionNormativa" code="IN" value="Nuevo" onclick="" styleClass="a-ipt-r"></seg:botonTag>
+<!-- 												<a id="btnNuevaObligacionNormativa">Nuevo</a>-->
+												<seg:botonTag id="btnAsociarObligacionNormativa" code="IN" value="Asociar" onclick="" styleClass="a-ipt-r"></seg:botonTag>
+<!-- 	                                        	<a id="btnAsociarObligacionNormativa">Asociar</a> -->
 	                                    	</div>
 	                                    <div id="gridContenedorOblig" ></div> <!-- style="float: left; width: 81%" -->
 	                                    <div id="divContextMenuOblig"></div>
 	                                    </div>
+	                                    <!-- PR0013 - Inicio -->
+					                    <div id="divTagEnlacesNormaLegal" style="display:none;">
+											<div id="divEnlaceTagVerNormaLegalHijo">
+												<span class="pui-menuitem-icon ui-icon ui-icon-search"></span>
+												<seg:enlaceTag id='linkVerObligacionDetalle' code='CO' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+												<span>Ver Detalle</span>
+											</div>
+											<div id="divEnlaceTagEditarNormaLegalHijo">
+												<span class="pui-menuitem-icon ui-icon ui-icon-pencil"></span>
+												<seg:enlaceTag id='linkEditarObligacionDetalle' code='MO' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+												<span>Editar</span>
+											</div>
+											<div id="divEnlaceTagEliminarNormaLegalHijo">
+												<span class="pui-menuitem-icon ui-icon ui-icon-trash"></span>
+												<seg:enlaceTag id='linkEliminarObligacion' code='EL' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+												<span>Eliminar</span>
+											</div>
+										</div>
+										<!-- PR0013 - Fin -->
 	                                 </div>
                               </div>
                             
@@ -304,8 +330,10 @@
                         </form> 
 
                         <div id="botones">
-                            <button id="btnEditarBaseLegal" type="button" title="Editar Base Legal" style="display:none;">Guardar</button>
-                            <button id="btnNuevaBaseLegal" type="button" title="Agregar Base Legal" class="btnSimple">Guardar</button>
+                        	<seg:botonTag code="MO" value="Guardar"  styleClass="btn_a btn_small a-ipt-a" id="btnEditarBaseLegal" title="Editar Base Legal" onclick=""/>
+<!--                             <button id="btnEditarBaseLegal" type="button" title="Editar Base Legal" style="display:none;">Guardar</button> -->
+<!--                             <button id="btnNuevaBaseLegal" type="button" title="Agregar Base Legal" class="btnSimple">Guardar</button> -->
+                            <seg:botonTag code="IN" value="Guardar"  styleClass="btn_a btn_small" id="btnNuevaBaseLegal" title="Agregar Base Legal" onclick=""/>
                             <button id="btnCerrar" title="Cerrar" class="">Cerrar</button>
                         </div>
 
@@ -340,7 +368,8 @@
                                     </div>
                                 </div>
                                 <div style="text-align: center;">
-                                	<input id="btnEliminarObligacion" class="btn_a btn_small" type="button" value="Eliminar" style="display: none;">
+<!--                                 	<input id="btnEliminarObligacion" class="btn_a btn_small" type="button" value="Eliminar" style="display: none;"> -->
+                                	<seg:botonTag code="EL" value="Eliminar"  styleClass="btn_a btn_small a-ipt-a" id="btnEliminarObligacion" title="Eliminar" onclick=""/>
                                 </div>
                             </div>
                                 <div style="width:100%;" class="filaForm" ></div>
@@ -375,9 +404,9 @@
                       	<div style="clear:both;"></div>
                       	<div id="obligatorio">(*) Campos obligatorios</div>
                                 <div style="width:100%;"><br></div>
-                                <div ></div>
-                               
-                                        <div style="text-align:center;"><button id="btnNuevaOblNor" type="button" title="Registrar Obligación Normativa" class="btnSimple">Guardar</button>
+                                <div ></div>                               
+                                        <div style="text-align:center;">
+                                        <button id="btnNuevaOblNor" type="button" title="Registrar Obligación Normativa" class="btnSimple">Guardar</button>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <button id="btnCerrarOblNor" title="Cerrar" class="btnSimple" type="button" >Cerrar</button>
 			                    	<button id="btnCerrarOblNorVerDetalle" title="Cerrar" class="" style="display:none;">Cerrar</button></div>
@@ -437,7 +466,8 @@
                                                 </fieldset>
                                                 <div><br></div>
                                                 <div id="botones">
-                                                    <button id="btnAgregarTipificacion">Asociar</button>
+<!--                                                     <button id="btnAgregarTipificacion">Asociar</button> -->
+                                                    <seg:botonTag code="IN" value="Asociar" styleClass="btn_a btn_small" id="btnAgregarTipificacion" title="Asociar" onclick=""/>
                                                 </div>
                                                 <div><br></div>
                                             </div>
@@ -491,7 +521,8 @@
                                             </div>
                                             <div class="filaForm"><br></div>
                                             <div id="botones">
-                                                <button id="btnAgregarDescripcion">Guardar</button>
+                                            	<seg:botonTag code="MO" value="Guardar" styleClass="btn_a btn_small" id="btnAgregarDescripcion" title="Guardar" onclick=""/>
+<!--                                                 <button id="btnAgregarDescripcion">Guardar</button> -->
                                             </div>
 
                                         </div>
@@ -551,7 +582,9 @@
 <!-- 05/11/2015 -->
                                             <div id="botones" class="filaForm">
 <!--                                            <input id="botoSubirPauta" class="btn_a btn_small" type="button" style="display: inline-block;" value="Asociar"> -->
-                                            	<input id="btnGuardarObliTipiCriterio" class="btn_a btn_small" type="button" style="display: inline-block;" value="Asociar">
+<!--                                             	<input id="btnGuardarObliTipiCriterio" class="btn_a btn_small" type="button" style="display: inline-block;" value="Asociar"> -->
+                                            	<seg:botonTag code="IN" value="Asociar" styleClass="btn_a btn_small" id="btnGuardarObliTipiCriterio" title="Asociar" onclick=""/>
+                                            	
                                             </div>
                                             <div >
                                                 <br>
@@ -564,7 +597,10 @@
                                         </div>
                                         <div id="tabReferencia">
                                             <div id="asociaObligacionEditar" >
-                                            <div class="filaForm"><input id="btnAsociaNuevaBaseLegal" class="btn_a btn_small" type="button"  value="Asociar"></div>
+                                            <div class="filaForm">
+                                            <seg:botonTag code="IN" value="Asociar" styleClass="btn_a btn_small" id="btnAsociaNuevaBaseLegal" title="Asociar" onclick=""/>
+<!--                                             <input id="btnAsociaNuevaBaseLegal" class="btn_a btn_small" type="button"  value="Asociar"> -->
+                                            </div>
                                             <br>
                                             </div>
                                             <div style="border:0px black solid;padding:2px;margin:0px 0px 6px 0px;background:none repeat scroll 0 0 #e5e5e7;">Listado de Bases Legales Asociadas:</div>
@@ -646,7 +682,8 @@
                                                             
                                                         </div>
                                                         <div style="float:right;">
-                                                          <button id="btnGuardarRelacionStepCuatroRegresar" title="Guardar">Guardar</button>
+                                                        <seg:botonTag code="IN" value="Guardar" styleClass="btn_a btn_small" id="btnGuardarRelacionStepCuatroRegresar" title="Guardar" onclick=""/>
+<!--                                                           <button id="btnGuardarRelacionStepCuatroRegresar" title="Guardar">Guardar</button> -->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -671,7 +708,8 @@
                                             </div>
                                             <div style="clear:both;"><br></div>
                                             <div id="botones">
-                                            	<button id="btnRelacionesObligacion" type="button" title="Registrar Relaciones Obligacion Normativa" class="btnSimple">Guardar</button>
+                                            <seg:botonTag code="MO" value="Guardar" styleClass="btn_a btn_small" id="btnRelacionesObligacion" title="Guardar" onclick=""/>
+<!--                                             	<button id="btnRelacionesObligacion" type="button" title="Registrar Relaciones Obligacion Normativa" class="btnSimple">Guardar</button> -->
                                             </div>
                                         </div>
                                     </div>

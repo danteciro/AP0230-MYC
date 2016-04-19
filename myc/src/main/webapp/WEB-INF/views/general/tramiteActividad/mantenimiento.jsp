@@ -64,6 +64,25 @@
                             <div id="gridContenedorTramiteActividad"></div>
                             <div id="divContextMenuTramiteActividad"></div>
                         </div>
+                        <!-- PR0013 - Inicio -->
+                        <div id="divTagEnlaces" style="display:none;">
+							<div id="divEnlaceTagConsultar">
+								<span class="pui-menuitem-icon ui-icon ui-icon-search"></span>
+								<seg:enlaceTag id='linkVerTramiteActividad' code='CO' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+								<span>Consultar</span>
+							</div>
+							<div id="divEnlaceTagEditar">
+								<span class="pui-menuitem-icon ui-icon ui-icon-pencil"></span>
+								<seg:enlaceTag id='linkEditarTramiteActividad' code='MO' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+								<span>Editar</span>
+							</div>
+							<div id="divEnlaceTagEliminar">
+								<span class="pui-menuitem-icon ui-icon ui-icon-trash"></span>
+								<seg:enlaceTag id='linkEliminarTramiteActividad' code='EL' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+								<span>Eliminar</span>
+							</div>
+						</div>                        
+                        <!-- PR0013 - Fin -->
                         
                     </div>
                 </div>

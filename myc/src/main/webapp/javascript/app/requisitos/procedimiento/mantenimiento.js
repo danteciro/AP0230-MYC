@@ -291,21 +291,64 @@ function procesarGridProcedimiento(flg_load) {
             $('#linkVerProcedimiento').attr('onClick', 'abrirMantProcedimiento("view","'+rowid+'")');
             $('#linkEditarProcedimiento').attr('onClick', 'abrirMantProcedimiento("edit","'+rowid+'")');
             $('#linkEliminarProcedimiento').attr('onClick', 'eliminarProcedimiento("'+rowid+'")');
-            //$('#linkAgregarActProcedimiento').attr('onClick', 'agregarActProcedimiento("'+rowid+'","'+row.item+'","'+fxGrilla.limpiaPtos(row.denominacion)+'")');
-            //$('#linkVerActProcedimiento').attr('onClick', 'verActProcedimiento("'+rowid+'","'+row.item+'","'+fxGrilla.limpiaPtos(row.denominacion)+'")');
             $('#linkGestionarRequisitosProcedimiento').attr('onClick', 'gestionarRequProcedimiento("' + rowid + '")');
+
+            if($('#divEnlaceTagConsultar input').html()!=null){
+                $('#contextMenuProcedimiento li a[value="CO-PROCEDIMIENTO"]').html($('#divEnlaceTagConsultar').html());               
+               } else {
+             	  $('#contextMenuProcedimiento li a[value="CO-PROCEDIMIENTO"]').remove();
+               }
+            
+            if($('#divEnlaceTagEditar input').html()!=null){
+                $('#contextMenuProcedimiento li a[value="MO-PROCEDIMIENTO"]').html($('#divEnlaceTagEditar').html());               
+               } else {
+             	  $('#contextMenuProcedimiento li a[value="MO-PROCEDIMIENTO"]').remove();
+               }
+            
+            if($('#divEnlaceTagEliminar input').html()!=null){
+                $('#contextMenuProcedimiento li a[value="EL-PROCEDIMIENTO"]').html($('#divEnlaceTagEliminar').html());               
+               } else {
+             	  $('#contextMenuProcedimiento li a[value="EL-PROCEDIMIENTO"]').remove();
+               }
+            
+            if($('#divEnlaceTagGestionar input').html()!=null){
+                $('#contextMenuProcedimiento li a[value="MO-PROCEDIMIENTOGES"]').html($('#divEnlaceTagGestionar').html());
+               } else {
+             	  $('#contextMenuProcedimiento li a[value="MO-PROCEDIMIENTOGES"]').remove();
+               }
         },
         loadComplete: function(data) {
             $('#contextMenuProcedimiento').parent().remove();
             $('#divContextMenuProcedimiento').html("<ul id='contextMenuProcedimiento'>"
-                    + "<li> <a id='linkVerProcedimiento' data-icon='ui-icon-search' title='Ver Detalle'>Consultar</a> </li>"
-                    + "<li> <a id='linkEditarProcedimiento' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
-                    + "<li> <a id='linkEliminarProcedimiento' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
-                    + "<li> <a id='linkGestionarRequisitosProcedimiento' data-icon='ui-icon-clipboard' title='Gestionar Requisitos'>Gestionar Requisitos</a></li>"
+                    + "<li> <a value='CO-PROCEDIMIENTO'></a> </li>"
+                    + "<li> <a value='MO-PROCEDIMIENTO'></a></li>"
+                    + "<li> <a value='EL-PROCEDIMIENTO'></a></li>"
+                    + "<li> <a value='MO-PROCEDIMIENTOGES'></a></li>"
                     + "</ul>");
             $('#contextMenuProcedimiento').puicontextmenu({
                 target: $('#gridProcedimiento')
             });
+            
+//        onRightClickRow: function(rowid) {
+//            var row = grid.jqGrid('getRowData', rowid);
+//            $('#linkVerProcedimiento').attr('onClick', 'abrirMantProcedimiento("view","'+rowid+'")');
+//            $('#linkEditarProcedimiento').attr('onClick', 'abrirMantProcedimiento("edit","'+rowid+'")');
+//            $('#linkEliminarProcedimiento').attr('onClick', 'eliminarProcedimiento("'+rowid+'")');
+//            //$('#linkAgregarActProcedimiento').attr('onClick', 'agregarActProcedimiento("'+rowid+'","'+row.item+'","'+fxGrilla.limpiaPtos(row.denominacion)+'")');
+//            //$('#linkVerActProcedimiento').attr('onClick', 'verActProcedimiento("'+rowid+'","'+row.item+'","'+fxGrilla.limpiaPtos(row.denominacion)+'")');
+//            $('#linkGestionarRequisitosProcedimiento').attr('onClick', 'gestionarRequProcedimiento("' + rowid + '")');
+//        },
+//        loadComplete: function(data) {
+//            $('#contextMenuProcedimiento').parent().remove();
+//            $('#divContextMenuProcedimiento').html("<ul id='contextMenuProcedimiento'>"
+//                    + "<li> <a id='linkVerProcedimiento' data-icon='ui-icon-search' title='Ver Detalle'>Consultar</a> </li>"
+//                    + "<li> <a id='linkEditarProcedimiento' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
+//                    + "<li> <a id='linkEliminarProcedimiento' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
+//                    + "<li> <a id='linkGestionarRequisitosProcedimiento' data-icon='ui-icon-clipboard' title='Gestionar Requisitos'>Gestionar Requisitos</a></li>"
+//                    + "</ul>");
+//            $('#contextMenuProcedimiento').puicontextmenu({
+//                target: $('#gridProcedimiento')
+//            });
             //colocando puntos suspensivos
             fxGrilla.setPtosSuspensivos('gridProcedimiento','denominacion');
         },

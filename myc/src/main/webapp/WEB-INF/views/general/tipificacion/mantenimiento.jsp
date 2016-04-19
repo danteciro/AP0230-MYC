@@ -49,6 +49,25 @@
                             <div id="divContextMenuTipificacion"></div>
                             <div id="divContextMenuTipificacionSub"></div>
                         </div>
+		                <!-- PR0013 - Inicio -->                           
+		                <div id="divTagEnlaces" style="display:none;">
+							<div id="divEnlaceTagVerTipificacion">
+								<span class="pui-menuitem-icon ui-icon ui-icon-pencil"></span>
+								<seg:enlaceTag id='linkVerTipificacion' code='CO' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+								<span>Consultar</span>
+							</div>
+							<div id="divEnlaceTagEditarTipificacion">
+								<span class="pui-menuitem-icon ui-icon ui-icon-trash"></span>
+								<seg:enlaceTag id='linkEditarTipificacion' code='MO' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+								<span>Editar</span>
+							</div>
+							<div id="divEnlaceTagEliminarTipificacion">
+								<span class="pui-menuitem-icon ui-icon ui-icon-folder-collapsed"></span>
+								<seg:enlaceTag id='linkEliminarTipificacion' code='EL' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+								<span>Eliminar</span>
+							</div>
+						</div>
+						<!-- PR0013 - Fin -->
                     </div>
                 </div>
             </div>

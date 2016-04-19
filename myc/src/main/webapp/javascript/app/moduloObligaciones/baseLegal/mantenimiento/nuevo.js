@@ -160,7 +160,7 @@ var gestionBaseLegal = (function() {
          * function: init functions
          */
         
-        $('#btnAsociaBaseLegalConcordancia').puibutton({icon: 'ui-icon-document'});
+//        $('#btnAsociaBaseLegalConcordancia').puibutton({icon: 'ui-icon-document'});
         $('#btnAsociaBaseLegalConcordancia').click(abrirPopUpBusquedaAvanzadaConcordancia);
         $('#btnNuevaObligacionNormativa').puibutton({icon: 'ui-icon-document'});
         $('#btnAsociarObligacionNormativa').puibutton({icon: 'ui-icon-document'});
@@ -3114,12 +3114,21 @@ var nuevaObligacionNormativa = (function() {
             onRightClickRow: function(rowid, iRow, iCol, e) {
                 var row = grid.jqGrid('getRowData', rowid);
                 $('#linkEliminarCnf').attr('onClick', 'nuevaObligacionNormativa.eliminarConfiguracionConfirm("' + rowid + '")');
+                
+                if($('#divEnlaceTagEliminarConfiguracionObligacion input').html()!=null){
+                    $('#contextCnfOblg li a[value="EL-GRIDCONFIGURACIONOBLIGACION"]').html($('#divEnlaceTagEliminarConfiguracionObligacion').html());               
+                }else {
+                 	  $('#contextCnfOblg li a[value="EL-GRIDCONFIGURACIONOBLIGACION"]').remove();
+                 	 $('#contextCnfOblg').parent().css('opacity',0);
+                }
             },
             loadComplete: function(data) {
+            	$('#contextCnfOblg').parent().css('opacity',1);
                 $('#contextCnfOblg').parent().remove();
                 if(nuevaObligacionNormativa.modoVisualizacion != modoVer){
                     $('#divContextCnfOblg').html("<ul id='contextCnfOblg'>"
-                            + "<li> <a id='linkEliminarCnf' data-icon='ui-icon-trash' title='Eliminar Configuración'>Eliminar</a></li>"
+                    		+"<li> <a value='EL-GRIDCONFIGURACIONOBLIGACION'></a></li>"
+//                            + "<li> <a id='linkEliminarCnf' data-icon='ui-icon-trash' title='Eliminar Configuración'>Eliminar</a></li>"
                             + "</ul>");
                     $('#contextCnfOblg').puicontextmenu({
                         //target: $('#gridObligacionNormativa').find('tr').not('.ui-subgrid,.ui-subgrid tr')
@@ -3704,12 +3713,21 @@ var nuevaObligacionNormativa = (function() {
             onRightClickRow: function(rowid, iRow, iCol, e) {
                 var row = grid.jqGrid('getRowData', rowid);
                 $('#linkEliminarTipificacion').attr('onClick', 'nuevaObligacionNormativa.confirmEliminarTipificacion("' + rowid + '")');
+                
+                if($('#divEnlaceTagEliminarTipificacionObligacion input').html()!=null){
+                    $('#contextMenuTipificacion li a[value="EL-GRIDTIPIFICACIONOBLIGACION"]').html($('#divEnlaceTagEliminarTipificacionObligacion').html());               
+                }else {
+                 	  $('#contextMenuTipificacion li a[value="EL-GRIDTIPIFICACIONOBLIGACION"]').remove();
+                 	 $('#contextMenuTipificacion').parent().css('opacity',0);
+                }
             },
             loadComplete: function(data) {
+            	$('#contextMenuTipificacion').parent().css('opacity',1);
                 $('#contextMenuTipificacion').parent().remove();
                 if(nuevaObligacionNormativa.modoVisualizacion != modoVer){
                     $('#divContextMenuTipificacion').html("<ul id='contextMenuTipificacion'>"
-                            + "<li> <a id='linkEliminarTipificacion' data-icon='ui-icon-trash' title=''>Eliminar</a></li>"
+                    		+"<li> <a value='EL-GRIDTIPIFICACIONOBLIGACION'></a></li>"
+//                            + "<li> <a id='linkEliminarTipificacion' data-icon='ui-icon-trash' title=''>Eliminar</a></li>"
                             + "</ul>");
                     $('#contextMenuTipificacion').puicontextmenu({
                         //target: $('#gridObligacionNormativa').find('tr').not('.ui-subgrid,.ui-subgrid tr')
@@ -3881,12 +3899,22 @@ var nuevaObligacionNormativa = (function() {
                 var row = grid.jqGrid('getRowData', rowid);
 //                $('#linkEditarCriterio').attr('onClick', 'nuevaObligacionNormativa.editarCriterio("' + rowid + '")');
                 $('#linkEliminarCriterio').attr('onClick', 'nuevaObligacionNormativa.confirmEliminarCriterio("' + row.idObliTipiCriterio + '")');
+                
+                if($('#divEnlaceTagEliminarCriterioObligacion input').html()!=null){
+                    $('#contextMenuCriterio li a[value="EL-GRIDCRITERIOOBLIGACION"]').html($('#divEnlaceTagEliminarCriterioObligacion').html());               
+                }else {
+                 	  $('#contextMenuCriterio li a[value="EL-GRIDCRITERIOOBLIGACION"]').remove();
+                 	 $('#contextMenuCriterio').parent().css('opacity',0);
+                }
+                
             },
             loadComplete: function(data) {
+            	$('#contextMenuCriterio').parent().css('opacity',1);
                 $('#contextMenuCriterio').parent().remove();
                 if(nuevaObligacionNormativa.modoVisualizacion != modoVer){
                     $('#divContextMenuCriterio').html("<ul id='contextMenuCriterio'>"
-                        + "<li> <a id='linkEliminarCriterio' data-icon='ui-icon-trash' title=''>Eliminar</a></li>"
+                    	+"<li> <a value='EL-GRIDCRITERIOOBLIGACION'></a></li>"
+//                        + "<li> <a id='linkEliminarCriterio' data-icon='ui-icon-trash' title=''>Eliminar</a></li>"
                         + "</ul>");
                     $('#contextMenuCriterio').puicontextmenu({
                         //target: $('#gridObligacionNormativa').find('tr').not('.ui-subgrid,.ui-subgrid tr')
@@ -4641,12 +4669,21 @@ var nuevaObligacionNormativa = (function() {
             onRightClickRow: function(rowid, iRow, iCol, e) {
                 var row = grid.jqGrid('getRowData', rowid);
                 $('#linkEliminarBaseAsociada').attr('onClick', 'nuevaObligacionNormativa.eliminarBaseLegalAsociadaConfirm("' + rowid + '")');
+                
+                if($('#divEnlaceTagEliminarReferenciaObligacion input').html()!=null){
+                    $('#contextMenuBasesLegalesAsociadas li a[value="EL-GRIDREFERENCIAOBLIGACION"]').html($('#divEnlaceTagEliminarReferenciaObligacion').html());               
+                }else {
+                 	  $('#contextMenuBasesLegalesAsociadas li a[value="EL-GRIDREFERENCIAOBLIGACION"]').remove();
+                 	 $('#contextMenuBasesLegalesAsociadas').parent().css('opacity',0);
+                }
             },
             loadComplete: function(data) {
+            	$('#contextMenuBasesLegalesAsociadas').parent().css('opacity',1);
                 $('#contextMenuBasesLegalesAsociadas').parent().remove();
                 if(nuevaObligacionNormativa.modoVisualizacion != modoVer){
                     $('#divContextMenuBasesLegalesAsociadas').html("<ul id='contextMenuBasesLegalesAsociadas'>"
-                            + "<li> <a id='linkEliminarBaseAsociada' data-icon='ui-icon-trash' title='Eliminar Base Legal'>Eliminar</a></li>"
+                    		 + "<li> <a value='EL-GRIDREFERENCIAOBLIGACION'></a></li>"
+//                            + "<li> <a id='linkEliminarBaseAsociada' data-icon='ui-icon-trash' title='Eliminar Base Legal'>Eliminar</a></li>"
                             + "</ul>");
                     $('#contextMenuBasesLegalesAsociadas').puicontextmenu({
                         //target: $('#gridObligacionNormativa').find('tr').not('.ui-subgrid,.ui-subgrid tr')
@@ -5089,6 +5126,24 @@ var validaNuevaBaseLegal = (function() {
                 $('#linkVerObligacionDetalle').attr('onClick', 'validaNuevaBaseLegal.verObligacion("' + rowid + '")');
                 $('#linkEditarObligacionDetalle').attr('onClick', 'validaNuevaBaseLegal.editarObligacion("' + rowid + '")');
                 $('#linkEliminarObligacion').attr('onClick', 'validaNuevaBaseLegal.confirmEliminarObligacionBaseLegal("' + rowid + '")');
+                
+                if($('#divEnlaceTagVerNormaLegalHijo input').html()!=null){
+                    $('#contextMenuOblig li a[value="CO-MENUOBLIG"]').html($('#divEnlaceTagVerNormaLegalHijo').html());
+                 } else {  
+                    $('#contextMenuOblig li a[value="CO-MENUOBLIG"]').remove();
+                 }
+                
+                if($('#divEnlaceTagEditarNormaLegalHijo input').html()!=null){
+                    $('#contextMenuOblig li a[value="MO-MENUOBLIG"]').html($('#divEnlaceTagEditarNormaLegalHijo').html());
+                 } else {  
+                    $('#contextMenuOblig li a[value="MO-MENUOBLIG"]').remove();
+                 }
+                
+                if($('#divEnlaceTagEliminarNormaLegalHijo input').html()!=null){
+                    $('#contextMenuOblig li a[value="EL-MENUOBLIG"]').html($('#divEnlaceTagEliminarNormaLegalHijo').html());
+                 } else {  
+                    $('#contextMenuOblig li a[value="EL-MENUOBLIG"]').remove();
+                 }
             },
             loadComplete: function(data) {
                 $('#contextMenuOblig').parent().remove();
@@ -5096,20 +5151,20 @@ var validaNuevaBaseLegal = (function() {
                 switch (flagBaseLegal){
                     case "ver": 
                         html="<ul id='contextMenuOblig'>"
-                            + "<li> <a id='linkVerObligacionDetalle' data-icon='ui-icon-search' title='Ver Detalle'>Ver Detalle</a> </li>"
+                            + "<li> <a value='CO-MENUOBLIG'></a> </li>"
                             + "</ul>";
                         break;
                     case "nuevo":
                         html="<ul id='contextMenuOblig'>"
-                            + "<li> <a id='linkVerObligacionDetalle' data-icon='ui-icon-search' title='Ver Detalle'>Ver Detalle</a> </li>"
-                            + "<li> <a id='linkEliminarObligacion' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
+                        	+ "<li> <a value='CO-MENUOBLIG'></a> </li>"
+                            + "<li> <a value='MO-MENUOBLIG'></a></li>"
                             + "</ul>";
                         break;
                     default :
                         html="<ul id='contextMenuOblig'>"
-                            + "<li> <a id='linkVerObligacionDetalle' data-icon='ui-icon-search' title='Ver Detalle'>Ver Detalle</a> </li>"
-                            + "<li> <a id='linkEditarObligacionDetalle' data-icon='ui-icon-pencil' title='Editar'>Editar</a> </li>"
-                            + "<li> <a id='linkEliminarObligacion' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
+                        	+ "<li> <a value='CO-MENUOBLIG'></a> </li>"
+                            + "<li> <a value='MO-MENUOBLIG'></a></li>"
+                            + "<li> <a value='EL-MENUOBLIG'></a></li>"
                             + "</ul>";
                 }
                 
@@ -5117,6 +5172,39 @@ var validaNuevaBaseLegal = (function() {
                 $('#contextMenuOblig').puicontextmenu({
                     target: $('#gridOblig')
                 });                
+//            onRightClickRow: function(rowid, iRow, iCol, e) {
+//                var row = grid.jqGrid('getRowData', rowid);
+//                $('#linkVerObligacionDetalle').attr('onClick', 'validaNuevaBaseLegal.verObligacion("' + rowid + '")');
+//                $('#linkEditarObligacionDetalle').attr('onClick', 'validaNuevaBaseLegal.editarObligacion("' + rowid + '")');
+//                $('#linkEliminarObligacion').attr('onClick', 'validaNuevaBaseLegal.confirmEliminarObligacionBaseLegal("' + rowid + '")');
+//            },
+//            loadComplete: function(data) {
+//                $('#contextMenuOblig').parent().remove();
+//                var html="";
+//                switch (flagBaseLegal){
+//                    case "ver": 
+//                        html="<ul id='contextMenuOblig'>"
+//                            + "<li> <a id='linkVerObligacionDetalle' data-icon='ui-icon-search' title='Ver Detalle'>Ver Detalle</a> </li>"
+//                            + "</ul>";
+//                        break;
+//                    case "nuevo":
+//                        html="<ul id='contextMenuOblig'>"
+//                            + "<li> <a id='linkVerObligacionDetalle' data-icon='ui-icon-search' title='Ver Detalle'>Ver Detalle</a> </li>"
+//                            + "<li> <a id='linkEliminarObligacion' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
+//                            + "</ul>";
+//                        break;
+//                    default :
+//                        html="<ul id='contextMenuOblig'>"
+//                            + "<li> <a id='linkVerObligacionDetalle' data-icon='ui-icon-search' title='Ver Detalle'>Ver Detalle</a> </li>"
+//                            + "<li> <a id='linkEditarObligacionDetalle' data-icon='ui-icon-pencil' title='Editar'>Editar</a> </li>"
+//                            + "<li> <a id='linkEliminarObligacion' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
+//                            + "</ul>";
+//                }
+//                
+//                $('#divContextMenuOblig').html(html);
+//                $('#contextMenuOblig').puicontextmenu({
+//                    target: $('#gridOblig')
+//                });                
             }
         });
 

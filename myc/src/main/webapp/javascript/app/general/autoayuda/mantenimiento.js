@@ -90,15 +90,34 @@ function procesarGridAutoAyuda(flg_load) {
         },
         onRightClickRow: function(rowid, iRow, iCol, e) {
             $('#linkEditarAutoAyuda').attr('onClick', 'editarAutoAyuda("' + rowid + '")');
+            
+            if($('#divEnlaceTagEditarAutoAyuda input').html()!=null){
+                $('#contextMenuAutoAyuda li a[value="MO-AUTOAYUDA"]').html($('#divEnlaceTagEditarAutoAyuda').html());
+             } else {  
+                $('#contextMenuAutoAyuda li a[value="MO-AUTOAYUDA"]').remove();
+                $('#contextMenuAutoAyuda').parent().css('opacity',0);
+             }
         },
         loadComplete: function(data) {
+        	$('#contextMenuAutoAyuda').parent().css('opacity',1);
             $('#contextMenuAutoAyuda').parent().remove();
             $('#divContextMenuAutoAyuda').html("<ul id='contextMenuAutoAyuda'>"
-                    + "<li> <a id='linkEditarAutoAyuda' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
+                    + "<li> <a value='MO-AUTOAYUDA'>Editar</a></li>"
                     + "</ul>");
             $('#contextMenuAutoAyuda').puicontextmenu({
                 target: $('#gridAutoAyuda')
             });
+//        onRightClickRow: function(rowid, iRow, iCol, e) {
+//            $('#linkEditarAutoAyuda').attr('onClick', 'editarAutoAyuda("' + rowid + '")');
+//        },
+//        loadComplete: function(data) {
+//            $('#contextMenuAutoAyuda').parent().remove();
+//            $('#divContextMenuAutoAyuda').html("<ul id='contextMenuAutoAyuda'>"
+//                    + "<li> <a id='linkEditarAutoAyuda' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
+//                    + "</ul>");
+//            $('#contextMenuAutoAyuda').puicontextmenu({
+//                target: $('#gridAutoAyuda')
+//            });
         },
         loadError: function(jqXHR) {
             errorAjax(jqXHR);

@@ -47,10 +47,13 @@
         </form>
         <div style="text-align:left;" id="obligatorio">(*) Campos obligatorios</div>
         <div id="botones">
-            <input id="btnBuscarMaesTabMant" class="btn_a btn_small" type="button" value="Buscar" title="Buscar">
-            <input id="btnGuardarMaesTabMant" class="btn_a btn_small" type="button" value="Guardar" title="Guardar">
+        <seg:botonTag code="CO" value="Buscar" styleClass="btn_a btn_small" id="btnBuscarMaesTabMant" title="Buscar" onclick=""/>
+<!--             <input id="btnBuscarMaesTabMant" class="btn_a btn_small" type="button" value="Buscar" title="Buscar"> -->
+		<seg:botonTag code="IN" value="Guardar" styleClass="btn_a btn_small" id="btnGuardarMaesTabMant" title="Guardar" onclick=""/>
+<!--             <input id="btnGuardarMaesTabMant" class="btn_a btn_small" type="button" value="Guardar" title="Guardar"> -->
             <input id="btnCancelarMaesTabMant" class="btn_a btn_small" type="button" value="Limpiar" title="limpiar" style="display:none;">
-            <input id="btnEditarMaesTabMant" class="btn_a btn_small" type="button" value="Editar" title="Editar" style="display:none;">
+            <seg:botonTag code="MO" value="Editar" styleClass="btn_a btn_small a-ipt-a" id="btnEditarMaesTabMant" title="Editar" onclick=""/>
+<!--             <input id="btnEditarMaesTabMant" class="btn_a btn_small" type="button" value="Editar" title="Editar" style="display:none;"> -->
             <input class="btnCloseDialog btn_a btn_small" type="button" value="Cerrar" title="Cerrar">
         </div>
         <div class="tac">

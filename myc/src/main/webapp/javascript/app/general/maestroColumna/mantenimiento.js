@@ -201,12 +201,30 @@ function procesarGridMaestroColumna(flg_load) {
             $('#linkEliminarMaestroColumna').attr('onClick', 'eliminarMaestroColumna("'+rowid+'")');
             //$('#linkGestionarMaestroColumna').attr('onClick', 'gestionarMaestroColumna("' + rowid + '")');
             //$('#linkAgregarActProcedimiento').attr('onClick', 'mostrarValorParametroDinamico("' + rowid + '","' + row.nombre + '")');
+            if($('#divEnlaceTagEditarMaestroColumna input').html()!=null){
+                $('#contextMenuMaestroColumna li a[value="MO-GRIDEDITARMAESTROCOLUMNA"]').html($('#divEnlaceTagEditarMaestroColumna').html());
+             } else {  
+                $('#contextMenuMaestroColumna li a[value="MO-GRIDEDITARMAESTROCOLUMNA"]').remove();
+             }
+            
+            if($('#divEnlaceTagEliminarMaestroColumna input').html()!=null){
+                $('#contextMenuMaestroColumna li a[value="EL-GRIDELIMINARMAESTROCOLUMNA"]').html($('#divEnlaceTagEliminarMaestroColumna').html());
+             } else {  
+                $('#contextMenuMaestroColumna li a[value="EL-GRIDELIMINARMAESTROCOLUMNA"]').remove();
+             }
+            if($('#divEnlaceTagEditarMaestroColumna input').html()==null && $('#divEnlaceTagEliminarMaestroColumna input').html()==null){
+            	$('#contextMenuMaestroColumna').parent().css('opacity',0);
+            }
+            
         },
         loadComplete: function(data) {
+        	$('#contextMenuMaestroColumna').parent().css('opacity',1);
             $('#contextMenuMaestroColumna').parent().remove();
             $('#divContextMenuMaestroColumna').html("<ul id='contextMenuMaestroColumna'>"
-                    + "<li> <a id='linkEditarMaestroColumna' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
-                    + "<li> <a id='linkEliminarMaestroColumna' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
+            		+"<li> <a value='MO-GRIDEDITARMAESTROCOLUMNA'></a></li>"
+            		+"<li> <a value='EL-GRIDELIMINARMAESTROCOLUMNA'></a></li>"
+//                    + "<li> <a id='linkEditarMaestroColumna' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
+//                    + "<li> <a id='linkEliminarMaestroColumna' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
 //                    + "<li> <a id='linkGestionarMaestroColumna' data-icon='ui-icon-bookmark' title='Gestionar Maestro Columna'>Gestionar Maestro Columna</a></li>"
 //                    + "<li> <a id='linkAgregarActProcedimiento' data-icon='ui-icon-note' title='Valores'>Valores</a></li>"
                     + "</ul>");

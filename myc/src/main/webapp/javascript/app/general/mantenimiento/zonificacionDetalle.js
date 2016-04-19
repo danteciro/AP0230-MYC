@@ -503,21 +503,52 @@ function procesarGridZonificacionDetalle() {
         },
         onRightClickRow: function(rowid, iRow, iCol, e) {
             var row = grid.jqGrid('getRowData', rowid);
-//            $('#linkVerProcedimiento').attr('onClick', 'verParametroDinamico("' + rowid + '")');
             $('#linkEditarZonificacionDetalle').attr('onClick', 'editarZonificacionDetalle("' + rowid + '")');
             $('#linkEliminarZonificacionDetalle').attr('onClick', 'eliminarZonificacionDetalle("' + rowid + '")');
-//            $('#linkAgregarActProcedimiento').attr('onClick', 'mostrarValorParametroDinamico("' + rowid + '","' + row.nombre + '")');
+            
+            if($('#divEnlaceTagEditarZonifiDet input').html()!=null){
+                $('#contextMenuZonificacionDetalle li a[value="MO-ZONIFICACIONDET"]').html($('#divEnlaceTagEditarZonifiDet').html());
+             } else {  
+                $('#contextMenuZonificacionDetalle li a[value="MO-ZONIFICACIONDET"]').remove();
+             }
+            
+            if($('#divEnlaceTagEliminarZonifiDet input').html()!=null){
+                $('#contextMenuZonificacionDetalle li a[value="EL-ZONIFICACIONDET"]').html($('#divEnlaceTagEliminarZonifiDet').html());
+             } else {  
+                $('#contextMenuZonificacionDetalle li a[value="EL-ZONIFICACIONDET"]').remove();
+             }
+            if($('#divEnlaceTagEliminarZonifiDet input').html()==null && $('#divEnlaceTagEditarZonifiDet input').html()==null){
+            	$('#contextMenuZonificacionDetalle').parent().css('opacity',0);
+            }
+            
         },
         loadComplete: function(data) {
+        	$('#contextMenuZonificacionDetalle').parent().css('opacity',1);
             $('#contextMenuZonificacionDetalle').parent().remove();
             $('#divContextMenuZonificacionDetalle').html("<ul id='contextMenuZonificacionDetalle'>"
-                    + "<li> <a id='linkEditarZonificacionDetalle' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
-                    + "<li> <a id='linkEliminarZonificacionDetalle' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
-//                    + "<li> <a id='linkAgregarActProcedimiento' data-icon='ui-icon-note' title='Valores'>Valores</a></li>"
+                    + "<li> <a value='MO-ZONIFICACIONDET'></a></li>"
+                    + "<li> <a value='EL-ZONIFICACIONDET'></a></li>"
                     + "</ul>");
             $('#contextMenuZonificacionDetalle').puicontextmenu({
                 target: $('#gridZonificacionDetalle')
             });
+//        onRightClickRow: function(rowid, iRow, iCol, e) {
+//            var row = grid.jqGrid('getRowData', rowid);
+////            $('#linkVerProcedimiento').attr('onClick', 'verParametroDinamico("' + rowid + '")');
+//            $('#linkEditarZonificacionDetalle').attr('onClick', 'editarZonificacionDetalle("' + rowid + '")');
+//            $('#linkEliminarZonificacionDetalle').attr('onClick', 'eliminarZonificacionDetalle("' + rowid + '")');
+////            $('#linkAgregarActProcedimiento').attr('onClick', 'mostrarValorParametroDinamico("' + rowid + '","' + row.nombre + '")');
+//        },
+//        loadComplete: function(data) {
+//            $('#contextMenuZonificacionDetalle').parent().remove();
+//            $('#divContextMenuZonificacionDetalle').html("<ul id='contextMenuZonificacionDetalle'>"
+//                    + "<li> <a id='linkEditarZonificacionDetalle' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
+//                    + "<li> <a id='linkEliminarZonificacionDetalle' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
+////                    + "<li> <a id='linkAgregarActProcedimiento' data-icon='ui-icon-note' title='Valores'>Valores</a></li>"
+//                    + "</ul>");
+//            $('#contextMenuZonificacionDetalle').puicontextmenu({
+//                target: $('#gridZonificacionDetalle')
+//            });
         }
     });
 }

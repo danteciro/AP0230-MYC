@@ -79,7 +79,8 @@
         </form>
         <div id="obligatorio" class="tal">(*) Campos obligatorios</div>
         <div id="botones">
-            <button id="btnBuscarAsigBL" title="Buscar" >Buscar</button>
+            <seg:botonTag code="CO" value="Buscar" styleClass="btn_a btn_small" id="btnBuscarAsigBL" title="Buscar" onclick=""/>
+<!--             <button id="btnBuscarAsigBL" title="Buscar" >Buscar</button> -->
             <button id="btnLimpiarAsigBL" title="Limpiar" class="btnSimple">Limpiar</button>
             <button title="Cerrar" class="btnCloseDialog">Cerrar</button>
         </div>
@@ -88,7 +89,8 @@
         
         <div id="botones" class="divBtnAsociar" style="display:none;text-align: center;">
             <c:if test="${variable=='1'}">  
-                <button id="botoAsociarBusquedaAvanzadaBaseLegal" title="Asociar Bases Legales" >Asociar</button>
+                <seg:botonTag code="IN" value="Asociar" styleClass="btn_a btn_small" id="botoAsociarBusquedaAvanzadaBaseLegal" title="Asociar Bases Legales" onclick=""/>
+<!--                 <button id="botoAsociarBusquedaAvanzadaBaseLegal" title="Asociar Bases Legales" >Asociar</button> -->
             </c:if>
             <c:if test="${variable=='0'}">  
                 <button id="botoAsociarBaseLegalesObligacion" title="Asociar Bases Legales">Asociar</button>

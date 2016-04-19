@@ -46,7 +46,8 @@
                             </select>
                         </div>
                         <div>
-                            <input type="button" title="Agregar" value="Agregar" class="btn_a btn_small" id="btnAgregarDominio">
+                        	<seg:botonTag code="IN" value="Agregar" styleClass="btn_a btn_small" id="btnAgregarDominio" title="Agregar" onclick=""/>
+<!--                             <input type="button" title="Agregar" value="Agregar" class="btn_a btn_small" id="btnAgregarDominio"> -->
                         </div>
                     </div>
                 
@@ -67,8 +68,10 @@
         </form>                    
         <div id="obligatorio">(*) Campos obligatorios</div>
         <div id="botones">
-            <input type="button" title="Agregar Maestro Columna" value="Guardar" class="btn_a btn_small" id="btnGuardarMaesColu">
-            <input type="button" title="Editar Maestro Columna" value="Editar" class="btn_a btn_small" id="btnEditarMaesColu">
+        <seg:botonTag code="IN" value="Guardar" styleClass="btn_a btn_small" id="btnGuardarMaesColu" title="Agregar Maestro Columna" onclick=""/>
+<!--             <input type="button" title="Agregar Maestro Columna" value="Guardar" class="btn_a btn_small" id="btnGuardarMaesColu"> -->
+<seg:botonTag code="MO" value="Editar" styleClass="btn_a btn_small" id="btnEditarMaesColu" title="Editar Maestro Columna" onclick=""/>
+<!--             <input type="button" title="Editar Maestro Columna" value="Editar" class="btn_a btn_small" id="btnEditarMaesColu"> -->
             <input type="button" title="Limpiar" value="Limpiar" class="btn_a btn_small" id="btnLimpiarMaesColu">
             <input type="button" title="Cerrar" value="Cerrar" class="btnCloseDialog btn_a btn_small">
         </div>

@@ -66,6 +66,20 @@
                             <div id="gridContenedorObligacionProceso"></div>
                             <div id="divContextMenuObligacionProceso"></div>
                         </div>
+						<!-- PR0013 - Inicio -->                           
+			            <div id="divTagEnlacesObliTipo" style="display:none">
+							<div id="divEnlaceTagVerObliTipo">
+								<span class="pui-menuitem-icon ui-icon ui-icon-pencil"></span>
+								<seg:enlaceTag id='linkVerObligacionProceso' code='CO' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+								<span>Consultar</span>
+							</div>
+							<div id="divEnlaceTagEliminarObliTipo">
+								<span class="pui-menuitem-icon ui-icon ui-icon-trash"></span>
+								<seg:enlaceTag id='linkEliminarObligacionProceso' code='EL' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+								<span>Eliminar</span>
+							</div>
+						</div>
+						<!-- PR0013 - Fin -->
                     </div>
                 </div>
             </div>

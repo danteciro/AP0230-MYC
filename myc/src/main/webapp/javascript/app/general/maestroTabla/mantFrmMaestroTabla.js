@@ -127,12 +127,31 @@ function procesarGridMaesTabMant(flg_load) {
             $('#linkEditarMaesTabMant').attr('onClick', 'editarMaesTabMant("edit","'+rowid+'")');
             $('#linkSeleccionarMaesTabMant').attr('onClick', 'seleccionarMaesTabMant("'+rowid+'")');
             //$('#linkEliminarMaesTabMant').attr('onClick', 'eliminarMaesTabMant("'+rowid+'")');
+            
+            if($('#divEnlaceTagEditarMaestroTablaMant input').html()!=null){
+                $('#contextMenuMaesTabMant li a[value="MO-GRIDEDITARMAESTROTABLAMANT"]').html($('#divEnlaceTagEditarMaestroTablaMant').html());
+             } else {  
+                $('#contextMenuMaesTabMant li a[value="MO-GRIDEDITARMAESTROTABLAMANT"]').remove();
+             }
+            
+            if($('#divEnlaceTagSeleccionarMaestroTablaMant input').html()!=null){
+                $('#contextMenuMaesTabMant li a[value="SL-GRIDSELECCIONARMAESTROTABLAMANT"]').html($('#divEnlaceTagSeleccionarMaestroTablaMant').html());
+             } else {  
+                $('#contextMenuMaesTabMant li a[value="SL-GRIDSELECCIONARMAESTROTABLAMANT"]').remove();
+             }
+            if($('#divEnlaceTagEditarMaestroTablaMant input').html()==null && $('#divEnlaceTagSeleccionarMaestroTablaMant input').html()==null){
+            	$('#contextMenuMaesTabMant').parent().css('opacity',0);
+            }
+            
         },
         loadComplete: function(data) {
+        	$('#contextMenuMaesTabMant').parent().css('opacity',1);
             $('#contextMenuMaesTabMant').parent().remove();
             $('#divContextMenuMaesTabMant').html("<ul id='contextMenuMaesTabMant'>"
-                    + "<li> <a id='linkEditarMaesTabMant' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
-                    + "<li> <a id='linkSeleccionarMaesTabMant' data-icon='ui-icon-check' title='Editar'>Seleccionar</a></li>"
+            		+"<li> <a value='MO-GRIDEDITARMAESTROTABLAMANT'></a></li>"
+            		+"<li> <a value='SL-GRIDSELECCIONARMAESTROTABLAMANT'></a></li>"
+//                    + "<li> <a id='linkEditarMaesTabMant' data-icon='ui-icon-pencil' title='Editar'>Editar</a></li>"
+//                    + "<li> <a id='linkSeleccionarMaesTabMant' data-icon='ui-icon-check' title='Editar'>Seleccionar</a></li>"
                     //+ "<li> <a id='linkEliminarMaesTabMant' data-icon='ui-icon-trash' title='Eliminar'>Eliminar</a></li>"
                     + "</ul>");
             $('#contextMenuMaesTabMant').puicontextmenu({
