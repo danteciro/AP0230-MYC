@@ -45,7 +45,7 @@
         </form>
         
         <div id="botones">
-            <seg:botonTag code="CO" value="Agregar" id="btnAgregarRequ" title="AGREGAR" styleClass="btn_a btn_small" onclick=""/>
+            <seg:botonTag code="IN" value="Agregar" id="btnAgregarRequ" title="AGREGAR" styleClass="btn_a btn_small" onclick=""/>
 <!--            <button id="btnAgregarRequ" title="AGREGAR">Agregar</button>-->
             <button title="Cerrar" class="btnCloseDialog">Cerrar</button>
         </div>

@@ -428,8 +428,8 @@
                                             <li><a href="#tabPau">Criterios</a></li>
                                             <li><a href="#tabDes">Descripciones</a></li>
                                             <li><a href="#tabReferencia">Referenciar Base Legal</a></li>
-                                            <li><a href="#tabAsignar">Configuración</a></li>
-                                            <li><a href="#tabRelaciones">Relaciones</a></li>
+                                            <li><a href="#tabAsignar">Tipo de Supervisión</a></li>
+                                            <li><a href="#tabRelaciones">Temas</a></li>
 
                                         </ul>
                                         <div id="tabTip">
