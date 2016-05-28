@@ -177,13 +177,15 @@ var gestionBaseLegal = (function() {
             img.src = URL.createObjectURL(this.files[0]);
             img.onload = function() {
                 var validarArchivoObligacion = $('#divMensajeValidacionObligacionArchivo');
-                if(this.width > 100 || this.height > 100){
+                if(this.width > 800 || this.height > 600){
                     validarArchivoObligacion.show();
                     validarArchivoObligacion.focus();
-                    validarArchivoObligacion.html("* El tamaño de la imagen no corresponde con la permitida ( 100 x 100)");
+                    validarArchivoObligacion.html("* El tamaño de la imagen no corresponde con la permitida (800 x 600)");
+                    $('#botoGuardarFile').css('display','none');
                     //Limpiando archivo adjunto
-                    document.getElementById('formFileOblNor').reset();
+//                    document.getElementById('formFileOblNor').reset();
                 }else{
+                	$('#botoGuardarFile').css('display','inline-block');
                     validarArchivoObligacion.hide();
                     validarArchivoObligacion.html("");
                 }
@@ -195,7 +197,7 @@ var gestionBaseLegal = (function() {
             async: false,
             resetForm : true,
             success : function(data) {
-                //console.log("DATA DE CARGA-->"+data);
+                console.log("DATA DE CARGA-->"+data);
                 if (data != null && data.error != null) {
                     enviarDatosArchivoObligacion(data);
                 }						
@@ -1209,7 +1211,7 @@ var gestionBaseLegal = (function() {
         } else {
         	document.getElementById("divDownloadImg").innerHTML="";
             $('#divDownloadImg').append('<a class="link" href="'+baseURL + 'pages/mantenimiento/baseLegal/descargaArchivoObligacion"><img class="vam" width="20" height="24" src="'+baseURL+'images/stickers.png"></a>');
-            $('#divDownloadImg').append('<span class="ui-icon ui-icon-closethick"  title="ELIMINAR ARCHIVO"></span>');//btn borrar archivo
+//            $('#divDownloadImg').append('<span class="ui-icon ui-icon-closethick"  title="ELIMINAR ARCHIVO"></span>');//btn borrar archivo
 //            nuevoBL.lblMuestraNombreArchivo.text(nuevoBL.fileImagenObligacion.val());
             $('#dialogCargarNuevaOblNor').dialog('close');
         }
@@ -2866,7 +2868,7 @@ var nuevaObligacionNormativa = (function() {
     	nuevoBL.divConfigurarSupervision.css('display','none');
     	//Estilos VER --> Relaciones
     	nuevoBL.btnGuardarRelacionObligacion.css('display','none');
-    	$('#divDocumentoAdjuntoDetalle').css('display','none');
+    	$('#btnSubirDocumentoAdjuntoDetalle').css('display','none');
     	//Estilo cambio de Tab
     	$('#tabNewBaseLegal').tabs("enable",1);
         $('#tabNewBaseLegal').tabs({active: 1});
@@ -4330,7 +4332,7 @@ var nuevaObligacionNormativa = (function() {
         $.ajax({url: baseURL + "pages/mantenimiento/baseLegal/cleanDatosObligacionArchivo",
                 type: 'get',
                 success: function(data) {
-                        //console.info("Limpio cleanDatosObligacionArchivo");
+                        console.info("Limpio cleanDatosObligacionArchivo");
                         ocultaLoading();
                 },
                 error: errorAjax
@@ -5776,5 +5778,3 @@ jQuery.extend($.fn.fmatter, {
         return retorno;
     }
 });
-
-//

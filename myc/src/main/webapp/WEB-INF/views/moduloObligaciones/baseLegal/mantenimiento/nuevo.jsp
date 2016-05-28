@@ -815,11 +815,11 @@
         </div>
 
         <div id="dialogCargarNuevaOblNor" style="display:none;overflow: hidden;">
-<!--             <div id="divMensajeValidacionObligacionArchivo" class="errorMensaje" tabindex='1' style="display: none" ></div> -->
+            <div id="divMensajeValidacionObligacionArchivo" class="errorMensaje"  style="display: none" ></div>
             <form id="formFileOblNor"  action="/myc/pages/documentoAdjunto/subirArchivoObligacion" method="post" enctype="multipart/form-data" encoding="multipart/form-data" >
 <!--                    <input id="°desImagen" name="fileNormaLegal" type="file" />-->
                     <input id="fileNuevaOblNor"   name="archivos[0]" placeholder="" value="" type="file" validate="[O]" />
-                    <input id="file_NuevaOblNor" type="hidden" validate="[O]">
+                    <input id="file_NuevaOblNor" type="hidden" validate="[O]" />
                     <button id="botoGuardarFile" class="btnSimple" title="Subir Archivo" type="button">Guardar Archivo</button>
                 </form>		
         </div>
@@ -1017,4 +1017,3 @@
         
     </body>    
 </html>
-

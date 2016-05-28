@@ -262,5 +262,16 @@ public class ParametroDinamicoDAOImpl  implements ParametroDinamicoDAO{
     	
     }
     
-    	
+    @Override
+	public long obtenerIdDinamico() {
+		long idValor = 0;
+
+		try{
+			idValor = crud.findSequence("pgh_parametro_dinamico_seq");
+		}catch(Exception excepcion){
+			LOG.error("Error obtenerIdDinamico: " + excepcion.getMessage());
+		}
+		return idValor -1;
+		
+	}
 }

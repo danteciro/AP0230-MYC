@@ -1,16 +1,21 @@
 package gob.osinergmin.myc.controller;
 
 import gob.osinergmin.myc.domain.base.BaseConstantesOutBean;
+import gob.osinergmin.myc.domain.dto.CnfRequProcedimientoDTO;
 import gob.osinergmin.myc.domain.dto.MaestroColumnaDTO;
 import gob.osinergmin.myc.domain.dto.ParametroDinamicoDTO;
+import gob.osinergmin.myc.domain.dto.RequProcParaDinaDTO;
 import gob.osinergmin.myc.domain.dto.UsuarioDTO;
 import gob.osinergmin.myc.domain.dto.ValorParametroDTO;
+import gob.osinergmin.myc.domain.in.GuardarCnfRequProcedimientoInRO;
 import gob.osinergmin.myc.domain.in.GuardarParametroDinamicoInRO;
 import gob.osinergmin.myc.domain.in.GuardarValorParametroInRO;
+import gob.osinergmin.myc.domain.out.GuardarCnfRequProcedimientoOutRO;
 import gob.osinergmin.myc.domain.out.GuardarParametroDinamicoOutRO;
 import gob.osinergmin.myc.domain.out.GuardarValorParametroOutRO;
 import gob.osinergmin.myc.domain.ui.ParametroFilter;
 import gob.osinergmin.myc.domain.ui.ValorParametroFilter;
+import gob.osinergmin.myc.service.business.CnfRequProcedimientoNeg;
 import gob.osinergmin.myc.service.business.MaestroColumnaServiceNeg;
 import gob.osinergmin.myc.service.business.ParametroServiceNeg;
 import gob.osinergmin.myc.service.business.ValorParametroServiceNeg;
@@ -28,6 +33,8 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import org.jfree.util.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +62,9 @@ public class ParametroController {
     
 	@Inject
 	private MaestroColumnaServiceNeg maestroColumnaServiceNeg;
-    
+	
+    @Inject
+    private CnfRequProcedimientoNeg cnfRequProcedimientoNeg;
 
     
     @RequestMapping(method = RequestMethod.GET)
@@ -88,10 +97,11 @@ public class ParametroController {
         return retorno;
     }
     
-	@RequestMapping(value = "/eliminarParametro", method = RequestMethod.POST)
+    @RequestMapping(value = "/eliminarParametro", method = RequestMethod.POST)
     public @ResponseBody  Map<String, Object> eliminarParametro(ParametroDinamicoDTO parametroDTO) throws UnknownHostException{
     	 LOG.info("procesando eliminarParametro");
          Map<String,Object> retorno = new HashMap<String,Object>();
+         long idParametro;
          
          try{
          UsuarioDTO usuarioDTO = new UsuarioDTO();
@@ -102,36 +112,75 @@ public class ParametroController {
          in.setParametro(parametroDTO);
          in.setUsuario(usuarioDTO);
          
-       
     	 /*Validacion dependencias */
-         List<ParametroDinamicoDTO>listaValor=new ArrayList<ParametroDinamicoDTO>(); 
+         List<ParametroDinamicoDTO>listaValor=new ArrayList<ParametroDinamicoDTO>();
          ParametroFilter filtro = new ParametroFilter();
          filtro.setIdParametro(parametroDTO.getIdParametroDinamico());
-         listaValor=parametroServiceNeg.obtenerDependenciasValores(filtro);         
-         
-         List<ParametroDinamicoDTO>listaParam=new ArrayList<ParametroDinamicoDTO>(); 
-       
-        
          listaValor=parametroServiceNeg.obtenerDependenciasValores(filtro);
          
-         listaParam=parametroServiceNeg.obtenerDependencias(filtro);
-         
-         if(listaValor.size()!=0 && listaValor!=null){
-        	   retorno.put(ConstantesWeb.VV_RESULTADO, BaseConstantesOutBean.DEPENDENCE_VALOR);  
-               retorno.put(ConstantesWeb.VV_MENSAJE, "DEPENDENCE_VALOR");
-               
-         }else if(listaParam.size()!=0 && listaParam!=null){  
-        	 retorno.put(ConstantesWeb.VV_RESULTADO, BaseConstantesOutBean.DEPENDENCE);  
-             retorno.put(ConstantesWeb.VV_MENSAJE, "DEPENDENCE");
-        
-         } else if ((listaValor.size()==0 || listaValor==null)&& (listaParam.size()==0 || listaParam==null)){
+         List<ParametroDinamicoDTO>listaParam=new ArrayList<ParametroDinamicoDTO>(); 
+
+         List<ValorParametroDTO> listado = new ArrayList<ValorParametroDTO>();
+    	 ValorParametroFilter objParametroFilter = new ValorParametroFilter();
+    	 
+    	 idParametro = filtro.getIdParametro();
+    	 objParametroFilter.setIdParametroDinamico(idParametro);
+    	 int[] auxiliar = new int[1];
+    	 auxiliar[0]=0;
+
+   		 listado = valorParametroServiceNeg.listarValorParametro(objParametroFilter, auxiliar);
+   		 listaParam = parametroServiceNeg.obtenerDependencias(filtro);
+
+         if(listado.size()!=0){
+		         if(listado.get(0).getValor().equals(Constantes.VALOR_DEFECTO) && listado.size()>1) {
+		        	 retorno.put(ConstantesWeb.VV_RESULTADO, BaseConstantesOutBean.DEPENDENCE_VALOR);
+		             retorno.put(ConstantesWeb.VV_MENSAJE, "DEPENDENCE_VALOR");
+
+		         } else if(!listado.get(0).getValor().equals(Constantes.VALOR_DEFECTO) && listado.size()>0 ){
+		        	 retorno.put(ConstantesWeb.VV_RESULTADO, BaseConstantesOutBean.DEPENDENCE_VALOR);  
+		             retorno.put(ConstantesWeb.VV_MENSAJE, "DEPENDENCE_VALOR");
+		             
+		         } else if(listado.get(0).getValor().equals(Constantes.VALOR_DEFECTO) && listado.size()==1) {
+		        	 RequProcParaDinaDTO registroDTO = new RequProcParaDinaDTO();
+		        	 registroDTO.setValorParametro(listado.get(0));
+		             GuardarCnfRequProcedimientoInRO in1=new GuardarCnfRequProcedimientoInRO();
+		             in1.setRequProcParaDinaDTO(registroDTO);
+		             in1.setUsuario(usuarioDTO);
+		             
+		             GuardarCnfRequProcedimientoOutRO out=cnfRequProcedimientoNeg.eliminarRequProcParaDinaDTO(in1);
+		            listaParam = parametroServiceNeg.obtenerDependencias(filtro);
+		            
+		             ValorParametroDTO valorParametroDTOList=new ValorParametroDTO();
+		        	 UsuarioDTO usuarioDTOList = new UsuarioDTO();
+		        	 usuarioDTOList.setCodigo("00001");//TODO por completar
+		        	 usuarioDTOList.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
+		        	 valorParametroDTOList.setEstado(Constantes.CONSTANTE_ESTADO_INACTIVO);
+		        	 valorParametroDTOList.setIdValorParametro(listado.get(0).getIdValorParametro());
+
+		             GuardarValorParametroInRO inValor =new GuardarValorParametroInRO();
+		             inValor.setValorParametro(valorParametroDTOList);
+		             inValor.setUsuario(usuarioDTOList);
+
+		             GuardarValorParametroOutRO outValor = valorParametroServiceNeg.eliminarValorParametro(inValor);
+		        	 GuardarParametroDinamicoOutRO out2 = parametroServiceNeg.eliminarParametroDinamico(in);
+		        	 retorno.put(ConstantesWeb.VV_RESULTADO, out.getCodigoResultado());
+		             retorno.put("parametro", out2.getParametro());              
+		             retorno.put(ConstantesWeb.VV_MENSAJE, out.getMensaje());
+		             
+		         } else if(listaParam.size()!=0 && listaParam!=null){  
+		        	 retorno.put(ConstantesWeb.VV_RESULTADO, BaseConstantesOutBean.DEPENDENCE);
+		             retorno.put(ConstantesWeb.VV_MENSAJE, "DEPENDENCE");
+		             
+		         } 
+         }else if ((listado.size()==0 || listado==null)&&(listaParam.size()==0 || listaParam==null)){ 
+        	 
         	 GuardarParametroDinamicoOutRO out = parametroServiceNeg.eliminarParametroDinamico(in);
-             retorno.put(ConstantesWeb.VV_RESULTADO, out.getCodigoResultado());
+        	 retorno.put(ConstantesWeb.VV_RESULTADO, out.getCodigoResultado());
              retorno.put("parametro", out.getParametro());              
              retorno.put(ConstantesWeb.VV_MENSAJE, out.getMensaje());
-         }       
-        
-        	 
+             }       
+         
+    	 
          }catch(Exception ex){
         	 LOG.info("error",ex.getMessage());
         	 ex.printStackTrace();
@@ -366,7 +415,6 @@ public class ParametroController {
             parametroDTO.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
             GuardarParametroDinamicoInRO in =new GuardarParametroDinamicoInRO();
             
-            
             String nombre =parametroDTO.getNombre().replaceAll(" +", " ");            
             parametroDTO.setNombre(nombre);
             
@@ -377,8 +425,6 @@ public class ParametroController {
             List<ParametroDinamicoDTO>listaProc=new ArrayList<ParametroDinamicoDTO>(); 
             ParametroFilter filtro = new ParametroFilter();
             filtro.setIdParametro(parametroDTO.getIdParametroDinamico());
-            
-           
             filtro.setIdAmbitoParametrico(parametroDTO.getIdAmbitoParametrico().getIdMaestroColumna());
             filtro.setNombre(parametroDTO.getNombre().trim());
             
@@ -392,15 +438,14 @@ public class ParametroController {
 	            retorno.put(ConstantesWeb.VV_RESULTADO, out.getCodigoResultado());
 	            retorno.put("requisito", out.getParametro());              
 	            retorno.put(ConstantesWeb.VV_MENSAJE, out.getMensaje());
-	            
+	           
+	            if(parametroDTO.getIdAmbitoParametrico().getIdMaestroColumna() == Constantes.ID_REQUISITO){
+	            	this.insertarValorDinamicoDefecto();
+	            }
             } else {
             	retorno.put(ConstantesWeb.VV_RESULTADO, BaseConstantesOutBean.RESTRICT);  
             	retorno.put(ConstantesWeb.VV_MENSAJE, Constantes.CONSTANTE_MSJE_YA_EXISTE + " Par&aacute;metro Din&aacute;mico.");
             }
-            
-          
-            
-           
         }catch(Exception e){
             LOG.error("Error en registrarParametroDinamico: "+e.getMessage());
             e.printStackTrace();
@@ -586,5 +631,34 @@ public class ParametroController {
     	
     }
     
-   
+    @RequestMapping(value="/insertarValorDinamicoDefecto", method= RequestMethod.POST)
+	public @ResponseBody Map<String,Object> insertarValorDinamicoDefecto(){
+	LOG.info("procesando insertarValorDinamicoDefecto");
+	
+	long idDinamico = parametroServiceNeg.obtenerIdDinamico();
+	
+    ValorParametroDTO valorParametroDTO = new ValorParametroDTO();
+    GuardarValorParametroInRO in = new GuardarValorParametroInRO();
+    try {
+	     valorParametroDTO.setIdValorParametro(null);
+	     valorParametroDTO.setValor(Constantes.VALOR.toLowerCase());
+	     valorParametroDTO.setDescripcion(Constantes.VALOR);
+	     valorParametroDTO.setValorDefecto("1");
+	     valorParametroDTO.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
+	     valorParametroDTO.setIdParametroDinamico(idDinamico);
+	     
+	     UsuarioDTO usuarioDTO = new UsuarioDTO();
+	     usuarioDTO.setCodigo("00001");
+	     usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
+	        
+	     in.setValorParametro(valorParametroDTO);
+	     in.setUsuario(usuarioDTO);
+	        
+	     GuardarValorParametroOutRO out = valorParametroServiceNeg.guardarValorParametro(in);
+	     } catch(Exception exepcion) {
+	    	 LOG.error("Error en insertarValorDinamicoDefecto: "+exepcion.getMessage());
+	    	 exepcion.printStackTrace();
+	    	 }
+    return null;
+    }
 }

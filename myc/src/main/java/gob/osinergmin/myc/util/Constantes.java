@@ -48,5 +48,9 @@ public class Constantes {
     
     public static final String CONSTANTE_MSJE_YA_EXISTE="Ya existe";
 	public static final String CONSTANTE_ARCHIVO_BASE_LEGAL = "listaArchivosBL";
+	public static final String VALOR = "--Seleccione--";
+	public static final String VALOR_DEFECTO = "--SELECCIONE--";
+	public static final long ID_PROCEDIMIENTO = 165;
+	public static final long ID_REQUISITO = 166;
 	
 }

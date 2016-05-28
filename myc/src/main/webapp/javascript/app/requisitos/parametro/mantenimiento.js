@@ -513,21 +513,26 @@ function procesarGridValoresParametroDinamico(rowid) {
             $('#linkEditarValoPara').attr('onClick', 'editarValorParametroDinamico("' + rowid + '")');
             $('#linkEliminarValoPara').attr('onClick', 'eliminarValorParametroDinamico("' + rowid + '")');
             
-            if($('#divEnlaceTagEditar input').html()!=null){
-            	$('#contextMenuValoresParametroDinamico li a[value="MO-GRIDVALOPARA"]').html($('#divEnlaceTagEditarValoPara').html());               
-               } else {
-             	  $('#contextMenuValoresParametroDinamico li a[value="MO-GRIDVALOPARA"]').remove();
-               }
-            
-            if($('#divEnlaceTagEliminar input').html()!=null){
-            	$('#contextMenuValoresParametroDinamico li a[value="EL-GRIDVALOPARA"]').html($('#divEnlaceTagEliminarValoPara').html());               
-               } else {
-             	  $('#contextMenuValoresParametroDinamico li a[value="EL-GRIDVALOPARA"]').remove();             	 
-               }
-            if($('#divEnlaceTagEliminar input').html()==null && $('#divEnlaceTagEditar input').html()==null){
-            	$('#contextMenuValoresParametroDinamico').parent().css('opacity',0);
-            }
-            
+        	if(row.valor == "--SELECCIONE--"){
+        		$('#contextMenuValoresParametroDinamico').parent().css('opacity',0);
+        		$('#contextMenuValoresParametroDinamico').css('display','none');
+        	} else {     	
+        		$('#contextMenuValoresParametroDinamico').css('display','initial');
+        	if($('#divEnlaceTagEditarValoPara input').html()!=null){
+        		$('#contextMenuValoresParametroDinamico li a[value="MO-GRIDVALOPARA"]').html($('#divEnlaceTagEditarValoPara').html());               
+        	} else {
+        		$('#contextMenuValoresParametroDinamico li a[value="MO-GRIDVALOPARA"]').remove();
+        	}	            
+        	if($('#divEnlaceTagEliminarValoPara input').html()!=null){
+        		$('#contextMenuValoresParametroDinamico li a[value="EL-GRIDVALOPARA"]').html($('#divEnlaceTagEliminarValoPara').html());               
+        	} else {
+        		$('#contextMenuValoresParametroDinamico li a[value="EL-GRIDVALOPARA"]').remove();             	 
+        	}
+        	if($('#divEnlaceTagEliminarValoPara input').html()==null && $('#divEnlaceTagEditarValoPara input').html()==null){
+        		$('#contextMenuValoresParametroDinamico').parent().css('opacity',0);
+        	}
+        	$('#contextMenuValoresParametroDinamico').parent().css('opacity',1);
+        	}
         },
         loadComplete: function(data) {
         	$('#contextMenuValoresParametroDinamico').parent().css('opacity',1);

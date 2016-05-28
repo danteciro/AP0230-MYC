@@ -137,6 +137,7 @@ public class DetalleObligacionServiceNegImpl implements DetalleObligacionService
                 fos.write(documentoAdjunto.getRutaAlfrescoTmp());
                 fos.flush();
                 fos.close();
+                documentoAdjunto.setAplicacionSpace(Constantes.APPLICACION_SPACE_OBLIGACIONES);//setear space 08/06/2015
                 GuardarDocumentoAdjuntoOutRO outFileAlfresco  = documentoServiceNeg.enviarDatosAlfresco(documentoAdjunto, someFile);
                 if (outFileAlfresco != null && outFileAlfresco.getMensaje().equalsIgnoreCase("ok")) {
 

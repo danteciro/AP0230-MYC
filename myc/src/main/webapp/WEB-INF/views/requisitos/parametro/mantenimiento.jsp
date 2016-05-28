@@ -191,21 +191,19 @@
                     <div id="gridContenedorValoresParametroDinamico"></div>
                     <div id="divContextMenuValoresParametroDinamico"></div>
                 </div>
-	            <!-- PR0013 - Inicio -->
-				<div id="divTagEnlaces" style="display:none;">
-					<div id="divEnlaceTagEditarValoPara">
-						<span class="pui-menuitem-icon ui-icon ui-icon-pencil"></span>
-						<seg:enlaceTag id='linkEditarValoPara' code='MO' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
-						<span>Editar</span>
-					</div>
-					<div id="divEnlaceTagEliminarValoPara">
-						<span class="pui-menuitem-icon ui-icon ui-icon-trash"></span>
-						<seg:enlaceTag id='linkEliminarValoPara' code='EL' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
-						<span>Eliminar</span>
-					</div>
-				</div>
-	            <!-- PR0013 - Fin -->
             </div>
+			<div id="divTagEnlaces" style="display:none;">
+				<div id="divEnlaceTagEditarValoPara">
+					<span class="pui-menuitem-icon ui-icon ui-icon-pencil"></span>
+					<seg:enlaceTag id='linkEditarValoPara' code='MO' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+					<span>Editar</span>
+				</div>
+				<div id="divEnlaceTagEliminarValoPara">
+					<span class="pui-menuitem-icon ui-icon ui-icon-trash"></span>
+					<seg:enlaceTag id='linkEliminarValoPara' code='EL' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+					<span>Eliminar</span>
+				</div>
+			</div>
             <div id="botones">
 <!--                 <button id="btnNuevoValoPara" type="button" title="Nuevo Valor">Nuevo</button> -->
                 <seg:botonTag code="IN" value="Nuevo" styleClass="btn_a btn_small" id="btnNuevoValoPara" title="Nuevo" onclick=""/>

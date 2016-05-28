@@ -122,8 +122,8 @@ function armarGrillaRequSelec(requisitoReg){
             if(vv.idAmbitoParametrico.descripcion.toUpperCase()=='REQUISITO' && vv.valores.length>0){
                 html+='<div class="ilb para vam parametroDinamico" idparametrodinamico="'+vv.idParametroDinamico+'">'+
                          //'<input type="hidden" class="idParametroDinamico" value="'+vv.idParametroDinamico+'" />'+
-                         '<select class="idValorParametro">'+
-                            '<option value="">--Seleccione--</option>';
+                         '<select class="idValorParametro">';
+//                            '<option value="">--Seleccione--</option>';
                 //se agregan valores de cada parametro dinamico
                 //if(vv.valores.length>0){
                     $.each(vv.valores,function(kkk,vvv){

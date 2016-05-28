@@ -23,4 +23,6 @@ public interface CnfRequProcedimientoNeg {
     public GuardarProcedimientoOutRO guardarRequisitosProcedimiento(GuardarProcedimientoInRO in) throws CnfRequProcedimientoException;
     public GuardarCnfRequProcedimientoOutRO eliminarCnfRequProcedimiento(GuardarCnfRequProcedimientoInRO in);
     public void actualizarOrdenRequProc(String regModificar,UsuarioDTO usuarioDTO) throws CnfRequProcedimientoException;
+	GuardarCnfRequProcedimientoOutRO eliminarRequProcParaDinaDTO(
+			GuardarCnfRequProcedimientoInRO in);
 }

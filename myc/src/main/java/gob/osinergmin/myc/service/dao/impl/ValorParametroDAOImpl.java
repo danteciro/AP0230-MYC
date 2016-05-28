@@ -146,12 +146,14 @@ public class ValorParametroDAOImpl implements ValorParametroDAO {
 			try{
 				StringBuilder jpql = new StringBuilder();
 	        	//
-	        	jpql.append("select new PghValorParametro(vp.idValorParametro,vp.valor,vp.descripcion)" );
-	        	jpql.append(" from PghRequProcParaDina pp" );
-	        	jpql.append(" left join pp.idValorParametro  vp " );
-	        	if (!StringUtil.isEmptyNum(filtro.getIdValorParametro())) {
-	        	jpql.append(" where   vp.idValorParametro=:idValorParametro ");
-	        	}
+				jpql.append("select new PghValorParametro(vp.idValorParametro,vp.valor,vp.descripcion)" );
+                jpql.append(" from PghRequProcParaDina pp" );
+                jpql.append(" left join pp.idValorParametro vp " );
+                jpql.append(" left join pp.idRequisitoProcedimiento rp " );
+                jpql.append(" where rp.estado=1 " );
+                if (!StringUtil.isEmptyNum(filtro.getIdValorParametro())) {
+                jpql.append(" and vp.idValorParametro=:idValorParametro ");
+                }
 	        	query = crud.getEm().createQuery(jpql.toString());
 	        	
 	        	if (!StringUtil.isEmptyNum(filtro.getIdValorParametro())) {

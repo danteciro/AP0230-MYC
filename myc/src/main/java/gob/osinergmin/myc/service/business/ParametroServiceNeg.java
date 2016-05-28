@@ -24,6 +24,6 @@ public interface ParametroServiceNeg {
 	List<ParametroDinamicoDTO> obtenerDependencias(ParametroFilter filtro);
 	List<ParametroDinamicoDTO> obtenerDependenciasValores(ParametroFilter filtro);
 	List<ParametroDinamicoDTO> verificarOtrosParametros(ParametroFilter filtro);
-	
+	long obtenerIdDinamico();
 	
 }

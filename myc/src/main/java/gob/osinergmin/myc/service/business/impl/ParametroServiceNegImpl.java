@@ -176,6 +176,16 @@ public class ParametroServiceNegImpl implements ParametroServiceNeg {
         return listado;
     }
 
-	
+    @Override
+	public long obtenerIdDinamico() {
+		long valorParametro = 0;
+		
+		try{
+			valorParametro = parametroDAO.obtenerIdDinamico();
+		}catch(Exception excepcion){
+			LOG.error("error obtenerIdDinamico: " + excepcion.getMessage());
+		}
+		return valorParametro;
+	}
 	
 }

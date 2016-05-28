@@ -58,6 +58,24 @@ public class CnfRequProcedimientoNegImpl implements CnfRequProcedimientoNeg {
     
     @Override
     @Transactional
+    public GuardarCnfRequProcedimientoOutRO eliminarRequProcParaDinaDTO(GuardarCnfRequProcedimientoInRO in){
+        GuardarCnfRequProcedimientoOutRO retorno=new GuardarCnfRequProcedimientoOutRO();
+        try{
+        	RequProcParaDinaDTO registro=requProcParaDinaDAO.changeEstado(in.getRequProcParaDinaDTO(),in.getUsuario());
+            
+            retorno.setRequProcParaDinaDTO(registro);
+            retorno.setMensaje("ok");
+            retorno.setCodigoResultado(BaseConstantesOutBean.SUCCESS);
+        }catch (Exception ex) {
+            LOG.error("error guardarRequisito", ex);
+            retorno.setMensaje("error");
+            retorno.setCodigoResultado(BaseConstantesOutBean.ERROR);  
+        }
+        return retorno;
+    }
+    
+    @Override
+    @Transactional
     public GuardarProcedimientoOutRO guardarRequisitosProcedimiento(GuardarProcedimientoInRO in) throws CnfRequProcedimientoException{
         GuardarProcedimientoOutRO retorno=new GuardarProcedimientoOutRO();
         try{

@@ -109,6 +109,7 @@ public class PghParametroDinamico extends Auditoria {
         this.descripcion=descripcion;
     }
 
+
     public Long getIdParametroDinamico() {
         return idParametroDinamico;
     }

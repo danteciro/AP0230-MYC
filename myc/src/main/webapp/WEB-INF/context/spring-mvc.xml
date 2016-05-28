@@ -32,7 +32,8 @@
         <property name="locations">
             <list>
                 <value>classpath:mycweb.properties</value>
-				<value>file:/data/properties/nps_parametros.properties</value>
+                <value>classpath:nps_parametros.properties</value>
+<!--                <value>file:/data/properties/nps_parametros.properties</value>-->
             </list>
         </property>
     </bean>

@@ -97,6 +97,8 @@ public class PghValorParametro extends Auditoria{
     	this.valor=valor;
     	this.descripcion=descripcion;
     }
+    
+     
 
     public Long getIdValorParametro() {
         return idValorParametro;

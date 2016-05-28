@@ -14,4 +14,7 @@ import gob.osinergmin.myc.service.exception.RequProcParaDinaException;
  */
 public interface RequProcParaDinaDAO {
     public RequProcParaDinaDTO create(RequProcParaDinaDTO registroDTO, UsuarioDTO usuarioDTO) throws RequProcParaDinaException;
+
+	RequProcParaDinaDTO changeEstado(RequProcParaDinaDTO registroDTO,
+			UsuarioDTO usuarioDTO) throws RequProcParaDinaException;
 }

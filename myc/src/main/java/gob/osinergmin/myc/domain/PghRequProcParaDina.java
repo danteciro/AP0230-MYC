@@ -58,6 +58,11 @@ public class PghRequProcParaDina extends Auditoria{
     public PghRequProcParaDina(Long idRequProcParaDina) {
         this.idRequProcParaDina = idRequProcParaDina;
     }
+    
+    public PghRequProcParaDina(Long idRequProcParaDina,Long idValorParametro, String valor, String descripcion ) {
+        this.idRequProcParaDina = idRequProcParaDina;       
+        this.idValorParametro=new PghValorParametro(idValorParametro,valor,descripcion);
+    }
 
     public String getEstado() {
         return estado;
