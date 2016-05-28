@@ -42,8 +42,8 @@
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" lazy-init="false">
         <property name="locations">
             <list>
-				<value>classpath:mycweb.properties</value>
-                <value>file:/data/properties/nps_parametros.properties</value>
+                <value>classpath:mycweb.properties</value>
+				<value>file:/data/properties/nps_parametros.properties</value>
             </list>
         </property>
         <property name="properties">
@@ -55,9 +55,7 @@
         </property>
     </bean>
     
-   
-    
-        <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="jdbc/osinerg_myc" />
     </bean>
 	
