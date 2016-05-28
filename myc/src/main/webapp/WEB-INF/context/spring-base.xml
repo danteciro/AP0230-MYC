@@ -42,15 +42,22 @@
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" lazy-init="false">
         <property name="locations">
             <list>
-               <value>file:/data/properties/nps_parametros.properties</value>
+
+                <value>file:/data/properties/nps_parametros.properties</value>
             </list>
         </property>
-       
+        <property name="properties">
+            <props>
+                <prop key="jpaVendorAdapter.showSql">true</prop>
+                <prop key="jpaVendorAdapter.generateDdl">false</prop>
+                <prop key="jpaVendorAdapter.databasePlatform">org.hibernate.dialect.Oracle10gDialect</prop>                
+            </props>
+        </property>
     </bean>
     
+   
     
-    
-    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="jdbc/osinerg_myc" />
     </bean>
 	
