@@ -209,10 +209,10 @@ var gestionBaseLegal = (function() {
             img.src = URL.createObjectURL(this.files[0]);
             img.onload = function() {
                 var validarArchivoDescripcion = $('#divMensajeValidacionArchivoDescripcion');
-                if(this.width > 100 || this.height > 100){
+                if(this.width > 800 || this.height > 600){
                     validarArchivoDescripcion.show();
                     validarArchivoDescripcion.focus();
-                    validarArchivoDescripcion.html("* El tamaño de la imagen no corresponde con la permitida ( 100 x 100)");
+                    validarArchivoDescripcion.html("* El tamaño de la imagen no corresponde con la permitida ( 800 x 600)");
                     //Limpiando archivo adjunto
                     document.getElementById('formFileDesOblNor').reset();
                 }else{
@@ -4213,6 +4213,8 @@ var nuevaObligacionNormativa = (function() {
     });
 
     function abrirPopUpSubirArchivoObligacion() {
+    	$('#divMensajeValidacionObligacionArchivo').css('display','none');
+    	$('#fileNuevaOblNor').val('');
         $('#dialogCargarNuevaOblNor').dialog('open');
         document.getElementById('frmNuevaOblNorm').onsubmit = function() {
             return false;
@@ -4243,6 +4245,8 @@ var nuevaObligacionNormativa = (function() {
     }
     
     function abrirPopUpSubirArchivoDescripcion() {
+    	$('#divMensajeValidacionArchivoDescripcion').css('display','none');
+    	$('#fileDesOblNor').val('');
         $('#dialogCargarArchivoDescripcion').dialog('open');
     }
 

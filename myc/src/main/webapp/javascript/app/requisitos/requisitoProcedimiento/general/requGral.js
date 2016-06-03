@@ -266,8 +266,9 @@ function obtenerCamposValorParaDinaRequGral(camposx, valoresParaDina) {
 												valoresParaDina,
 												function(kk, regParaDina) {
 													if (regCampo.idParametroDinamico == regParaDina.valorParametro.idParametroDinamico) {
-														valorParaDina = regParaDina.valorParametro.descripcion;
-														if(valorParaDina == '--Seleccione--'){
+														valorParaDina = regParaDina.valorParametro.valor;
+														//valorParaDina = regParaDina.valorParametro.descripcion;
+														if(valorParaDina == '--Seleccione--' || valorParaDina == '--SELECCIONE--'){
 															valorParaDina = '';
 														}
 													}

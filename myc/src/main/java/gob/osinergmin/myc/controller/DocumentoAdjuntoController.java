@@ -224,7 +224,7 @@ public class DocumentoAdjuntoController {
         } catch (Exception e) {
             LOG.error("Error subiendo archivo BL", e);
             try {
-                response.getWriter().write("{\"error\":true,\"mensaje\":\"Error al insertar Documento\"}");
+                response.getWriter().write("{\"error\":true,\"mensaje\":\"Debe seleccionar documento\"}");
             } catch (IOException ex) {
                 LOG.debug("error al escribir en response", ex);
                 ex.printStackTrace();
@@ -266,7 +266,7 @@ public class DocumentoAdjuntoController {
         } catch (Exception e) {
             LOG.error("Error subiendo archivo BL", e);
             try {
-                response.getWriter().write("{\"error\":true,\"mensaje\":\"Error al insertar Documento\"}");
+                response.getWriter().write("{\"error\":true,\"mensaje\":\"Debe seleccionar documento\"}");
             } catch (IOException ex) {
                 LOG.debug("error al escribir en response", ex);
                 ex.printStackTrace();

@@ -452,7 +452,11 @@ function obtenerCamposValorParaDinaRequEspe(camposx,valoresParaDina){
         if(valoresParaDina.length>0){//si exiten valoresParaDina
             $.each(valoresParaDina,function(kk,regParaDina){
                 if(regCampo.idParametroDinamico==regParaDina.valorParametro.idParametroDinamico){
-                  valorParaDina=regParaDina.valorParametro.descripcion;
+                	valorParaDina=regParaDina.valorParametro.valor;
+                	//valorParaDina=regParaDina.valorParametro.descripcion;
+                	if(valorParaDina == '--Seleccione--' || valorParaDina == '--SELECCIONE--'){
+						valorParaDina = '';
+					}
                 }
             });    
         }
