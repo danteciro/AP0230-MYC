@@ -16,6 +16,7 @@ public class ActividadFilter extends BasePaginatorFilter {
     private Long idTramite;
     private String estado;
     private Long idTramiteActividad;
+    private Long idRubroOpcion;
 
     public ActividadFilter(){
     }
@@ -65,7 +66,10 @@ public class ActividadFilter extends BasePaginatorFilter {
 	public void setIdTramiteActividad(Long idTramiteActividad) {
 		this.idTramiteActividad = idTramiteActividad;
 	}
-    
-    
-    
+	public Long getIdRubroOpcion() {
+		return idRubroOpcion;
+	}
+	public void setIdRubroOpcion(Long idRubroOpcion) {
+		this.idRubroOpcion = idRubroOpcion;
+	}
 }

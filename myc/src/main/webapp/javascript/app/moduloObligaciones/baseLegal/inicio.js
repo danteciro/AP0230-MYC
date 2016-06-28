@@ -127,7 +127,7 @@ var busquedaBaseLegal = (function() {
     function abrirMantenimientoBaseLegal(flagBaseLegal) {
         var URL = baseURL + "pages/baseLegal/abrirDialogMantenimientoBaseLegal";
         if(flagBaseLegal=="nuevo"){
-            $.get(URL, {flagBaseLegal:flagBaseLegal}, function(data) {
+            $.get(URL, {flagBaseLegal:flagBaseLegal, idNormaSeleccionada:$('#txtIdNormaSeleccionada').val()}, function(data) {
                 objComponenteGestionObligacionInicio.divContainerMantenimientoBaseLegal.html(data);
                 /** muestra div contenedor mantenimiento **/
                 $('#divOcultaContainerMantenimiento').css("display","block"); 
@@ -147,9 +147,7 @@ var busquedaBaseLegal = (function() {
                     $('#chkModificatoria').removeAttr('disabled');
             		$('#chkConcordancia').removeAttr('disabled');
                 }
-                
             });
-           
         }
     }
     /**
@@ -494,6 +492,41 @@ var busquedaBaseLegal = (function() {
             }
         });
     }
+    /*Rsis 14 - Inicio*/
+    
+    function eliminarIncumplimiento (rowid){
+    	alert("aaaa");
+    	confirm.start();
+        confirm.open("¿Ud est&aacute; seguro de eliminar este requisito?","procEliminarIncumplimiento('"+rowid+"')");
+        
+    }
+    
+    function procEliminarIncumplimiento(id){
+    	alert(""+id);
+        $.ajax({
+            url:baseURL + "pages/mantenimiento/baseLegal/eliminarIncumplimiento",
+            	
+            type:'post',
+            async:false,
+            data:{
+            	idEscenearioIncumplimiento:id            	
+            },
+            beforeSend:muestraLoading,
+            success:function(data){
+                ocultaLoading();
+                if(data.resultado=="SUCCESS"){
+                    mensajeGrowl("success", global.confirm.delete, "");
+                    gridIncumplimiento();
+                }else if(data.resultado=="RESTRICT"){
+                    mensajeGrowl("warn", data.mensaje, "");
+                }else{
+                    mensajeGrowl("error", data.mensaje, "");
+                }
+            },
+            error:errorAjax
+        });
+    }
+    /*Rsis 14 - Inicio*/
     /**
      * @param {type} rowid
      * @returns {undefined}

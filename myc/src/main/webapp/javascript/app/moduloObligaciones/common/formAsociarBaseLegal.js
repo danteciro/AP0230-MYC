@@ -230,6 +230,10 @@ function asignarBasesLegales() {
         $("#dialogAsociarBaseLegal").dialog("close");
         gestionBaseLegal.concatenaDescripcionBaseLegal();
     }
+    if($(txtCodigoBaseLegalNuevo).val() != ""){
+    	$("#btnEditarBaseLegal").click();
+    }
+    
 }
     
     /**
@@ -303,7 +307,7 @@ function gridAsigBaseLegal(varLista){
             tipoAnexo:$('#slcTipoAnexoAsigBL').val(),
             articuloAnexo:$('#txtArticuloAnexoAsigBL').val(),
             varLista:varLista,
-            idsBaseLegal:$('#idsBaseLegal').val(),
+            idsBaseLegal:$('#idsBaseLegal').val()+$('#txtidBaseLegalConcordancia').val(),
             flgBusqAvanzada:'1',
             opcion:'1'
         },

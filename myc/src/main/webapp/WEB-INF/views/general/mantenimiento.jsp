@@ -91,6 +91,7 @@
                     <li><a class="menuItem" image="/myc/images/contrato.png" href="/myc/pages/concurso"><p>CONCURSO</p></a></li>
                     <li><a class="menuItem" image="/myc/images/clicpaper.png" href="/myc/pages/tipificacion"><p>TIPIFICACIÓN</p></a></li>
                     <li><a class="menuItem" image="/myc/images/proceso_obligacion.jpg" href="/myc/pages/autoayuda"><p>AUTOAYUDA</p></a></li>
+                    <li><a class="menuItem" image="/myc/images/opc1.jpg" href="/myc/pages/rubroOpcion"><p>RUBRO - OPCION</p></a></li>
 <!--                     <li><a class="menuItem" image="/myc/images/criterio.png" href="/myc/pages/criterio"><p>CRITERIO</p></a></li> -->
                 </ul>  
             </li>  

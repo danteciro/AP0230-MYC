@@ -18,9 +18,7 @@ import gob.osinergmin.myc.service.exception.CnfRequProcedimientoException;
 import gob.osinergmin.myc.service.exception.RequProcParaDinaException;
 import gob.osinergmin.myc.util.Constantes;
 import gob.osinergmin.myc.util.PropertyUtils;
-
 import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

@@ -3,11 +3,13 @@ package gob.osinergmin.myc.service.business.impl;
 
 import gob.osinergmin.myc.domain.dto.BaseLegalDTO;
 import gob.osinergmin.myc.domain.dto.DetalleBaseLegalDTO;
+import gob.osinergmin.myc.domain.dto.DetalleNormaTecnicaDTO;
 import gob.osinergmin.myc.domain.dto.ObligacionBaseLegalDTO;
 import gob.osinergmin.myc.domain.dto.UsuarioDTO;
 import gob.osinergmin.myc.domain.ui.BaseLegalFilter;
 import gob.osinergmin.myc.service.business.BaseLegalServiceNeg;
 import gob.osinergmin.myc.service.dao.BaseLegalDAO;
+import gob.osinergmin.myc.service.dao.DetalleNormaTecnicaDAO;
 import gob.osinergmin.myc.service.dao.ObligacionBaseLegalDAO;
 
 import java.util.List;
@@ -30,6 +32,8 @@ public class BaseLegalServiceNegImpl implements BaseLegalServiceNeg{
 	
 	@Inject
 	private ObligacionBaseLegalDAO obligacionBaseLegalDAO;
+	@Inject
+	private DetalleNormaTecnicaDAO detalleNormaTecnicaDAO;
 	
 	@Override
     @Transactional
@@ -214,9 +218,11 @@ public class BaseLegalServiceNegImpl implements BaseLegalServiceNeg{
 
 
 	@Override
+	@Transactional
 	public BaseLegalDTO editarBaseLegal(BaseLegalDTO baseLegalDTO,UsuarioDTO usuarioDTO) {
 		LOG.info("Actualizar Base Legal ServiceNegImpl");
 		BaseLegalDTO registro=null;
+		ObligacionBaseLegalDTO registroObligacionBaseLegal = null;
 		try{
 			// Actualización de la Base Legal con Bases Legales en Concordancia
 			registro=baseLegalDAO.update(baseLegalDTO,usuarioDTO);
@@ -341,6 +347,28 @@ public class BaseLegalServiceNegImpl implements BaseLegalServiceNeg{
 			e.printStackTrace();
 		}
 		return listaBaseLegalByObligacion;
+	}
+
+	@Override
+	public List<DetalleNormaTecnicaDTO> findDetalleNormaTecnicaById(Long idDetalleBaseLegal) {
+		List<DetalleNormaTecnicaDTO>detalleNormaTecnicaDTO = null;
+		try {
+			detalleNormaTecnicaDTO = detalleNormaTecnicaDAO.findDetalleNormaTecnicaById(idDetalleBaseLegal);	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+		return detalleNormaTecnicaDTO;
+	}
+	
+	@Override
+	public List<BaseLegalDTO> verificarBaseLegalExistente(BaseLegalFilter filtro) {
+        List<BaseLegalDTO> listado=null;
+        try{
+        	listado = baseLegalDAO.findToBase(filtro);
+        }catch(Exception ex){
+        	LOG.error("",ex);
+        }
+        return listado;
 	}
 	
 	//

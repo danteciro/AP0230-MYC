@@ -40,6 +40,11 @@ import java.util.List;
     /** Anexo de la Norma Legal **/
     /** descripción del tipo de anexo **/
     private Long tipoAnexo;
+    /*Rsis 1 - Inicio*/
+    /** Numero de Anexo de la Norma Legal **/
+    /** descripción del Numero tipo de anexo **/
+    private String NumeroAnexo;
+    /*Rsis 1 - Fin*/
     /** artículo del anexo **/
     private String articuloAnexo;
     /** inciso nivel 1 del anexo **/
@@ -104,6 +109,7 @@ import java.util.List;
     private Long correlativo;
 
     
+    private List<DetalleNormaTecnicaDTO> detalleNormaTecnica;
         
     public String getFlagPadre() {
 		return flagPadre;
@@ -522,6 +528,25 @@ import java.util.List;
 	public void setCorrelativo(Long correlativo) {
 		this.correlativo = correlativo;
 	}
+	/*Rsis 1 - Inicio*/
+	public String getNumeroAnexo() {
+		return NumeroAnexo;
+	}
+
+	public void setNumeroAnexo(String numeroAnexo) {
+		NumeroAnexo = numeroAnexo;
+	}
+	/*Rsis 1 - Fin*/
+
+	public List<DetalleNormaTecnicaDTO> getDetalleNormaTecnica() {
+		return detalleNormaTecnica;
+	}
+
+	public void setDetalleNormaTecnica(
+			List<DetalleNormaTecnicaDTO> detalleNormaTecnica) {
+		this.detalleNormaTecnica = detalleNormaTecnica;
+	}
+	
 	
 	
 }

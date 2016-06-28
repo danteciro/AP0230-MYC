@@ -7,7 +7,9 @@ package gob.osinergmin.myc.common.util;
 import gob.osinergmin.myc.domain.dto.ActividadDTO;
 import gob.osinergmin.myc.domain.dto.BaseLegalConcordanciaDTO;
 import gob.osinergmin.myc.domain.dto.BaseLegalDTO;
+import gob.osinergmin.myc.domain.dto.CnfObligacionDTO;
 import gob.osinergmin.myc.domain.dto.ObligacionBaseLegalDTO;
+import gob.osinergmin.myc.domain.dto.OpcionDTO;
 import gob.osinergmin.myc.domain.dto.RequProcParaDinaDTO;
 import gob.osinergmin.myc.domain.dto.TemaDTO;
 import gob.osinergmin.myc.domain.dto.TipificacionSancionDTO;
@@ -73,6 +75,20 @@ public class MycUtil {
             String[] s = new String[actividades.size()];
             int cont=0;
             for(ActividadDTO maestra : actividades){s[cont]=maestra.getIdActividad().toString();cont++;}
+            retorno = StringUtils.join(s, ",");
+        }        
+        return retorno;
+    }
+    
+    //jsifuentes
+    public static String concatenaOpciones(List<OpcionDTO> listado){
+        String retorno="";
+        if(listado!=null && listado.size()>0){
+            String[] s = new String[listado.size()];
+            int cont=0;
+            for(OpcionDTO maestra : listado){
+                s[cont]=maestra.getIdOpcion().toString();cont++;
+            }
             retorno = StringUtils.join(s, ",");
         }        
         return retorno;
@@ -268,6 +284,17 @@ public class MycUtil {
             String[] s = new String[temaObligacionAct.size()];
             int cont=0;
             for(TemaDTO maestra : temaObligacionAct){s[cont]=maestra.getIdTemaObligacion().toString();cont++;}
+            retorno = StringUtils.join(s, ",");
+        }        
+        return retorno;
+	}
+	
+	public static String concatenaListadoActividades(List<CnfObligacionDTO> actividad) {
+		String retorno="";
+        if(actividad!=null && actividad.size()>0){
+            String[] s = new String[actividad.size()];
+            int cont=0;
+            for(CnfObligacionDTO maestra : actividad){s[cont]=maestra.getIdActividad().toString();cont++;}
             retorno = StringUtils.join(s, ",");
         }        
         return retorno;

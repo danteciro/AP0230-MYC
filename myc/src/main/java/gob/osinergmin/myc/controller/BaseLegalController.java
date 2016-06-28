@@ -1,6 +1,8 @@
 package gob.osinergmin.myc.controller;
 
+import gob.osinergmin.myc.common.util.JsonUtil;
 import gob.osinergmin.myc.domain.dto.BaseLegalDTO;
+import gob.osinergmin.myc.domain.dto.BaseLegalFilterDTO;
 import gob.osinergmin.myc.domain.dto.CnfObligacionDTO;
 import gob.osinergmin.myc.domain.dto.MaestroColumnaDTO;
 import gob.osinergmin.myc.domain.dto.ObligacionNormativaDTO;
@@ -11,6 +13,7 @@ import gob.osinergmin.myc.service.business.MaestroColumnaServiceNeg;
 import gob.osinergmin.myc.service.business.ObligacionNormativaServiceNeg;
 import gob.osinergmin.myc.service.business.ObligacionTipoServiceNeg;
 import gob.osinergmin.myc.util.ConstantesWeb;
+
 import java.beans.PropertyEditorSupport;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,10 +22,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.ServletContext;
  
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -305,7 +310,7 @@ public class BaseLegalController {
 				 
 		return listaResultadoBaseLegal;
 	}
-    
+    /*PR OSINE_119 - Item 04 - Inicio*/
     /**
      * 
      * @param baseLegalDTO
@@ -318,17 +323,14 @@ public class BaseLegalController {
         Map<String, Object> registrar(BaseLegalDTO baseLegalDTO, HttpServletRequest request, HttpSession session){
         LOG.info("procesando POST para RequestMapping /registrar POST ");
         Map<String, Object> salida = new HashMap<String, Object>();
-        List<BaseLegalDTO> listadoBaseLegal =(List<BaseLegalDTO>) request.getSession().getServletContext().getAttribute("LISTA_BASES_LEGALES");
-        
-//        List<BaseLegalDTO> listadoBaseLegal =(List<BaseLegalDTO>) servletContext.getAttribute("LISTA_BASES_LEGALES");
-        
-        //List<BaseLegalDTO> listadoBaseLegal =(List<BaseLegalDTO>) session.getAttribute("LISTA_BASES_LEGALES");
+        List<BaseLegalDTO> listadoBaseLegal =(List<BaseLegalDTO>) request.getSession().getServletContext().getAttribute("LISTA_BASES_LEGALES");               
         listadoBaseLegal.add(baseLegalDTO);
           
         salida.put("resultado", 0);
         
         return salida;
     }
+    /*PR OSINE_119 - Item 04 - Fin*/
     /**
      * 
      * @param obligacionNormativaDTO
@@ -691,10 +693,25 @@ public class BaseLegalController {
      * @return
      */
     @RequestMapping ( value = "/abrirDialogMantenimientoBaseLegal" , method = RequestMethod.GET )
-    public String abrirDialogMantenimientoBaseLegal(String flagBaseLegal,Model model,HttpSession session, HttpServletRequest request) {
+    public String abrirDialogMantenimientoBaseLegal(String flagBaseLegal, Long idNormaSeleccionada, Model model,HttpSession session, HttpServletRequest request) {
+        try{
+     	   BaseLegalFilter filtro = new BaseLegalFilter();
+     	   filtro.setIdBaseLegal(idNormaSeleccionada);
+     	   int[ ] auxiliar = {99};
+     	   String fechafechaVigenciaNormaLegalFormateada = "";
+     	   List<BaseLegalDTO> baseLegalDTO =  baseLegalService.listarBaseLegalToBaseLegal(filtro, auxiliar);
+     	   Date fechaVigenciaNormaLegal =  baseLegalDTO.get(0).getFechaEntradaVigenciaNormaLegal();
+     	   if (fechaVigenciaNormaLegal != null){
+     		   fechafechaVigenciaNormaLegalFormateada = new SimpleDateFormat("dd/MM/yyyy").format(fechaVigenciaNormaLegal);
+     		   model.addAttribute("baseLegalFechavigencia", fechafechaVigenciaNormaLegalFormateada);
+     	   }
+        }catch(Exception ex){
+            LOG.error("Error en registrarTipificacion: "+ex.getMessage());
+            ex.printStackTrace();
+        }
     	model.addAttribute("idDialog", "dlgMantenimientoBaseLegal");
         model.addAttribute("flagBaseLegal", flagBaseLegal);
-
+        model.addAttribute("detalleNormaTecnicaDTO",JsonUtil.convertirObjetoACadenaJson(""));
         return "moduloObligaciones/baseLegal/mantenimiento/nuevo";
     }
     

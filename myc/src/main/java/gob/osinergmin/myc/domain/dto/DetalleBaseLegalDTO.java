@@ -47,7 +47,10 @@ public class DetalleBaseLegalDTO {
     private String estado;
     /** id de la Base Legal**/
     private Long idBaseLegal;
-    
+    /*Rsis 1 - Inicio*/
+    /** numero de Anexo de la base Legal**/
+    private String numeroAnexo;
+    /*Rsis 1 - Fin*/
     /**
      * Campos de Auditoria * 
      **/
@@ -270,7 +273,15 @@ public class DetalleBaseLegalDTO {
 	public void setTerminalModificacion(String terminalModificacion) {
 		this.terminalModificacion = terminalModificacion;
 	}
-    
+	/*Rsis 1 - Inicio*/
+	public String getNumeroAnexo() {
+		return numeroAnexo;
+	}
+
+	public void setNumeroAnexo(String numeroAnexo) {
+		this.numeroAnexo = numeroAnexo;
+	}
+	/*Rsis 1 - Fin*/
     
         
 }

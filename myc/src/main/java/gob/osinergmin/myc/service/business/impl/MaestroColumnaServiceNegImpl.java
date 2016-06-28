@@ -167,6 +167,50 @@ public class MaestroColumnaServiceNegImpl implements MaestroColumnaServiceNeg{
 	        }
 	        return listado;
 	    }
+	    /*Rsis 11 - Inicio*/
+	    @Override
+	    public List<MaestroColumnaDTO> listarMedidaSeguridad(){
+	        List<MaestroColumnaDTO> listado = null;
+	        try{
+	        	listado=maestroColumnaDAO.findMedidaSeguridad();
+	        }catch(Exception e){
+	            LOG.error(e.getMessage());
+	        }
+	        return listado;
+	    }
+	    
+	    @Override
+	    public List<MaestroColumnaDTO> listarAccionInfraccion(){
+	        List<MaestroColumnaDTO> listado = null;
+	        try{
+	        	listado=maestroColumnaDAO.findAccionInfraccion();
+	        }catch(Exception e){
+	            LOG.error(e.getMessage());
+	        }
+	        return listado;
+	    }
+	    
+	    @Override
+	    public List<MaestroColumnaDTO> listarEscenario(){
+	        List<MaestroColumnaDTO> listado = null;
+	        try{
+	        	listado=maestroColumnaDAO.findEscenario();
+	        }catch(Exception e){
+	            LOG.error(e.getMessage());
+	        }
+	        return listado;
+	    }
+	    /*Rsis 11 - Fin*/
+	    @Override
+	    public List<MaestroColumnaDTO> listarNumeroAnexo(String codigo){
+	        List<MaestroColumnaDTO> listado = null;
+	        try{
+	        	listado=maestroColumnaDAO.findNumeroAnexo(codigo);
+	        }catch(Exception e){
+	            LOG.error(e.getMessage());
+	        }
+	        return listado;
+	    }
 	    @Override
 	    public List<MaestroColumnaDTO> listarTemas() throws Exception{
 	        List<MaestroColumnaDTO> listado = null;

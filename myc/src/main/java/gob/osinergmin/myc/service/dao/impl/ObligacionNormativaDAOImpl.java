@@ -18,26 +18,32 @@ import org.springframework.util.CollectionUtils;
 import gob.osinergmin.myc.common.util.MycUtil;
 import gob.osinergmin.myc.common.util.StringUtil;
 import gob.osinergmin.myc.domain.MdiMaestroColumna;
+import gob.osinergmin.myc.domain.PghOpcion;
 import gob.osinergmin.myc.domain.PghConfObligacion;
 import gob.osinergmin.myc.domain.PghDetalleObligacion;
-import gob.osinergmin.myc.domain.PghListadoBaseLegal;
+import gob.osinergmin.myc.domain.PghInfraccion;
 import gob.osinergmin.myc.domain.PghObligacion;
 import gob.osinergmin.myc.domain.PghProcesoObligacionTipo;
 import gob.osinergmin.myc.domain.PghTemaObligacionMaestro;
 import gob.osinergmin.myc.domain.builder.BaseLegalConcordanciaBuilder;
 import gob.osinergmin.myc.domain.builder.CnfObligacionBuilder;
 import gob.osinergmin.myc.domain.builder.DetalleObligacionBuilder;
+import gob.osinergmin.myc.domain.builder.InfraccionBuilder;
 import gob.osinergmin.myc.domain.builder.MaestroColumnaBuilder;
 import gob.osinergmin.myc.domain.builder.ObligacionNormativaBuilder;
+import gob.osinergmin.myc.domain.builder.OpcionBuilder;
 import gob.osinergmin.myc.domain.builder.ProcesoObligacionTipoBuilder;
 import gob.osinergmin.myc.domain.builder.TemaObligacionBuilder;
 import gob.osinergmin.myc.domain.dto.BaseLegalConcordanciaDTO;
 import gob.osinergmin.myc.domain.dto.BaseLegalDTO;
 import gob.osinergmin.myc.domain.dto.CnfObligacionDTO;
 import gob.osinergmin.myc.domain.dto.DetalleObligacionDTO;
+import gob.osinergmin.myc.domain.dto.InfraccionDTO;
 import gob.osinergmin.myc.domain.dto.MaestroColumnaDTO;
 import gob.osinergmin.myc.domain.dto.ObligacionNormativaDTO;
+import gob.osinergmin.myc.domain.dto.OpcionDTO;
 import gob.osinergmin.myc.domain.dto.ProcesoObligacionTipoDTO;
+import gob.osinergmin.myc.domain.dto.RubroOpcionDTO;
 import gob.osinergmin.myc.domain.dto.TemaDTO;
 import gob.osinergmin.myc.domain.dto.UsuarioDTO;
 import gob.osinergmin.myc.domain.ui.BaseLegalFilter;
@@ -46,6 +52,19 @@ import gob.osinergmin.myc.service.dao.CrudDAO;
 import gob.osinergmin.myc.service.dao.ObligacionNormativaDAO;
 import gob.osinergmin.myc.service.exception.ObligacionException;
 import gob.osinergmin.myc.util.Constantes;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
+import javax.persistence.Query;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 @Service
 @Transactional
@@ -393,7 +412,57 @@ public class ObligacionNormativaDAOImpl implements ObligacionNormativaDAO{
                 }
 		return retorno;
 	}
+	/*PR OSINE_119 - Item 16 - Inicio*/	
+	@Override
+	public List<OpcionDTO> obtenerOpciones(String idRubro) {
+		LOG.info("(Registrar configuración DAOImpl) Ingresando... ");
+		List<OpcionDTO> retorno =null;
+		try {
+			RubroOpcionDTO rubroOpcionDTO=new RubroOpcionDTO();
+			String estado = "1";
+			rubroOpcionDTO.setEstado(estado);							
+			 retorno=findOpciones(idRubro);						
+			LOG.info("(Registrar configuración DAOImpl) Saliendo... ");
+			
+		} catch (Exception e) {
+                    LOG.error("error Registrar Configuracion ObligacionNormativaDAO : "+e.getMessage());
+                    e.printStackTrace();                    
+		}
+		return retorno;
+	}
+	/*PR OSINE_119 - Item 16 - Fin*/
 	
+	/*PR OSINE_119 - Item 14 - Inicio*/
+	private List<OpcionDTO> findOpciones(String idRubro){
+		LOG.info("(Encontrar Configuración DAOImpl) Ingresando... ");
+		Query query=null;
+		List<OpcionDTO> retorno=null;
+		try {
+			StringBuilder jpql = new StringBuilder();
+	       	jpql.append("Select new  PghOpcion(o.identificador_opcion) ");
+            jpql.append( "from PghRubroOpcion ro " );
+            jpql.append(" inner join ro.idActividad a  " );
+            jpql.append(" inner join ro.idOpcion o  " );
+            jpql.append(" where ro.idActividad.idActividad in ("+idRubro+")");
+            jpql.append(" and ro.estado='1'" );
+            jpql.append(" and o.aplicacion='MYC'" );
+            
+            jpql.append(" group by o.identificador_opcion");
+            query = crud.getEm().createQuery(jpql.toString());                                  	             	        	       
+	        LOG.info("query IdConfiguracion: " + jpql.toString());
+            List<PghOpcion> resultados = query.getResultList();
+            System.out.println(" Resultado Query FindConfiguracion: " + resultados.size());
+            if (resultados.size() > 0) {
+            	retorno = OpcionBuilder.toListOpcionDto(resultados);
+            }
+            LOG.info("(Encontrar Configuración DAOImpl) Saliendo... ");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return retorno;
+	}
+	/*PR OSINE_119 - Item 14 - Fin*/
 	private ProcesoObligacionTipoDTO findConfObligacion(Long idRubro,Long idProceso,String oblgTipo){
 		LOG.info("(Encontrar Configuración DAOImpl) Ingresando... ");
 		ProcesoObligacionTipoDTO confProcOblg=null;
@@ -432,7 +501,7 @@ public class ObligacionNormativaDAOImpl implements ObligacionNormativaDAO{
 		LOG.info("(Encontrar Obligacion By Id DAO IMPL) Ingresando...");
         try {
         	StringBuilder jpql = new StringBuilder();
-            jpql.append("SELECT p.idConfObligacion, p.pghProcesoObligacionTipo.mdiActividad.nombre,p.pghProcesoObligacionTipo.pghProceso.descripcion,p.pghProcesoObligacionTipo.pghObligacionTipo.nombre,p.pghProcesoObligacionTipo.pghProcesoObligacionTipoPK.idProOblTip FROM PghConfObligacion p where estado='1' and p.idObligacion='"+filtro.getIdObligacion()+"'");
+            jpql.append("SELECT p.idConfObligacion,p.pghProcesoObligacionTipo.mdiActividad.idActividad, p.pghProcesoObligacionTipo.mdiActividad.nombre,p.pghProcesoObligacionTipo.pghProceso.descripcion,p.pghProcesoObligacionTipo.pghObligacionTipo.nombre,p.pghProcesoObligacionTipo.pghProcesoObligacionTipoPK.idProOblTip FROM PghConfObligacion p where estado='1' and p.idObligacion='"+filtro.getIdObligacion()+"'");
     		Query 	query = crud.getEm().createQuery(jpql.toString());
 	        LOG.info("query find Configuracion By IdObligacion: " + jpql.toString());
 	        List<Object[]>  resultados = query.getResultList();  
@@ -572,7 +641,32 @@ public class ObligacionNormativaDAOImpl implements ObligacionNormativaDAO{
 		}
 		return retorno;
 	}
+	/*PR OSINE_119 - Item 14 - Inicio*/
+	@Override
+	public InfraccionDTO findInfraccionObligacion(Long idObligacion) {
+		LOG.info("(Consultar Temas de la Obligacion By Id DAO IMPL) Ingresando...");
+		InfraccionDTO retorno=null;
+		try {
+			StringBuilder jpql = new StringBuilder();
+            jpql.append("SELECT p FROM PghInfraccion p where estado='1' and p.idObligacion.idObligacion='"+idObligacion+"'");
+    		Query 	query = crud.getEm().createQuery(jpql.toString());
+	        LOG.info("query Consulta By IdObligacion: " + jpql.toString());
+	        List<PghInfraccion>  resultados = query.getResultList();  
+	        System.out.println(" Listado  "+resultados);
 
+	        if(!CollectionUtils.isEmpty(resultados)){
+	        	retorno=InfraccionBuilder.toInfraccionDto(resultados.get(0));
+	        }
+	        LOG.info("(Consultar Temas de la Obligacion By Id DAO IMPL) Saliendo... :Retorno: " + retorno);
+			
+		} catch (Exception e) {
+			LOG.error(e.getMessage(),e);
+			e.printStackTrace();
+		}
+		return retorno;
+	}
+	/*PR OSINE_119 - Item 14 - Fin*/
+	
     @Override
     public ObligacionNormativaDTO registrarRelaciones(ObligacionNormativaDTO registro, UsuarioDTO usuarioDTO) {
         ObligacionNormativaDTO retorno = null;

@@ -10,6 +10,9 @@ package gob.osinergmin.myc.util;
  */
 public class Constantes {
     public static final String CONSTANTE_ESTADO_ACTIVO = "1";
+    /*Rsis 13 - Inicio*/
+    //public static final char CONSTANTE_ESTADO_ACTIVO_INFRACCION = '1';
+    /*Rsis 13 - Inicio*/
     public static final String CONSTANTE_ESTADO_INACTIVO = "0";
     public static final String DOMINIO_AMBITO_PARAMETRICO= "AMBITO_PARAMETRICO";
     public static final String DOMINIO_TIPO_CONSULTA= "TIPO_PARAMETRO";
@@ -39,6 +42,9 @@ public class Constantes {
     public static final String CONSTANTE_ARCHIVO_CRITERIO = "archivoCriterio";
     public static final String CONSTANTE_ARCHIVO_OBLIGACION = "archivoObligacion";
     public static final String CONSTANTE_ARCHIVO_DESCRIPCON = "archivoDescripcion";
+    /*Rsis 11 - Inicio*/
+    public static final String CONSTANTE_ARCHIVO_INFRACCION = "archivoInfraccion";
+    /*Rsis 11 - Fin*/
     
     public static final String CONSTANTE_TRAZABILIDAD_NUEVO = "N";
     public static final String CONSTANTE_TRAZABILIDAD_MODIFICAR = "U";
@@ -52,5 +58,6 @@ public class Constantes {
 	public static final String VALOR_DEFECTO = "--SELECCIONE--";
 	public static final long ID_PROCEDIMIENTO = 165;
 	public static final long ID_REQUISITO = 166;
-	
+	public static final String CONSTANTE_APLICAION_MYC= "MYC";
+	public static final String ID_TIPO_SUPERVISION="ID_TIPO_SUPERV";
 }

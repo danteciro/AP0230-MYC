@@ -7,7 +7,10 @@ package gob.osinergmin.myc.domain;
 import gob.osinergmin.myc.domain.component.ColumAddObligaciones;
 import gob.osinergmin.myc.domain.component.ColumAddObligacionesTmp;
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,11 +21,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -90,6 +95,10 @@ public class PghDetalleBaseLegal extends ColumAddObligacionesTmp {
     private Long idTipoAnexo;
     @Column(name = "ARTICULO_ANEXO")
     private String articuloAnexo;
+    /*Rsis 1 - Inicio*/
+    @Column(name = "NUMERO_TIPO_ANEXO")
+    private String numeroAnexo;
+    /*Rsis 1 - Fin*/
     @Column(name = "INCISO_1_ANEXO")
     private String inciso1Anexo;
     @Column(name = "INCISO_2_ANEXO")
@@ -102,6 +111,9 @@ public class PghDetalleBaseLegal extends ColumAddObligacionesTmp {
     @JoinColumn(name = "ID_BASE_LEGAL", referencedColumnName = "ID_BASE_LEGAL")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private PghBaseLegal idBaseLegal;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDetalleBaseLegal", fetch = FetchType.LAZY)
+    private List<PghDetalleNormaTecnica> pghDetalleNormaTecnicaList;
+    
 
     public PghDetalleBaseLegal() {
     }
@@ -261,8 +273,27 @@ public class PghDetalleBaseLegal extends ColumAddObligacionesTmp {
     public void setIdBaseLegal(PghBaseLegal idBaseLegal) {
         this.idBaseLegal = idBaseLegal;
     }
+    /*Rsis 1 - Inicio*/       
+    public String getNumeroAnexo() {
+		return numeroAnexo;
+	}
+    
+	public void setNumeroAnexo(String numeroAnexo) {
+		this.numeroAnexo = numeroAnexo;
+	}
+	
+	/*jsifuentes - Inicio*/
+    @XmlTransient
+    public List<PghDetalleNormaTecnica> getPghDetalleNormaTecnicaList() {
+        return pghDetalleNormaTecnicaList;
+    }
 
-    @Override
+    public void setPghDetalleNormaTecnicaList(List<PghDetalleNormaTecnica> pghDetalleNormaTecnicaList) {
+        this.pghDetalleNormaTecnicaList = pghDetalleNormaTecnicaList;
+    }
+    /*jsifuentes - Inicio*/
+	/*Rsis 1 - Fin*/
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (idDetalleBaseLegal != null ? idDetalleBaseLegal.hashCode() : 0);

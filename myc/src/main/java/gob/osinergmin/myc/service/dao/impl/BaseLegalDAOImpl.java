@@ -9,23 +9,27 @@ import gob.osinergmin.myc.common.util.MycUtil;
 import gob.osinergmin.myc.common.util.StringUtil;
 import gob.osinergmin.myc.domain.PghBaseLegal;
 import gob.osinergmin.myc.domain.PghDetalleBaseLegal;
+import gob.osinergmin.myc.domain.PghDetalleNormaTecnica;
 import gob.osinergmin.myc.domain.PghListadoBaseLegal;
 import gob.osinergmin.myc.domain.PghObligacionBaseLegal;
 import gob.osinergmin.myc.domain.builder.ActividadBuilder;
 import gob.osinergmin.myc.domain.builder.BaseLegalBuilder;
 import gob.osinergmin.myc.domain.builder.BaseLegalConcordanciaBuilder;
 import gob.osinergmin.myc.domain.builder.DetalleBaseLegalBuilder;
+import gob.osinergmin.myc.domain.builder.DetalleNormaTecnicaBuilder;
 import gob.osinergmin.myc.domain.builder.ObligacionBaseLegalBuilder;
 import gob.osinergmin.myc.domain.builder.PghObligacionBaseLegalBuilder;
 import gob.osinergmin.myc.domain.dto.ActividadDTO;
 import gob.osinergmin.myc.domain.dto.BaseLegalConcordanciaDTO;
 import gob.osinergmin.myc.domain.dto.BaseLegalDTO;
 import gob.osinergmin.myc.domain.dto.DetalleBaseLegalDTO;
+import gob.osinergmin.myc.domain.dto.DetalleNormaTecnicaDTO;
 import gob.osinergmin.myc.domain.dto.ObligacionBaseLegalDTO;
 import gob.osinergmin.myc.domain.dto.UsuarioDTO;
 import gob.osinergmin.myc.domain.ui.BaseLegalFilter;
 import gob.osinergmin.myc.service.dao.BaseLegalDAO;
 import gob.osinergmin.myc.service.dao.CrudDAO;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -225,6 +229,21 @@ public class BaseLegalDAOImpl implements BaseLegalDAO {
 				}			
 			}
 // 05-11-2015			
+			
+			
+			//jsifuentes inicio
+			if(baseLegalDTO.getDetalleNormaTecnica()!=null){
+				List<DetalleNormaTecnicaDTO> detalleNormaTecnicaDTO=baseLegalDTO.getDetalleNormaTecnica();
+				for (DetalleNormaTecnicaDTO obj : detalleNormaTecnicaDTO) {
+					obj.setEstado(estado);
+					obj.setIdDetalleBaseLegal(detalleBaseLegal.getIdDetalleBaseLegal());
+					PghDetalleNormaTecnica pghDetalleNormaTecnica = DetalleNormaTecnicaBuilder.getDetalleNormaTecnica(obj);
+					pghDetalleNormaTecnica.setDatosAuditoria(usuarioDTO);
+					crud.create(pghDetalleNormaTecnica);
+				}
+				
+			}
+			//jsifuentes fin
 			retorno=BaseLegalBuilder.toBaseLegalRetornoDto(pghBaseLegal,idDetalleBaseLegalRetorno,codTrazabilidadRetorno);
 //			
 			LOG.info("(Registro Base Legal DAO Impl) retorno: "+retorno.toString());
@@ -896,6 +915,20 @@ public class BaseLegalDAOImpl implements BaseLegalDAO {
                     }
                 }
             }
+            
+            //jsifuentes inicio
+			if(baseLegalDTO.getDetalleNormaTecnica()!=null){
+				List<DetalleNormaTecnicaDTO> detalleNormaTecnicaDTO=baseLegalDTO.getDetalleNormaTecnica();
+				for (DetalleNormaTecnicaDTO obj : detalleNormaTecnicaDTO) {
+					obj.setEstado(estado);
+					obj.setIdDetalleBaseLegal(baseLegalDTO.getIdDetalleBaseLegal());
+					PghDetalleNormaTecnica pghDetalleNormaTecnica = DetalleNormaTecnicaBuilder.getDetalleNormaTecnica(obj);
+					pghDetalleNormaTecnica.setDatosAuditoria(usuarioDTO);
+					crud.create(pghDetalleNormaTecnica);
+				}
+				
+			}
+			//jsifuentes fin
     			
             retorno=BaseLegalBuilder.toBaseLegalDto(baseUpd);
         }catch(Exception e){
@@ -1224,14 +1257,20 @@ public class BaseLegalDAOImpl implements BaseLegalDAO {
     // 06-11-2015	
 	@Override
 	public Long countToBase(BaseLegalFilter filtro) {
-        LOG.info("contador DAO IMPL");
-        Query query = getFindQueryToBase(filtro, true);
-        LOG.info("salida contador DAO IMPL");
+		LOG.info("contador DAO IMPL");
+        Query query = null;
+		try {
+			query = getFindQueryToBase(filtro, true);
+            LOG.info("salida contador DAO IMPL");
+		} catch (Exception e) {
+			LOG.error(e.getMessage(),e);
+            e.printStackTrace();
+		}
         return (Long) query.getSingleResult();
     }
 
 	private Query getFindQueryToBase(BaseLegalFilter filtro, boolean count) {
-        Query query=null;        
+        Query query=null;
         try{
             if (count) {
                 if (filtro.getIdBaseLegal()!= null) {

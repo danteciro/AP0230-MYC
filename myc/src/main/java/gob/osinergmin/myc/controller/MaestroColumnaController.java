@@ -1,3 +1,20 @@
+/**
+ * Resumen.
+ * Objeto                   : MaestroColumnaController.java 
+ * Descripción              : 
+ * Fecha de Creación        : 
+ * PR de Modificacion 		: 
+ * Autor                    : 
+ * ---------------------------------------------------------------------------------------
+ * Modificaciones
+ * Motivo   	    Fecha     	  Nombre                 Descripcion
+ * OSINE_119		15/06/2016	  Roy Colorado			 Se agregaron los métodos:
+ * 														 obtenerMedidaSeguridad();
+ * 														 obtenerAccionInfraccion();
+ * 														 obtenerEscenario();
+ * ----------------------------------------------------------------------------------------                                          
+ */
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -13,6 +30,7 @@ import gob.osinergmin.myc.service.business.MaestroTablaServiceNeg;
 import gob.osinergmin.myc.util.Constantes;
 import gob.osinergmin.myc.util.ConstantesWeb;
 import java.net.Inet4Address;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -138,7 +156,56 @@ public class MaestroColumnaController {
         }
         return salida;
     }
+    /*PR OSINE_119 - Item 11 - Inicio*/
+    /**
+     * Método que obtiene una lista de medidas de seguridad
+     * @return listMedidaSeguridad
+     */
+    @RequestMapping(value = "/obtenerMedidaSeguridad", method = RequestMethod.GET)
+    public @ResponseBody
+    List<MaestroColumnaDTO> obtenerMedidaSeguridad() {
+        List<MaestroColumnaDTO> listMedidaSeguridad = new ArrayList<MaestroColumnaDTO>();
+        try{
+        listMedidaSeguridad=maestroColumnaServiceNeg.listarMedidaSeguridad();
+        }catch(Exception e){
+            LOG.info("error al procesar listadoSigla " +e);
+        }
+        return listMedidaSeguridad;
+    }
     
+    /**
+     * Método que obtiene una lista de infracciones
+     * @return listAccionInfraccion
+     */
+    @RequestMapping(value = "/obtenerAccionInfraccion", method = RequestMethod.GET)
+    public @ResponseBody
+    List<MaestroColumnaDTO> obtenerAccionInfraccion() {
+        List<MaestroColumnaDTO> listAccionInfraccion = new ArrayList<MaestroColumnaDTO>();
+        try{
+        listAccionInfraccion=maestroColumnaServiceNeg.listarAccionInfraccion();
+        }catch(Exception e){
+            LOG.info("error al procesar listadoSigla " +e);
+        }
+        return listAccionInfraccion;
+    }
+    
+    
+    /**
+     * Método que obtiene una lista escenarios de incumplimiento
+     * @return listMedidaSeguridad
+     */
+    @RequestMapping(value = "/obtenerEscenario", method = RequestMethod.GET)
+    public @ResponseBody
+    List<MaestroColumnaDTO> obtenerEscenario() {
+        List<MaestroColumnaDTO> listEscenarioIncumplimiento = new ArrayList<MaestroColumnaDTO>();
+        try{
+        listEscenarioIncumplimiento=maestroColumnaServiceNeg.listarEscenario();
+        }catch(Exception e){
+            LOG.info("error al procesar listadoSigla " +e);
+        }
+        return listEscenarioIncumplimiento;
+    }
+    /*PR OSINE_119 - Item 11 - Fin*/
     @RequestMapping(value="/findMaestroColumna",method= RequestMethod.GET)
     public @ResponseBody Map<String,Object> findMaestroColumna(MaestroColumnaFilter filtro,int rows, int page,int flg_load,HttpSession session){
         LOG.info("findRequisito");

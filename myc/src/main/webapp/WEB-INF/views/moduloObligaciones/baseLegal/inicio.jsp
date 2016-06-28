@@ -151,6 +151,13 @@
 							<seg:enlaceTag id='linkEliminarTipificacion' code='EL' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
 							<span>Eliminar</span>
 						</div>
+						<!-- Rsis 14 - Inicio -->
+						<div id="divEnlaceTagEliminarIncumplimiento">								
+							<span class="pui-menuitem-icon ui-icon ui-icon-trash"></span>
+							<seg:enlaceTag id='linkEliminarIncumplimiento' code='EL' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+							<span>Eliminar</span>
+						</div>
+						<!-- Rsis 14 - Fin -->
 						<!-- Enlaces Obligaciones vs Criterios -->
 						<div id="divEnlaceTagEliminarCriterioObligacion">
 							<span class="pui-menuitem-icon ui-icon ui-icon-trash"></span>
@@ -169,6 +176,7 @@
 							<seg:enlaceTag id='linkEliminarCnf' code='EL' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
 							<span>Eliminar</span>
 						</div>
+						
 					</div>
 					<!-- PR0013 - Fin -->
                     </div>

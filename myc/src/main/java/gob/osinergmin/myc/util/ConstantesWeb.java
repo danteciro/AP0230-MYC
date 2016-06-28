@@ -106,6 +106,11 @@ public class ConstantesWeb {
         public static final String PAGE_GENERAL_MANT_FRM_TRAMITE_ACTIV="general/tramiteActividad/mantFrmTramiteActividad";
         public static final String PAGE_GENERAL_MANT_FRM_EDIT_TRAMITE_ACTIV="general/tramiteActividad/mantEditFrmTramiteActividad";
         
+        //Rubro - Opcion
+        public static final String PAGE_GENERAL_MANT_RUBRO_OPCION="general/rubroOpcion/mantenimiento";
+        public static final String PAGE_GENERAL_MANT_FRM_RUBRO_OPCION="general/rubroOpcion/mantFrmRubroOpcion";
+        public static final String PAGE_GENERAL_MANT_EDIT_FRM_RUBRO_OPCION="general/rubroOpcion/mantEditFrmRubroOpcion";
+        
         //Concurso
         public static final String PAGE_GENERAL_MANT_CONSURSO="general/concurso/mantenimiento";
         public static final String PAGE_GENERAL_MANT_CONSURSO_ADJUNTOS="general/concurso/mantFrmArchivo";
@@ -163,6 +168,10 @@ public class ConstantesWeb {
         
         //Entidades
         public static final String MSG_ENTITY_OBLIGACION="Obligaci\u00F3n";
+        /*Rrsis 14 - inicio*/
+        public static final String MSG_ENTITY_INFRACCION="Infracci\u00F3n";
+        public static final String MSG_ENTITY_INCUMPLIMIENTO="Incumplimiento";
+        /*Rsis 14 - fin*/
         public static final String MSG_ENTITY_BASELEGAL="Base Legal";
         public static final String MSG_ENTITY_TIPIFICACION="Tipificaci\u00F3n";
         public static final String MSG_ENTITY_CONFIGURACION="Configuraci\u00F3n";

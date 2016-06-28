@@ -1,14 +1,43 @@
+/**
+ * Resumen.
+ * Objeto            : MantenimientoBaseLegalController.java
+ * Descripción       : 
+ * Fecha de Creación : 
+ * PR de Creación    : 
+ * Autor             : 
+ * ---------------------------------------------------------------------------------------
+ * Modificaciones
+ * Motivo   	Fecha     		Nombre                Descripción
+ * OSINE_119	10/06/2016		Roy Colorado		  Se implementaron los siguientes métodos
+ * 													  - registrarInfraccion();
+ * 													  - registrarIncumplimiento();
+ * 													  - findIncumplimiento();
+ * 													  - eliminarIncumplimiento();
+ * 													  - descargaArchivoInfraccion();
+ * 													  - Se agregó el siguiente método consultaInfraccionByObligacionId();	
+ * ----------------------------------------------------------------------------------------
+ */
+
 package gob.osinergmin.myc.controller;
 
 import gob.osinergmin.myc.domain.PghCriterio;
+import gob.osinergmin.myc.common.util.JsonUtil;
+import gob.osinergmin.myc.common.util.MycUtil;
+import gob.osinergmin.myc.common.util.MycUtil;
+import gob.osinergmin.myc.domain.PghObligacion;
+import gob.osinergmin.myc.domain.base.BaseConstantesOutBean;
 import gob.osinergmin.myc.domain.dto.BaseLegalDTO;
 import gob.osinergmin.myc.domain.dto.CnfObligacionDTO;
 import gob.osinergmin.myc.domain.dto.CriterioDTO;
 import gob.osinergmin.myc.domain.dto.DetalleBaseLegalDTO;
 import gob.osinergmin.myc.domain.dto.DetalleCriterioDTO;
 import gob.osinergmin.myc.domain.dto.DetalleDocumentoCriterioDTO;
+import gob.osinergmin.myc.domain.dto.DetalleNormaTecnicaDTO;
 import gob.osinergmin.myc.domain.dto.DetalleObligacionDTO;
 import gob.osinergmin.myc.domain.dto.DocumentoAdjuntoDTO;
+import gob.osinergmin.myc.domain.dto.IncumplimientoDTO;
+import gob.osinergmin.myc.domain.dto.InfraccionDTO;
+import gob.osinergmin.myc.domain.dto.MaestroColumnaDTO;
 import gob.osinergmin.myc.domain.dto.ObliTipiDTO;
 import gob.osinergmin.myc.domain.dto.ObligacionBaseLegalDTO;
 import gob.osinergmin.myc.domain.dto.ObligacionTipoDTO;
@@ -16,12 +45,18 @@ import gob.osinergmin.myc.domain.dto.ProcesoDTO;
 import gob.osinergmin.myc.domain.dto.MaestroColumnaDTO;
 import gob.osinergmin.myc.domain.dto.ObligacionNormativaDTO;
 import gob.osinergmin.myc.domain.dto.ObligacionTipificacionDTO;
+import gob.osinergmin.myc.domain.dto.ObligacionTipoDTO;
+import gob.osinergmin.myc.domain.dto.OpcionDTO;
+import gob.osinergmin.myc.domain.dto.ProcesoDTO;
+import gob.osinergmin.myc.domain.dto.RubroOpcionDTO;
 import gob.osinergmin.myc.domain.dto.TemaDTO;
 import gob.osinergmin.myc.domain.dto.TipificacionDTO;
 import gob.osinergmin.myc.domain.dto.TipificacionSancionDTO;
 import gob.osinergmin.myc.domain.dto.UsuarioDTO;
 import gob.osinergmin.myc.domain.in.GuardarDocumentoAdjuntoInRO;
+import gob.osinergmin.myc.domain.in.GuardarRubroOpcionInRO;
 import gob.osinergmin.myc.domain.out.GuardarDocumentoAdjuntoOutRO;
+import gob.osinergmin.myc.domain.out.GuardarRubroOpcionOutRO;
 import gob.osinergmin.myc.domain.ui.BaseLegalFilter;
 import gob.osinergmin.myc.domain.ui.ObligacionFilter;
 import gob.osinergmin.myc.service.business.BaseLegalServiceNeg;
@@ -30,6 +65,8 @@ import gob.osinergmin.myc.service.business.CriterioServiceNeg;
 import gob.osinergmin.myc.service.business.DetalleCriterioServiceNeg;
 import gob.osinergmin.myc.service.business.DetalleObligacionServiceNeg;
 import gob.osinergmin.myc.service.business.DocumentoAdjuntoNeg;
+import gob.osinergmin.myc.service.business.IncumplimientoServiceNeg;
+import gob.osinergmin.myc.service.business.InfraccionServiceNeg;
 import gob.osinergmin.myc.service.business.MaestroColumnaServiceNeg;
 import gob.osinergmin.myc.service.business.ObliTipiServiceNeg;
 import gob.osinergmin.myc.service.business.ObligacionBaseLegalServiceNeg;
@@ -49,15 +86,18 @@ import java.net.Inet4Address;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.cxf.helpers.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -119,7 +159,15 @@ public class MantenimientoBaseLegalController {
     
     @Inject
     private ObliTipiServiceNeg obliTipiCriterioServiceNeg;
+    /*PR_OSINE119 - Item 13 - Inicio*/
+    @Autowired
+    private InfraccionServiceNeg infraccionServiceNeg;
+    /*PR_OSINE119 - Item 13 - Fin*/
     
+    /*PR_OSINE119 - Item 14 - Inicio*/
+    @Autowired
+    private IncumplimientoServiceNeg incumplimientoServiceNeg ;
+    /*PR_OSINE119 - Item 14 - Fin*/
     @InitBinder
     public void binder(WebDataBinder binder) {
         binder.registerCustomEditor(Date.class, new PropertyEditorSupport() {
@@ -269,7 +317,41 @@ public class MantenimientoBaseLegalController {
             LOG.info("error al procesar listadoSigla " +e);
         }
         return listTipoAnexo;
+    }    
+    /**
+     * 
+     * @return 
+     */
+    /*
+    @RequestMapping(value = "/obtenerNumeroAnexo", method = RequestMethod.GET)
+    public @ResponseBody
+    List<MaestroColumnaDTO> obtenerNumeroAnexo() {
+        List<MaestroColumnaDTO> listTipoAnexo = new ArrayList<MaestroColumnaDTO>();
+        try{
+        listTipoAnexo=maestroColumnaService.listarNumeroAnexo();
+        }catch(Exception e){
+            LOG.info("error al procesar listadoSigla " +e);
+        }
+        return listTipoAnexo;
     }
+    */
+    /***        
+    * @param codigo
+    * @return 
+    */
+    @RequestMapping(value = "/obtenerNumeroAnexo", method = RequestMethod.GET)
+    public @ResponseBody
+    List<MaestroColumnaDTO> obtenerNumeroAnexo(String codigo) {
+    	System.out.println("codigoo por finnn"+codigo);
+        List<MaestroColumnaDTO> listNumeroAnexo = new ArrayList<MaestroColumnaDTO>();
+        try{
+        listNumeroAnexo=maestroColumnaService.listarNumeroAnexo(codigo);
+        }catch(Exception e){
+            LOG.info("error al procesar listadoSigla " +e);
+        }
+        return listNumeroAnexo;
+    }
+    
     /**
      * 
      * @param idActividad
@@ -407,16 +489,61 @@ public class MantenimientoBaseLegalController {
 
         return salida;
     }
-    /**
-     * 
-     * @param codigo
-     * @param pep
-     * @param rows
-     * @param page
-     * @param session
-     * @param request
-     * @return 
-     */
+    /*PR OSINE_119 - Item 14 - Inicio*/    
+    @RequestMapping(value = "/registrarIncumplimiento", method = RequestMethod.POST)
+    public @ResponseBody
+    Map<String, Object> registrarIncumplimiento(Long idIncumplimiento,Long  idObligacion,Long idInfraccion,Long idMaestroincumplimiento, String codTrazabilidad,HttpServletRequest request, HttpSession session) {
+        LOG.info("procesando POST para RequestMapping /registrarIncumplimiento POST -- registrarIncumplimiento");
+        LOG.info("-- idTipificacion = "+idIncumplimiento);
+        LOG.info("-- idObligacion = "+idObligacion);
+        LOG.info("-- idInfraccion = "+idInfraccion);
+        Map<String, Object> salida = new HashMap<String, Object>();
+        IncumplimientoDTO incumplimientoDTO = null;        
+        try {
+            UsuarioDTO usuarioDTO = getUsuario(session);
+            
+            incumplimientoDTO = new IncumplimientoDTO();
+            incumplimientoDTO.setId_esce_incumplimiento(idIncumplimiento);
+            incumplimientoDTO.setId_infraccion(idInfraccion);
+            incumplimientoDTO.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
+            incumplimientoDTO.setId_esce_incu_maestro(idMaestroincumplimiento);
+            incumplimientoDTO.setCod_trazabilidad(codTrazabilidad);
+            incumplimientoDTO.setTerminal_creacion(usuarioDTO.getTerminal());
+            incumplimientoDTO.setUsuario_creacion(usuarioDTO.getCodigo());
+        
+            if(idInfraccion!=null){
+            
+		            List<IncumplimientoDTO> listaIncumplimiento = incumplimientoServiceNeg.listarIncumplimiento(idInfraccion, idMaestroincumplimiento);		            
+		            if (listaIncumplimiento==null || listaIncumplimiento.isEmpty()) {
+		            	
+		                incumplimientoServiceNeg.guardaIncumplimiento(incumplimientoDTO, usuarioDTO);
+		                String mensaje=controlMessagesStaticEntity(ConstantesWeb.mensajes.MSG_OPERATION_SUCCESS_CREATE_RELATION,ConstantesWeb.mensajes.MSG_ENTITY_INCUMPLIMIENTO);
+		                salida.put(ConstantesWeb.VV_MENSAJE, mensaje);
+		                salida.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_EXITO);
+		            	
+		            } else {
+		            	String mensaje=controlMessagesStaticEntity(ConstantesWeb.mensajes.MSG_OPERATION_FAIL_CREATE_DUPLICATE,ConstantesWeb.mensajes.MSG_ENTITY_INCUMPLIMIENTO);
+		                salida.put(ConstantesWeb.VV_MENSAJE, mensaje);
+		                salida.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_ERROR);
+		            }
+	        } else {
+	        	    String mensaje=controlMessagesStaticEntity("Debe registrar la Infraci&oacute;n","");
+		        	salida.put(ConstantesWeb.VV_MENSAJE, mensaje);
+		            salida.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_ERROR);
+	        }
+            
+        } catch (Exception ex) {
+            LOG.error("Error al Registrar Incumplimiento Controller: " + ex.getMessage());
+            ex.printStackTrace();
+            String mensaje=controlMessagesStaticEntity(ConstantesWeb.mensajes.MSG_OPERATION_FAIL_CREATE_RELATION,ConstantesWeb.mensajes.MSG_ENTITY_INCUMPLIMIENTO);
+            salida.put(ConstantesWeb.VV_MENSAJE, ex.getMessage());
+            salida.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_ERROR);
+        }
+
+        return salida;
+    }
+    /*PR OSINE_119 - Item 14 - Fin*/
+    
     @RequestMapping(value = "/findTipificacion", method = RequestMethod.GET)
     public @ResponseBody
     Map<String, Object> findTipificacion(int rows, int page, String sidx,
@@ -451,7 +578,82 @@ public class MantenimientoBaseLegalController {
         map.put("filas", listaTipificacionPaginada);
         return map;
     }
-
+    /*PR OSINE_119 - Item 14 - Inicio*/
+    /**
+     * Método que realiza la búsqueda de incumplimientos
+     * @param rows
+     * @param page
+     * @param sidx
+     * @param sord
+     * @param idIncumplimiento
+     * @param session
+     * @return 
+     */
+    @RequestMapping(value = "/findIncumplimiento", method = RequestMethod.GET)
+    public @ResponseBody
+    Map<String, Object> findIncumplimiento(int rows, int page, String sidx,
+            String sord, Long idInfraccion, HttpSession session) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        LOG.info("procesando GET para RequestMapping /findTipificacion ");
+        LOG.info("-- findIncumplimiento -idInfraccion = " + idInfraccion);
+        List<IncumplimientoDTO> listaIncumplimiento = new ArrayList<IncumplimientoDTO>();
+        if(idInfraccion!=null){
+         listaIncumplimiento = incumplimientoServiceNeg.listarIncumplimientos(idInfraccion);
+        }
+        Long contador = new Long(listaIncumplimiento.size());
+        int indiceInicial = (page - 1) * rows;
+        int indiceFinal = indiceInicial + rows;
+        List<IncumplimientoDTO> listaTipificacionPaginada = new ArrayList<IncumplimientoDTO>();
+        listaTipificacionPaginada = listaIncumplimiento.subList(
+                indiceInicial, indiceFinal > listaIncumplimiento
+                .size() ? listaIncumplimiento.size()
+                : indiceFinal);
+        Long numeroFilas = (contador / rows);
+        if ((contador % rows) > 0) {
+            numeroFilas = numeroFilas + 1L;
+        }
+        map.put("total", numeroFilas);
+        map.put("pagina", page);
+        map.put("registros", contador);
+        map.put("filas", listaTipificacionPaginada);
+        map.put("idInfraccion", idInfraccion);
+        
+        return map;
+    }
+    /*PR OSINE_119 - Item 14 - Fin*/
+    
+    /*PR OSINE_119 - Item 14 - Inicio*/
+    /**
+     * Método que elimina incumplimientos
+     * @param idEscenearioIncumplimiento
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/eliminarIncumplimiento", method = RequestMethod.POST)
+    public @ResponseBody
+    Map<String, Object> eliminarIncumplimiento(Long idEscenearioIncumplimiento, HttpSession session) {
+    	
+        Map<String, Object> map = new HashMap<String, Object>();
+        UsuarioDTO usuarioDTO = getUsuario(session);
+        LOG.info("procesando GET para RequestMapping /findTipificacion ");
+        LOG.info("-- idIncumplimiento = " + idEscenearioIncumplimiento);
+        IncumplimientoDTO incumplimientoDTO = new IncumplimientoDTO();
+        incumplimientoDTO.setId_esce_incumplimiento(idEscenearioIncumplimiento);
+        incumplimientoDTO  = incumplimientoServiceNeg.eliminarIncumplimiento(incumplimientoDTO,usuarioDTO);
+        if (incumplimientoDTO!=null) {            
+            String mensaje=controlMessagesStaticEntity(ConstantesWeb.mensajes.MSG_OPERATION_SUCCESS_CREATE_RELATION,ConstantesWeb.mensajes.MSG_OPERATION_FAIL_DELETE);
+            map.put(ConstantesWeb.VV_MENSAJE, mensaje);
+            map.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_EXITO);
+        } else {
+        	String mensaje=controlMessagesStaticEntity(ConstantesWeb.mensajes.MSG_OPERATION_FAIL_CREATE_DUPLICATE,ConstantesWeb.mensajes.MSG_OPERATION_SUCCESS_DELETE);
+        	map.put(ConstantesWeb.VV_MENSAJE, mensaje);
+        	map.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_ERROR);
+        }
+        return map;
+    }
+    
+    /*PR OSINE_119 - Item 14 - Fin*/
+    
     @RequestMapping(value = "/findTipificacionCriterio", method = RequestMethod.GET)
     public @ResponseBody
     Map<String, Object> findTipificacionCriterio(int rows, int page, String sidx,
@@ -1057,7 +1259,38 @@ public class MantenimientoBaseLegalController {
             throw new RuntimeException("IOError writing file to output stream");
         }        
     }
-    
+    /*PR OSINE_119 - Item 11 - Inicio*/
+    /**
+     * Método que permite descargar un archivo del alfresco
+     * @param response
+     * @param session
+     */
+    @RequestMapping(value="/descargaArchivoInfraccion",method= RequestMethod.GET)
+    public void descargaArchivoInfraccion(HttpServletResponse response, HttpSession session) {
+        LOG.info("procesando GET para RequestMapping /descargaArchivoInfracion GET ");
+        InputStream is = null;
+        String nombreArchivo = "";
+        DocumentoAdjuntoDTO documentoAdjunto = (DocumentoAdjuntoDTO)session.getAttribute(Constantes.CONSTANTE_ARCHIVO_INFRACCION);
+        byte[] data = documentoAdjunto.getRutaAlfrescoTmp();
+        is = new ByteArrayInputStream(data);
+        nombreArchivo = documentoAdjunto.getNombreArchivo();
+        try {        	
+            if(is==null){
+    	        response.getWriter().write("ERROR: AL DESCARGAR ARCHIVO..!!");
+    		return;
+            }       	
+            String nombreFichero = nombreArchivo;        	
+            response.setHeader("Content-Disposition", "attachment; filename=\"" 
+                    + nombreFichero+ "\"");
+            IOUtils.copy(is, response.getOutputStream());
+            response.flushBuffer();
+        }catch (Exception ex) {
+            LOG.info("--->"+ex.getMessage());
+            LOG.info("Error writing file to output stream. Filename was '" + nombreArchivo + "'");
+            throw new RuntimeException("IOError writing file to output stream");
+        }        
+    }
+    /*PR OSINE_119 - Item 11 - Fin*/
     @RequestMapping(value = "/cleanDatosCriterio", method = RequestMethod.GET)
     public @ResponseBody
     Map<String, Object> cleanDatosCriterio(HttpServletRequest request, HttpSession sesion, Model model) {
@@ -1206,77 +1439,92 @@ public class MantenimientoBaseLegalController {
         Map<String, Object> salida = new HashMap<String, Object>();
         
         try{
-            if(baseLegalDTO.getNumeroNormaLegal()!=null && !baseLegalDTO.getNumeroNormaLegal().equals("")){
-            	UsuarioDTO usuarioDTO = getUsuario(session);
-                
-                /* creado jpiro 20150107 - inicio */
-                GuardarDocumentoAdjuntoOutRO outFileAlfresco=null;
-                //si "articuloNormaLegal" es vacio entonces se evalua la subida al alfresco
-                if(baseLegalDTO.getArticuloNormaLegal()!=null && !baseLegalDTO.getArticuloNormaLegal().equals("") ){
-                    LOG.info("-->NO se sube archivo alfresco");
-                    request.getSession().removeAttribute("listaArchivosBL");
-                }else{
-                    LOG.info("-->SI se sube archivo alfresco");
-                    List<DocumentoAdjuntoDTO> listaArchivos = ((List<DocumentoAdjuntoDTO>) request.getSession().getAttribute("listaArchivosBL"));
-                    LOG.info("listaArchivos sesion-->"+listaArchivos);
-                    if (listaArchivos != null && listaArchivos.size()>0) {
-                        DocumentoAdjuntoDTO documento =new DocumentoAdjuntoDTO(); 
-                        //genera nombre alfresco=rutaAlfrescoBD
-                        int lastIndexOf = listaArchivos.get(0).getNombreArchivo().lastIndexOf(".");
-                        String formato = listaArchivos.get(0).getNombreArchivo().substring(lastIndexOf);
-                        String rutaAlfrescoBD = baseLegalDTO.getCodigoBaseLegal()+"_DOCUMENTO"+formato;
-                        
-                        File someFile = new File(rutaAlfrescoBD);
-                        FileOutputStream fos = new FileOutputStream(someFile);
-                        fos.write(listaArchivos.get(0).getRutaAlfrescoTmp());
-                        fos.flush();
-                        fos.close();
-                        
-                        documento.setNombreArchivo(listaArchivos.get(0).getNombreArchivo());   
-                        documento.setAplicacionSpace(Constantes.APPLICACION_SPACE_OBLIGACIONES);
-                        
-                        //GuardarDocumentoAdjuntoInRO inDoc=new GuardarDocumentoAdjuntoInRO();
-                        outFileAlfresco=documentoServiceNeg.enviarDatosAlfresco(documento, someFile);
-                        if (outFileAlfresco!=null && outFileAlfresco.getMensaje().equalsIgnoreCase("ok")){
-                            GuardarDocumentoAdjuntoInRO inDoc=new GuardarDocumentoAdjuntoInRO();
-                            documento.setRutaAlfresco(rutaAlfrescoBD);
-                            documento.setIdDocumentoAdjunto(null);
-                            documento.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
-                            inDoc.setDocumento(documento);
-                            inDoc.setUsuario(usuarioDTO);
-
-                            GuardarDocumentoAdjuntoOutRO saveDoc =documentoServiceNeg.registrarDocumentoAdjunto(inDoc);
+        	List<BaseLegalDTO> baseLegal = new ArrayList<BaseLegalDTO>();
+        	BaseLegalFilter filtro = new BaseLegalFilter();
+        	filtro.setDescripcion(baseLegalDTO.getDescripcionGeneralBaseLegal());
+        	if (baseLegalDTO.getFlagPadre() != null ){
+        	  baseLegal = baseLegalService.verificarBaseLegalExistente(filtro);
+        	}
+        	if (baseLegal.size() == 0){
+                if(baseLegalDTO.getNumeroNormaLegal()!=null && !baseLegalDTO.getNumeroNormaLegal().equals("")){
+                	UsuarioDTO usuarioDTO = getUsuario(session);
+                    
+                    /* creado jpiro 20150107 - inicio */
+                    GuardarDocumentoAdjuntoOutRO outFileAlfresco=null;
+                    //si "articuloNormaLegal" es vacio entonces se evalua la subida al alfresco
+                    if(baseLegalDTO.getArticuloNormaLegal()!=null && !baseLegalDTO.getArticuloNormaLegal().equals("") ){
+                        LOG.info("-->NO se sube archivo alfresco");
+                        request.getSession().removeAttribute("listaArchivosBL");
+                    }else{
+                        LOG.info("-->SI se sube archivo alfresco");
+                        List<DocumentoAdjuntoDTO> listaArchivos = ((List<DocumentoAdjuntoDTO>) request.getSession().getAttribute("listaArchivosBL"));
+                        LOG.info("listaArchivos sesion-->"+listaArchivos);
+                        if (listaArchivos != null && listaArchivos.size()>0) {
+                            DocumentoAdjuntoDTO documento =new DocumentoAdjuntoDTO(); 
+                            //genera nombre alfresco=rutaAlfrescoBD
+                            int lastIndexOf = listaArchivos.get(0).getNombreArchivo().lastIndexOf(".");
+                            String formato = listaArchivos.get(0).getNombreArchivo().substring(lastIndexOf);
+                            String rutaAlfrescoBD = baseLegalDTO.getCodigoBaseLegal()+"_DOCUMENTO"+formato;
                             
-                            baseLegalDTO.setIdDocumentoAdjunto(saveDoc.getDocumento().getIdDocumentoAdjunto());	
+                            File someFile = new File(rutaAlfrescoBD);
+                            FileOutputStream fos = new FileOutputStream(someFile);
+                            fos.write(listaArchivos.get(0).getRutaAlfrescoTmp());
+                            fos.flush();
+                            fos.close();
+                            
+                            documento.setNombreArchivo(listaArchivos.get(0).getNombreArchivo());   
+                            documento.setAplicacionSpace(Constantes.APPLICACION_SPACE_OBLIGACIONES);
+                            
+                            //GuardarDocumentoAdjuntoInRO inDoc=new GuardarDocumentoAdjuntoInRO();
+                            outFileAlfresco=documentoServiceNeg.enviarDatosAlfresco(documento, someFile);
+                            if (outFileAlfresco!=null && outFileAlfresco.getMensaje().equalsIgnoreCase("ok")){
+                                GuardarDocumentoAdjuntoInRO inDoc=new GuardarDocumentoAdjuntoInRO();
+                                documento.setRutaAlfresco(rutaAlfrescoBD);
+                                documento.setIdDocumentoAdjunto(null);
+                                documento.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
+                                inDoc.setDocumento(documento);
+                                inDoc.setUsuario(usuarioDTO);
+
+                                GuardarDocumentoAdjuntoOutRO saveDoc =documentoServiceNeg.registrarDocumentoAdjunto(inDoc);
+                                
+                                baseLegalDTO.setIdDocumentoAdjunto(saveDoc.getDocumento().getIdDocumentoAdjunto());	
+                            }
                         }
                     }
+                    /* creado jpiro 20150107 - fin */
+                    
+                    String estado="1";
+                    baseLegalDTO.setEstado(estado);
+                    String descSinEspacio = baseLegalDTO.getDescripcionGeneralBaseLegal();
+                    baseLegalDTO.setDescripcionGeneralBaseLegal(descSinEspacio.trim());
+                    BaseLegalDTO retorno=baseLegalService.guardaBaseLegal(baseLegalDTO,usuarioDTO);
+                    //jsifuentes inicio
+                    retorno.setListaBasesLegales(baseLegalDTO.getListaBasesLegales());
+                    //jsifuentes fin
+                    LOG.info("(Registra Base Legal) retorno: "+retorno.getCodigoBaseLegal());                
+//                   String mensaje=controlMessagesEntity(ConstantesWeb.mensajes.MSG_OPERATION_SUCCESS_CREATE,ConstantesWeb.mensajes.MSG_ENTITY_BASELEGAL,retorno.getCodigoBaseLegal());
+                    String mensaje=controlMessagesStaticEntity(ConstantesWeb.mensajes.MSG_OPERATION_SUCCESS_CREATE,ConstantesWeb.mensajes.MSG_ENTITY_BASELEGAL);
+    // 05-11-2015                
+                    String codigoTrazabilidad = generarCodTrazabilidad();
+                    salida.put("baseLegal", retorno);
+                    salida.put("codTrazabilidad",codigoTrazabilidad);
+    // 05-11-2015
+                    salida.put("codigoBaseLegal", retorno.getCodigoBaseLegal());
+                    salida.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_EXITO);
+                    salida.put(ConstantesWeb.VV_MENSAJE, mensaje);
+                }else{
+                    salida.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_ADVERTENCIA);
+                    String mensaje="Campo Número es Obligatorio";
+                    salida.put(ConstantesWeb.VV_MENSAJE, mensaje);
                 }
-                /* creado jpiro 20150107 - fin */
-                
-                String estado="1";
-                baseLegalDTO.setEstado(estado);
-                String descSinEspacio = baseLegalDTO.getDescripcionGeneralBaseLegal();
-                baseLegalDTO.setDescripcionGeneralBaseLegal(descSinEspacio.trim());
-                BaseLegalDTO retorno=baseLegalService.guardaBaseLegal(baseLegalDTO,usuarioDTO);
-                LOG.info("(Registra Base Legal) retorno: "+retorno.getCodigoBaseLegal());                
-//               String mensaje=controlMessagesEntity(ConstantesWeb.mensajes.MSG_OPERATION_SUCCESS_CREATE,ConstantesWeb.mensajes.MSG_ENTITY_BASELEGAL,retorno.getCodigoBaseLegal());
-                String mensaje=controlMessagesStaticEntity(ConstantesWeb.mensajes.MSG_OPERATION_SUCCESS_CREATE,ConstantesWeb.mensajes.MSG_ENTITY_BASELEGAL);
-// 05-11-2015                
-                String codigoTrazabilidad = generarCodTrazabilidad();
-                salida.put("baseLegal", retorno);
-                salida.put("codTrazabilidad",codigoTrazabilidad);
-// 05-11-2015
-                salida.put("codigoBaseLegal", retorno.getCodigoBaseLegal());
-                salida.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_EXITO);
+                //Eliminar el documento adjunto de la session
+                request.getSession().removeAttribute("listaArchivosBL");
+        	}
+        	else{
+        		salida.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_ERROR);
+                String mensaje="Norma Legal ya ingresada verifique y modifique la informaci&oacute;n a registrar";
                 salida.put(ConstantesWeb.VV_MENSAJE, mensaje);
-            }else{
-                salida.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_ADVERTENCIA);
-                String mensaje="Campo Número es Obligatorio";
-                salida.put(ConstantesWeb.VV_MENSAJE, mensaje);
-            }
-            //Eliminar el documento adjunto de la session
-            request.getSession().removeAttribute("listaArchivosBL");
-        	
+        	}
         }catch(Exception e){
         	String mensaje=controlMessagesStaticEntity(ConstantesWeb.mensajes.MSG_OPERATION_FAIL_CREATE,ConstantesWeb.mensajes.MSG_ENTITY_BASELEGAL);
         	salida.put(ConstantesWeb.VV_RESULTADO, 3);        	
@@ -1379,6 +1627,9 @@ public class MantenimientoBaseLegalController {
         	
         	List<TemaDTO> retornoTema= obligacionNormativaService.consultaTemaByObligacionId(idObligacion);
         	
+        	/*PR OSINE_119 - Item 14 - Inicio*/        	
+        	InfraccionDTO retornoInfraccionDTO= obligacionNormativaService.consultaInfraccionByObligacionId(idObligacion);
+        	/*PR OSINE_119 - Item 14 - Fin*/
         	if(retorno.getIdDocumentoAdjunto()!=null){
                documento=documentoServiceNeg.consultarDatosAlfresco(retorno.getIdDocumentoAdjunto());
                LOG.info("idDocumento: "+retorno.getIdDocumentoAdjunto());
@@ -1396,12 +1647,36 @@ public class MantenimientoBaseLegalController {
                 for(TemaDTO maestra : retornoTema){s[cont]=maestra.getIdTemaObligacion().toString();cont++;}
                 listaTemas= StringUtils.join(s, ", ");
             } 
+        	
+        	String idRubros = "";         	
+        	ObligacionFilter filtro = new ObligacionFilter();
+        	int[] auxiliar=new int[1];
+        	filtro.setIdObligacion(idObligacion);
+        	List<CnfObligacionDTO> cnfObligacionDTOs= obligacionNormativaService.findObligacionById(filtro, auxiliar);
+        	
+        	if(cnfObligacionDTOs!=null){ 
+        		
+        	idRubros=MycUtil.concatenaListadoActividades(cnfObligacionDTOs);
+        	
+        	}
+        	/*PR OSINE_119 - Item 16 - Inicio*/
+        	List<OpcionDTO> listaOpciones=obligacionNormativaService.obtenerOpciones(idRubros);
+        	/*PR OSINE_119 - Item 16 - Fin*/
+        	if (listaOpciones!=null){        		
+        		salida.put("countOpc",listaOpciones.size());
+        		for (int i = 0; i < listaOpciones.size(); i++) {
+        			salida.put("opcion"+i,listaOpciones.get(i).getIdentificador_opcion() );        			                	
+				}        	
+        	}
         	        	        	
             salida.put("obligacion",retorno);
             salida.put("detalleObligacion",retornoDetalle);
             salida.put("documento",documento);
             salida.put("documentoDetalle", documentoDetalle);
             salida.put("listaTema", listaTemas);
+            /*PR OSINE_119 - Item 16 - Inicio*/
+            salida.put("idInfraccion", retornoInfraccionDTO);
+            /*PR OSINE_119 - Item 16 - Fin*/
         	salida.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_EXITO);
         }catch(Exception e){
             LOG.error("Error al Consultar Obligacion Controller: "+e.getMessage());
@@ -1668,6 +1943,78 @@ public class MantenimientoBaseLegalController {
         }
         return salida;
     }
+    /*PR OSINE_119 - Item 11 - Inicio*/    
+    /**
+     * Método que permite registrar una infracción
+     * @param idAccionMaestro
+     * @param idMedidaSeguridadMaestro
+     * @param descripcionInfraccion
+     * @param idInfraccion
+     * @param codigoObligacion
+     * @param codTrazabilidad
+     * @param request
+     * @param session
+     * @return 
+     */
+    @RequestMapping(value = "/registrarInfraccion", method = RequestMethod.POST)
+    public @ResponseBody
+        
+    Map<String, Object> registrarInfraccion(String idAccionMaestro, String idMedidaSeguridadMaestro,String descripcionInfraccion,Long idInfraccion,String codigoObligacion,String codTrazabilidad,HttpServletRequest request, HttpSession session){
+        Map<String, Object> salida = new HashMap<String, Object>();
+        try{
+        	Long idAccionMaestroTemp = Long.parseLong(idAccionMaestro);
+        	Long idMedidaSeguridadMaestroTemp = Long.parseLong(idMedidaSeguridadMaestro);
+            UsuarioDTO usuarioDTO = getUsuario(session);
+            DocumentoAdjuntoDTO archivoDTO = (DocumentoAdjuntoDTO)session.getAttribute(Constantes.CONSTANTE_ARCHIVO_INFRACCION);
+            if(idInfraccion!=null && !idInfraccion.equals("")){
+                InfraccionDTO infraccionDTO = new InfraccionDTO();
+                infraccionDTO.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
+                infraccionDTO.setIdAccionMaestro(idAccionMaestroTemp);
+                infraccionDTO.setIdMedidaSeguridadMaestro(idMedidaSeguridadMaestroTemp);
+                infraccionDTO.setDescripcionInfraccion(descripcionInfraccion);
+                infraccionDTO.setDocumentoAdjuntoDTO(archivoDTO);                
+                infraccionDTO.setCodTrazabilidad(codTrazabilidad);
+                infraccionDTO.setUsuarioCreacion(usuarioDTO.getCodigo());
+                infraccionDTO.setTerminalCreacion(usuarioDTO.getTerminal());
+                infraccionDTO.setIdInfraccion(idInfraccion);
+                InfraccionDTO retorno = infraccionServiceNeg.updateInfraccion(infraccionDTO, usuarioDTO);
+                String mensaje=controlMessagesStaticEntity(ConstantesWeb.mensajes.MSG_OPERATION_SUCCESS_UPDATE,ConstantesWeb.mensajes.MSG_ENTITY_INFRACCION);
+                salida.put(ConstantesWeb.VV_MENSAJE, mensaje);
+                salida.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_EXITO);
+            }else{
+
+                InfraccionDTO infraccionDTO = new InfraccionDTO();
+                infraccionDTO.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
+                infraccionDTO.setDescripcionInfraccion(descripcionInfraccion);                                
+                infraccionDTO.setIdAccionMaestro(idAccionMaestroTemp);
+                infraccionDTO.setIdMedidaSeguridadMaestro(idMedidaSeguridadMaestroTemp);
+                infraccionDTO.setDocumentoAdjuntoDTO(archivoDTO);                
+                infraccionDTO.setCodTrazabilidad(codTrazabilidad);
+                infraccionDTO.setUsuarioCreacion(usuarioDTO.getCodigo());
+                infraccionDTO.setTerminalCreacion(usuarioDTO.getTerminal());
+                PghObligacion pghObligacion = new PghObligacion();
+                Long idObligaciontemp = Long.parseLong(codigoObligacion);                
+                pghObligacion.setIdObligacion(idObligaciontemp);                
+                infraccionDTO.setIdObligacion(pghObligacion);
+                infraccionDTO.setIdObligacion2(new Long(codigoObligacion));
+                
+                InfraccionDTO retorno = infraccionServiceNeg.guardaInfraccion(infraccionDTO, usuarioDTO);
+                LOG.info("(Registra Detalle Obligacion) retorno: "+retorno.toString());                
+                String mensaje=controlMessagesStaticEntity(ConstantesWeb.mensajes.MSG_OPERATION_SUCCESS_CREATE,ConstantesWeb.mensajes.MSG_ENTITY_INFRACCION);
+                salida.put(ConstantesWeb.VV_MENSAJE, mensaje);
+                salida.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_EXITO);
+                salida.put("idInfraccion",retorno.getIdInfraccion());                
+            }
+        }catch(Exception e){
+            LOG.error("Error al Registrar Detalle Obligacion Controller: "+e.getMessage());
+            e.printStackTrace();
+            String mensaje=controlMessagesStaticEntity(ConstantesWeb.mensajes.MSG_OPERATION_FAIL_UPDATE,ConstantesWeb.mensajes.MSG_ENTITY_INFRACCION);
+            salida.put(ConstantesWeb.VV_MENSAJE, mensaje);
+            salida.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_ERROR);
+        }
+        return salida;
+    }
+    /*PR OSINE_119 - Item 11 - Fin*/
     /**
      * <-- Producción -- >
      * @param codigoEditarBaseLegal
@@ -1682,6 +2029,7 @@ public class MantenimientoBaseLegalController {
         LOG.info("procesando GET para RequestMapping /editar Gestion GET id: " + codigoEditarBaseLegal);
         BaseLegalDTO consulta = new BaseLegalDTO();
         DetalleBaseLegalDTO detalle=new DetalleBaseLegalDTO();
+        List<DetalleNormaTecnicaDTO>detalleNormaTecnicaDTO = new ArrayList<DetalleNormaTecnicaDTO>();
         model.addAttribute("idDialog", "dlgMantenimientoBaseLegal");
         model.addAttribute("flagBaseLegal", flagBaseLegal);
         try {
@@ -1694,13 +2042,25 @@ public class MantenimientoBaseLegalController {
             if(detalle!=null){
                 fechaPublicacionDetalleNormaLegal=convertirFechaString(detalle.getFechaEntradaVigenciaNorma());
             }
+            
+            detalleNormaTecnicaDTO = baseLegalService.findDetalleNormaTecnicaById(detalle.getIdDetalleBaseLegal());
+            /**/
+           //detalleNormaTecnicaDTO = baseLegalService.findDetalleNormaTecnicaById(detalle.getIdDetalleBaseLegal());            
+            /**/
             model.addAttribute("baseLegal",consulta);
             model.addAttribute("detalleBaseLegal",detalle);
             model.addAttribute("fechaVigenciaNormaLegalController",fechaVigenciaNormaLegal);
             model.addAttribute("fechaPublicacionNormaLegalController",fechaPublicacionNormaLegal);
             model.addAttribute("fechaPublicacionDetalleNormaLegalController",fechaPublicacionDetalleNormaLegal);
             model.addAttribute("documentoAdjunto",consulta.getIdDocumentoAdjunto());
+            if (detalleNormaTecnicaDTO != null){
+            	model.addAttribute("detalleNormaTecnicaDTO",JsonUtil.convertirObjetoACadenaJson(detalleNormaTecnicaDTO));
+            }else{
+            	model.addAttribute("detalleNormaTecnicaDTO",JsonUtil.convertirObjetoACadenaJson(new ArrayList<DetalleNormaTecnicaDTO>()));
+            }
             model.addAttribute("codTrazabilidad",generarCodTrazabilidad());
+            
+
         } catch (Exception e) {
             e.printStackTrace();
             LOG.error("ERROR en obtenerBaseLegal");
@@ -2005,10 +2365,12 @@ public class MantenimientoBaseLegalController {
      * @return
      */
     @RequestMapping(value="/registrarConfiguracionObligacion",method=RequestMethod.POST)
-    public @ResponseBody Map<String,Object> registrarConfiguracionObligacion(Long idObligacion,Long idRubro,Long idProceso,String idObligacionTipo,String codTrazabilidad,HttpSession session){
+    public @ResponseBody Map<String,Object> registrarConfiguracionObligacion(Long idObligacion,Long idRubro,Long idProceso,String idObligacionTipo,String codTrazabilidad, HttpSession session, HttpServletRequest request){
+    	LOG.info("datos mydata"+request.getParameter("midata"));
     	LOG.info("Metodo: Guardar Relaciones. idObligacion: "+idObligacion +"idRubro: "+idRubro+"idProceso: "+idProceso);
     	Map<String,Object> retorno=new HashMap<String,Object>();
-    	CnfObligacionDTO registro=new CnfObligacionDTO(); 
+    	CnfObligacionDTO registro=new CnfObligacionDTO();       	
+    	List<OpcionDTO> listaOpciones=new ArrayList<OpcionDTO>();
         try{
         	
         	UsuarioDTO usuarioDTO = getUsuario(session);
@@ -2023,6 +2385,29 @@ public class MantenimientoBaseLegalController {
         	String mensaje=controlMessagesStaticEntity(ConstantesWeb.mensajes.MSG_OPERATION_SUCCESS_CREATE_RELATION,ConstantesWeb.mensajes.MSG_ENTITY_CONFIGURACION);
         	retorno.put(ConstantesWeb.VV_MENSAJE, mensaje);
         	retorno.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_EXITO);
+        	
+        	String idRubros = "";         	
+        	ObligacionFilter filtro = new ObligacionFilter();
+        	int[] auxiliar=new int[1];
+        	filtro.setIdObligacion(idObligacion);
+        	List<CnfObligacionDTO> cnfObligacionDTOs= obligacionNormativaService.findObligacionById(filtro, auxiliar);
+        	
+        	if(cnfObligacionDTOs!=null){ 
+        		
+        	idRubros=MycUtil.concatenaListadoActividades(cnfObligacionDTOs);
+        	
+        	}else {
+        		idRubros=idRubro.toString();	
+        	}
+        	
+        	listaOpciones=obligacionNormativaService.obtenerOpciones(idRubros);
+        	
+        	if (listaOpciones!=null){        		
+        		    retorno.put("countOpc",listaOpciones.size());
+        		for (int i = 0; i < listaOpciones.size(); i++) {
+        			retorno.put("opcion"+i,listaOpciones.get(i).getIdentificador_opcion() );        			                	
+				}        	
+        	}
 
         }catch(Exception ex){
         	LOG.error("Error en Registrar Configuración: "+ex.getMessage());
@@ -2175,6 +2560,31 @@ public class MantenimientoBaseLegalController {
            ex.printStackTrace();
        }
        return retorno;
+   }
+   
+   
+   @RequestMapping(value="/obtenerFechaEntradaVigente", method= RequestMethod.POST)
+   public @ResponseBody String obtenerFechaEntradaVigente(Long idBaseLegal, HttpServletRequest request){
+	   LOG.info("procesando registrar Asociacion ObligacionCriterio");
+       Map<String,Object> retorno = new HashMap<String,Object>();
+       try{
+    	   BaseLegalFilter filtro = new BaseLegalFilter();
+    	   filtro.setIdBaseLegal(idBaseLegal);
+    	   int[ ] auxiliar = {99};
+    	   String fechafechaVigenciaNormaLegalFormateada = "";
+    	   List<BaseLegalDTO> baseLegalDTO =  baseLegalService.listarBaseLegalToBaseLegal(filtro, auxiliar);
+//    	   baseLegalDTO.get(0).getFechaEntradaVigenciaNorma();
+    	   Date fechaVigenciaNormaLegal =  baseLegalDTO.get(0).getFechaEntradaVigenciaNormaLegal();
+    	   if (fechaVigenciaNormaLegal != null){
+    		   fechafechaVigenciaNormaLegalFormateada = new SimpleDateFormat("dd/MM/yyyy").format(fechaVigenciaNormaLegal);
+    	   }
+    	   retorno.put("baseLegalFechavigencia", fechafechaVigenciaNormaLegalFormateada);
+    	   retorno.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_EXITO);
+       }catch(Exception ex){
+           LOG.error("Error en registrarTipificacion: "+ex.getMessage());
+           ex.printStackTrace();
+       }
+       return JsonUtil.convertirObjetoACadenaJson(retorno);
    }
    /**
     * Concatena Mensaje Estático + Mensaje Ingresado a Criterio

@@ -5,9 +5,12 @@ import org.springframework.stereotype.Service;
 import gob.osinergmin.myc.domain.dto.CnfObligacionDTO;
 import gob.osinergmin.myc.domain.dto.DetalleObligacionDTO;
 import gob.osinergmin.myc.domain.dto.DocumentoAdjuntoDTO;
+import gob.osinergmin.myc.domain.dto.InfraccionDTO;
 import gob.osinergmin.myc.domain.dto.MaestroColumnaDTO;
 import gob.osinergmin.myc.domain.dto.ObligacionBaseLegalDTO;
 import gob.osinergmin.myc.domain.dto.ObligacionNormativaDTO;
+import gob.osinergmin.myc.domain.dto.OpcionDTO;
+import gob.osinergmin.myc.domain.dto.RubroOpcionDTO;
 import gob.osinergmin.myc.domain.dto.TemaDTO;
 import gob.osinergmin.myc.domain.dto.UsuarioDTO;
 import gob.osinergmin.myc.domain.in.GuardarDocumentoAdjuntoInRO;
@@ -29,6 +32,7 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service("OblNormativaServiceNegImpl")
@@ -70,6 +74,7 @@ public class ObligacionNormativaServiceNegImpl implements ObligacionNormativaSer
 	public ObligacionNormativaDTO guardaObligacion(ObligacionNormativaDTO obligacionNormativaDTO,UsuarioDTO usuarioDTO){
             LOG.info("Registro Obligacion Normativa ServiceNegImpl");
             ObligacionNormativaDTO registro=null;
+            ObligacionBaseLegalDTO registroObligacionBaseLegal = null;
             DetalleObligacionDTO detalle = new DetalleObligacionDTO();
 // 05-11-2015     
             ObligacionBaseLegalDTO relacion = new ObligacionBaseLegalDTO();
@@ -122,6 +127,16 @@ public class ObligacionNormativaServiceNegImpl implements ObligacionNormativaSer
                         obligacionNormativaDAO.update(registro, usuarioDTO);
                         
                     }
+                }
+                
+                //grabando las concordancia
+                for (int i = 0; i < obligacionNormativaDTO.getListaBasesLegales().size(); i++) {
+              	  registroObligacionBaseLegal = new ObligacionBaseLegalDTO();
+              	  registroObligacionBaseLegal.setIdBaseLegal(obligacionNormativaDTO.getListaBasesLegales().get(i).getIdBaseLegalDestino());
+              	  registroObligacionBaseLegal.setIdObligacion(registro.getIdObligacion());
+              	  registroObligacionBaseLegal.setEstado("1");
+              	  registroObligacionBaseLegal.setCodTrazabilidad(obligacionNormativaDTO.getCodTrazabilidad());
+              	  registroObligacionBaseLegal = obligacionBaseLegalDAO.create(registroObligacionBaseLegal, usuarioDTO);
                 }
 		LOG.info("(Registro Obligacion Normativa ServiceNegImpl) registro: "+registro.toString());
             } catch (Exception ex) {
@@ -183,7 +198,18 @@ public class ObligacionNormativaServiceNegImpl implements ObligacionNormativaSer
 		
 		return retorno;
 	}
-
+	/*PR OSINE_119 - Item 16 - Inicio*/
+	
+	@Override
+	public List<OpcionDTO> obtenerOpciones(String idRubro) {
+		List<OpcionDTO> retorno=null;
+		retorno = obligacionNormativaDAO.obtenerOpciones(idRubro);
+		LOG.info("cuenta -size: "+retorno);
+		
+		return retorno;
+	}
+	
+	/*PR OSINE_119 - Item 16 - Inicio*/
 	@Override
 	public List<CnfObligacionDTO> findObligacionById(ObligacionFilter filtro, int[] auxiliar) {
 		LOG.info("(Encontrar Obligacion By Id Service Neg Impl)Ingresando...");
@@ -222,7 +248,15 @@ public class ObligacionNormativaServiceNegImpl implements ObligacionNormativaSer
 		lista=obligacionNormativaDAO.findTemaObligacion(idObligacion);
 		return lista;
 	}
-
+	/*PR OSINE_119 - Item 14 - Inicio*/
+	@Override
+		public InfraccionDTO consultaInfraccionByObligacionId(Long idObligacion) {
+		LOG.info("Funcion: Consultar Temas de la Obligacion");
+		InfraccionDTO lista=null;
+		lista=obligacionNormativaDAO.findInfraccionObligacion(idObligacion);
+		return lista;
+	}
+	/*PR OSINE_119 - Item 14 - Fin*/
 	@Override
 	public ObligacionNormativaDTO registrarRelaciones(
 			ObligacionNormativaDTO registro, UsuarioDTO usuarioDTO) {

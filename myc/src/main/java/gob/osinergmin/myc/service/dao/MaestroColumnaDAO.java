@@ -22,6 +22,14 @@ public interface MaestroColumnaDAO {
 	    public List<MaestroColumnaDTO> findComponente() throws Exception;
 	    public List<MaestroColumnaDTO> findSigla() throws Exception;
 	    public List<MaestroColumnaDTO> findTipoAnexo() throws Exception;
+	    /*Rsis 11 - Inicio*/
+	    public List<MaestroColumnaDTO> findMedidaSeguridad() throws Exception;
+	    public List<MaestroColumnaDTO> findAccionInfraccion() throws Exception;
+	    public List<MaestroColumnaDTO> findEscenario() throws Exception;
+	    /*Rsis 11 - Fin*/
+	    /*Rsis 1 - Inicio*/
+	    public List<MaestroColumnaDTO> findNumeroAnexo(String codigo) throws Exception;
+	    /*Rsis 1 - Fin*/
 	    public List<MaestroColumnaDTO> findTemas() throws Exception;
 	    public List<MaestroColumnaDTO> findCriticidad() throws Exception;
 	    public List<MaestroColumnaDTO> findNormaTecnica() throws Exception;

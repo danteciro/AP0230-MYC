@@ -74,10 +74,11 @@ public class CnfObligacionBuilder {
 			for(Object[] maestro:lista){
 				proceso  = new CnfObligacionDTO();
 				proceso.setIdConfObligacion(new Long(maestro[0].toString()));
-				proceso.setNombreActividad(maestro[1].toString());
-				proceso.setNombreProceso(maestro[2].toString());
-				proceso.setDescripcionObligacionTipo(maestro[3].toString());
-				proceso.setIdProOblTip(new Long(maestro[4].toString()));
+				proceso.setIdActividad(new Long(maestro[1].toString()));
+				proceso.setNombreActividad(maestro[2].toString());
+				proceso.setNombreProceso(maestro[3].toString());
+				proceso.setDescripcionObligacionTipo(maestro[4].toString());
+				proceso.setIdProOblTip(new Long(maestro[5].toString()));
 				retorno.add(proceso);
 			}
 		}

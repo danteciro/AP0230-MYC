@@ -70,6 +70,8 @@ public class ActividadDAOImpl implements ActividadDAO {
                     query = crud.getEm().createNamedQuery("MdiActividad.findByIdProcedimiento");
                 }else if (filtro.getIdTramiteActividad()!= null) {
                     query = crud.getEm().createNamedQuery("MdiActividad.findByIdTramiteActividad");
+                }else if (filtro.getIdRubroOpcion()!= null) {
+                    query = crud.getEm().createNamedQuery("MdiActividad.findByIdRubroOpcion");
                 }else{
                     query = crud.getEm().createNamedQuery("MdiActividad.findAll");
                 }

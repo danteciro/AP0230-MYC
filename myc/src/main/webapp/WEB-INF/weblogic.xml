@@ -14,5 +14,5 @@
       <package-name>org.springframework.*</package-name>
     </prefer-application-packages>
   </container-descriptor>
-  <context-root>myc</context-root>
+  <context-root>myc2</context-root>
 </weblogic-web-app>

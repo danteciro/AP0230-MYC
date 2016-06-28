@@ -41,6 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "PghBaseLegal.findActiveAll", query = "SELECT p FROM PghBaseLegal p WHERE p.estado='1'"),
     @NamedQuery(name = "PghBaseLegal.countAll",query="SELECT count(p.idBaseLegal) FROM PghBaseLegal p WHERE p.estado='1'"),
     @NamedQuery(name = "PghBaseLegal.countByFilter",query="SELECT count(p.idBaseLegal) FROM PghBaseLegal p WHERE p.estado='1' and upper(p.descripcion) like :descripcion and upper(p.codigoBaseLegal) like :codigoBaseLegal "),
+    @NamedQuery(name = "PghBaseLegal.countByIdBaseLegal",query="SELECT count(p.idBaseLegal) FROM PghBaseLegal p WHERE p.estado='1' and p.idBaseLegal=:idBaseLegal"),
     @NamedQuery(name = "PghBaseLegal.findByFilter",query="SELECT p FROM PghBaseLegal p WHERE p.estado='1' and upper(p.descripcion) like :descripcion and upper(p.codigoBaseLegal) like :codigoBaseLegal order by p.codigoBaseLegal desc "),
     @NamedQuery(name = "PghBaseLegal.countByFilterPadre",query="SELECT count(p.idBaseLegal) FROM PghBaseLegal p " +
     		"WHERE p.estado='1' " +
@@ -85,6 +86,10 @@ public class PghBaseLegal extends ColumAddObligacionesTmp  {
     private String titulo;
     @Column(name = "DESCRIPCION")
     private String descripcion;
+    /*Rsis 1 - Inicio*/
+    //@Column(name = "NUMERO_TIPO_ANEXO")
+    //private String numeroAnexo;
+    /*Rsis 1 - Inicio*/
     @Column(name = "ID_BASE_LEGAL_REF")
     private Long idBaseLegalRef;
     @Basic(optional = false)
@@ -298,7 +303,17 @@ public class PghBaseLegal extends ColumAddObligacionesTmp  {
         this.idDocumentoAdjunto = idDocumentoAdjunto;
     }
     
-    @XmlTransient
+    /*Rsis 1 - Inicio*/
+    /*public String getNumeroAnexo() {
+		return numeroAnexo;
+	}
+
+	public void setNumeroAnexo(String numeroAnexo) {
+		this.numeroAnexo = numeroAnexo;
+	}
+	*/
+	/*Rsis 1 - Fin*/
+	@XmlTransient
     public List<PghObligacionBaseLegal> getPghObligacionBaseLegalList() {
         return pghObligacionBaseLegalList;
     }

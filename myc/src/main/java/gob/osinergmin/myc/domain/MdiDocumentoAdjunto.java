@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -112,7 +113,10 @@ public class MdiDocumentoAdjunto extends Auditoria {
     
     @OneToMany(mappedBy = "idDocumentoAdjunto", fetch = FetchType.LAZY)
     private List<PghRequisito> pghRequisitoList;
-
+    /*Rsis 14 - Inicio*/
+    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idDocumentoAdjunto", fetch = FetchType.LAZY)
+    //private List<PghInfraccion> pghInfraccionList;
+    /*Rsis 14 - Inicio*/
     public MdiDocumentoAdjunto() {
     }
 
@@ -270,8 +274,19 @@ public class MdiDocumentoAdjunto extends Auditoria {
     public void setIdConcurso(Long idConcurso) {
         this.idConcurso = idConcurso;
     }
+    
+    /*Rsis 14 - Inicio*/
+    /*
+    public List<PghInfraccion> getPghInfraccionList() {
+		return pghInfraccionList;
+	}
 
-    @XmlTransient
+	public void setPghInfraccionList(List<PghInfraccion> pghInfraccionList) {
+		this.pghInfraccionList = pghInfraccionList;
+	}
+	*/
+	/*Rsis 14 - Fin*/
+	@XmlTransient
     @JsonIgnore
     public List<PghRequisito> getPghRequisitoList() {
         return pghRequisitoList;

@@ -1,5 +1,6 @@
 package gob.osinergmin.myc.service.dao;
 
+import gob.osinergmin.myc.domain.MdiDocumentoAdjunto;
 import gob.osinergmin.myc.domain.dto.DocumentoAdjuntoDTO;
 import gob.osinergmin.myc.domain.dto.UsuarioDTO;
 import gob.osinergmin.myc.domain.ui.DocumentoAdjuntoFilter;

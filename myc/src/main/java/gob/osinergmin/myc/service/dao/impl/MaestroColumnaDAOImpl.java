@@ -286,6 +286,111 @@ public class MaestroColumnaDAOImpl implements MaestroColumnaDAO{
 			        return listaMaestroColumnaDTO;
 
 		    }
+		    /*Rsis 11 - Inicio*/
+		    @Override
+		    @Transactional(readOnly=true)
+		    public List<MaestroColumnaDTO> findMedidaSeguridad() throws Exception{
+		    	LOG.info("entro findTipoAnexo");
+	        	List<MaestroColumnaDTO> listaMaestroColumnaDTO = null;
+	        	try{
+			        	
+			        	List<MdiMaestroColumna> listaMaestroColumna = null;
+		                Map<String, Object> parameters = new HashMap<String, Object>();
+		                String dominio="MEDIDA_SEGURIDAD";
+		                String aplicacion="MYC";
+		                parameters.put("dominio", dominio);
+		                parameters.put("aplicacion", aplicacion);
+		                LOG.info("parametros: "+parameters);
+		                listaMaestroColumna = crud.findByNamedQuery("MdiMaestroColumna.findByDominioAplicacionMedSeg", parameters);   
+		                LOG.info("TIPO ANEXO BD"+listaMaestroColumna);
+		                listaMaestroColumnaDTO = MaestroColumnaBuilder.getMaestroColumnaDTOList(listaMaestroColumna);
+				        LOG.info("TIPO ANEXO DTO: "+listaMaestroColumnaDTO +"TIPO ANEXO BD"+listaMaestroColumna);
+
+			        }catch(Exception e){
+			        	LOG.error("error", e);
+			        }
+			        return listaMaestroColumnaDTO;
+
+		    }
+		    
+		    @Override
+		    @Transactional(readOnly=true)
+		    public List<MaestroColumnaDTO> findAccionInfraccion() throws Exception{
+		    	LOG.info("entro findTipoAnexo");
+	        	List<MaestroColumnaDTO> listaMaestroColumnaDTO = null;
+	        	try{
+			        	
+			        	List<MdiMaestroColumna> listaMaestroColumna = null;
+		                Map<String, Object> parameters = new HashMap<String, Object>();
+		                String dominio="ACCION_MEDIDA";
+		                String aplicacion="MYC";
+		                parameters.put("dominio", dominio);
+		                parameters.put("aplicacion", aplicacion);
+		                LOG.info("parametros: "+parameters);
+		                listaMaestroColumna = crud.findByNamedQuery("MdiMaestroColumna.findByDominioAplicacionAccInfr", parameters);   
+		                LOG.info("TIPO ANEXO BD"+listaMaestroColumna);
+		                listaMaestroColumnaDTO = MaestroColumnaBuilder.getMaestroColumnaDTOList(listaMaestroColumna);
+				        LOG.info("TIPO ANEXO DTO: "+listaMaestroColumnaDTO +"TIPO ANEXO BD"+listaMaestroColumna);
+
+			        }catch(Exception e){
+			        	LOG.error("error", e);
+			        }
+			        return listaMaestroColumnaDTO;
+
+		    }
+		    
+		    @Override
+		    @Transactional(readOnly=true)
+		    public List<MaestroColumnaDTO> findEscenario() throws Exception{
+		    	LOG.info("entro findTipoAnexo");
+	        	List<MaestroColumnaDTO> listaMaestroColumnaDTO = null;
+	        	try{
+			        	
+			        	List<MdiMaestroColumna> listaMaestroColumna = null;
+		                Map<String, Object> parameters = new HashMap<String, Object>();
+		                String dominio="ESCENARIO_MEDIDA";
+		                String aplicacion="MYC";
+		                parameters.put("dominio", dominio);
+		                parameters.put("aplicacion", aplicacion);
+		                LOG.info("parametros: "+parameters);
+		                listaMaestroColumna = crud.findByNamedQuery("MdiMaestroColumna.findByDominioAplicacionEscenario", parameters);   
+		                LOG.info("TIPO ANEXO BD"+listaMaestroColumna);
+		                listaMaestroColumnaDTO = MaestroColumnaBuilder.getMaestroColumnaDTOList(listaMaestroColumna);
+				        LOG.info("TIPO ANEXO DTO: "+listaMaestroColumnaDTO +"TIPO ANEXO BD"+listaMaestroColumna);
+
+			        }catch(Exception e){
+			        	LOG.error("error", e);
+			        }
+			        return listaMaestroColumnaDTO;
+
+		    }
+		    /*Rsis 11 - Fin*/
+		    @Override
+		    @Transactional(readOnly=true)
+		    public List<MaestroColumnaDTO> findNumeroAnexo(String codigo) throws Exception{
+		    	LOG.info("entro findTipoAnexo");
+	        	List<MaestroColumnaDTO> listaMaestroColumnaDTO = null;
+	        	try{
+			        	
+			        	List<MdiMaestroColumna> listaMaestroColumna = null;
+		                Map<String, Object> parameters = new HashMap<String, Object>();
+		                //String dominio="NUM_ANEXO";
+		                String aplicacion="OBLIGACIONES";
+		                parameters.put("dominio", codigo);
+		                parameters.put("aplicacion", aplicacion);
+		                //parameters.put("codigo",codigo);
+		                LOG.info("parametros: "+parameters);
+		                listaMaestroColumna = crud.findByNamedQuery("MdiMaestroColumna.findByDominioAplicacion", parameters);   
+		                LOG.info("TIPO ANEXO BD"+listaMaestroColumna);
+		                listaMaestroColumnaDTO = MaestroColumnaBuilder.getMaestroColumnaDTOList(listaMaestroColumna);
+				        LOG.info("TIPO ANEXO DTO: "+listaMaestroColumnaDTO +"TIPO ANEXO BD"+listaMaestroColumna);
+
+			        }catch(Exception e){
+			        	LOG.error("error", e);
+			        }
+			        return listaMaestroColumnaDTO;
+
+		    }		    
 		    @Override
 		    @Transactional(readOnly=true)
 		    public List<MaestroColumnaDTO> findTemas() throws Exception{

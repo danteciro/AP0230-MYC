@@ -38,6 +38,9 @@ public class BaseLegalBuilder {
             registro.setEstado(baseLegalDTO.getEstado());
             registro.setIdBaseLegalRef(baseLegalDTO.getIdBaseLegalRef());
             registro.setFechaTerminoVigencia(baseLegalDTO.getFechaTerminoVigenciaNormaLegal());
+            /*Rsis 1 - Inicio*/
+            //registro.setNumero_Anexo(baseLegalDTO.getNumeroAnexo());
+            /*Rsis 1 - Fin*/
             if(baseLegalDTO.getIdDocumentoAdjunto()!=null){
                 registro.setIdDocumentoAdjunto(new MdiDocumentoAdjunto(baseLegalDTO.getIdDocumentoAdjunto()));
             }
@@ -125,6 +128,9 @@ public class BaseLegalBuilder {
     	baseLegalDTO.setEstado(baseLegal.getEstado());
     	baseLegalDTO.setFechaTerminoVigenciaNormaLegal(baseLegal.getFechaTerminoVigencia());
     	baseLegalDTO.setIdBaseLegalRef(baseLegal.getIdBaseLegalRef());
+    	/*Rsis 1 - Inicio*/
+    	//baseLegalDTO.setNumeroAnexo(baseLegal.getNumeroAnexo());
+    	/*Rsis 1 - Fin*/
         if(baseLegal.getIdDocumentoAdjunto()!=null){
             baseLegalDTO.setIdDocumentoAdjunto(baseLegal.getIdDocumentoAdjunto().getIdDocumentoAdjunto());
             baseLegalDTO.setNombreArchivo(baseLegal.getIdDocumentoAdjunto().getNombreArchivo());
@@ -203,6 +209,9 @@ public class BaseLegalBuilder {
 		baseLegalDTO.setEstado(baseLegal.getEstado());
 		baseLegalDTO.setFechaTerminoVigenciaNormaLegal(baseLegal.getFechaTerminoVigencia());
 		baseLegalDTO.setIdBaseLegalRef(baseLegal.getIdBaseLegalRef());
+		/*Rsis 1 - Inicio*/
+		//baseLegalDTO.setNumeroAnexo(baseLegal.getNumeroAnexo());
+		/*Rsis 1 - F*/
 	    if(baseLegal.getIdDocumentoAdjunto()!=null){
 	        baseLegalDTO.setIdDocumentoAdjunto(baseLegal.getIdDocumentoAdjunto().getIdDocumentoAdjunto());
 	        baseLegalDTO.setNombreArchivo(baseLegal.getIdDocumentoAdjunto().getNombreArchivo());

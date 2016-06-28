@@ -76,6 +76,10 @@ import org.codehaus.jackson.annotate.JsonIgnore;
             + "FROM PghCnfTramiteActividad ta "
             + "left join ta.idActividad ac "
             + "WHERE ac.estado=:estado and ta.estado=:estado and ta.idTramiteActivdad=:idTramiteActivdad")
+//    @NamedQuery(name = "MdiActividad.findByIdRubroOpcion", query = "SELECT distinct new MdiActividad(ac.idActividad,ac.nombre) "
+//            + "FROM PghCnfTramiteActividad ta "
+//            + "left join ta.idActividad ac "
+//            + "WHERE ac.estado=:estado and ta.estado=:estado and ta.idTramiteActivdad=:idTramiteActivdad")
 })
 public class MdiActividad extends Auditoria {
     private static final long serialVersionUID = 1L;
@@ -116,6 +120,8 @@ public class MdiActividad extends Auditoria {
     private List<PghCnfTramiteActividad> pghCnfTramiteActividadList;
     @OneToMany(mappedBy = "idActividad", fetch = FetchType.LAZY)
     private List<PghCnfRequProcedimiento> pghCnfRequProcedimientoList;
+    @OneToMany(mappedBy = "idActividad", fetch = FetchType.LAZY)
+    private List<PghRubroOpcion> pghRubroOpcionList;
 
     public MdiActividad() {
     }
@@ -247,8 +253,19 @@ public class MdiActividad extends Auditoria {
     public void setPghCnfRequProcedimientoList(List<PghCnfRequProcedimiento> pghCnfRequProcedimientoList) {
         this.pghCnfRequProcedimientoList = pghCnfRequProcedimientoList;
     }
+    
+    
+    @XmlTransient
+    @JsonIgnore
+    public List<PghRubroOpcion> getPghRubroOpcionList() {
+		return pghRubroOpcionList;
+	}
 
-    @Override
+	public void setPghRubroOpcionList(List<PghRubroOpcion> pghRubroOpcionList) {
+		this.pghRubroOpcionList = pghRubroOpcionList;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (idActividad != null ? idActividad.hashCode() : 0);

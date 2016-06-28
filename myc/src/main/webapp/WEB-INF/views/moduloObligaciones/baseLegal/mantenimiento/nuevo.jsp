@@ -8,7 +8,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script type="text/javascript" src='<c:url value="/javascript/app/moduloObligaciones/baseLegal/mantenimiento/nuevo.js" />' charset="utf-8"></script>
+        <!--PR119 RSIS 19 inicion -->
+        <script type="text/javascript">
+            var detalleNormaTecnicaDTO =${detalleNormaTecnicaDTO};
+//             console.log(detalleNormaTecnicaDTO);
+        </script>
+        <!--PR119 RSIS 19 Fin -->
+        <script type="text/javascript" src='<c:url value="/javascript/app/moduloObligaciones/baseLegal/mantenimiento/nuevo.js" />' charset="utf-8"></script>        
         <style>
         	
             .pui-tabview-left > .pui-tabview-nav{
@@ -135,7 +141,10 @@
                                     <div class="filaForm">
                                         <div class="lblc" style="vertical-align:top;width:140px;"><label for="txtaTitBaseLegal">Título:</label></div>
                                         <div>
-                                            <textarea id="txtaTitBaseLegal" value="${baseLegal.tituloNormaLegal}" name="tituloNormaLegal"  maxlength="200" style="height:17px;width:773px;">${baseLegal.tituloNormaLegal}</textarea>
+                                            <!-- PR119 - Item 22 - Inicio -->
+                                            <%--<textarea id="txtaTitBaseLegal" value="${baseLegal.tituloNormaLegal}" name="tituloNormaLegal"  maxlength="200" style="height:17px;width:773px;">${baseLegal.tituloNormaLegal}</textarea> --%>
+                                            <textarea id="txtaTitBaseLegal" value="${baseLegal.tituloNormaLegal}" name="tituloNormaLegal"  maxlength="500" style="height:17px;width:773px;">${baseLegal.tituloNormaLegal}</textarea>
+                                            <!-- PR119 - Item 22 - Fin -->
                                         </div>
                                     </div>
                                     
@@ -171,7 +180,10 @@
                                         <div class="filaForm"> 
                                             <div class="lblc" style="width:127px;" ><label for="dateFecVigenciaNorma" >Fecha Entrada Vigencia: </label></div>
                                             <div style="width:200px;">
-                                                <input id="dateFecVigenciaNorma" value="" name="" type="text" readonly>
+                                                 <!-- PR119 - Item 21 - Inicio -->
+                                                 <!--<input id="dateFecVigenciaNorma" value="" name="" type="text" readonly> -->
+                                                <input id="dateFecVigenciaNorma" value="${baseLegalFechavigencia}" name="" type="text" readonly>
+                                                <!-- PR119 - Item 21 - Fin -->
                                             </div>
                                         </div>
                                     </div>
@@ -188,6 +200,18 @@
                                         	<input id="cmbHideTipoAnexoBaseLegal" value="${detalleBaseLegal.tipoAnexo}" style="display:none;"/>
                                             <select id="cmbTipAneBaseLegal" name="tipoAnexo" validate="" >
                                             </select>
+											<!--Rsis 1 - Inicio -->
+											<div class="lblc">
+												<label id="lblNumeroAnexo" for="cmbNumeroAnexo" style="display:none;"><strong>N°:</strong></label>
+											</div>
+											<div style="width: 200px;">
+												<input id="cmbHideNumeroAnexo"
+													value="${detalleBaseLegal.numeroAnexo}"
+													style="display: none;" /> <select id="cmbNumeroAnexo"
+													name="numeroAnexo" validate="" style="display:none;">
+												</select>
+											</div>
+											<!--Rsis 1 - Fin -->
                                         </div>
                                     </div>
                                     <div id="divAnexoBaseLegal" style="display:none;">
@@ -228,8 +252,24 @@
                                             <select id="cmbNorTecBaseLegal" name="tipoNormaTecnica" validate="" >
                                             </select>
                                         </div>  
-                                        <textarea id="txtDesNorTecBaseLegal" value="${detalleBaseLegal.descripcionNormaTecnica}" name="descripcionNormaTecnica" validate="" maxlength="300" hidden="true" style="height:40px;width:569px;vertical-align:bottom;" placeholder="Norma">${detalleBaseLegal.descripcionNormaTecnica}</textarea>
+                                        <!-- PR119 - Item 22 - Inicio -->
+                                        <!--<textarea id="txtDesNorTecBaseLegal" value="${detalleBaseLegal.descripcionNormaTecnica}" name="descripcionNormaTecnica" validate="" maxlength="300" hidden="true" style="height:40px;width:569px;vertical-align:bottom;" placeholder="Norma">${detalleBaseLegal.descripcionNormaTecnica}</textarea>-->
+                                        <textarea id="txtDesNorTecBaseLegal" value="${detalleBaseLegal.descripcionNormaTecnica}" name="descripcionNormaTecnica" validate="" maxlength="300" hidden="true" style="height:40px;width:300px;vertical-align:bottom;" placeholder="Norma">${detalleBaseLegal.descripcionNormaTecnica}</textarea>
+                                        <seg:botonTag code="MO" value="Agregar"  styleClass="btn_a btn_small" id="btnAgregarNormaTecnica" onclick="" />
+                                        <!-- PR119 - Item 17 - Fin -->
                                     </div>
+                                    <!-- PR119 - Item 17 - Inicio -->
+                                    <br>
+                                    <div align="center">
+                                        <table id="tblNormaTecnica"></table>
+                                        <div id="pNormaTecnica"></div>
+                                    </div>
+                                    <br>
+                                    <div id="inputsDetalleNorma">
+<!--                                         <input type="checkbox" name="detalleNormaTecnica[0].idTipoNormaTecnica"  id="cmb" value="1" checked> -->
+<!--                                         <input type="checkbox" name="detalleNormaTecnica[1].idTipoNormaTecnica"  id="cmb" value="2" checked> -->
+                                    </div>
+                                 <!-- PR119 - Item 17 - Fin -->
                                 </fieldset>
                                 <div class="filaForm" >
                                     <br>
@@ -348,6 +388,11 @@
                             <input name="codTrazabilidad" type="hidden" value="${codTrazabilidad}">
 <!-- 05/11/2015 -->
                             <input id="txtidBaseLegalByObligacion" name="idBaseLegal" style="display:none;"  value="${baseLegal.idBaseLegal}" />
+                            <!-- PR119 - Item 18 - Inicio -->
+                            <input id="txtidBaseLegalConcordancia" name="idBaseLegalConcordancia" style="display:none;"  value="" />
+                            <div id="baseLegalConcordancia">
+                            </div>
+                            <!-- PR119 - Item 18 - Fin -->
                             
                             <div id="divMensajeValidacionObl" class="errorMensaje" tabindex='1' style="display: none" ></div>
                             <div id="divMensajeValOblNor" class="errorMensaje" tabindex='1' style="display: none" >Se debe registrar la Obligación Normativa</div>
@@ -424,15 +469,29 @@
 
                                     <div id="tabNueOblNor" style="width:920px;">
                                         <ul>
+                                            <!--Rsis 11 - Inicio-->
+                                            <!--
                                             <li><a href="#tabTip">Tipificación</a></li>
                                             <li><a href="#tabPau">Criterios</a></li>
                                             <li><a href="#tabDes">Descripciones</a></li>
                                             <li><a href="#tabReferencia">Referenciar Base Legal</a></li>
                                             <li><a href="#tabAsignar">Tipo de Supervisión</a></li>
                                             <li><a href="#tabRelaciones">Temas</a></li>
-
+                                            -->
+                                        	<li id="tabSupervision"><a href="#tabAsignar">Tipo de Supervisión</a></li>
+                                            <li id="tabSanciones"><a href="#tabTip">Sanciones</a></li>
+                                            <li id="tabDescr"><a href="#tabDes">Descripciones</a></li>
+                                            <li id="tabRef"><a href="#tabReferencia">Referenciar Base Legal</a></li>                                            
+                                            <li id="tabRelac"><a href="#tabRelaciones">Temas</a></li>
+											<li id="tabMedSeg"><a href="#tabMedidaSeguridad">Medida
+												de Seguridad</a></li>
+											<!--Rsis 11 - Fin-->
                                         </ul>
                                         <div id="tabTip">
+                                          <!-- PR119 - Item 7 - Inicio -->
+                                          <div id="fldstTipificaciones">
+			                                <h3>Tipificaciones</h3>
+			                              <!-- PR119 - Item 7 - Fin --> 
                                             <div id="tipificacionEditarObligacion">
                                                 <div id="divMensajeValidacionAdicionarTipificacion" class="errorMensaje" tabindex='1' style="display: none" ></div>
                                                 <div class="filaForm">
@@ -443,7 +502,10 @@
                                                     </div>
                                                     <div class="lblc" style="width:160px;"><label for="txtDesTipifOblNor">Descripción de la Infracción:</label></div>   
                                                     <div>
-                                                        <input type="text" id="txtDesTipifOblNor" name="value" style="width:416px;" disabled="disabled" maxlength="500"/>
+                                                        <!-- PR119 - Item 7 - Inicio -->
+                                                        <!--<input type="text" id="txtDesTipifOblNor" name="value" style="width:416px;" disabled="disabled" maxlength="500"/>-->
+                                                        <input type="text" id="txtDesTipifOblNor" name="value" style="width:350px;" disabled="disabled" maxlength="500"/>
+                                                        <!-- PR119 - Item 7 - Fin --> 
                                                     </div>
                                                 </div>
                                                 <div class="filaForm">
@@ -455,7 +517,10 @@
                                                     <div style="width:20px;"><label for="spinhastaOblNor">UIT</label></div>
                                                     <div class="lblc" style="width:136px;"><label for="txtBaseLegalTipificacion">Base Legal:</label></div>   
                                                     <div>
-                                                        <input type="text" id="txtBaseLegalTipificacion" name="value" style="width:416px;" disabled="disabled" />
+                                                        <!-- PR119 - Item 7 - Inicio -->
+                                                        <!--<input type="text" id="txtBaseLegalTipificacion" name="value" style="width:416px;" disabled="disabled" />-->
+                                                        <input type="text" id="txtBaseLegalTipificacion" name="value" style="width:350px;" disabled="disabled" />
+                                                        <!-- PR119 - Item 7 - Fin -->
                                                     </div>
                                                 </div>
                                                 <fieldset>
@@ -470,10 +535,147 @@
                                                     <seg:botonTag code="IN" value="Asociar" styleClass="btn_a btn_small" id="btnAgregarTipificacion" title="Asociar" onclick=""/>
                                                 </div>
                                                 <div><br></div>
+                                                <!-- PR119 - Item 7 - Inicio -->
+                                                <div style="border:0px black solid;padding:2px;margin:0px 0px 6px 0px;background:none repeat scroll 0 0 #e5e5e7;">Listado de Tipificaciones :</div>
+	                                            <div id="divContextMenuTipificacion"></div>
+	                                            <div id="gridTipificacion"></div>
+	                                            <!-- PR119 - Item 7 - Fin -->
                                             </div>
                                             
-                                            <div style="border:0px black solid;padding:2px;margin:0px 0px 6px 0px;background:none repeat scroll 0 0 #e5e5e7;">Listado de Tipificaciones :</div>
-                                            <div id="divContextMenuTipificacion"></div>
+                                            <!-- PR119 - Item 07 - Inicio -->
+<!--
+                                          <div id="divDocumentoAdjuntoDetalle" class="filaForm" >
+                                            <div style="width:180px;"></div>
+                                            <div><input id="btnSubirDocumentoAdjuntoDetalle" class="btn_a btn_small" type="button" value="Doc. Adjuntos"></div>
+                                                <div id="divDownloadDetalleImg" class="vam" style="padding-left:5px;">
+-->
+<!--                                                     <a id="lnkDownloadArchivoDescripcion" href="" ><img id="imgFilDesOblNor" style="cursor: pointer;"  height="24" width="20" hidden="true" src="/myc/images/stickers.png"/></a> -->
+<!--
+                                                </div>
+                                                <div style="vertical-align: middle"><label>(.png)</label></div>
+                                            </div>
+                                            
+                                            <div class="filaForm" style="display: none">
+                                                <div class="lble vat" style="width:200px;"><label for="txtDescObligacionNormativaGuia">Descripción Obligación Normativa (Guia):</label></div>
+                                                <div>
+                                                    <textarea maxlength="500" style="height:40px;width: 706px;" class="" name="descripcionGuiaObligacion" id="txtDescObligacionNormativaGuia"></textarea>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="filaForm" style="display: none">
+                                                <div class="lble vat" style="width:200px;"><label for=""></label></div>
+
+                                                <div class="vam">
+-->												
+                                                    <!--                                <button id="imgUpload" class="btnSimple" title="Subir Archivo"  type="button">Subir Archivo</button>-->
+<!--													
+													
+
+                                                    <button id="btnCargarDescOblNor" >Doc. Adjuntos</button>
+
+
+                                                </div>
+                                                <div style="vertical-align:middle;">
+                                                    <img id="imgFileDescCargaOblNor" height="24" width="20" hidden="true" src="/myc/images/stickers.png"/>
+                                                    <label id="lblDescFileCargado" ></label>
+                                                </div>     
+                                            </div>
+                                            <div class="filaForm"><br></div>
+                                            <div id="botones">
+                                            	<seg:botonTag code="MO" value="Guardar" styleClass="btn_a btn_small" id="btnAgregarDescripcion" title="Guardar" onclick=""/>
+-->												
+<!--                                                 <button id="btnAgregarDescripcion">Guardar</button> -->
+<!-- 
+                                            </div>
+
+                                        </div>
+                                        <div id="tabPau">
+                                        <div id="divMensajeValidacionOblCriterio" class="errorMensaje" style="display:none;" tabindex="1"></div>
+-->
+                                      <!-- PR119 - Item 07 - Fin -->
+                                            
+                                            <!-- PR119 - Item 07 - Inicio -->
+                                       		<h3>Criterio</h3> 
+                                            <!-- pestaña unida -->
+                                           <div id="criterioEditarObligacion">
+                                            <div id="divMensajeValidacionOblCriterio" class="errorMensaje" style="display:none;" tabindex="1"></div>
+                                           <!-- PR119 - Item 07 - Fin -->
+                                            <div id="criterioObligacionEditar">
+<!-- 05/11/2015 -->
+                                            <form id="formCriterio">                     
+                                            <div class="filaForm">
+                                            <div style="width:150px;"><label for="cmbTipiCriterio">Tipificación:</label></div>   
+                                            	<div>                                                	
+                                                    <select style="width:120px;" id="cmbTipiCriterio" name="idTipificacion" class="lbld" validate="[O]" >
+				                                            <option value="">--Seleccione--</option>
+				                                    </select>
+                                            	</div>
+                                            </div>
+                                            
+                                            <div class="filaForm">
+                        						<div class="vat" style="width:150px;"><label for="txtIncumplimientoCriterio">Incumplimiento:</label></div>
+                        						<div>
+                        							<!-- PR119 - Item 22 - Inicio -->
+                        							<!--<textarea id="txtIncumplimientoCriterio" style="width: 700px;" value="" name="descripcion" class="lbld" maxlength="400" rows="2" validate="[O]" ></textarea> -->
+                            						<textarea id="txtIncumplimientoCriterio" style="width: 650px;" value="" name="descripcion" class="lbld" maxlength="400" rows="2" validate="[O]" ></textarea>
+                            						<!-- PR119 - Item 22 - Fin -->
+                        						</div>
+                    						</div>
+                    						
+                    						<div class="filaForm">
+
+                                                    <div style="width:150px;"><label for="txtSancionMonetariaCriterio">Sanción Monetaria (Hasta):</label></div>   
+                                                    <div>
+                                                        <input type="text" id="txtSancionMonetariaCriterio" name="sancionMonetaria" style="width:95px;"  maxlength="12">
+                                                    </div>
+                                                    <div style="width:20px;"><label for="">UIT</label></div>
+                                                    <div class="lblc" style="width:136px;"><label for="txtBaseLegalCriterio">Base Legal:</label></div>   
+                                                    <div>
+                                                        <!-- PR119 - Item 22 - Inicio -->
+                                                        <!--<input type="text" id=txtBaseLegalCriterio name="baseLegal" style="width:416px;" maxlength="1000"/>-->
+                                                        <input type="text" id=txtBaseLegalCriterio name="baseLegal" style="width:367px;" maxlength="1000"/>
+                                                        <!-- PR119 - Item 22 - Fin -->
+                                                    </div>
+                                            </div>
+                                            <div class="form">
+                                            	
+							                    <div id="divProcesosCriterio" style="display:none;width: 875px;">
+							                    <fieldset>
+                                                    <legend>Otras Sanciones</legend>
+							                        <div class="filaForm" style="margin-top: 5px;"></div>
+							                        <div id="dvTituloEtapa" class="filaForm">
+							                        </div>
+							                        <div class="filaForm" style="margin-top: 5px;"></div>
+							                        <div id="dvEtapa" class="filaForm">
+							                        <div style="display: none;"><label for="divEtapa">Sanciones:</label></div>							                        
+							                            <div id="divEtapa" ></div>
+							                        </div>
+							                        </fieldset>
+							                    </div>
+							                    
+							                </div>
+							                </form>
+<!-- front_Criterio -->
+                                            <input type="hidden" id="idCriteriosJuntos" />
+<!-- 05/11/2015 -->
+                                            <div id="botones" class="filaForm">
+<!--                                            <input id="botoSubirPauta" class="btn_a btn_small" type="button" style="display: inline-block;" value="Asociar"> -->
+<!--                                             	<input id="btnGuardarObliTipiCriterio" class="btn_a btn_small" type="button" style="display: inline-block;" value="Asociar"> -->
+                                            	<seg:botonTag code="IN" value="Asociar" styleClass="btn_a btn_small" id="btnGuardarObliTipiCriterio" title="Asociar" onclick=""/>
+                                            	
+                                            </div>
+                                            <div >
+                                                <br>
+                                            </div>
+                                            </div>
+                                            <div style="border:0px black solid;padding:2px;margin:0px 0px 6px 0px;background:none repeat scroll 0 0 #e5e5e7;">Listado de Criterios :</div>
+                                            <div id="gridContenedorCriterio"></div>
+                                            <div id="divContextMenuCriterio"></div>
+                                            <div id="divContextMenuCriterioSub"></div>
+                                          </div>
+                                        <!-- PR119 - Item 7 - Inicio -->
+										</div>
                                         </div>
                                         <div id="tabDes">
                                             <div class="filaForm">
@@ -524,83 +726,14 @@
                                             	<seg:botonTag code="MO" value="Guardar" styleClass="btn_a btn_small" id="btnAgregarDescripcion" title="Guardar" onclick=""/>
 <!--                                                 <button id="btnAgregarDescripcion">Guardar</button> -->
                                             </div>
-
-                                        </div>
-                                        <div id="tabPau">
-                                        <div id="divMensajeValidacionOblCriterio" class="errorMensaje" style="display:none;" tabindex="1"></div>
-                                            <div id="criterioObligacionEditar">
-<!-- 05/11/2015 -->
-                                            <form id="formCriterio">                     
-                                            <div class="filaForm">
-                                            <div style="width:150px;"><label for="cmbTipiCriterio">Tipificación:</label></div>   
-                                            	<div>                                                	
-                                                    <select style="width:120px;" id="cmbTipiCriterio" name="idTipificacion" class="lbld" validate="[O]" >
-				                                            <option value="">--Seleccione--</option>
-				                                    </select>
-                                            	</div>
-                                            </div>
-                                            
-                                            <div class="filaForm">
-                        						<div class="vat" style="width:150px;"><label for="txtIncumplimientoCriterio">Incumplimiento:</label></div>
-                        						<div>
-                            						<textarea id="txtIncumplimientoCriterio" style="width: 700px;" value="" name="descripcion" class="lbld" maxlength="400" rows="2" validate="[O]" ></textarea>
-                        						</div>
-                    						</div>
-                    						
-                    						<div class="filaForm">
-
-                                                    <div style="width:150px;"><label for="txtSancionMonetariaCriterio">Sanción Monetaria (Hasta):</label></div>   
-                                                    <div>
-                                                        <input type="text" id="txtSancionMonetariaCriterio" name="sancionMonetaria" style="width:95px;"  maxlength="12">
-                                                    </div>
-                                                    <div style="width:20px;"><label for="">UIT</label></div>
-                                                    <div class="lblc" style="width:136px;"><label for="txtBaseLegalCriterio">Base Legal:</label></div>   
-                                                    <div>
-                                                        <input type="text" id=txtBaseLegalCriterio name="baseLegal" style="width:416px;" maxlength="1000"/>
-                                                    </div>
-                                            </div>
-                                            <div class="form">
-                                            	
-							                    <div id="divProcesosCriterio" style="display:none;width: 875px;">
-							                    <fieldset>
-                                                    <legend>Otras Sanciones</legend>
-							                        <div class="filaForm" style="margin-top: 5px;"></div>
-							                        <div id="dvTituloEtapa" class="filaForm">
-							                        </div>
-							                        <div class="filaForm" style="margin-top: 5px;"></div>
-							                        <div id="dvEtapa" class="filaForm">
-							                        <div style="display: none;"><label for="divEtapa">Sanciones:</label></div>							                        
-							                            <div id="divEtapa" ></div>
-							                        </div>
-							                        </fieldset>
-							                    </div>
-							                    
-							                </div>
-							                </form>
-<!-- front_Criterio -->
-                                            <input type="hidden" id="idCriteriosJuntos" />
-<!-- 05/11/2015 -->
-                                            <div id="botones" class="filaForm">
-<!--                                            <input id="botoSubirPauta" class="btn_a btn_small" type="button" style="display: inline-block;" value="Asociar"> -->
-<!--                                             	<input id="btnGuardarObliTipiCriterio" class="btn_a btn_small" type="button" style="display: inline-block;" value="Asociar"> -->
-                                            	<seg:botonTag code="IN" value="Asociar" styleClass="btn_a btn_small" id="btnGuardarObliTipiCriterio" title="Asociar" onclick=""/>
-                                            	
-                                            </div>
-                                            <div >
-                                                <br>
-                                            </div>
-                                            </div>
-                                            <div style="border:0px black solid;padding:2px;margin:0px 0px 6px 0px;background:none repeat scroll 0 0 #e5e5e7;">Listado de Criterios :</div>
-                                            <div id="gridContenedorCriterio"></div>
-                                            <div id="divContextMenuCriterio"></div>
-                                            <div id="divContextMenuCriterioSub"></div>
+                                        <!-- PR119 - Item 7 - Fin -->
                                         </div>
                                         <div id="tabReferencia">
                                             <div id="asociaObligacionEditar" >
                                             <div class="filaForm">
                                             <seg:botonTag code="IN" value="Asociar" styleClass="btn_a btn_small" id="btnAsociaNuevaBaseLegal" title="Asociar" onclick=""/>
 <!--                                             <input id="btnAsociaNuevaBaseLegal" class="btn_a btn_small" type="button"  value="Asociar"> -->
-                                            </div>
+		                                    </div>
                                             <br>
                                             </div>
                                             <div style="border:0px black solid;padding:2px;margin:0px 0px 6px 0px;background:none repeat scroll 0 0 #e5e5e7;">Listado de Bases Legales Asociadas:</div>
@@ -712,6 +845,118 @@
 <!--                                             	<button id="btnRelacionesObligacion" type="button" title="Registrar Relaciones Obligacion Normativa" class="btnSimple">Guardar</button> -->
                                             </div>
                                         </div>
+                                        <!-- Rsis 9 Inicio -->
+						<div id="tabMedidaSeguridad"
+							style="height: auto; width: 880px; overflow: hidden;">
+							<div id="fldstMedidaSeguridad">
+								<h3>Infracción</h3>
+								
+								<div id="seguridadInfracion">
+									<div id="divMensajeValMedidaSeg" class="errorMensaje" tabindex='1' style="display: none" ></div>
+									<div class="filaForm">
+										<input id="idInfraccion" style="display: none;" />
+										<div class="lble vat" style="width: 180px;">
+											<label for="txtDescInfraccion">Descripción de
+												Infracción:</label>
+										</div>
+										<div>
+											<textarea style="width: 625px;" rows="3" class=""
+												name="descripcionInfraccion" id="txtDescInfraccion"
+												maxlength="2000"></textarea>
+										</div>
+									</div>
+									<div id="divDocumentoAdjuntoDetalle" class="filaForm">
+										<div>
+											<input id="btnSubirDocumentoAdjuntoDetalleInfraccion"
+												class="btn_a btn_small" type="button" value="Doc. Adjuntos" required>
+										</div>
+										<div id="divDownloadDetalleImgInfraccion" class="vam"
+											style="padding-left: 5px;">
+											<!--                                                     <a id="lnkDownloadArchivoDescripcion" href="" ><img id="imgFilDesOblNor" style="cursor: pointer;"  height="24" width="20" hidden="true" src="/myc/images/stickers.png"/></a> -->
+										</div>
+										<div style="vertical-align: middle">
+											<label>(.png)</label>
+										</div>
+									</div>
+
+
+									<div class="filaForm">
+										<input id="idHideMedidaDeSeguridad" style="display: none;" />
+										<div class="lble vat" style="width: 180px;">
+										
+											<label for="cmbMedidaSeguirdad">Medida de seguridad:</label>
+										</div>
+										<div>																						
+											<input id="cmbHideMedidaSeguridad" style="display: none;" />
+											<select id="cmbMedidaSeguirdad" name="MedidaSeguridad"
+												validate="" style="width: 650px;">
+											</select>
+										</div>
+									</div>
+
+									<div class="filaForm">
+										<input id="idHideCodAccion" style="display: none;" />
+										<div class="lble vat" style="width: 180px;">
+											<label for="idAccionMaestro">Accion:</label>
+										</div>
+										<div>
+											<input id="cmbHideAccionInfraccion" value="${infraccion.idAccionMaestro}" style="display:none;"/>											
+											<select id="cmbAccionInfraccion" name="idAccionMaestro"
+												validate="" style="width: 650px;">
+											</select>
+										</div>
+									</div>
+									<div id="botones">
+										<seg:botonTag code="MO" value="Guardar"
+											styleClass="btn_a btn_small" id="btnGuardarInfraccion"
+											title="Guardar" onclick="" />
+									</div>
+								</div>
+							
+
+																				
+								<h3>Escenario de
+									Incumplimiento</h3>
+								<div class="seguridadEscenario">							
+									<div>
+									<div id="divMensajeValidacionAdicionarIncumplimiento" class="errorMensaje" tabindex='1' style="display: none" ></div> 
+									<div class="filaForm">
+										<input id="idIncumplimiento" style="display: none;" />
+										<div class="lble vat" style="width: 180px;">
+											<label for="cmbEscenario">Escenario:</label>
+										</div>
+										<div>
+											<select id="cmbEscenario" name="Escenario" validate=""
+												style="width: 650px;">
+											</select>
+										</div>
+									</div>
+									<div id="botones">
+										<seg:botonTag code="MO" value="Asociar"
+											styleClass="btn_a btn_small" id="btnAgregarIncumplimiento"
+											title="Asociar" onclick="" />
+										<!--                                             	<button id="btnRelacionesObligacion" type="button" title="Registrar Relaciones Obligacion Normativa" class="btnSimple">Guardar</button> -->
+									</div>
+									<div style="border:0px black solid;padding:2px;margin:0px 0px 6px 0px;background:none repeat scroll 0 0 #e5e5e7;">Listado de Incumplimientos :</div>
+	                                            <div id="divContextMenuIncumplimiento"></div>
+	                                            <div id="gridIncumplimiento2"></div>
+									
+									</div>
+									
+								</div>
+									<div id="divTagEnlaces" style="display:none;">
+										<div id="divEnlaceTagEliminarIncumplimiento">
+										<span class="pui-menuitem-icon ui-icon ui-icon-trash"></span>
+										<seg:enlaceTag id='linkEliminarIncumplimiento' code='EL' enlace='' value='' onclick='' styleClass='a-ipt'></seg:enlaceTag>
+										<span>Eliminar</span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+					<!-- Rsis 9 Fin -->
                                     </div>
                                 </div>
                         
@@ -832,7 +1077,18 @@
                     <button id="botoGuardarFileDescripcion" class="btnSimple" title="Subir Archivo" type="button">Guardar Archivo</button>
                 </form>		
         </div>     
-
+		<!-- Rsis 11 - Inicio -->
+	<div id="dialogCargarArchivoInfraccion" style="display: none; overflow: hidden;">
+		<div id="divMensajeValidacionArchivoInfraccion" class="errorMensaje" tabindex='1' style="display: none"></div>
+		<form id="formFileInfraccion" action="/myc/pages/documentoAdjunto/subirArchivoInfraccion" method="post" enctype="multipart/form-data" encoding="multipart/form-data">
+			<input id="fileInfraccion" name="archivos[0]" placeholder="" value="" type="file" validate="[O]" /> 
+			<input id="file_Infraccion" type="hidden" validate="[O]">
+			<button id="botoGuardarFileInfraccion" class="btnSimple" title="Subir Archivo" type="button">Guardar Archivo</button>
+		</form>
+	</div>
+	<!-- Rsis 11 - Fin -->
+		
+		
         <div id="dialogDescGuiaOblNor" style="display:none;overflow: hidden;">
 
             <form id="formDescGuiaOblNor" >
@@ -1017,3 +1273,4 @@
         
     </body>    
 </html>
+

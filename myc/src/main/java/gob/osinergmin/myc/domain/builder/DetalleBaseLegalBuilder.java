@@ -35,7 +35,9 @@ public class DetalleBaseLegalBuilder {
 		registro.setConcordancias(registroDTO.getConcordancia());
 		registro.setDescripcion(registroDTO.getDescripcionGeneralBaseLegal());
 		registro.setEstado(registroDTO.getEstado());
-		
+		/*Rsis 1 - Inicio*/
+		registro.setNumeroAnexo(registroDTO.getNumeroAnexo());
+		/*Rsis 1 - Fin*/
 		PghBaseLegal idBaseLegal = new PghBaseLegal();
 		idBaseLegal.setIdBaseLegal(registroDTO.getIdBaseLegal());
 		registro.setIdBaseLegal(idBaseLegal);
@@ -84,7 +86,9 @@ public class DetalleBaseLegalBuilder {
 			registroDTO.setUsuarioCreacion(registro.getUsuarioCreacion());
 			registroDTO.setTerminalCreacion(registro.getTerminalCreacion());
 			registroDTO.setFechaCreacion(registro.getFechaCreacion());
-						
+			/*Rsis 1 - Inicio*/
+			registroDTO.setNumeroAnexo(registro.getNumeroAnexo());
+			/*Rsis 1 - Fin*/
 		}
 		return registroDTO;
 	}
@@ -112,7 +116,9 @@ public class DetalleBaseLegalBuilder {
 			registroDTO.setUsuarioCreacion(registro.getUsuarioCreacion());
 			registroDTO.setTerminalCreacion(registro.getTerminalCreacion());
 			registroDTO.setFechaCreacion(registro.getFechaCreacion());
-						
+			/*Rsis 1 - Inicio*/
+			registroDTO.setNumeroAnexo(registro.getNumeroAnexo());
+			/*Rsis 1 - Fin*/						
 		}
 		return registroDTO;
 	}

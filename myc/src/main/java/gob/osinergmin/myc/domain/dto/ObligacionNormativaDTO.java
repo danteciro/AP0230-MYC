@@ -57,6 +57,10 @@ public class ObligacionNormativaDTO {
     
     private String nombreArchivo;
     private String rutaAlfresco;
+    
+    /** listado de bases legales **/
+    private List<BaseLegalConcordanciaDTO> listaBasesLegales;
+    
 //    
     public String getCodTrazabilidad() {
         return codTrazabilidad;
@@ -256,6 +260,15 @@ public class ObligacionNormativaDTO {
 
 	public void setRutaAlfresco(String rutaAlfresco) {
 		this.rutaAlfresco = rutaAlfresco;
+	}
+
+	public List<BaseLegalConcordanciaDTO> getListaBasesLegales() {
+		return listaBasesLegales;
+	}
+
+	public void setListaBasesLegales(
+			List<BaseLegalConcordanciaDTO> listaBasesLegales) {
+		this.listaBasesLegales = listaBasesLegales;
 	}
 	
 

@@ -76,7 +76,7 @@ public class DocumentoAdjuntoController {
                 strExtenciones = strExtenciones.substring(0,strExtenciones.length()-2);
             }
             if (!validaFormatoPermitido(extenciones,file.getOriginalFilename())) {
-                response.getWriter().write("{\"error\":true,\"mensaje\":\"Formato no permitido. ( Extenciones permitidas: "+strExtenciones+") \"}");
+                response.getWriter().write("{\"error\":true,\"mensaje\":\"Formato no permitido. ( Extensiones permitidas: "+strExtenciones+") \"}");
                 return;
             }
             if(file.getSize()>new Long(4000000)){
@@ -168,7 +168,7 @@ public class DocumentoAdjuntoController {
                 strExtenciones = strExtenciones.substring(0,strExtenciones.length()-2);
             }
             if (!validaFormatoPermitido(extenciones,file.getOriginalFilename())) {
-                response.getWriter().write("{\"error\":true,\"mensaje\":\"Formato no permitido. ( Extenciones permitidas: "+strExtenciones+") \"}");
+                response.getWriter().write("{\"error\":true,\"mensaje\":\"Formato no permitido. ( Extensiones permitidas: "+strExtenciones+") \"}");
                 return;
             }
             DocumentoAdjuntoDTO archivoDTO = new DocumentoAdjuntoDTO();
@@ -210,7 +210,7 @@ public class DocumentoAdjuntoController {
                 strExtenciones = strExtenciones.substring(0,strExtenciones.length()-2);
             }
             if (!validaFormatoPermitido(extenciones,file.getOriginalFilename())) {
-                response.getWriter().write("{\"error\":true,\"mensaje\":\"Formato no permitido. ( Extenciones permitidas: "+strExtenciones+") \"}");
+                response.getWriter().write("{\"error\":true,\"mensaje\":\"Formato no permitido. ( Extensiones permitidas: "+strExtenciones+") \"}");
                 return;
             }
             DocumentoAdjuntoDTO archivoDTO = new DocumentoAdjuntoDTO();
@@ -252,7 +252,7 @@ public class DocumentoAdjuntoController {
                 strExtenciones = strExtenciones.substring(0,strExtenciones.length()-2);
             }
             if (!validaFormatoPermitido(extenciones,file.getOriginalFilename())) {
-                response.getWriter().write("{\"error\":true,\"mensaje\":\"Formato no permitido. ( Extenciones permitidas: "+strExtenciones+") \"}");
+                response.getWriter().write("{\"error\":true,\"mensaje\":\"Formato no permitido. ( Extensiones permitidas: "+strExtenciones+") \"}");
                 return;
             }
             DocumentoAdjuntoDTO archivoDTO = new DocumentoAdjuntoDTO();
@@ -274,6 +274,49 @@ public class DocumentoAdjuntoController {
             return;
         }
     }
+    /*PR OSINE_119 - Item 11 - Inicio*/
+    @RequestMapping(value = "/subirArchivoInfraccion", method = RequestMethod.POST)
+    public void subirArchivoInfraccion(@RequestParam("archivos[0]") MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
+	LOG.info("--- subirArchivoDescripcion ---");
+	LOG.info("nombre = " + file.getOriginalFilename().toUpperCase());
+        request.getSession().removeAttribute(Constantes.CONSTANTE_ARCHIVO_INFRACCION);
+        
+	response.setContentType("text/html;charset=utf-8");
+        try {
+            LOG.info("formatos permitidos: "+tipoExtencionesArchivoDescrpcion);
+            LOG.info("tamaño file="+file.getSize());
+            String[] extenciones = tipoExtencionesArchivoDescrpcion.split("\\|");
+            String strExtenciones = "";
+            for (int i = 0; i < extenciones.length; i++) {
+                strExtenciones += extenciones[i] + ", ";
+            }
+            if(!strExtenciones.isEmpty()){
+                strExtenciones = strExtenciones.substring(0,strExtenciones.length()-2);
+            }
+            if (!validaFormatoPermitido(extenciones,file.getOriginalFilename())) {
+                response.getWriter().write("{\"error\":true,\"mensaje\":\"Formato no permitido. ( Extensiones permitidas: "+strExtenciones+") \"}");
+                return;
+            }
+            DocumentoAdjuntoDTO archivoDTO = new DocumentoAdjuntoDTO();
+            archivoDTO.setNombreArchivo(file.getOriginalFilename().toUpperCase());
+            archivoDTO.setRutaAlfrescoTmp(file.getBytes());
+            
+            request.getSession().setAttribute(Constantes.CONSTANTE_ARCHIVO_INFRACCION, archivoDTO);
+            response.getWriter().write("{\"error\":false,\"mensaje\":\"Se cargo el archivo\"}");
+            return;
+            
+        } catch (Exception e) {
+            LOG.error("Error subiendo archivo BL", e);
+            try {
+                response.getWriter().write("{\"error\":true,\"mensaje\":\"Error al insertar Documento\"}");
+            } catch (IOException ex) {
+                LOG.debug("error al escribir en response", ex);
+                ex.printStackTrace();
+            }
+            return;
+        }
+    }
+    /*PR OSINE_119 - Item 11 - Fin*/
     
     @RequestMapping(value = "/subirArchivo", method = RequestMethod.POST)
     public void subirArchivoLegal(@RequestParam("archivo") MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
@@ -294,7 +337,7 @@ public class DocumentoAdjuntoController {
                 strExtenciones = strExtenciones.substring(0,strExtenciones.length()-2);
             }
             if (!validaFormatoPermitido(extenciones,file.getOriginalFilename())) {
-                response.getWriter().write("{\"error\":true,\"mensaje\":\"Formato no permitido. ( Extenciones permitidas: "+strExtenciones+") \"}");
+                response.getWriter().write("{\"error\":true,\"mensaje\":\"Formato no permitido. ( Extensiones permitidas: "+strExtenciones+") \"}");
                 return;
             }
             //List<DocumentoAdjuntoDTO> files = new ArrayList<DocumentoAdjuntoDTO>();

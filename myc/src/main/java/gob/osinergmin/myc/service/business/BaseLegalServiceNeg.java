@@ -2,6 +2,7 @@ package gob.osinergmin.myc.service.business;
 
 import gob.osinergmin.myc.domain.dto.BaseLegalDTO;
 import gob.osinergmin.myc.domain.dto.DetalleBaseLegalDTO;
+import gob.osinergmin.myc.domain.dto.DetalleNormaTecnicaDTO;
 import gob.osinergmin.myc.domain.dto.ObligacionBaseLegalDTO;
 import gob.osinergmin.myc.domain.dto.UsuarioDTO;
 
@@ -42,5 +43,7 @@ public interface BaseLegalServiceNeg {
 	//lgarciar_05/11/2015_10:10_pm
 	public List<BaseLegalDTO> listarBaseLegalToBaseLegal(BaseLegalFilter filtro, int[] auxiliar);
 	public List<BaseLegalDTO> listarBaseLegalByObligacion(Long row_id);
+	public List<DetalleNormaTecnicaDTO> findDetalleNormaTecnicaById(Long idDetalleBaseLegal);
+	public List<BaseLegalDTO> verificarBaseLegalExistente(BaseLegalFilter filtro);
 	
 }
