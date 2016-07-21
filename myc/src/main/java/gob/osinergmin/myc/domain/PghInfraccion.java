@@ -31,6 +31,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -57,8 +58,8 @@ public class PghInfraccion extends ColumAddObligacionesTmp{
     /**
      * 
      */
-    @SequenceGenerator(name = "SEQ_GENERATOR", sequenceName = "PGH_INFRACCION_SEQ", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_GENERATOR")
+    @SequenceGenerator(name = "SEQ_GENERATOR_INFRACCION", sequenceName = "PGH_INFRACCION_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_GENERATOR_INFRACCION")
     private Long idInfraccion;
     @Size(max = 500)
     @Column(name = "DESCRIPCION_INFRACCION")
@@ -67,15 +68,13 @@ public class PghInfraccion extends ColumAddObligacionesTmp{
     private Long idMedidaSeguridadMaestro;
     @Column(name = "ID_ACCION_MAESTRO")
     private Long idAccionMaestro;
-    @NotNull
     @Column(name = "ESTADO")
     private String estado;
     @JoinColumn(name = "ID_OBLIGACION", referencedColumnName = "ID_OBLIGACION")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,optional=false)
     private PghObligacion idObligacion;
     @JoinColumn(name = "ID_DOCUMENTO_ADJUNTO", referencedColumnName = "ID_DOCUMENTO_ADJUNTO")
-    @NotNull
-    @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,optional=false)
     private MdiDocumentoAdjunto idDocumentoAdjunto;
     
     

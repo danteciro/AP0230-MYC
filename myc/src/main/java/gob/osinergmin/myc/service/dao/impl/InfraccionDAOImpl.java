@@ -27,7 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @author rcoloradoa
  */
 @Service
-@Transactional
 public class InfraccionDAOImpl implements InfraccionDAO{
     private static final Logger LOG = LoggerFactory.getLogger(InfraccionDAOImpl.class);
     
@@ -95,6 +94,7 @@ public class InfraccionDAOImpl implements InfraccionDAO{
 	}
 
 	@Override
+	@Transactional
 	public Long findInfraccion(InfraccionDTO infraccion) {
 		Long retorno=null;		
 		Query query=null;

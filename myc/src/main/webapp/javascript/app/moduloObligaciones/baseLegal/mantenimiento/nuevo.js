@@ -4,6 +4,7 @@ var datajson = [];
 var validaCerrar=0;
 var modoVer = "ver";
 var modoEdicion = "edicion";
+
 var gestionBaseLegal = (function() {
     var flag;
     var modoVisualizacion;
@@ -15,7 +16,11 @@ var gestionBaseLegal = (function() {
     	});
     	$('#tipificacionEditarObligacion').removeAttr('height');
     	$('#criterioEditarObligacion').removeAttr('height');
-    	
+    	/* OSINE_SFS-610 - INICIO */
+    	$('#formFileOblNor').css('margin-top',30);
+    	$('#formFileDesOblNor').css('margin-top',30);
+    	$('#formFileInfraccion').css('margin-top',30);  
+    	/* OSINE_SFS-610 - FIN */
     	$('#fldstMedidaSeguridad').accordion({
     		heightStyle: "content"
     	});
@@ -24,6 +29,7 @@ var gestionBaseLegal = (function() {
     	$('#seguridadEscenario').removeAttr('height');
 //  05-11-2015
     	$('#txtBaseLegalCriterio').alphanum(charAllow);
+    	$('#txtDescInfraccion').alphanum(charAllow);
     	$('#txtaTitBaseLegal').alphanum(charAllow);
     	//--
     	$('#cmbTipiCriterio').change(function(){
@@ -107,7 +113,7 @@ var gestionBaseLegal = (function() {
         var anio = fechaActual.getFullYear();
         nuevoBL.btnGuardarNuevoObligacion.click(guardarNuevaObligacion);
         nuevoBL.divTabNormaLegal.tabs({active: 0});
-        nuevoBL.txtAnioNormaLegal.spinner({max: (anio+1)}, {min: 1990});
+        nuevoBL.txtAnioNormaLegal.spinner({max: (anio+1)}, {min: 1960});
         
         picker();//Funcion: inicializa Datepickers
         
@@ -192,10 +198,16 @@ var gestionBaseLegal = (function() {
                     validarArchivoObligacion.focus();
                     validarArchivoObligacion.html("* El tamaño de la imagen no corresponde con la permitida (800 x 600)");
                     $('#botoGuardarFile').css('display','none');
+                    /* OSINE_SFS-610 - INICIO */
+                    $('#formFileOblNor').css('margin-top',0);
+                    /* OSINE_SFS-610 - FIN */
                 }else{
                 	$('#botoGuardarFile').css('display','inline-block');
                     validarArchivoObligacion.hide();
                     validarArchivoObligacion.html("");
+                    /* OSINE_SFS-610 - INICIO */
+                    $('#formFileOblNor').css('margin-top',30);
+                    /* OSINE_SFS-610 - FIN */
                 }
             };
         }); 
@@ -220,12 +232,18 @@ var gestionBaseLegal = (function() {
                 if(this.width > 800 || this.height > 600){
                     validarArchivoDescripcion.show();
                     validarArchivoDescripcion.focus();
-                    validarArchivoDescripcion.html("* El tamaño de la imagen no corresponde con la permitida ( 800 x 600)");
+                    validarArchivoDescripcion.html("* El tamaño de la imagen no corresponde con la permitida (800 x 600)");
                     //Limpiando archivo adjunto
                     document.getElementById('formFileDesOblNor').reset();
+                    /* OSINE_SFS-610 - INICIO */
+                    $('#formFileDesOblNor').css('margin-top',0);
+                    /* OSINE_SFS-610 - FIN */
                 }else{
                     validarArchivoDescripcion.hide();
                     validarArchivoDescripcion.html("");
+                    /* OSINE_SFS-610 - INICIO */
+                    $('#formFileDesOblNor').css('margin-top',30);
+                    /* OSINE_SFS-610 - FIN */                    
                 }
             };
         }); 
@@ -238,14 +256,16 @@ var gestionBaseLegal = (function() {
                 if(this.width > 800 || this.height > 600){
                     validarArchivoDescripcion.show();
                     validarArchivoDescripcion.focus();
-                    validarArchivoDescripcion.html("* El tamaño de la imagen no corresponde con la permitida ( 800 x 600)");
+                    validarArchivoDescripcion.html("* El tamaño de la imagen no corresponde con la permitida (800 x 600)");
                     $('#botoGuardarFileInfraccion').css('display','none');
+                    $('#formFileInfraccion').css('margin-top',0);
                     //Limpiando archivo adjunto
                     //document.getElementById('formFileInfraccion').reset();                    
                 }else{
                 	$('#botoGuardarFileInfraccion').css('display','inline-block');
                     validarArchivoDescripcion.hide();
                     validarArchivoDescripcion.html("");
+                    $('#formFileInfraccion').css('margin-top',30);
                 }
             };
         }); 
@@ -435,7 +455,7 @@ var gestionBaseLegal = (function() {
     function confirmEliminarBaseLegal(rowid) {
         confirm.start();
 //        var mensaje = "¿Ud est&aacute; seguro de eliminar esta Base Legal?";
-        var mensaje = "Est&aacute operaci&oacuten es irreversible y no elimina las obligaciones relacionadas, ¿Est&aacute seguro de eliminar la base legal que tiene obligaciones relacionadas?";
+        var mensaje = "Esta operaci&oacuten es irreversible y no elimina las obligaciones relacionadas, ¿Est&aacute seguro de eliminar la base legal que tiene obligaciones relacionadas?";
         confirm.open(mensaje,
                 "gestionBaseLegal.eliminarBaseLegal('" + rowid + "')");/*function: busquedaBaseLegal.confirmEliminarBaseLegal*/
     }
@@ -654,6 +674,7 @@ var gestionBaseLegal = (function() {
     }
     
     function picker(){
+
 //    	nuevoBL.dateFechaPublicacionNormaLegal.datepicker(configuracionBasica(nuevoBL.dateFechaVigenciaNormaLegal,"minDate"));
     	nuevoBL.dateFechaPublicacionNormaLegal.datepicker(configuracionBasicaFechas());
 	    nuevoBL.dateFechaPublicacionNormaLegal.keydown(function(event){
@@ -661,14 +682,6 @@ var gestionBaseLegal = (function() {
 	   	  if(key != 8 && key !== 46)
 	   	   return false;
 	   	 });
-//	    var el=$("#dateFecPublicacion,#dateFecVigenciaNorma,#dateFecVigenciaNormaAnexo");
-//    	nuevoBL.dateFechaVigenciaNormaLegal.datepicker(configuracionBasica(el,"maxDate"));
-    	nuevoBL.dateFechaVigenciaNormaLegal.datepicker(configuracionBasicaFechaVigencia());
-    	nuevoBL.dateFechaVigenciaNormaLegal.keydown(function(event){
-    		var key=event.keyCode || event.charCode;
-	   	  	if(key != 8 && key !== 46)
-	   	  		return false;
-    	});
 //    	nuevoBL.dateFechaVigenciaArtNormaLegal.datepicker(configuracionBasica(nuevoBL.dateFechaVigenciaNormaLegal,"maxDate"));
     	nuevoBL.dateFechaVigenciaArtNormaLegal.datepicker(configuracionBasicaFechas());
         nuevoBL.dateFechaVigenciaArtNormaLegal.keydown(function(event){
@@ -684,6 +697,19 @@ var gestionBaseLegal = (function() {
   	   	  if(key != 8 && key !== 46)
   	   	   return false;
   	   	 });
+        
+        
+//	    var el=$("#dateFecPublicacion,#dateFecVigenciaNorma,#dateFecVigenciaNormaAnexo");
+//    	nuevoBL.dateFechaVigenciaNormaLegal.datepicker(configuracionBasica(el,"maxDate"));
+    	nuevoBL.dateFechaVigenciaNormaLegal.datepicker(configuracionBasicaFechaVigencia());
+    	nuevoBL.dateFechaVigenciaNormaLegal.keydown(function(event){
+    		var key=event.keyCode || event.charCode;
+	   	  	if(key != 8 && key !== 46)
+	   	  		return false;
+    	});
+    	$('#dateFecVigenciaNorma').datepicker('option','minDate',$('#dateFecVigencia').val()).trigger('change');
+    	$('#dateFecVigenciaNormaAnexo').datepicker('option','minDate',$('#dateFecVigencia').val()).trigger('change');
+    	console.info('ingreso');
    	}
     
     function configuracionBasicaFechaVigencia() {
@@ -698,12 +724,10 @@ var gestionBaseLegal = (function() {
    	   dateFormat: "dd/mm/yy",
            yearRange: '1960:2050',
    	   onSelect: function(selectedDate){
-   	    var fecha=$.datepicker.parseDate("dd/mm/yy",selectedDate);
-            
-            nuevoBL.dateFechaPublicacionNormaLegal.datepicker("option","maxDate",fecha);
+   	   var fecha=$.datepicker.parseDate("dd/mm/yy",selectedDate);            
             nuevoBL.dateFechaVigenciaArtNormaLegal.datepicker("option","minDate",fecha);
-            nuevoBL.dateFechaVigenciaAnexoNormaLegal.datepicker("option","minDate",fecha);
-   	   }
+//            nuevoBL.dateFechaVigenciaAnexoNormaLegal.datepicker("option","minDate",fecha);
+       }
    	 };
    	 return ob;
     }
@@ -744,8 +768,10 @@ var gestionBaseLegal = (function() {
     	
     	$('#idInfraccion').val('');
     	$('#txtDescInfraccion').val('');
-    	$('#cmbMedidaSeguirdad').val('-1');
-    	$('#cmbAccionInfraccion').val('-1');
+    	/* OSINE_SFS-610 - Inicio */
+     	//$('#cmbMedidaSeguirdad').val('-1');
+    	//$('#cmbAccionInfraccion').val('-1');
+     	/* OSINE_SFS-610 - Fin */
     	$('#contenedorImgMedidaSeguridad').remove();
     	$('#cmbEscenario').val('-1');
     	$('#gridIncumplimiento').jqGrid('clearGridData');
@@ -787,6 +813,8 @@ var gestionBaseLegal = (function() {
 //        nuevaObligacionNormativa.gridConfiguracionObligacion();//verificar donde inicializar el grid
         document.getElementById("divDownloadImg").innerHTML="";
         document.getElementById("divDownloadDetalleImg").innerHTML="";
+        document.getElementById("divDownloadDetalleImgInfraccion").innerHTML="";   
+
     }
     
     function evaluaDetalle(){
@@ -1476,8 +1504,8 @@ concatenaDescripcionBaseLegal();
         var fechaActual = new Date();
         var anioFinal = fechaActual.getFullYear();
         var anio = $('#txtAnioBaseLegal').val();
-        if(anio != "" && ( parseInt(anio) < 1990 || parseInt(anio) > (anioFinal+1) )){
-            mensajeValidacion += "* Debe ingresar un año valido (mayor a 1990 y menor a "+(anioFinal+1)+") <br>";       
+        if(anio != "" && ( parseInt(anio) < 1960 || parseInt(anio) > (anioFinal+1) )){
+            mensajeValidacion += "* Debe ingresar un año valido (mayor a 1960 y menor o igual a "+(anioFinal+1)+") <br>";       
         }
         if ($('#chkCrearObligacion').is(':checked')) {
             var filasGridObligaciones = $("#gridOblig").getRowData();
@@ -1508,27 +1536,39 @@ concatenaDescripcionBaseLegal();
         
         var expreg = new RegExp("^[0-9]{1,3}$|^[a-z]{1,2}$");
         if($('#txtInc1BaseLegal').val() != "" && !expreg.test($('#txtInc1BaseLegal').val())){
-            mensajeValidacion += "* Debe ingresar un valor valido para el Articulo - Inciso Nivel 1 ( ### o AA ) <br>";
+        	/* OSINE_SFS-610 - Inicio */
+            //mensajeValidacion += "* Debe ingresar un valor valido para el Articulo - Inciso Nivel 1 ( ### o AA ) <br>";
+        	mensajeValidacion += "* Debe ingresar un valor v&aacute;lido para el Art&iacute;culo - Inciso Nivel 1 ( ### &oacute; aa ) <br>";
+        	/* OSINE_SFS-610 - Fin */
             $('#txtInc1BaseLegal').addClass("error");
         }
         
         if($('#txtInc2BaseLegal').val() != "" && !expreg.test($('#txtInc2BaseLegal').val())){
-            mensajeValidacion += "* Debe ingresar un valor valido para el Articulo - Inciso Nivel 2 ( ### o AA ) <br>";
+        	/* OSINE_SFS-610 - Inicio */
+            //mensajeValidacion += "* Debe ingresar un valor valido para el Articulo - Inciso Nivel 2 ( ### o AA ) <br>";
+        	mensajeValidacion += "* Debe ingresar un valor v&aacute;lido para el Art&iacute;culo - Inciso Nivel 2 ( ### &oacute; aa ) <br>";
+        	/* OSINE_SFS-610 - Fin */
             $('#txtInc2BaseLegal').addClass("error");
         }
         
         if($('#txtInc3BaseLegal').val() != "" && !expreg.test($('#txtInc3BaseLegal').val())){
-            mensajeValidacion += "* Debe ingresar un valor valido para el Anexo - Inciso Nivel 1 ( ### o AA ) <br>";
+        	/* OSINE_SFS-610 - Inicio */
+            //mensajeValidacion += "* Debe ingresar un valor valido para el Anexo - Inciso Nivel 1 ( ### o AA ) <br>";
+        	mensajeValidacion += "* Debe ingresar un valor v&aacute;lido para el Anexo - Inciso Nivel 1 ( ### &oacute; aa ) <br>";
+            /* OSINE_SFS-610 - Fin */
             $('#txtInc3BaseLegal').addClass("error");
-        }
+        }        
         
         if($('#txtInc4BaseLegal').val() != "" && !expreg.test($('#txtInc4BaseLegal').val())){
-            mensajeValidacion += "* Debe ingresar un valor valido para el Anexo Inciso - Nivel 2 ( ### o AA ) <br>";   
+        	/* OSINE_SFS-610 - Inicio */
+            //mensajeValidacion += "* Debe ingresar un valor valido para el Anexo Inciso - Nivel 2 ( ### o AA ) <br>";   
+        	mensajeValidacion += "* Debe ingresar un valor v&aacute;lido para el Anexo - Inciso Nivel 2 ( ### &oacute; aa ) <br>";
+        	/* OSINE_SFS-610 - Fin */
             $('#txtInc4BaseLegal').addClass("error");
         }
         
         if($('#cmbNumeroAnexo option:selected').text() == '--Seleccione--' && $('#cmbTipAneBaseLegal option:selected').text() != '--Seleccione--'){
-        	mensajeValidacion += "* Debe ingresar un numero de anexo <br>";
+        	mensajeValidacion += "* Debe ingresar un n&uacute;mero de anexo <br>";
         	nuevoBL.cmbNumeroAnexo.addClass("error");
         }
         
@@ -1546,8 +1586,12 @@ concatenaDescripcionBaseLegal();
         	mensajeValidacion += "* Debe ingresar un valor en el campo Artículo <br>";
         	nuevoBL.txtArticuloNormaLegal.addClass("error");
         }
-        
-        
+
+        if($("#txtDesConcatenado").val().length>2000 || $('#txtDesConcatenadoOculto').val().length>2000){
+        	mensajeValidacion += "* La cantidad maxima de caracteres para la descripci&oacute;n de la Base Legal es de 2000  <br>";
+        	$("#txtDesConcatenado").addClass("error");
+        	$('#txtDesConcatenadoOculto').addClass("error");
+        }
         if(mensajeValidacion != ""){
             divValidacion.show();
             divValidacion.focus();
@@ -1656,13 +1700,21 @@ concatenaDescripcionBaseLegal();
                         	$('#toggAsigna').css('display','none'); 
                             var divMostrarCodigoBaseLegal = $("#divMensajeMostrarCodigoBaseLegal").show();
                             divMostrarCodigoBaseLegal.focus();
-                            divMostrarCodigoBaseLegal.html(" El Codigo de la Base Legal es:"+data.codigoBaseLegal);
+                            /* OSINE_SFS-610 - Inicio */
+                            //divMostrarCodigoBaseLegal.html(" El Codigo de la Base Legal es:"+data.codigoBaseLegal);
+                            divMostrarCodigoBaseLegal.html(" El C&oacute;digo de la Base Legal es:"+data.codigoBaseLegal);
+                            /* OSINE_SFS-610 - Fin */
+                            $('#divDialogEditarBaseLegal').find('span').eq(1).html(data.codigoBaseLegal);
                             $("#dialogMostrarCodigoBaseLegal").dialog('open');
                         }else{
                         	$('#toggAsigna').css('display','inline-block'); 
                             var divMostrarCodigoBaseLegal = $("#divMensajeMostrarCodigoBaseLegal").show();
                             divMostrarCodigoBaseLegal.focus();
-                            divMostrarCodigoBaseLegal.html(" El Codigo de la Base Legal es:"+data.codigoBaseLegal);
+                            /* OSINE_SFS-610 - Inicio */
+                            //divMostrarCodigoBaseLegal.html(" El Codigo de la Base Legal es:"+data.codigoBaseLegal);
+                            divMostrarCodigoBaseLegal.html(" El C&oacute;digo de la Base Legal es:"+data.codigoBaseLegal);
+                            /* OSINE_SFS-610 - Fin */
+                            $('#divDialogEditarBaseLegal').find('span').eq(1).html(data.codigoBaseLegal);
                             $("#dialogMostrarCodigoBaseLegal").dialog('open');
 
                         }       
@@ -2444,8 +2496,8 @@ var nuevaObligacionNormativa = (function() {
         $("#dialogCargarNuevaOblNor").dialog({//Model(Cabecera Obligacion Normativa) >> Inicializa Model-dialog >>PopUp Subir Archivo
             resizable: false,
             autoOpen: false,
-            height: "auto",
-            width: "auto",
+            height: "150",
+            width: "550",
             dialogClass: 'dialog',
             modal: true,
             title: 'Subir Archivo'
@@ -2500,8 +2552,8 @@ var nuevaObligacionNormativa = (function() {
         $("#dialogCargarArchivoDescripcion").dialog({//Model(Archivo Descripcion) >> Inicializa Model-dialog >>PopUp Subir Archivo
             resizable: false,
             autoOpen: false,
-            height: "auto",
-            width: "auto",
+            height: "150",
+            width: "550",
             dialogClass: 'dialog',
             modal: true,
             title: 'Subir Archivo'
@@ -2510,8 +2562,8 @@ var nuevaObligacionNormativa = (function() {
         $("#dialogCargarArchivoInfraccion").dialog({//Model(Archivo Descripcion) >> Inicializa Model-dialog >>PopUp Subir Archivo
             resizable: false,
             autoOpen: false,
-            height: "auto",
-            width: "auto",
+            height: "150",
+            width: "550",
             dialogClass: 'dialog',
             modal: true,
             title: 'Subir Archivo'
@@ -2634,7 +2686,7 @@ var nuevaObligacionNormativa = (function() {
         $('#nueva_TituloPauta').alphanum(descripcion);
         $('#txtTipifOblNor').alphanum(tipificacion);
         $('#txtDesOblNor').alphanum(charAllow);
-        $('#txtDesNorTecBaseLegal').alphanum(descripcion);
+        $('#txtDesNorTecBaseLegal').alphanum(descripcionObligacion);
     
         /*iconos de botones configurar*/
 //        $('#btnAsociarActividadStepUno').puibutton({icon: 'ui-icon-triangle-1-e'});
@@ -2993,6 +3045,7 @@ var nuevaObligacionNormativa = (function() {
             		gridIncumplimiento();
             	}else if(mode==0){
             		mostrarObligacion(data,mode);
+            		gridIncumplimiento();
             	}
             }
         });
@@ -3022,7 +3075,14 @@ var nuevaObligacionNormativa = (function() {
     	nuevoBL.divConfigurarSupervision.css('display','none');
     	//Estilos VER --> Relaciones
     	nuevoBL.btnGuardarRelacionObligacion.css('display','none');
+    	
+    	$('#divContenidoTipificacion').css('display','none');
+    	$('#btnAgregarTipificacion').css('display','none');
+    	$('#btnAgregarIncumplimiento').css('display','none');
+    	$('#btnSubirDocumentoAdjuntoDetalleInfraccion').css('display','none');
+    	$('#btnGuardarInfraccion').css('display','none');
     	$('#btnSubirDocumentoAdjuntoDetalle').css('display','none');
+    	
     	//Estilo cambio de Tab
     	$('#tabNewBaseLegal').tabs("enable",1);
         $('#tabNewBaseLegal').tabs({active: 1});
@@ -3050,6 +3110,7 @@ var nuevaObligacionNormativa = (function() {
     	gestionBaseLegal.evaluaDetalle();
     	document.getElementById("divDownloadImg").innerHTML="";
     	document.getElementById("divDownloadDetalleImg").innerHTML="";
+    	document.getElementById("divDownloadDetalleImgInfraccion").innerHTML="";    	
     	if(data.obligacion.idDocumentoAdjunto!=null){
     		var nombreArchivo=data.documento.nombreArchivo;
     		var rutaAlfresco=data.documento.rutaAlfresco;
@@ -3080,12 +3141,20 @@ var nuevaObligacionNormativa = (function() {
         	$('#txtDescInfraccion').val(data.idInfraccion.descripcionInfraccion);
         	$('#cmbMedidaSeguirdad').val(data.idInfraccion.idMedidaSeguridadMaestro);
         	$('#cmbAccionInfraccion').val(data.idInfraccion.idAccionMaestro);
+        	if(data.idInfraccion.documentoAdjuntoDTO!=null){
+        		var nombreArchivo=data.idInfraccion.documentoAdjuntoDTO.nombreArchivo;
+        		var rutaAlfresco=data.idInfraccion.documentoAdjuntoDTO.rutaAlfresco;
+        		document.getElementById("divDownloadDetalleImgInfraccion").innerHTML="";
+                $('#divDownloadDetalleImgInfraccion').append('<a class="link" href="'+baseURL + 'pages/documentoAdjunto/descargaArchivoAlfresco?aplicacionSpace=OBLIGACIONES&nombreArchivo='+nombreArchivo+'&rutaAlfresco='+rutaAlfresco+'"><img class="vam" width="20" height="24" src="'+baseURL+'images/stickers.png"></a>');
+        	}
         }
         else{
         	$('#idInfraccion').val('');
         	$('#txtDescInfraccion').val('');        	
-        	$('#cmbMedidaSeguirdad').val('-1');
-        	$('#cmbAccionInfraccion').val('-1');
+        	/* OSINE_SFS-610 - Inicio */
+        	//$('#cmbMedidaSeguirdad').val('-1');
+        	//$('#cmbAccionInfraccion').val('-1');
+        	/* OSINE_SFS-610 - Fin */
         	$('#contenedorImgMedidaSeguridad').remove();
         }
                 
@@ -3149,6 +3218,7 @@ var nuevaObligacionNormativa = (function() {
     	gestionBaseLegal.evaluaDetalle();
     	document.getElementById("divDownloadImg").innerHTML="";
     	document.getElementById("divDownloadDetalleImg").innerHTML="";
+    	document.getElementById("divDownloadDetalleImgInfraccion").innerHTML="";
     	if(data.obligacion.idDocumentoAdjunto!=null){
     		var nombreArchivo=data.documento.nombreArchivo;
     		var rutaAlfresco=data.documento.rutaAlfresco;
@@ -3182,15 +3252,29 @@ var nuevaObligacionNormativa = (function() {
         	$('#txtDescInfraccion').val(data.idInfraccion.descripcionInfraccion);
         	$('#cmbMedidaSeguirdad').val(data.idInfraccion.idMedidaSeguridadMaestro);
         	$('#cmbAccionInfraccion').val(data.idInfraccion.idAccionMaestro);
+        	if(data.idInfraccion.documentoAdjuntoDTO!=null){
+        		var nombreArchivo=data.idInfraccion.documentoAdjuntoDTO.nombreArchivo;
+        		var rutaAlfresco=data.idInfraccion.documentoAdjuntoDTO.rutaAlfresco;
+        		document.getElementById("divDownloadDetalleImgInfraccion").innerHTML="";
+                $('#divDownloadDetalleImgInfraccion').append('<a class="link" href="'+baseURL + 'pages/documentoAdjunto/descargaArchivoAlfresco?aplicacionSpace=OBLIGACIONES&nombreArchivo='+nombreArchivo+'&rutaAlfresco='+rutaAlfresco+'"><img class="vam" width="20" height="24" src="'+baseURL+'images/stickers.png"></a>');
+        	}
         }
         else{
         	$('#idInfraccion').val('');
         	$('#txtDescInfraccion').val('');
-        	$('#cmbMedidaSeguirdad').val('-1');
-        	$('#cmbAccionInfraccion').val('-1');        	
+        	/* OSINE_SFS-610 - Inicio */
+        	//$('#cmbMedidaSeguirdad').val('-1');
+        	//$('#cmbAccionInfraccion').val('-1');
+        	/* OSINE_SFS-610 - Fin */        	
         	$('#contenedorImgMedidaSeguridad').remove();        	
         	
         }
+        $('#divContenidoTipificacion').css('display','inline-block');
+    	$('#btnAgregarTipificacion').css('display','inline-block');
+    	$('#btnAgregarIncumplimiento').css('display','inline-block');
+    	$('#btnSubirDocumentoAdjuntoDetalleInfraccion').css('display','inline-block');
+    	$('#btnGuardarInfraccion').css('display','inline-block');
+    	$('#btnSubirDocumentoAdjuntoDetalle').css('display','inline-block');
         /*Rsis 16 - Fin*/
         
     }
@@ -3327,7 +3411,10 @@ var nuevaObligacionNormativa = (function() {
     	/* modif jpiro 20150106 - ini */
         confirm.start();
         /* modif jpiro 20150106 - fin */
-        confirm.open("¿Ud est&aacute; seguro de eliminar la configuracion ?",
+        /* OSINE_SFS-610 - Inicio */
+        //confirm.open("¿Ud est&aacute; seguro de eliminar la configuracion ?",
+        confirm.open("¿Ud est&aacute; seguro de eliminar la configuraci&oacute;n ?",
+        /* OSINE_SFS-610 - Fin */
                 "nuevaObligacionNormativa.eliminarConfiguracion('" + rowid + "')");
     }
     function eliminarConfiguracion(rowid){
@@ -3337,7 +3424,44 @@ var nuevaObligacionNormativa = (function() {
     }
     function getEliminarConfiguracion(idConfEliminar) {
         var URL = baseURL + "pages/mantenimiento/baseLegal/eliminarConfiguracionObligacion";
-        $.get(URL,{idConfObligacion:idConfEliminar,codTrazabilidad:$('#codTrazabilidad').val()}, function(data) {
+        /* OSINE_SFS-610 - Inicio */
+        //$.get(URL,{idConfObligacion:idConfEliminar,codTrazabilidad:$('#codTrazabilidad').val()}, function(data) {
+        $.get(URL,{idObligacion: $('#idObligacion').val(),idConfObligacion:idConfEliminar,codTrazabilidad:$('#codTrazabilidad').val()}, function(data) {
+        	
+        	$('#tabTipi').css('display',"");
+        	var sancion=0;
+        	var referencia=0;
+        	var descripcion=0;
+        	var medida=0;
+        	var temas=0;
+        	if(!(data.countOpcActualizar==undefined)){
+        		for (var i = 0; i < data.countOpcActualizar; i++) {
+    	    		var opciones=data["opcionActualizar"+i];
+    	    		if(sancion==0){
+    	    			if(opciones=="ID_SANCION") {$('#tabSanciones').css('display',"");   sancion=1;} else { $('#tabSanciones').css('display',"none"); }
+    	    		}
+    	    		if(referencia==0){
+    	    			if(opciones=="ID_REF_B_L") {$('#tabRef').css('display',""); referencia=1;} else { $('#tabRef').css('display',"none"); }
+    	    		}
+    	    		if(descripcion==0){
+    					if(opciones=="ID_DESCRP") {$('#tabDescr').css('display',""); descripcion=1;} else { $('#tabDescr').css('display',"none"); }
+    	    		}
+    	    		if(medida==0){
+    					if(opciones=="ID_MED_SEG") {$('#tabMedSeg').css('display',"");  medida=1;} else { $('#tabMedSeg').css('display',"none"); }
+    	    		}
+    	    		if(temas==0){
+    					if(opciones=="ID_TEMAS") {$('#tabRelac').css('display',"");   temas=1;} else { $('#tabRelac').css('display',"none"); }
+    	    		}
+            	}
+        	}else{
+        		$('#tabSanciones').css('display',"none");
+        		$('#tabRef').css('display',"none");
+        		$('#tabDescr').css('display',"none");
+        		$('#tabMedSeg').css('display',"none");
+        		$('#tabRelac').css('display',"none");
+        	}
+        	
+        /* OSINE_SFS-610 - Fin */
             if (data.resultado == 0) {
                 mensajeGrowl("success", "Se elimino el registro correctamente", "");
                 nuevaObligacionNormativa.gridConfiguracionObligacion();}
@@ -3799,7 +3923,10 @@ var nuevaObligacionNormativa = (function() {
     	
     	 if($('#txtDescInfraccion').val()==""){
     		validaInfraccion=false;
-            error = "Se Debe ingresar descripcion de infraccion. <br>";
+    		/* OSINE_SFS-610 - Inicio */
+    		//error = "Se Debe ingresar descripcion de infraccion. <br>";
+            error = "Se Debe ingresar descripci&oacute;n de infracci&oacute;n. <br>";
+            /* OSINE_SFS-610 - Fin */
             $('#txtDescInfraccion').addClass("error");
             errorCheck +=  error;
     	}
@@ -3812,7 +3939,10 @@ var nuevaObligacionNormativa = (function() {
      	 }
     	 if($('#cmbAccionInfraccion').val()==-1){
       		validaInfraccion=false;
-            error = "Se Debe ingresar Accion.";
+      		/* OSINE_SFS-610 - Inicio */
+      		//error = "Se Debe ingresar Accion.";
+            error = "Se Debe ingresar Acci&oacute;n.";
+            /* OSINE_SFS-610 - Fin */
             $('#cmbAccionInfraccion').addClass("error");
             errorCheck += error;
       	 }
@@ -3878,7 +4008,9 @@ var nuevaObligacionNormativa = (function() {
         if($('#txtIdTipificacion').val() === ""){
             divValidacion.show();
             divValidacion.focus();
-            divValidacion.html("* Debe Ingresar una Tipificación valida");
+            /* OSINE_SFS-610 - INICIO */
+            divValidacion.html("* Debe Ingresar una Tipificaci&oacute;n v&aacute;lida");
+            /* OSINE_SFS-610 - FIN */
         }else{
             divValidacion.hide();
             divValidacion.html("");
@@ -3978,6 +4110,9 @@ var nuevaObligacionNormativa = (function() {
                 url: baseURL + "pages/mantenimiento/baseLegal/registrarIncumplimiento",
                 type: 'post',
                 async: false,
+                /* OSINE_SFS-610 - Inicio */
+                dataType: 'json',
+                /* OSINE_SFS-610 - Fin */
                 data: {
                     idIncumplimiento: $('#idIncumplimiento').val(),
                     idMaestroincumplimiento: $('#cmbEscenario').val(),
@@ -4012,7 +4147,12 @@ var nuevaObligacionNormativa = (function() {
                         ocultaLoading();
                     }
                 },
-                error: errorAjax
+                /* OSINE_SFS-610 - Inicio */
+                //error: errorAjax
+                error : function(jqXHR) {
+    				errorAjax(jqXHR);
+    			}
+                /* OSINE_SFS-610 - Fin */
             });
             /*remove atribute desabilitar*/
             $('#txtDesTipifOblNor').attr('disabled', 'disabled');
@@ -4026,7 +4166,9 @@ var nuevaObligacionNormativa = (function() {
      * @returns {undefined}
      */
     function gridTipificacion() {
-        var colNames = ['idTipificacion','Codigo Tipificación', 'Descripcion Infracción', 'Sanción','','concatIdTipoSancion'];
+    	/* OSINE_SFS-610 INICIO */
+        var colNames = ['idTipificacion','C&oacute;digo Tipificaci&oacute;n', 'Descripci&oacute;n Infracción', 'Sanci&oacute;n','','concatIdTipoSancion'];
+        /* OSINE_SFS-610 FIN */
         var colModel = [
             {name: "idTipificacion", hidden: true, width: 200, sortable: false, align: "center"},
             {name: "codTipificacion", width: 300, sortable: false, align: "center"},
@@ -4106,8 +4248,10 @@ var nuevaObligacionNormativa = (function() {
         /* modif jpiro 20150106 - ini */
         confirm.start();
         /* modif jpiro 20150106 - fin */
-        confirm.open("¿Ud est&aacute; seguro de eliminar esta Tipificacion?",
+        /* OSINE_SFS-610 - INICIO */
+        confirm.open("¿Ud est&aacute; seguro de eliminar esta Tipificaci&oacute;n?",
                 "nuevaObligacionNormativa.eliminarTipificacion('" + rowid + "')");
+        /* OSINE_SFS-610 - FIN */
     }
     function eliminarTipificacion(rowid){
         var row = $('#gridTipificaciones').jqGrid('getRowData', rowid);
@@ -4342,8 +4486,10 @@ var nuevaObligacionNormativa = (function() {
     }
     function confirmEliminarCriterio(idCriterio) {
         confirm.start();
-        confirm.open("¿Ud est&aacute; seguro de eliminar asociacion con el criterio?",
+        /* OSINE_SFS-610 - INICIO */
+        confirm.open("¿Ud est&aacute; seguro de eliminar asociaci&oacute;n con el criterio?",
                 "nuevaObligacionNormativa.eliminarCriterio('" + idCriterio + "')");
+        /* OSINE_SFS-610 - FIN */
     }
     function eliminarCriterio(idCriterio){
         var URL = baseURL + "pages/mantenimiento/baseLegal/eliminarCriterioAsociado";
@@ -5141,28 +5287,18 @@ var nuevaObligacionNormativa = (function() {
 })();
 var cargaInicial=(function(){
 	function constructor(){
+		obtenerTipoAnexos();
 		$("#btnAgregarNormaTecnica").css("display","none");
 		obtenertipoNormaLegal();
 		obtenerSiglas();
-		obtenerTipoAnexos();
-		var tipoAnexo = $("#cmbHideTipoAnexoBaseLegal").val();
-		var codigo;
-		if(tipoAnexo=="245"){
-			codigo="TA003";
-		}else if(tipoAnexo=="244"){
-			codigo="TA002";
-		}else if(tipoAnexo=="243"){
-			codigo="TA001";
-		}else if(tipoAnexo=="881"){
-			codigo="TA004";
-		}						
-		obtenerNumeroAnexos(codigo);		
+		
+		var tipoAnexo = $("#cmbHideTipoAnexoBaseLegal").val();				
 		obtenerTipoNormaTecnica();
 		obtenerNormaLegalPadre();
 		/*Rsis 11 - Inicio*/
 		obtenerMedidaSeguridad();
 		obtenerAccionInfraccion();
-		obtenerEscenario();
+		obtenerEscenario();		
 		
 		//var codigo = $("#cmbHideTipoAnexoBaseLegal").val();
 		//var codigo=$("#cmbTipAneBaseLegal").find(':checked').attr('codigo');
@@ -5191,6 +5327,11 @@ var cargaInicial=(function(){
 		/*jsifuentes - Inicio*/
 		cargarDetalleNormaTecnica();
 		/*jsifuentes - Fin*/
+		setTimeout(function(){ obtenerNumeroAnexos();}, 1000);
+		$('#cmbTipAneBaseLegal').change(function() {
+			obtenerNumeroAnexos();
+        });  
+		
 	}
 	/**
      * 
@@ -5268,7 +5409,7 @@ var cargaInicial=(function(){
         $.getJSON("mantenimiento/baseLegal/obtenerTipoAnexo", {
             //idActividad: idActividad,
             ajax: 'true',
-            async: true
+            async: false
         }, function(data) {
             var html = '<option value="-1">--Seleccione--</option>';
             var len = data.length;
@@ -5287,45 +5428,17 @@ var cargaInicial=(function(){
             $('#cmbTipAneBaseLegal').html(html);
             html = '<option value="0">--Seleccione--</option>';
             $("#cmbNumeroAnexo").html(html);
-        	});
-    
-        
-        
-        $('#cmbTipAneBaseLegal').change(function() {
-           
-        	
-        	var codigo=$("#cmbTipAneBaseLegal").find(':checked').attr('codigo');
-        	$data = {
-            	//idMaestroColumna: this.value
-            	codigo: codigo
-            };            
-            var url = "mantenimiento/baseLegal/obtenerNumeroAnexo";
-            $.getJSON(url, $data, function(data) {
-                var html = '<option value="">--Seleccione--</option>';
-                var len = data.length;
-               
-                for (var i = 0; i < len; i++) {
-                	
-                    html += '<option value="' + data[i].codigo+ '" >'
-                            + data[i].descripcion + '</option>';
-               
-                $("#cmbNumeroAnexo").html(html);
-                }                
-            });
-        });                       
-    }
+        	});  
+     }
     
     /*Rsis1 - Inicio*/
-    function obtenerNumeroAnexos(codigo) {  
-    	$data = {
-        	//idMaestroColumna: this.value
-        	codigo: codigo
-        };            
+    function obtenerNumeroAnexos(){           
         var url = "mantenimiento/baseLegal/obtenerNumeroAnexo";
-        $.getJSON(url, $data, function(data) {
+        $.getJSON(url,
+            {codTipoAnexo: $('#cmbTipAneBaseLegal').find(':checked').attr('codigo')}, 
+            function(data) {
             var html = '<option value="">--Seleccione--</option>';
-            var len = data.length;
-           
+            var len = data.length;           
             for (var i = 0; i < len; i++) {
             	if (data[i].codigo== $('#cmbHideNumeroAnexo').val() || data[i].codigo== $('#cmbHideNumeroAnexo').val() || data[i].codigo== $('#cmbHideNumeroAnexo').val()){
                 html += '<option value="' + data[i].codigo+ '" selected="selected">'
@@ -5333,9 +5446,9 @@ var cargaInicial=(function(){
             	}else{
             		html += '<option value="' + data[i].codigo+ '">'
                     + data[i].descripcion + '</option>';
-            	}
+            	}            
+            }  
             $("#cmbNumeroAnexo").html(html);
-            }                
         });
     }     
     /*Rsis1 - Fin*/
@@ -5351,9 +5464,17 @@ var cargaInicial=(function(){
             var html = '<option value="-1">--Seleccione--</option>';
             var len = data.length;
             for (var i = 0; i < len; i++) {
-            	                	    
-            	    html += '<option value="' + data[i].idMaestroColumna + '">'
-                        + data[i].descripcion + '</option>';            	            		            	    
+            		/* OSINE_SFS-610 - Inicio */
+            	    //html += '<option value="' + data[i].idMaestroColumna + '">'
+            		//+ data[i].descripcion + '</option>'; 
+            		if (data[i].codigo == variable.infraccion){
+            			html += '<option value="' + data[i].idMaestroColumna + '" selected="selected">'
+            			+ data[i].descripcion + '</option>'; 
+            		}else{
+            			html += '<option value="' + data[i].idMaestroColumna + '" >'
+            			+ data[i].descripcion + '</option>'; 
+            		}
+                   /* OSINE_SFS-610 - Fin */
                 }            
             $('#cmbMedidaSeguirdad').html(html);                       
         });
@@ -5368,8 +5489,17 @@ var cargaInicial=(function(){
             var html = '<option value="-1">--Seleccione--</option>';
             var len = data.length;
             for (var i = 0; i < len; i++) {            	                   
-                    html += '<option value="' + data[i].idMaestroColumna + '">'
-                            + data[i].descripcion + '</option>';            	                    
+            		/* OSINE_SFS-610 - Inicio */
+                    //html += '<option value="' + data[i].idMaestroColumna + '">'
+                    //        + data[i].descripcion + '</option>';
+	            	if (data[i].codigo == variable.infraccion){
+	            		html += '<option value="' + data[i].idMaestroColumna + '" selected="selected">'
+	                    + data[i].descripcion + '</option>';
+	            	}else{
+	            		html += '<option value="' + data[i].idMaestroColumna + '">'
+	                    + data[i].descripcion + '</option>';
+	            	}
+                    /* OSINE_SFS-610 - Inicio */
                 }            
             $('#cmbAccionInfraccion').html(html);                       
         });
@@ -5408,7 +5538,10 @@ var cargaInicial=(function(){
     	    height: 150,
     	    rowNum: 5,
     	    hidegrid: false,
-    	       colNames:['idDetalleNormaTecnica', 'idTipoNormaTecnica', 'Tipo De Norma Técnica','Descripcion De La Norma Técnica'],
+    	    	/* OSINE_SFS-610 - Inicio */
+    	       //colNames:['idDetalleNormaTecnica', 'idTipoNormaTecnica', 'Tipo De Norma Técnica','Descripcion De La Norma Técnica'],
+    	    	colNames:['idDetalleNormaTecnica', 'idTipoNormaTecnica', 'Tipo De Norma T&eacute;cnica','Descripci&oacute;n De La Norma T&eacute;cnica'],
+    	       /* OSINE_SFS-610 - Fin */
     	       colModel:[
                    {name:'idDetalleNormaTecnica',index:'idDetalleNormaTecnica', width:300,hidden: true},
                    {name:'idTipoNormaTecnica',index:'idTipoNormaTecnica', width:300,hidden: true},
@@ -5417,7 +5550,10 @@ var cargaInicial=(function(){
     	       ],
     	       pager: "#pNormaTecnica",
     	       viewrecords: true,
-    	       caption: "Relacion Norma Técnica"
+    	       /* OSINE_SFS-610 - Inicio */
+    	       //caption: "Relacion Norma Técnica"
+    	       caption: "Relaci&oacute;n Norma T&eacute;cnica"
+    	       /* OSINE_SFS-610 - Fin */
     	});	
     }
     /*jsifuentes - Fin*/
@@ -5533,7 +5669,8 @@ var cargaInicial=(function(){
     	constructor:constructor,
 // 05-11-2015    	
     	obtenerTipificacionToCriterio:obtenerTipificacionToCriterio,
-    	obtenerTipificacion:obtenerTipificacion
+    	obtenerTipificacion:obtenerTipificacion,
+    	obtenerNumeroAnexos:obtenerNumeroAnexos
 //
     };
 })();
@@ -5641,7 +5778,10 @@ var validaNuevaBaseLegal = (function() {
     	
         confirm.start();
 //        confirm.open("¿Ud est&aacute; seguro de eliminar esta Base Legal?","validaNuevaBaseLegal.eliminarBaseLegalConcordancia('" + rowid + "')");
-        confirm.open("¿Esta seguro de eliminar la base legal concordante?","validaNuevaBaseLegal.eliminarBaseLegalConcordancia('" + rowid + "')");
+		/* OSINE_SFS-610 - Inicio */
+        //confirm.open("¿Esta seguro de eliminar la base legal concordante?","validaNuevaBaseLegal.eliminarBaseLegalConcordancia('" + rowid + "')");
+        confirm.open("¿Est&aacute; seguro de eliminar la base legal concordante?","validaNuevaBaseLegal.eliminarBaseLegalConcordancia('" + rowid + "')");
+        /* OSINE_SFS-610 - Fin */
     	
     }
     function eliminarBaseLegalConcordancia(rowid) {
@@ -5800,8 +5940,10 @@ var validaNuevaBaseLegal = (function() {
     function confirmEliminarObligacionBaseLegal(rowid){
     	confirm.start();
 //    	confirm.open("¿Ud est&aacute; seguro de eliminar esta Obligación?","validaNuevaBaseLegal.eliminarObligacionBaseLegal('" + rowid + "')");
-    	
-    	confirm.open("¿Esta seguro de eliminar la asociación con la obligación?","validaNuevaBaseLegal.eliminarObligacionBaseLegal('" + rowid + "')");
+    	/* OSINE_SFS-610 - Inicio */
+    	//confirm.open("¿Esta seguro de eliminar la asociación con la obligación?","validaNuevaBaseLegal.eliminarObligacionBaseLegal('" + rowid + "')");
+    	confirm.open("¿Est&aacute; seguro de eliminar la asociaci&oacute;n con la obligaci&oacute;n?","validaNuevaBaseLegal.eliminarObligacionBaseLegal('" + rowid + "')");
+    	/* OSINE_SFS-610 - Fin */
     }
     function eliminarObligacionBaseLegal(rowid) {
     	$('#gridOblig').jqGrid('delRowData', rowid);
@@ -6091,7 +6233,7 @@ var validaNuevaBaseLegal = (function() {
 	    	}
 	    	if(validaSancion){
 	    		confirm.start();
-		        confirm.open("¿Esta seguro de guardar el criterio?","validaNuevaBaseLegal.guardarCriterioConfirmado()");
+		        confirm.open("¿Est&aacute; seguro de guardar el criterio?","validaNuevaBaseLegal.guardarCriterioConfirmado()");
 	    	}
 	    };
 	}
@@ -6389,9 +6531,8 @@ function agregarNormaTecnica() {
 	
 	 var mydata = $('#tblNormaTecnica').getGridParam('data');
 	 if (idTipoNormaTecnica!="" && descripcionNorma !=""){
-	   mydata.push({idTipoNormaTecnica:idTipoNormaTecnica, descripcionIdTipoNormaTecnica:descripcionIdTipoNormaTecnica, descripcionNorma:descripcionNorma});
+	   mydata.push({'idTipoNormaTecnica':idTipoNormaTecnica,'descripcionIdTipoNormaTecnica':descripcionIdTipoNormaTecnica,'descripcionNorma':descripcionNorma});
 	 }
-
 	
 	 $('#tblNormaTecnica').jqGrid('clearGridData');
 	 $('#tblNormaTecnica').jqGrid('setGridParam', {data: mydata});
@@ -6434,6 +6575,8 @@ $('#cmbNormaLegal').change(function(){
 	        ocultaLoading();
 	        if(data.resultado=="0"){
 	        	$('#dateFecVigenciaNorma').val(data.baseLegalFechavigencia);
+	        	$('#dateFecVigenciaNorma').datepicker('option','minDate',$('#dateFecVigencia').val()).trigger('change');
+	        	$('#dateFecVigenciaNormaAnexo').datepicker('option','minDate',$('#dateFecVigencia').val()).trigger('change');
 	        }else if(data.resultado=="1"){
 	            mensajeGrowl("error", data.mensaje, "Intente de nuevo");
 	        }else{
@@ -6489,11 +6632,11 @@ function procEliminarIncumplimiento(id){
 
 function gridIncumplimiento() {
 	
-    var colNames = ['id_esce_incumplimiento','Medida de Seguridad', 'Descripcion Incumplimiento'];
+    var colNames = ['id_esce_incumplimiento','Medida de Seguridad', 'Descripci&oacute;n Incumplimiento'];
     var colModel = [
         {name: "id_esce_incumplimiento", hidden: true, width: 200, sortable: false, align: "center"},
         {name: "id_esce_incu_maestro",hidden:true ,  width: 300, sortable: false, align: "center"},
-        {name: "descripcionEscenarioIncumplimiento", width: 600, sortable: false, align: "center"},
+        {name: "descripcionEscenarioIncumplimiento", width: 600, sortable: false, align: "center"}
     ];
     $("#gridIncumplimiento2").html("");
     var url = baseURL + "pages/mantenimiento/baseLegal/findIncumplimiento";

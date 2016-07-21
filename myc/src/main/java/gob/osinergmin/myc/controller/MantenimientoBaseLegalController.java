@@ -341,11 +341,11 @@ public class MantenimientoBaseLegalController {
     */
     @RequestMapping(value = "/obtenerNumeroAnexo", method = RequestMethod.GET)
     public @ResponseBody
-    List<MaestroColumnaDTO> obtenerNumeroAnexo(String codigo) {
-    	System.out.println("codigoo por finnn"+codigo);
+    List<MaestroColumnaDTO> obtenerNumeroAnexo(String codTipoAnexo) {
+    	System.out.println("codigoo por finnn"+codTipoAnexo);
         List<MaestroColumnaDTO> listNumeroAnexo = new ArrayList<MaestroColumnaDTO>();
         try{
-        listNumeroAnexo=maestroColumnaService.listarNumeroAnexo(codigo);
+        listNumeroAnexo=maestroColumnaService.listarNumeroAnexo(codTipoAnexo);
         }catch(Exception e){
             LOG.info("error al procesar listadoSigla " +e);
         }
@@ -526,8 +526,11 @@ public class MantenimientoBaseLegalController {
 		                salida.put(ConstantesWeb.VV_MENSAJE, mensaje);
 		                salida.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_ERROR);
 		            }
-	        } else {
-	        	    String mensaje=controlMessagesStaticEntity("Debe registrar la Infraci&oacute;n","");
+	        } else {	        		
+	        		// OSINE_SFS-610 - Inicio
+	        	    //String mensaje=controlMessagesStaticEntity("Debe registrar la Infraci&oacute;n","");
+	        		String mensaje=controlMessagesStaticEntity("Debe registrar la Infracci&oacute;n","");
+	        	    // OSINE_SFS-610 - Inicio
 		        	salida.put(ConstantesWeb.VV_MENSAJE, mensaje);
 		            salida.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_ERROR);
 	        }
@@ -597,26 +600,32 @@ public class MantenimientoBaseLegalController {
         LOG.info("procesando GET para RequestMapping /findTipificacion ");
         LOG.info("-- findIncumplimiento -idInfraccion = " + idInfraccion);
         List<IncumplimientoDTO> listaIncumplimiento = new ArrayList<IncumplimientoDTO>();
+        Long contador = new Long(0);
         if(idInfraccion!=null){
          listaIncumplimiento = incumplimientoServiceNeg.listarIncumplimientos(idInfraccion);
-        }
-        Long contador = new Long(listaIncumplimiento.size());
-        int indiceInicial = (page - 1) * rows;
-        int indiceFinal = indiceInicial + rows;
-        List<IncumplimientoDTO> listaTipificacionPaginada = new ArrayList<IncumplimientoDTO>();
-        listaTipificacionPaginada = listaIncumplimiento.subList(
-                indiceInicial, indiceFinal > listaIncumplimiento
-                .size() ? listaIncumplimiento.size()
-                : indiceFinal);
-        Long numeroFilas = (contador / rows);
-        if ((contador % rows) > 0) {
-            numeroFilas = numeroFilas + 1L;
-        }
-        map.put("total", numeroFilas);
-        map.put("pagina", page);
-        map.put("registros", contador);
-        map.put("filas", listaTipificacionPaginada);
-        map.put("idInfraccion", idInfraccion);
+         if(listaIncumplimiento!=null){
+        	 contador=new Long(listaIncumplimiento.size());
+        	 int indiceInicial = (page - 1) * rows;
+             int indiceFinal = indiceInicial + rows;
+             List<IncumplimientoDTO> listaTipificacionPaginada = new ArrayList<IncumplimientoDTO>();
+             listaTipificacionPaginada = listaIncumplimiento.subList(
+                     indiceInicial, indiceFinal > listaIncumplimiento
+                     .size() ? listaIncumplimiento.size()
+                     : indiceFinal);
+             Long numeroFilas = (contador / rows);
+             if ((contador % rows) > 0) {
+                 numeroFilas = numeroFilas + 1L;
+             }
+             map.put("total", numeroFilas);
+             map.put("pagina", page);
+             map.put("registros", contador);
+             map.put("filas", listaTipificacionPaginada);
+             map.put("idInfraccion", idInfraccion);
+        	 
+         }
+         
+        }        
+        
         
         return map;
     }
@@ -1471,8 +1480,12 @@ public class MantenimientoBaseLegalController {
                             fos.write(listaArchivos.get(0).getRutaAlfrescoTmp());
                             fos.flush();
                             fos.close();
-                            
-                            documento.setNombreArchivo(listaArchivos.get(0).getNombreArchivo());   
+                            /* INICIO - OSINE_SFS-600 */
+//                            documento.setNombreArchivo(listaArchivos.get(0).getNombreArchivo()); 
+                            /* FIN -  OSINE_SFS-600 */
+                            /* INICIO - OSINE_SFS-600 */
+                            documento.setNombreArchivo(rutaAlfrescoBD); 
+                            /* FIN -  OSINE_SFS-600 */
                             documento.setAplicacionSpace(Constantes.APPLICACION_SPACE_OBLIGACIONES);
                             
                             //GuardarDocumentoAdjuntoInRO inDoc=new GuardarDocumentoAdjuntoInRO();
@@ -2006,7 +2019,7 @@ public class MantenimientoBaseLegalController {
                 salida.put("idInfraccion",retorno.getIdInfraccion());                
             }
         }catch(Exception e){
-            LOG.error("Error al Registrar Detalle Obligacion Controller: "+e.getMessage());
+            LOG.error("Error al Registrar Detalle Obligacion Controller: "+e.getMessage(),e);
             e.printStackTrace();
             String mensaje=controlMessagesStaticEntity(ConstantesWeb.mensajes.MSG_OPERATION_FAIL_UPDATE,ConstantesWeb.mensajes.MSG_ENTITY_INFRACCION);
             salida.put(ConstantesWeb.VV_MENSAJE, mensaje);
@@ -2041,9 +2054,10 @@ public class MantenimientoBaseLegalController {
             String fechaPublicacionDetalleNormaLegal = null;
             if(detalle!=null){
                 fechaPublicacionDetalleNormaLegal=convertirFechaString(detalle.getFechaEntradaVigenciaNorma());
+                detalleNormaTecnicaDTO = baseLegalService.findDetalleNormaTecnicaById(detalle.getIdDetalleBaseLegal());
             }
             
-            detalleNormaTecnicaDTO = baseLegalService.findDetalleNormaTecnicaById(detalle.getIdDetalleBaseLegal());
+            
             /**/
            //detalleNormaTecnicaDTO = baseLegalService.findDetalleNormaTecnicaById(detalle.getIdDetalleBaseLegal());            
             /**/
@@ -2157,8 +2171,12 @@ public class MantenimientoBaseLegalController {
                         fos.write(listaArchivos.get(0).getRutaAlfrescoTmp());
                         fos.flush();
                         fos.close();
-                        
-                        documento.setNombreArchivo(listaArchivos.get(0).getNombreArchivo());   
+                        /* INICIO OSINE_SFS-600 */
+//                        documento.setNombreArchivo(listaArchivos.get(0).getNombreArchivo());
+                        /* FIN OSINE_SFS-600 */
+                        /* INICIO OSINE_SFS-600 */
+                        documento.setNombreArchivo(rutaAlfrescoBD);
+                        /* FIN OSINE_SFS-600 */
                         documento.setAplicacionSpace(Constantes.APPLICACION_SPACE_OBLIGACIONES);
                         
                         //GuardarDocumentoAdjuntoInRO inDoc=new GuardarDocumentoAdjuntoInRO();
@@ -2476,7 +2494,10 @@ public class MantenimientoBaseLegalController {
      * @return
      */
     @RequestMapping(value="/eliminarConfiguracionObligacion",method = RequestMethod.GET)
-    public @ResponseBody Map<String, Object> eliminarConfiguracionObligacion(Long idConfObligacion,String codTrazabilidad,HttpSession session){
+    /* OSINE_SFS-610 - Inicio */
+    //public @ResponseBody Map<String, Object> eliminarConfiguracionObligacion(Long idConfObligacion,String codTrazabilidad,HttpSession session){
+    public @ResponseBody Map<String, Object> eliminarConfiguracionObligacion(Long idObligacion, Long idConfObligacion,String codTrazabilidad,HttpSession session){	
+    /* OSINE_SFS-610 - Fin */
         LOG.info("(Controller Eliminar Configuracion Obligacion)Ingresando... ");
         Map<String, Object> salida = new HashMap<String, Object>();
         try {
@@ -2485,6 +2506,30 @@ public class MantenimientoBaseLegalController {
         	
             CnfObligacionDTO retorno=cnfObligService.eliminarConfiguracion(idConfObligacion,codTrazabilidad,usuarioDTO);
             LOG.info("Configuracion Eliminada: "+retorno.getIdConfObligacion());
+            /* OSINE_SFS-610 - Inicio */
+            List<OpcionDTO> listaOpciones=new ArrayList<OpcionDTO>();
+            String idRubros = "";
+            
+            ObligacionFilter filtro = new ObligacionFilter();
+        	int[] auxiliar=new int[1];
+        	filtro.setIdObligacion(idObligacion);
+        	List<CnfObligacionDTO> cnfObligacionDTOs= obligacionNormativaService.findObligacionById(filtro, auxiliar);
+        	
+        	if(cnfObligacionDTOs!=null){ 
+        		
+        	idRubros=MycUtil.concatenaListadoActividades(cnfObligacionDTOs);
+        	
+        	}
+			
+        	listaOpciones=obligacionNormativaService.obtenerOpciones(idRubros);
+        	
+        	if (listaOpciones!=null){        		
+        		salida.put("countOpcActualizar",listaOpciones.size());
+        		for (int i = 0; i < listaOpciones.size(); i++) {
+        			salida.put("opcionActualizar"+i,listaOpciones.get(i).getIdentificador_opcion() );        			                	
+				}        	
+        	}
+            /* OSINE_SFS-610 - Fin */
         	salida.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_EXITO);
         	
         } catch (Exception e) {

@@ -52,7 +52,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "PghBaseLegal.findByFilterPadre",query="SELECT new PghBaseLegal(p.idBaseLegal, p.codigoBaseLegal, p.descripcion,d.idDocumentoAdjunto,d.nombreArchivo,d.rutaAlfresco,p.flagPadre," +
     		"sum(case when (select x.idBaseLegal from PghBaseLegal x where x.idBaseLegalPadre=p.idBaseLegal and x.estado='1' and rownum=1) is not null then 1 else 0 end) as tieneAct) " +
     		"FROM PghBaseLegal p left join p.idDocumentoAdjunto d  " +
-    		"WHERE p.estado='1' and p.flagPadre='P' and upper(p.descripcion) like :descripcion and upper(p.codigoBaseLegal) like :codigoBaseLegal " +
+    		"WHERE p.estado='1' " +
+    		"and p.flagPadre='P' " +
+    		"and upper(p.descripcion) like :descripcion " +
+    		"and upper(p.codigoBaseLegal) like :codigoBaseLegal " +
     		"and upper(p.titulo) like :titulo " +
     		"group by p.idBaseLegal,p.codigoBaseLegal, p.descripcion,d.idDocumentoAdjunto,d.nombreArchivo,d.rutaAlfresco,p.flagPadre " +
     		"order by p.codigoBaseLegal desc "),

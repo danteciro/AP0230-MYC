@@ -100,14 +100,14 @@ public class PghObligacion extends ColumAddObligacionesTmp {
     private List<PghTemaObligacionMaestro> pghTemaObligacionMaestroList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idObligacion", fetch = FetchType.LAZY)
     private List<PghObligacionBaseLegal> pghObligacionBaseLegalList;
-    
+
     @Transient
     private Long tieneAct;
 
     public PghObligacion() {
     }
 
-    public PghObligacion(Long idObligacion) {
+	public PghObligacion(Long idObligacion) {
         this.idObligacion = idObligacion;
     }
     

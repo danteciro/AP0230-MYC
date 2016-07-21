@@ -2,6 +2,9 @@
 var idSileAdmi;
 var idTramites;
 var idActividades;
+/* OSINE_SFS-610 - Inicio */
+var nodeSeleccion='';
+/* OSINE_SFS-610 - Fin */
 $(function() {
     procesarGridRubroOpcion("0");
     initInicioProc();
@@ -22,6 +25,9 @@ function initInicioProc(){
 function btnLimpiarForm(){
 //    $('#buscarProc').find('input, select').val('');
     $('#buscarProc').find('select').val('');
+    /* OSINE_SFS-610 - Inicio */
+    procesarGridRubroOpcion(0);
+    /* OSINE_SFS-610 - Fin */
 }
 
 function abrirMantTramiteActividad(tipo,rowid){
@@ -71,10 +77,13 @@ function abrirMantTramiteActividad(tipo,rowid){
 
 
 function abrirMantEditRubroOpcion(tipo,rowid){
-	
+	 /* OSINE_SFS-610 - Inicio */
 	 var title="CONSULTAR ACTIVIDAD vs TIPO TRÁMITE";
+	 /* OSINE_SFS-610 - Fin */
 	    if(tipo=='edit'){
-	        title="EDITAR RELACION RUBRO vs OPCION";
+	    	/* OSINE_SFS-610 - Inicio */
+	        title="EDITAR RELACIÓN RUBRO vs OPCIÓN";
+	        /* OSINE_SFS-610 - Fin */
 	 }
     var row = $('#gridRubroOpcion').jqGrid('getRowData', rowid);
     $.ajax({
@@ -309,7 +318,7 @@ function procesarGridRubroOpcion(flg_load) {
         colModel: columnas,
         height: "auto",
         viewrecords: true,
-        caption: "Listado de relaciones Rubro vs Opcion",
+        caption: "Listado de relaciones Rubro vs Opci&oacute;n",
         autowidth: true,
         jsonReader: {
             root: "filas",
@@ -438,6 +447,13 @@ function btnAgregarActividadMan(){
         width: 640,height:280,modal:true,
         close: function( event, ui ) {//se destruye popup para evitar conflicto con arbol y seleccionados
             //console.log('cerrando y destruyendo popup');
+        	/* OSINE_SFS-610 - Inicio */
+        	if(nodeSeleccion==null || nodeSeleccion==undefined || nodeSeleccion==''){
+        		$('#optRubroMan').css("display","none");
+        		$('#cmbTramiteActividad').val('');
+        	} 
+        	nodeSeleccion='';
+        	/* OSINE_SFS-610 - Fin */
             $(this).dialog('destroy');
         }
     });
@@ -466,11 +482,19 @@ function initArbolActividades(){
         select: function(event, data) {
             var selKeys = $.map(data.tree.getSelectedNodes(), function(node){
                 if(!node.folder){
-                	console.log(node.key);
+                	console.log(node.key);                	                	
                 	$("#optRubroMan").val(node.key);
                     $("#optRubroMan").text(node.title);
                     $("#optRubroMan").attr('selected','selected');
+                    /* OSINE_SFS-610 - Inicio */
+                    nodeSeleccion = node.key;
+                    $('#optRubroMan').css("display","block");
+                    /* OSINE_SFS-610 - Fin */
                     return "{id:'"+node.key+"',nombre:'"+node.title+"'}";
+                } else {
+                	/* OSINE_SFS-610 - Inicio */
+                	$('#optRubroMan').css("display","none");
+                	/* OSINE_SFS-610 - Fin */
                 }
             });
         },

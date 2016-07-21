@@ -145,7 +145,9 @@ var criterio = (function() {
 	    var validar = $('#formCriterio').validateAllForm("#divMensajeValidaFrmCriterio");
 	    if(validar){	    	
 	    	 confirm.start();
-       	  confirm.open("¿Esta seguro de guardar el criterio?","criterio.guardarCriterioConfirmado()");
+	    	 /* OSINE_SFS-600 - INICIO */
+       	  	confirm.open("¿Est&aacute; seguro de guardar el criterio?","criterio.guardarCriterioConfirmado()");
+       	  	/* OSINE_SFS-600 - FIN */
 
 	    };
 	}

@@ -2,6 +2,11 @@ var baseURL;
 var id;
 var caracteres = "abcdefghijklmnopqrstuvwxyzñÑABCDEFGHIJKLMNOPQRSTUVWXYZáéíóú ";
 var numeros = "0123456789";
+/* OSINE_SFS-610 - Inicio */
+var variable = {
+		infraccion: 'AA2',
+}
+/* OSINE_SFS-610 - Fin */
 var numeros_caracteres = numeros + caracteres;
 var moneda = numeros + ".";
 var global = {

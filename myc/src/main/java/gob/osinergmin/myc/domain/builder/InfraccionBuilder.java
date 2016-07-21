@@ -7,7 +7,9 @@ package gob.osinergmin.myc.domain.builder;
 import gob.osinergmin.myc.domain.MdiDocumentoAdjunto;
 import gob.osinergmin.myc.domain.PghInfraccion;
 import gob.osinergmin.myc.domain.PghObligacion;
+import gob.osinergmin.myc.domain.dto.DocumentoAdjuntoDTO;
 import gob.osinergmin.myc.domain.dto.InfraccionDTO;
+import gob.osinergmin.myc.domain.dto.ObligacionNormativaDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +38,8 @@ public class InfraccionBuilder {
                     docAdjunto.setUsuarioCreacion(infraccionDTO.getUsuarioCreacion());
                     docAdjunto.setTerminalCreacion(infraccionDTO.getTerminalCreacion());                    
                     registro.setIdDocumentoAdjunto(docAdjunto);                    
-                    }                              
-              if(infraccionDTO.getIdObligacion2() != null){
+                }                              
+              if(infraccionDTO.getIdObligacion()!=null && infraccionDTO.getIdObligacion().getIdObligacion()!= null){
                 obligacion = new PghObligacion();
                 obligacion.setIdObligacion(infraccionDTO.getIdObligacion().getIdObligacion());
                 registro.setIdObligacion(obligacion);             
@@ -70,6 +72,14 @@ public class InfraccionBuilder {
         infraccionDTO.setCodTrazabilidad(infraccion.getCodTrazabilidad());
         infraccionDTO.setIdAccionMaestro(infraccion.getIdAccionMaestro());
         infraccionDTO.setIdMedidaSeguridadMaestro(infraccion.getIdMedidaSeguridadMaestro());
+        DocumentoAdjuntoDTO documento = new DocumentoAdjuntoDTO();
+        documento.setIdDocumentoAdjunto(infraccion.getIdDocumentoAdjunto().getIdDocumentoAdjunto());
+        documento.setNombreArchivo(infraccion.getIdDocumentoAdjunto().getNombreArchivo());
+        documento.setRutaAlfresco(infraccion.getIdDocumentoAdjunto().getRutaAlfresco());
+        infraccionDTO.setDocumentoAdjuntoDTO(documento);
+        ObligacionNormativaDTO obligacion = new ObligacionNormativaDTO();
+        obligacion.setIdObligacion(infraccion.getIdObligacion().getIdObligacion());
+        infraccionDTO.setObligacionDTO(obligacion);
         return infraccionDTO;
     }
        

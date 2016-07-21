@@ -22,10 +22,10 @@
                                 <div class="form">
                                     <div class="filaForm" >
                                         <div class="lble"><label for="cmbProcesoBusq">RUBRO:</label></div>
-                                        <div class="slcta">
-                                            <select id="cmbTramiteActividad" name="idActividad">
+                                        <div class="lblxa">
+                                            <select id="cmbTramiteActividad" name="idActividad" class="lblxa">
                                               <option value="">--Seleccione--</option>
-                                              <option id="optRubroMan"  value="-1"></option>
+                                              <option id="optRubroMan"  value="-1" style="display:none;"></option>
                                             </select>
                                         </div>
                                         <input id="btnAgregarActividadMan" type="button" value="SELECCIONAR RUBROS" class="button_2">

@@ -10,8 +10,9 @@
     <head>
         <!--PR119 RSIS 19 inicion -->
         <script type="text/javascript">
-            var detalleNormaTecnicaDTO =${detalleNormaTecnicaDTO};
-//             console.log(detalleNormaTecnicaDTO);
+
+        var detalleNormaTecnicaDTO = ${detalleNormaTecnicaDTO};
+
         </script>
         <!--PR119 RSIS 19 Fin -->
         <script type="text/javascript" src='<c:url value="/javascript/app/moduloObligaciones/baseLegal/mantenimiento/nuevo.js" />' charset="utf-8"></script>        
@@ -31,9 +32,10 @@
     <body >
 
         <div id="${idDialog}" >
-            <input id="codTrazabilidad" type="hidden" value="${codTrazabilidad}">
-            <input id="accionDialogMantenimiento" type="hidden" value="${flagBaseLegal}">
-            <input id="idDialogMantenimientoBaseLegal" type="hidden" value="${idDialog}">
+        	<input id="iptDetalleNormaTecnica" type="hidden" value="" >
+            <input id="codTrazabilidad" type="hidden" value="${codTrazabilidad}" >
+            <input id="accionDialogMantenimiento" type="hidden" value="${flagBaseLegal}" >
+            <input id="idDialogMantenimientoBaseLegal" type="hidden" value="${idDialog}" >
             <div id="tabNewBaseLegal" style="width:990px;">
                 <ul>
                     <li id="tab1"><a href="#newBaseLegal">Base Legal</a></li>
@@ -381,7 +383,7 @@
                     </div>
                 </div>
                 <div id="newObligacionNormativa">
-                    <div id="dialogAgregarObligacionNormativa"   title="OBLIGACION NORMATIVA" >
+                    <div id="dialogAgregarObligacionNormativa"   title="OBLIGACI&Oacute;N NORMATIVA" >
                     	<div id="toggCabeceraObligacion" >
                     	<div id="cabeceraObligacion" >
                         <form id="frmNuevaOblNorm" >
@@ -494,6 +496,7 @@
 			                              <!-- PR119 - Item 7 - Fin --> 
                                             <div id="tipificacionEditarObligacion">
                                                 <div id="divMensajeValidacionAdicionarTipificacion" class="errorMensaje" tabindex='1' style="display: none" ></div>
+                                                <div id="divContenidoTipificacion" >
                                                 <div class="filaForm">
                                                     <div style="width:150px;"><label for="txtTipifOblNor">Tipificación:</label></div>   
                                                     <div>
@@ -530,6 +533,7 @@
                                                     </div>
                                                 </fieldset>
                                                 <div><br></div>
+                                                </div>
                                                 <div id="botones">
 <!--                                                     <button id="btnAgregarTipificacion">Asociar</button> -->
                                                     <seg:botonTag code="IN" value="Asociar" styleClass="btn_a btn_small" id="btnAgregarTipificacion" title="Asociar" onclick=""/>
@@ -862,7 +866,7 @@
 										<div>
 											<textarea style="width: 625px;" rows="3" class=""
 												name="descripcionInfraccion" id="txtDescInfraccion"
-												maxlength="2000"></textarea>
+												maxlength="500"></textarea>
 										</div>
 									</div>
 									<div id="divDocumentoAdjuntoDetalle" class="filaForm">
@@ -897,7 +901,7 @@
 									<div class="filaForm">
 										<input id="idHideCodAccion" style="display: none;" />
 										<div class="lble vat" style="width: 180px;">
-											<label for="idAccionMaestro">Accion:</label>
+											<label for="idAccionMaestro">Acci&oacute;n:</label>
 										</div>
 										<div>
 											<input id="cmbHideAccionInfraccion" value="${infraccion.idAccionMaestro}" style="display:none;"/>											
@@ -1016,9 +1020,14 @@
         <div id="dialogConfirmacionEditarRegistroBaseLegal" class="dialog" style="display: none;"
              title="Confirmaci&oacute;n">
 <!-- 05/11/2015              -->
-             <div style="width:350px;">
+             <div id="divDialogEditarBaseLegal" style="width:350px;">
 	            <p> <span class="ui-icon ui-icon-alert" id="icon"></span>
+	            <!-- OSINE_SFS-610 - Inicio -->
+	            <!-- 
 	                ¿Desea actualizar la base legal con codigo: <span>${baseLegal.codigoBaseLegal}</span> ?
+	                -->
+	                ¿Desea actualizar la base legal con c&oacute;digo: <span>${baseLegal.codigoBaseLegal}</span> ?
+	            <!-- OSINE_SFS-610 - Fin -->
 	            </p>
              </div>
 <!-- 7 -->
@@ -1059,8 +1068,8 @@
             </div>
         </div>
 
-        <div id="dialogCargarNuevaOblNor" style="display:none;overflow: hidden;">
-            <div id="divMensajeValidacionObligacionArchivo" class="errorMensaje"  style="display: none" ></div>
+        <div id="dialogCargarNuevaOblNor" style="display:none;overflow: hidden; text-align:center;">
+            <div id="divMensajeValidacionObligacionArchivo" class="errorMensaje"  style="display: none;" ></div>
             <form id="formFileOblNor"  action="/myc/pages/documentoAdjunto/subirArchivoObligacion" method="post" enctype="multipart/form-data" encoding="multipart/form-data" >
 <!--                    <input id="°desImagen" name="fileNormaLegal" type="file" />-->
                     <input id="fileNuevaOblNor"   name="archivos[0]" placeholder="" value="" type="file" validate="[O]" />
@@ -1069,8 +1078,8 @@
                 </form>		
         </div>
             
-       <div id="dialogCargarArchivoDescripcion" style="display:none;overflow: hidden;">
-            <div id="divMensajeValidacionArchivoDescripcion" class="errorMensaje" tabindex='1' style="display: none" ></div>
+       <div id="dialogCargarArchivoDescripcion" style="display:none;overflow: hidden; text-align:center;">
+            <div id="divMensajeValidacionArchivoDescripcion" class="errorMensaje"  style="display: none" ></div>
             <form id="formFileDesOblNor"  action="/myc/pages/documentoAdjunto/subirArchivoDescripcion" method="post" enctype="multipart/form-data" encoding="multipart/form-data" >
                     <input id="fileDesOblNor"   name="archivos[0]" placeholder="" value="" type="file" validate="[O]" />
                     <input id="file_DesOblNor" type="hidden" validate="[O]">
@@ -1078,8 +1087,8 @@
                 </form>		
         </div>     
 		<!-- Rsis 11 - Inicio -->
-	<div id="dialogCargarArchivoInfraccion" style="display: none; overflow: hidden;">
-		<div id="divMensajeValidacionArchivoInfraccion" class="errorMensaje" tabindex='1' style="display: none"></div>
+	<div id="dialogCargarArchivoInfraccion" style="display: none; overflow: hidden; text-align:center;">
+		<div id="divMensajeValidacionArchivoInfraccion" class="errorMensaje"  style="display: none"></div>
 		<form id="formFileInfraccion" action="/myc/pages/documentoAdjunto/subirArchivoInfraccion" method="post" enctype="multipart/form-data" encoding="multipart/form-data">
 			<input id="fileInfraccion" name="archivos[0]" placeholder="" value="" type="file" validate="[O]" /> 
 			<input id="file_Infraccion" type="hidden" validate="[O]">

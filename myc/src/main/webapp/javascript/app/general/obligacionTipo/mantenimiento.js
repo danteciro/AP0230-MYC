@@ -85,7 +85,6 @@ function procEditarObligacionTipo(){
 
 function btnLimpiarForm(){
     $('#formBusqueda').find('input, select').val('');
- 
 }
 function procesarGridObligacionTipo(flg_load) {
     if (flg_load === undefined) {

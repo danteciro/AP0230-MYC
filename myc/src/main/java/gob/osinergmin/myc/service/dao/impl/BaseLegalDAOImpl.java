@@ -291,7 +291,7 @@ public class BaseLegalDAOImpl implements BaseLegalDAO {
                 }else if(filtro.getFlgBusqAvanzada()!=null && filtro.getFlgBusqAvanzada().equals("1")) {
                     query=buildQueryFindAdvanceByFilter(filtro,true);
                 }else{
-                    query = crud.getEm().createNamedQuery("PghBaseLegal.countByFilterPadre");
+                    query = buildQueryBaseLegalFilter(filtro,true);
                 }
             }else {
                 if (filtro.getIdBaseLegal()!= null) {
@@ -300,41 +300,10 @@ public class BaseLegalDAOImpl implements BaseLegalDAO {
                     query=buildQueryFindAdvanceByFilter(filtro,false);
                 }else{
                 	LOG.info("entroooo--->");
-                    query = crud.getEm().createNamedQuery("PghBaseLegal.findByFilterPadre");
+                    query = buildQueryBaseLegalFilter(filtro,false);
                 }
             }
-            ////////////parametros
-            if(filtro.getFlgBusqAvanzada()!=null && filtro.getFlgBusqAvanzada().equals("1")){
-                LOG.info("sin parametros es busqueda avanzada..");
-            }else{
-                if (filtro.getIdBaseLegal()!= null) {
-                    query.setParameter("idBaseLegal",filtro.getIdBaseLegal());
-                }
-                if (filtro.getDescripcionNormaLegal()!=null && !StringUtil.isEmpty(filtro.getDescripcionNormaLegal())) {
-                	LOG.info("aa");
-                    query.setParameter("descripcion","%"+StringUtil.removeBlank(filtro.getDescripcionNormaLegal().toUpperCase())+"%");
-                    
-                }else{
-                	LOG.info("aaaa");
-                    query.setParameter("descripcion","%");
-                }
-                if (!StringUtil.isEmpty(filtro.getCodigoBaseLegal())) {
-                	LOG.info("bb");
-                    query.setParameter("codigoBaseLegal","%"+StringUtil.removeBlank(filtro.getCodigoBaseLegal().toUpperCase())+"%");
-                }else{
-                	LOG.info("bbbb");
-                    query.setParameter("codigoBaseLegal","%");
-                }
-                if (!StringUtil.isEmpty(filtro.getTitulo())) {
-                	LOG.info("aa");
-                    query.setParameter("titulo","%"+StringUtil.removeBlank(filtro.getTitulo().toUpperCase())+"%");
-                    
-                }else{
-                	LOG.info("aaaa");
-                    query.setParameter("titulo","%");
-                }
-            }
-            
+                        
             
         }catch(Exception e){
             LOG.error("Error getFindQuery: "+e.getMessage());
@@ -364,24 +333,7 @@ public class BaseLegalDAOImpl implements BaseLegalDAO {
                     query = crud.getEm().createNamedQuery("PghBaseLegal.findByFilter");
                 }
             }
-            ////////////parametros
-            if(filtro.getFlgBusqAvanzada()!=null && filtro.getFlgBusqAvanzada().equals("1")){
-                LOG.info("sin parametros es busqueda avanzada..");
-            }else{
-                if (filtro.getIdBaseLegal()!= null) {
-                    query.setParameter("idBaseLegal",filtro.getIdBaseLegal());
-                }
-                if (!StringUtil.isEmpty(filtro.getDescripcion())) {
-                    query.setParameter("descripcion","%"+StringUtil.removeBlank(filtro.getDescripcion().toUpperCase())+"%");
-                }else{
-                    query.setParameter("descripcion","%");
-                }
-                if (!StringUtil.isEmpty(filtro.getCodigoBaseLegal())) {
-                    query.setParameter("codigoBaseLegal","%"+StringUtil.removeBlank(filtro.getCodigoBaseLegal().toUpperCase())+"%");
-                }else{
-                    query.setParameter("codigoBaseLegal","%");
-                }
-            }
+            
             
             
         }catch(Exception e){
@@ -459,7 +411,6 @@ public class BaseLegalDAOImpl implements BaseLegalDAO {
         if (filtro.getSiglaNormaLegal()!= null) {
             jpql.append("and bl.idSigla=:idSigla ");
         }
-        LOG.info("Titulo: "+filtro.getTitulo());
         if(filtro.getTitulo()!= null && !StringUtil.removeBlank(filtro.getTitulo()).equals("")) {
         	jpql.append("and upper(bl.titulo) like '%"+filtro.getTitulo()+"%' ");
         }
@@ -601,7 +552,73 @@ public class BaseLegalDAOImpl implements BaseLegalDAO {
         //////////////////////////////////////
         return query;
     }
+    public Query buildQueryBaseLegalFilter(BaseLegalFilter filtro, boolean count){
+        LOG.info("DAO - buildQueryBaseLegalFilter");
+        String queryString;
+        StringBuilder jpql = new StringBuilder();
+        boolean flgTablaDBL=false;
+        boolean flgTablaOBL=false;
+        Query query = null;
+        try {			
+		
+        //arma CAMPOS QUERY 
+        if (count) {        	
+        	jpql.append("Select sum(count(distinct bl.idBaseLegal)) ");
+            
+        }else{
+        	jpql.append("Select distinct new PghBaseLegal(bl.idBaseLegal, bl.codigoBaseLegal, bl.descripcion,da.idDocumentoAdjunto,da.nombreArchivo,da.rutaAlfresco,bl.flagPadre, ");
+            jpql.append("sum(case when (select x.idBaseLegal from PghBaseLegal x where x.idBaseLegalPadre=bl.idBaseLegal and x.estado='1' and rownum=1) is not null then 1 else 0 end) as tieneAct) ");
+        }
+        
+        	jpql.append("from PghBaseLegal bl "
+                    + "left join bl.idDocumentoAdjunto da "
+                );
+        	//arma WHERE´s
+            jpql.append(" WHERE bl.estado='1' and bl.flagPadre = 'P' ");
 
+            //WHERE´s dinamicos
+
+        if (filtro.getCodigoBaseLegal()!= null && !StringUtil.removeBlank(filtro.getCodigoBaseLegal()).equals("")) {
+            jpql.append("and upper(bl.codigoBaseLegal) like :codigoBaseLegal ");
+        } 
+        if (filtro.getDescripcionNormaLegal()!= null && !StringUtil.removeBlank(filtro.getDescripcionNormaLegal()).equals("")) {
+            jpql.append("and upper(bl.descripcion) like :descripcion ");
+        } 
+        if(filtro.getTitulo()!= null && !StringUtil.removeBlank(filtro.getTitulo()).equals("")) {
+        	jpql.append("and upper(bl.titulo) like '%"+filtro.getTitulo()+"%' ");
+        }
+        
+        if(filtro.getIdsBaseLegal()!=null && !StringUtil.removeBlank(filtro.getIdsBaseLegal()).equals("")){
+            jpql.append("and bl.idBaseLegal not in ("+filtro.getIdsBaseLegal()+")");
+        }
+  
+        jpql.append(" group by bl.idBaseLegal,bl.codigoBaseLegal, bl.descripcion,da.idDocumentoAdjunto,da.nombreArchivo,bl.flagPadre,da.rutaAlfresco ");
+        jpql.append(" order by bl.codigoBaseLegal desc ");
+       
+        //////////////////////////////////////
+        //Crear QUERY
+        queryString = jpql.toString();
+        LOG.info("Query > "+queryString);
+        query = this.crud.getEm().createQuery(queryString);
+        //////////////////////////////////////
+        //Ingreso de PARAMETROS
+            //parametros de WHERE's
+        if (filtro.getDescripcionNormaLegal()!=null && !StringUtil.isEmpty(filtro.getDescripcionNormaLegal())) {
+        	LOG.info("aa");
+            query.setParameter("descripcion","%"+StringUtil.removeBlank(filtro.getDescripcionNormaLegal().toUpperCase())+"%");            
+        }
+        if (!StringUtil.isEmpty(filtro.getCodigoBaseLegal())) {
+        	LOG.info("bb");
+            query.setParameter("codigoBaseLegal","%"+StringUtil.removeBlank(filtro.getCodigoBaseLegal().toUpperCase())+"%");
+        }
+        
+        } catch (Exception e) {
+			e.printStackTrace();
+		}
+        
+        //////////////////////////////////////
+        return query;
+    }
 	/*@Override
 	 @SuppressWarnings("unchecked")
 	public BaseLegalDTO findBaseLegalbyCodigo(String codigoBaseLegal) {

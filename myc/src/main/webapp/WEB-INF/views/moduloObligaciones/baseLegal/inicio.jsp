@@ -68,7 +68,7 @@
         <div class="container">
             <div class="pui-panel ui-widget-content">
                 <div class="pui-panel-titlebar ui-corner-all">
-                    <span class="ui-panel-title">GESTION DE BASE LEGAL</span>
+                    <span class="ui-panel-title">GESTI&Oacute;N DE BASE LEGAL</span>
                 </div>
                 <div class="pui-panel-content ui-widget-content">
                     <fieldset id="busquedaBaseLegal">

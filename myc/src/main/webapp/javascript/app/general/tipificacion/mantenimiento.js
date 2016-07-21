@@ -110,7 +110,9 @@ function procEditarRequ(){
 //ELIMINAR REQUISITO - INICIO
 function eliminarTipificacion(rowid){
     var row = $('#gridTipificacion').jqGrid('getRowData', rowid);
-    confirm.open("¿Ud. est&aacute; seguro de eliminar esta tipificacion?","procEliminarTipificacion('"+row.idTipificacion+"')");
+    /* OSINE_SFS-610 - INICIO */
+    confirm.open("¿Ud. est&aacute; seguro de eliminar esta tipificaci&oacute;n?","procEliminarTipificacion('"+row.idTipificacion+"')");
+    /* OSINE_SFS-610 - FIN */
 }
 function procEliminarTipificacion(id){
     $.ajax({

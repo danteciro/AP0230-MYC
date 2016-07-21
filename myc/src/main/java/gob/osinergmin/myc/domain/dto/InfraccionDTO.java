@@ -79,6 +79,7 @@ public class InfraccionDTO {
 	 * Entidad de la base de datos con la que se relaciona la infracción
 	 */
 	private PghObligacion idObligacion;
+	private ObligacionNormativaDTO obligacionDTO;
 	/**
 	 * Identificador temporal de obligación
 	 */
@@ -235,6 +236,12 @@ public class InfraccionDTO {
 
 	public void setGetIdDocumentoAdjunto(Long getIdDocumentoAdjunto) {
 		this.getIdDocumentoAdjunto = getIdDocumentoAdjunto;
+	}
+	public ObligacionNormativaDTO getObligacionDTO() {
+		return obligacionDTO;
+	}
+	public void setObligacionDTO(ObligacionNormativaDTO obligacionDTO) {
+		this.obligacionDTO = obligacionDTO;
 	}
 	
 	

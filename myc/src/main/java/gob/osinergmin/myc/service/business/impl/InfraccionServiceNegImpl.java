@@ -46,15 +46,14 @@ public class InfraccionServiceNegImpl implements InfraccionServiceNeg{
     @Transactional
     public InfraccionDTO guardaInfraccion(InfraccionDTO infraccionDTO, UsuarioDTO usuarioDTO) {
         LOG.info("Registro Infraccion ServiceNegImpl");
-        InfraccionDTO registro = null;
+        InfraccionDTO registro = new InfraccionDTO();
         try{
-            DocumentoAdjuntoDTO documentoAdjunto = infraccionDTO.getDocumentoAdjuntoDTO();            
-            registro = infraccionDAO.create(infraccionDTO, usuarioDTO);
+            DocumentoAdjuntoDTO documentoAdjunto = infraccionDTO.getDocumentoAdjuntoDTO();         
             if(documentoAdjunto != null){
                 int lastIndexOf = documentoAdjunto.getNombreArchivo().lastIndexOf(".");
                 String formato = documentoAdjunto.getNombreArchivo().substring(lastIndexOf);
                 registro.setIdObligacion(infraccionDTO.getIdObligacion());
-                String rutaAlfrescoBD = registro.getIdObligacion().getIdObligacion() + "_IMG"+ formato;                
+                String rutaAlfrescoBD = infraccionDTO.getDocumentoAdjuntoDTO().getNombreArchivo() + "_IMG_INF"+ formato;                
                 File someFile = new File(rutaAlfrescoBD);
                 FileOutputStream fos = new FileOutputStream(someFile);
                 fos.write(documentoAdjunto.getRutaAlfrescoTmp());
@@ -73,7 +72,9 @@ public class InfraccionServiceNegImpl implements InfraccionServiceNeg{
                     GuardarDocumentoAdjuntoOutRO saveDoc = documentoServiceNeg.registrarDocumentoAdjunto(inDoc);
                     DocumentoAdjuntoDTO documentoAdjuntoCreado = saveDoc.getDocumento();
                     registro.setDocumentoAdjuntoDTO(documentoAdjuntoCreado);
-                    infraccionDAO.update(registro, usuarioDTO);
+                    infraccionDTO.setDocumentoAdjuntoDTO(documentoAdjuntoCreado);
+                    registro = infraccionDAO.create(infraccionDTO, usuarioDTO);
+//                    infraccionDAO.update(registro, usuarioDTO);
                 }
             }
             LOG.info("(Registro Detalle Obligacion ServiceNegImpl) registro: "+registro.toString());
@@ -84,6 +85,7 @@ public class InfraccionServiceNegImpl implements InfraccionServiceNeg{
     }
   
 	@Override
+	@Transactional
 	public InfraccionDTO updateInfraccion(
 			InfraccionDTO infraccionDTO, UsuarioDTO usuarioDTO) {
 		LOG.info("Actualizar Detalle Obligacion ServiceNegImpl");
@@ -99,7 +101,7 @@ public class InfraccionServiceNegImpl implements InfraccionServiceNeg{
                 }else{
                     int lastIndexOf = documentoAdjunto.getNombreArchivo().lastIndexOf(".");
                     String formato = documentoAdjunto.getNombreArchivo().substring(lastIndexOf);
-                    rutaAlfrescoBD = registro.getIdObligacion() + "_IMG"+ formato;
+                    rutaAlfrescoBD = registro.getDocumentoAdjuntoDTO().getNombreArchivo() + "_IMG_INF"+ formato;
                 }
                 System.out.println("-- rutaAlfrescoBD = "+rutaAlfrescoBD);
                 File someFile = new File(rutaAlfrescoBD);
@@ -117,7 +119,10 @@ public class InfraccionServiceNegImpl implements InfraccionServiceNeg{
                         GuardarDocumentoAdjuntoInRO inDoc = new GuardarDocumentoAdjuntoInRO();
                         inDoc.setDocumento(documentoAdjuntoActual);
                         inDoc.setUsuario(usuarioDTO);
-                        documentoServiceNeg.editarDocumentoAdjunto(inDoc);
+                        GuardarDocumentoAdjuntoOutRO saveDoc = documentoServiceNeg.editarDocumentoAdjunto(inDoc);
+                        DocumentoAdjuntoDTO documentoAdjuntoCreado = saveDoc.getDocumento();
+                        registro.getDocumentoAdjuntoDTO().setIdDocumentoAdjunto(documentoAdjuntoCreado.getIdDocumentoAdjunto());
+                        infraccionDAO.update(registro, usuarioDTO);
                     }else{
                         GuardarDocumentoAdjuntoInRO inDoc = new GuardarDocumentoAdjuntoInRO();
                         documentoAdjunto.setRutaAlfresco(rutaAlfrescoBD);
