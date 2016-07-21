@@ -828,7 +828,11 @@ public class BaseLegalDAOImpl implements BaseLegalDAO {
             baseLegalDTO.setEstado(estado);
             PghBaseLegal baseAct = crud.find(baseLegalDTO.getIdBaseLegal(), PghBaseLegal.class);
             PghBaseLegal baseUpd = BaseLegalBuilder.getBaseLegal(baseLegalDTO);
-            
+            if(baseUpd.getIdDocumentoAdjunto()!=null && baseUpd.getIdDocumentoAdjunto().getIdDocumentoAdjunto()!=null){
+            	
+            }else{            	
+            	baseUpd.setIdDocumentoAdjunto(baseAct.getIdDocumentoAdjunto());
+            }
             boolean validarDetalle=validarDetalleBaseLegal(baseLegalDTO);
             
             LOG.info("SE PROCEDE A ACTUALIZAR BASE LEGAL");
