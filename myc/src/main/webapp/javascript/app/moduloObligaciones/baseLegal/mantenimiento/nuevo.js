@@ -434,6 +434,8 @@ var gestionBaseLegal = (function() {
                     $('#dateFecVigencia').removeAttr('disabled');
                     $('#dateFecPublicacion').removeAttr('disabled');
                     $('#txtaTitBaseLegal').removeAttr('disabled');
+		    $('#dateFecVigenciaNorma').datepicker('option','minDate',data.fechaVigencia).trigger('change');
+                    $('#dateFecVigenciaNormaAnexo').datepicker('option','minDate',data.fechaVigencia).trigger('change');
                 }else{
                 	$('#cmbHideTipoBaseLegal').val('');
                 	$('#cmbTipBaseLegal').val('');
