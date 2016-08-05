@@ -1,19 +1,6 @@
---MAESTRO_COLUMNA ARCHIVO_PLAZO_DESCARGO A CONSIDERAR EN EL PLAZO DESCARGO LUEGO DE CONCLUIR
-INSERT INTO mdi_maestro_tabla (DESCRIPCION, DOMINIO, Usuario_Creacion,FECHA_CREACION,Terminal_Creacion,ES_EDITABLE,Aplicacion) VALUES 
-('ARCHIVO PLAZO DESCARGO','ARCHIVO_PLAZO_DESC','USU01',SYSDATE,'LOCALHOST','SI','INPS');
-
 --MAESTRO_COLUMNA TIPO DIRECCION OPERATIVA
 INSERT INTO mdi_maestro_columna (descripcion,Codigo,Id_Maestro_Columna,Dominio,fecha_creacion,usuario_creacion,terminal_creacion,aplicacion,estado) values 
 ('OPERATIVA','OPE',mdi_maestro_columna_seq.nextval,'TIPO_DIRECCION',sysdate,'usu01','localhost','SGLSS',1);
-
---MAESTRO_COLUMNA DIRECC INPS UO A CONSIDERAR PARA SER LA DIRECC A MOSTRAR EN INPS
-INSERT INTO mdi_maestro_tabla (DESCRIPCION, DOMINIO, Usuario_Creacion,FECHA_CREACION,Terminal_Creacion,ES_EDITABLE,Aplicacion) VALUES 
-('DIRECCION INPS UO','DIRE_INPS_UO','USU01',SYSDATE,'LOCALHOST','NO','INPS');
-INSERT INTO mdi_maestro_columna (descripcion,Codigo,Id_Maestro_Columna,Dominio,fecha_creacion,usuario_creacion,terminal_creacion,aplicacion,estado) values 
-('OPERATIVA','OPE',mdi_maestro_columna_seq.nextval,'DIRE_INPS_UO',sysdate,'usu01','localhost','INPS',1);
-
-INSERT INTO mdi_maestro_columna (descripcion,Codigo,Id_Maestro_Columna,Dominio,fecha_creacion,usuario_creacion,terminal_creacion,aplicacion,estado) values 
-('OPERATIVA','OPE',mdi_maestro_columna_seq.nextval,'DIRE_INPS_UO_DL',sysdate,'usu01','localhost','INPS',1);
 
 --MAESTRO_COLUMNA SUPERVISION_MUESTRAL PARA metodologia de Selecion para supervision muestral
 INSERT INTO mdi_maestro_tabla (DESCRIPCION, DOMINIO, Usuario_Creacion,FECHA_CREACION,Terminal_Creacion,ES_EDITABLE,Aplicacion) VALUES 
