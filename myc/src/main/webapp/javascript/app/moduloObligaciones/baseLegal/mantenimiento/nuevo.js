@@ -5481,10 +5481,10 @@ var cargaInicial=(function(){
             	    //html += '<option value="' + data[i].idMaestroColumna + '">'
             		//+ data[i].descripcion + '</option>'; 
             		if (data[i].codigo == variable.infraccion){
-            			html += '<option value="' + data[i].idMaestroColumna + '" selected="selected">'
+            			html += '<option value="' + data[i].idMaestroColumna + '" codigo="'+data[i].codigo+'" selected="selected">'
             			+ data[i].descripcion + '</option>'; 
             		}else{
-            			html += '<option value="' + data[i].idMaestroColumna + '" >'
+            			html += '<option value="' + data[i].idMaestroColumna + '"  codigo="'+data[i].codigo+'" >'
             			+ data[i].descripcion + '</option>'; 
             		}
                    /* OSINE_SFS-610 - Fin */
@@ -5506,10 +5506,10 @@ var cargaInicial=(function(){
                     //html += '<option value="' + data[i].idMaestroColumna + '">'
                     //        + data[i].descripcion + '</option>';
 	            	if (data[i].codigo == variable.infraccion){
-	            		html += '<option value="' + data[i].idMaestroColumna + '" selected="selected">'
+	            		html += '<option value="' + data[i].idMaestroColumna + '" codigo="'+data[i].codigo+'" selected="selected">'
 	                    + data[i].descripcion + '</option>';
 	            	}else{
-	            		html += '<option value="' + data[i].idMaestroColumna + '">'
+	            		html += '<option value="' + data[i].idMaestroColumna + '" codigo="'+data[i].codigo+'">'
 	                    + data[i].descripcion + '</option>';
 	            	}
                     /* OSINE_SFS-610 - Inicio */
