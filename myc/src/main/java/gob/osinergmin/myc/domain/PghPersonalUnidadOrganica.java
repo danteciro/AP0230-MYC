@@ -1,0 +1,138 @@
+/**
+* Resumen		
+* Objeto		: PghPersonalUnidadOrganica.java
+* Descripción		: Domain de la entidad.
+* Fecha de Creación	: 13/06/2016
+* PR de Creación	: OSINE_SFS-480
+* Autor			: Julio Piro
+* ---------------------------------------------------------------------------------------------------
+* Modificaciones
+* Motivo            Fecha           Nombre                          Descripción
+* ---------------------------------------------------------------------------------------------------
+* 
+*/ 
+
+package gob.osinergmin.myc.domain;
+
+import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@Entity
+@Table(name = "PGH_PERSONAL_UNIDAD_ORGANICA")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "PghPersonalUnidadOrganica.findAll", query = "SELECT p FROM PghPersonalUnidadOrganica p where estado=1"),
+    @NamedQuery(name = "PghPersonalUnidadOrganica.findByIdUnidadOrganica", query = "SELECT p FROM PghPersonalUnidadOrganica p where p.estado=1 and p.idUnidadOrganica.idUnidadOrganica=:idUnidadOrganica ")
+})
+public class PghPersonalUnidadOrganica extends Auditoria {
+
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ID_PERSONAL_UNIDAD_ORGANICA")
+    private Long idPersonalUnidadOrganica;
+    @Column(name = "FLAG_DEFAULT")
+    private Character flagDefault;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ESTADO")
+    private String estado;
+    @JoinColumn(name = "ID_PERSONAL", referencedColumnName = "ID_PERSONAL")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private PghPersonal idPersonal;
+    @JoinColumn(name = "ID_UNIDAD_ORGANICA", referencedColumnName = "ID_UNIDAD_ORGANICA")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private MdiUnidadOrganica idUnidadOrganica;
+
+    public PghPersonalUnidadOrganica() {
+    }
+
+    public PghPersonalUnidadOrganica(Long idPersonalUnidadOrganica) {
+        this.idPersonalUnidadOrganica = idPersonalUnidadOrganica;
+    }
+
+    public PghPersonalUnidadOrganica(Long idPersonalUnidadOrganica, String estado, String usuarioCreacion, Date fechaCreacion, String terminalCreacion) {
+        this.idPersonalUnidadOrganica = idPersonalUnidadOrganica;
+        this.estado = estado;
+        this.usuarioCreacion = usuarioCreacion;
+        this.fechaCreacion = fechaCreacion;
+        this.terminalCreacion = terminalCreacion;
+    }
+
+    public Long getIdPersonalUnidadOrganica() {
+        return idPersonalUnidadOrganica;
+    }
+
+    public void setIdPersonalUnidadOrganica(Long idPersonalUnidadOrganica) {
+        this.idPersonalUnidadOrganica = idPersonalUnidadOrganica;
+    }
+
+    public Character getFlagDefault() {
+        return flagDefault;
+    }
+
+    public void setFlagDefault(Character flagDefault) {
+        this.flagDefault = flagDefault;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public PghPersonal getIdPersonal() {
+        return idPersonal;
+    }
+
+    public void setIdPersonal(PghPersonal idPersonal) {
+        this.idPersonal = idPersonal;
+    }
+
+    public MdiUnidadOrganica getIdUnidadOrganica() {
+        return idUnidadOrganica;
+    }
+
+    public void setIdUnidadOrganica(MdiUnidadOrganica idUnidadOrganica) {
+        this.idUnidadOrganica = idUnidadOrganica;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idPersonalUnidadOrganica != null ? idPersonalUnidadOrganica.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof PghPersonalUnidadOrganica)) {
+            return false;
+        }
+        PghPersonalUnidadOrganica other = (PghPersonalUnidadOrganica) object;
+        if ((this.idPersonalUnidadOrganica == null && other.idPersonalUnidadOrganica != null) || (this.idPersonalUnidadOrganica != null && !this.idPersonalUnidadOrganica.equals(other.idPersonalUnidadOrganica))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "gob.osinergmin.myc.domain.PghPersonalUnidadOrganica[ idPersonalUnidadOrganica=" + idPersonalUnidadOrganica + " ]";
+    }
+    
+}
