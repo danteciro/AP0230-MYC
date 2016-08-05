@@ -12,6 +12,7 @@ public class ConstantesWeb {
     public static final int VV_EXITO = 0;
     public static final int VV_ERROR = 1;
     public static final int VV_ADVERTENCIA = 2;
+    public static final int VV_ADVERTENCIA_EXISTENCIA = 3;
     
     public static final String VV_RESULTADO = "resultado";
     public static final String VV_MENSAJE = "mensaje";
@@ -143,8 +144,12 @@ public class ConstantesWeb {
         public static final String PAGE_GENERAL_MANT_FRM_CRITERIO="general/criterio/mantFrmCriterio";
         //sanciones
         public static final String PAGE_GENERAL_MANT_SANCIONES="general/criterio/mantSanciones";
-
-        
+        //Unidad Organica
+        public static final String PAGE_GENERAL_MANT_UNIDAD_ORGANICA="general/unidadOrganica/mantUnidadOrganica"; /* OSINE_SFS-480 - RSIS10 - mdiosesf */
+        //inps
+        public static final String PAGE_GENERAL_MANT_INPS="general/inps/mantenimiento"; /* OSINE_SFS-480 - RSIS10 - mdiosesf */
+        public static final String PAGE_GENERAL_MANT_FILTROEMPSUPERVISORAS_INPS="general/inps/filtroEmpSupervisoras/mantfiltroEmpSupervisoras"; /* OSINE_SFS-480 - RSIS10 - mdiosesf */
+        public static final String PAGE_GENERAL_MANT_SELECCION_MUESTRAL="general/inps/seleccionMuestral/mantSeleccionMuestral"; /* OSINE_SFS-480 - RSIS23 */
     }
     
     public static class mensajes{
@@ -165,6 +170,10 @@ public class ConstantesWeb {
         
         public static final String MSG_OPERATION_FAIL_CREATE_RELATION="Fallo al asignar: ";
         public static final String MSG_OPERATION_FAIL_DELETE_RELATION="Fallo al desasignar: ";
+        
+        //Mensajes Unidad Organica
+        public static final String MSG_OPERATION_FAIL_HAS_NODE="No se puede eliminar, contiene dependencias.";
+        public static final String MSG_OPERATION_FAIL_HAS_PERSONAL="No se puede eliminar, el registro se encuentra asignado a un Personal.";
         
         //Entidades
         public static final String MSG_ENTITY_OBLIGACION="Obligaci\u00F3n";

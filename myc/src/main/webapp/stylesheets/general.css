@@ -1,3 +1,4 @@
+.contextMenu{box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8)}
 /*sortable - inicio*/
 .ui-sortable { list-style-type: none;}
 .ui-sortable-highlight { height: 30px; line-height: 30px; background: #d8d8d8;}

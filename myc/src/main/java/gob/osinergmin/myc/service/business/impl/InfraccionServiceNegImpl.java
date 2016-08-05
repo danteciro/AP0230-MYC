@@ -48,12 +48,16 @@ public class InfraccionServiceNegImpl implements InfraccionServiceNeg{
         LOG.info("Registro Infraccion ServiceNegImpl");
         InfraccionDTO registro = new InfraccionDTO();
         try{
-            DocumentoAdjuntoDTO documentoAdjunto = infraccionDTO.getDocumentoAdjuntoDTO();         
+            DocumentoAdjuntoDTO documentoAdjunto = infraccionDTO.getDocumentoAdjuntoDTO();   
+            
+            registro = infraccionDAO.create(infraccionDTO, usuarioDTO);
+            
             if(documentoAdjunto != null){
                 int lastIndexOf = documentoAdjunto.getNombreArchivo().lastIndexOf(".");
                 String formato = documentoAdjunto.getNombreArchivo().substring(lastIndexOf);
                 registro.setIdObligacion(infraccionDTO.getIdObligacion());
-                String rutaAlfrescoBD = infraccionDTO.getDocumentoAdjuntoDTO().getNombreArchivo() + "_IMG_INF"+ formato;                
+                String rutaAlfrescoBD = documentoAdjunto.getNombreArchivo().substring(0,lastIndexOf) + "_IMG_INF"+ formato;
+                documentoAdjunto.setNombreArchivo(rutaAlfrescoBD);             
                 File someFile = new File(rutaAlfrescoBD);
                 FileOutputStream fos = new FileOutputStream(someFile);
                 fos.write(documentoAdjunto.getRutaAlfrescoTmp());
@@ -73,10 +77,13 @@ public class InfraccionServiceNegImpl implements InfraccionServiceNeg{
                     DocumentoAdjuntoDTO documentoAdjuntoCreado = saveDoc.getDocumento();
                     registro.setDocumentoAdjuntoDTO(documentoAdjuntoCreado);
                     infraccionDTO.setDocumentoAdjuntoDTO(documentoAdjuntoCreado);
-                    registro = infraccionDAO.create(infraccionDTO, usuarioDTO);
-//                    infraccionDAO.update(registro, usuarioDTO);
+                    infraccionDTO.setIdInfraccion(registro.getIdInfraccion());
+                    
+                    registro = infraccionDAO.update(infraccionDTO, usuarioDTO);
                 }
             }
+           
+            
             LOG.info("(Registro Detalle Obligacion ServiceNegImpl) registro: "+registro.toString());
         }catch(Exception ex){
             LOG.error("",ex);
@@ -94,15 +101,17 @@ public class InfraccionServiceNegImpl implements InfraccionServiceNeg{
             DocumentoAdjuntoDTO documentoAdjunto = infraccionDTO.getDocumentoAdjuntoDTO();
             registro = infraccionDAO.update(infraccionDTO, usuarioDTO);
             if(documentoAdjunto != null){
-                String rutaAlfrescoBD;
-                if(registro.getDocumentoAdjuntoDTO().getIdDocumentoAdjunto() == null){
-                    DocumentoAdjuntoDTO documentoAdjuntoActual = documentoAdjuntoDAO.get(registro.getDocumentoAdjuntoDTO().getIdDocumentoAdjunto());
-                    rutaAlfrescoBD = documentoAdjuntoActual.getRutaAlfresco();
-                }else{
-                    int lastIndexOf = documentoAdjunto.getNombreArchivo().lastIndexOf(".");
+                String rutaAlfrescoBD=null;
+                	int lastIndexOf = documentoAdjunto.getNombreArchivo().lastIndexOf(".");
                     String formato = documentoAdjunto.getNombreArchivo().substring(lastIndexOf);
-                    rutaAlfrescoBD = registro.getDocumentoAdjuntoDTO().getNombreArchivo() + "_IMG_INF"+ formato;
-                }
+                    rutaAlfrescoBD = documentoAdjunto.getNombreArchivo().substring(0,lastIndexOf) + "_IMG_INF"+ formato;
+                    documentoAdjunto.setNombreArchivo(rutaAlfrescoBD);
+//                else{
+//                	DocumentoAdjuntoDTO documentoAdjuntoActual = documentoAdjuntoDAO.get(registro.getDocumentoAdjuntoDTO().getIdDocumentoAdjunto());
+//                    rutaAlfrescoBD = documentoAdjuntoActual.getRutaAlfresco();	
+//                }               
+                    
+                
                 System.out.println("-- rutaAlfrescoBD = "+rutaAlfrescoBD);
                 File someFile = new File(rutaAlfrescoBD);
                 FileOutputStream fos = new FileOutputStream(someFile);
@@ -113,17 +122,19 @@ public class InfraccionServiceNegImpl implements InfraccionServiceNeg{
                 GuardarDocumentoAdjuntoOutRO outFileAlfresco  = documentoServiceNeg.enviarDatosAlfresco(documentoAdjunto, someFile);
                 if (outFileAlfresco != null && outFileAlfresco.getMensaje().equalsIgnoreCase("ok")) {
 
-                    if(registro.getDocumentoAdjuntoDTO().getIdDocumentoAdjunto() != null){
-                        DocumentoAdjuntoDTO documentoAdjuntoActual = documentoAdjuntoDAO.get(registro.getDocumentoAdjuntoDTO().getIdDocumentoAdjunto());
-                        documentoAdjuntoActual.setNombreArchivo(documentoAdjunto.getNombreArchivo());
-                        GuardarDocumentoAdjuntoInRO inDoc = new GuardarDocumentoAdjuntoInRO();
-                        inDoc.setDocumento(documentoAdjuntoActual);
-                        inDoc.setUsuario(usuarioDTO);
-                        GuardarDocumentoAdjuntoOutRO saveDoc = documentoServiceNeg.editarDocumentoAdjunto(inDoc);
-                        DocumentoAdjuntoDTO documentoAdjuntoCreado = saveDoc.getDocumento();
-                        registro.getDocumentoAdjuntoDTO().setIdDocumentoAdjunto(documentoAdjuntoCreado.getIdDocumentoAdjunto());
-                        infraccionDAO.update(registro, usuarioDTO);
-                    }else{
+//                    if(registro.getDocumentoAdjuntoDTO()!=null && registro.getDocumentoAdjuntoDTO().getIdDocumentoAdjunto() != null){
+//                        DocumentoAdjuntoDTO documentoAdjuntoActual = documentoAdjuntoDAO.get(registro.getDocumentoAdjuntoDTO().getIdDocumentoAdjunto());
+//                        documentoAdjuntoActual.setNombreArchivo(documentoAdjunto.getNombreArchivo());
+//                        GuardarDocumentoAdjuntoInRO inDoc = new GuardarDocumentoAdjuntoInRO();
+//                        inDoc.setDocumento(documentoAdjuntoActual);
+//                        inDoc.setUsuario(usuarioDTO);
+//                        GuardarDocumentoAdjuntoOutRO saveDoc = documentoServiceNeg.editarDocumentoAdjunto(inDoc);
+//                        DocumentoAdjuntoDTO documentoAdjuntoCreado = saveDoc.getDocumento();
+//                        registro.getDocumentoAdjuntoDTO().setIdDocumentoAdjunto(documentoAdjuntoCreado.getIdDocumentoAdjunto());
+//                        registro.getDocumentoAdjuntoDTO().setNombreArchivo(documentoAdjuntoCreado.getNombreArchivo());
+//                        registro.getDocumentoAdjuntoDTO().setRutaAlfresco(documentoAdjuntoCreado.getRutaAlfresco());
+//                        registro=infraccionDAO.update(registro, usuarioDTO);
+//                    }else{
                         GuardarDocumentoAdjuntoInRO inDoc = new GuardarDocumentoAdjuntoInRO();
                         documentoAdjunto.setRutaAlfresco(rutaAlfrescoBD);
                         documentoAdjunto.setIdDocumentoAdjunto(null);
@@ -133,9 +144,13 @@ public class InfraccionServiceNegImpl implements InfraccionServiceNeg{
 
                         GuardarDocumentoAdjuntoOutRO saveDoc = documentoServiceNeg.registrarDocumentoAdjunto(inDoc);
                         DocumentoAdjuntoDTO documentoAdjuntoCreado = saveDoc.getDocumento();
-                        registro.getDocumentoAdjuntoDTO().setIdDocumentoAdjunto(documentoAdjuntoCreado.getIdDocumentoAdjunto());
-                        infraccionDAO.update(registro, usuarioDTO);
-                    }
+                        DocumentoAdjuntoDTO documento = new DocumentoAdjuntoDTO();
+                        documento.setIdDocumentoAdjunto(documentoAdjuntoCreado.getIdDocumentoAdjunto());
+                        documento.setNombreArchivo(documentoAdjuntoCreado.getNombreArchivo());
+                        documento.setRutaAlfresco(documentoAdjuntoCreado.getRutaAlfresco());
+                        registro.setDocumentoAdjuntoDTO(documento);
+                        registro=infraccionDAO.update(registro, usuarioDTO);
+//                    }
                 }
             }
             LOG.info("(Actualizar Detalle Obligacion ServiceNegImpl) registro: "+registro.toString());

@@ -4,9 +4,12 @@
  */
 package gob.osinergmin.myc.service.dao.impl;
 
+import gob.osinergmin.myc.domain.MdiActividad;
 import gob.osinergmin.myc.domain.builder.ActividadBuilder;
+import gob.osinergmin.myc.domain.builder.ObligacionSubTipoBuilder;
 import gob.osinergmin.myc.domain.builder.ProcesoObligacionTipoBuilder;
 import gob.osinergmin.myc.domain.dto.ActividadDTO;
+import gob.osinergmin.myc.domain.dto.ObligacionSubTipoDTO;
 import gob.osinergmin.myc.domain.dto.ProcesoObligacionTipoDTO;
 import gob.osinergmin.myc.domain.ui.ActividadFilter;
 import gob.osinergmin.myc.service.dao.ActividadDAO;
@@ -18,6 +21,7 @@ import javax.persistence.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 /**
  *
@@ -113,4 +117,24 @@ public class ActividadDAOImpl implements ActividadDAO {
 		}
 		return retorno;
 	}
+
+	@Override
+	public ActividadDTO listarActividadxCodigo(ActividadFilter filtro) {
+		ActividadDTO listado=null;
+		Query query = crud.getEm().createNamedQuery("MdiActividad.findByCodigo");
+		if(filtro.getCodigo()!=null){
+			query.setParameter("codigo", filtro.getCodigo());
+		}
+		if(filtro.getEstado()!=null){
+			query.setParameter("estado", filtro.getEstado());
+		}	
+		List<MdiActividad> actividad= (List<MdiActividad>) query.getResultList(); 
+		if(!CollectionUtils.isEmpty(actividad)){
+			listado = (ActividadDTO) ActividadBuilder.toListActividadDto(actividad).get(0);
+		}        
+        return listado;    
+	}
+    
+    
+    
 }

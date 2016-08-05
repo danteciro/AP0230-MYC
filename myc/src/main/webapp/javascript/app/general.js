@@ -16,7 +16,16 @@ var global = {
         save:"Se registró satisfactoriamente.",
         edit:"Se actualizó el registro satisfactoriamente.",
         delete:"Se eliminó el registro satisfactoriamente."
-    }
+    },
+    accion:{ /* OSINE_SFS-480 - RSIS09 - mdiosesf - Inicio */
+        save:1,
+        update:2,
+        delete:3,
+        consult:4
+    }, 
+    msjMaxNivel:{ 
+    	error:"No se puede agregar nuevo nivel."
+    } /* OSINE_SFS-480 - RSIS09 - mdiosesf - Fin */
 };
 
 $(function() {
@@ -107,6 +116,13 @@ var numericMonto = {
 		allowOtherCharSets : false,
 	    allowSpace    : false,
 	    allow    : '.'
+	};
+var enteroMonto = {
+		allowNumeric   : true,
+		allowLatin : false,
+		allowOtherCharSets : false,
+	    allowSpace    : false,
+	    disallow : '.eE'
 	};
 
 var alphaNumOptions = {
@@ -506,7 +522,86 @@ var fxTree={
         return retorno;
     }
 };
-
+var fxTreeUnidadOrganica={ /* OSINE_SFS-480 - RSIS09 - mdiosesf - Inicio */
+	    build:function(objData){
+	        //ordenar json de ajax
+	        var cont=0;
+	        var data=[];
+	        $.each(objData,function(k,v){
+	            data[cont]={'key':v.idUnidadOrganica,'title':v.descripcion,'idActividadPadre':v.idUnidadOrganicaSuperior,'children':[],'folder':false};
+	            cont++;
+	        });
+	        //declaro auxiliares
+	        var dataF=[];//data a retornar
+	        var dataT=[];//data q almacena restantes, mientras se va armando el arbol
+	        //armo 1er nivel
+	        var x=fxTreeUnidadOrganica.orderChild(data,null);
+	        dataF=x.resultado;
+	        dataT=x.restante;
+	        //armo 2do nivel
+	        $.each(dataF,function(k,v){
+	            var idPadre=v.key;
+	            var x=fxTreeUnidadOrganica.orderChild(dataT,idPadre);
+	            dataF[k]['children']=x.resultado;
+	            dataT=x.restante;
+	        });
+	        //armo 3do nivel
+	        $.each(dataF,function(k,v){
+	            $.each(dataF[k]['children'],function(kk,vv){
+	                var idPadre=vv.key;
+	                var x=fxTreeUnidadOrganica.orderChild(dataT,idPadre);
+	                dataF[k]['children'][kk]['children']=x.resultado;
+	                dataT=x.restante;
+	            });
+	        });	        
+	       //armo 4do nivel
+	        $.each(dataF,function(k,v){
+	            $.each(dataF[k]['children'],function(kk,vv){
+	            	$.each(dataF[k]['children'][kk]['children'],function(kkk,vvv){
+	            		var idPadre=vvv.key;
+	            		var x=fxTreeUnidadOrganica.orderChild(dataT,idPadre);
+	            		dataF[k]['children'][kk]['children'][kkk]['children']=x.resultado;
+	            		dataT=x.restante;
+	            	});
+	            });
+	        });
+	      //armo 5do nivel
+	        $.each(dataF,function(k,v){
+	            $.each(dataF[k]['children'],function(kk,vv){
+	            	$.each(dataF[k]['children'][kk]['children'],function(kkk,vvv){
+	            		$.each(dataF[k]['children'][kk]['children'][kkk]['children'],function(kkkk,vvvv){
+	            			var idPadre=vvvv.key;
+	            			var x=fxTreeUnidadOrganica.orderChild(dataT,idPadre);
+	            			dataF[k]['children'][kk]['children'][kkk]['children'][kkkk]['children']=x.resultado;
+	            			dataT=x.restante;
+		            	});
+	            	});
+	            });
+	        });	      
+	        return dataF;
+	    },
+	    orderChild:function(data,idPadre){
+	        var dataA=[];
+	        var dataB=[];
+	        var contA=0;
+	        var contB=0;
+	        $.each(data,function(k,v){
+	            if(v.idActividadPadre==idPadre){
+	                dataA[contA]=v;
+	                contA++;
+	            }else{
+	                dataB[contB]=v;
+	                contB++;
+	            }
+	        });
+	        return {resultado:dataA,restante:dataB};
+	    },
+	    isFather:function(id,data){
+	        var retorno=false;
+	        $.each(data,function(k,v){if(id==v.idActividadPadre){retorno=true;}});
+	        return retorno;
+	    }
+	}; /* OSINE_SFS-480 - RSIS09 - mdiosesf - Fin */
 /*
  * Funciones para armado de arboles Opciones
  */

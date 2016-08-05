@@ -318,23 +318,6 @@ public class MantenimientoBaseLegalController {
         }
         return listTipoAnexo;
     }    
-    /**
-     * 
-     * @return 
-     */
-    /*
-    @RequestMapping(value = "/obtenerNumeroAnexo", method = RequestMethod.GET)
-    public @ResponseBody
-    List<MaestroColumnaDTO> obtenerNumeroAnexo() {
-        List<MaestroColumnaDTO> listTipoAnexo = new ArrayList<MaestroColumnaDTO>();
-        try{
-        listTipoAnexo=maestroColumnaService.listarNumeroAnexo();
-        }catch(Exception e){
-            LOG.info("error al procesar listadoSigla " +e);
-        }
-        return listTipoAnexo;
-    }
-    */
     /***        
     * @param codigo
     * @return 
@@ -1460,11 +1443,14 @@ public class MantenimientoBaseLegalController {
                     
                     /* creado jpiro 20150107 - inicio */
                     GuardarDocumentoAdjuntoOutRO outFileAlfresco=null;
-                    //si "articuloNormaLegal" es vacio entonces se evalua la subida al alfresco
+                    //si "articuloNormaLegal" es vacio entonces se evalua la subida al alfresco                    
+                    String codigoBaseLegal = baseLegalService.obtenerCodigoBaseLegal(baseLegalDTO.getFlagPadre());
+                    baseLegalDTO.setCodigoBaseLegal(codigoBaseLegal);
                     if(baseLegalDTO.getArticuloNormaLegal()!=null && !baseLegalDTO.getArticuloNormaLegal().equals("") ){
                         LOG.info("-->NO se sube archivo alfresco");
                         request.getSession().removeAttribute("listaArchivosBL");
                     }else{
+                    	
                         LOG.info("-->SI se sube archivo alfresco");
                         List<DocumentoAdjuntoDTO> listaArchivos = ((List<DocumentoAdjuntoDTO>) request.getSession().getAttribute("listaArchivosBL"));
                         LOG.info("listaArchivos sesion-->"+listaArchivos);
@@ -1974,6 +1960,7 @@ public class MantenimientoBaseLegalController {
         
     Map<String, Object> registrarInfraccion(String idAccionMaestro, String idMedidaSeguridadMaestro,String descripcionInfraccion,Long idInfraccion,String codigoObligacion,String codTrazabilidad,HttpServletRequest request, HttpSession session){
         Map<String, Object> salida = new HashMap<String, Object>();
+        InfraccionDTO retorno = new InfraccionDTO();
         try{
         	Long idAccionMaestroTemp = Long.parseLong(idAccionMaestro);
         	Long idMedidaSeguridadMaestroTemp = Long.parseLong(idMedidaSeguridadMaestro);
@@ -1990,10 +1977,14 @@ public class MantenimientoBaseLegalController {
                 infraccionDTO.setUsuarioCreacion(usuarioDTO.getCodigo());
                 infraccionDTO.setTerminalCreacion(usuarioDTO.getTerminal());
                 infraccionDTO.setIdInfraccion(idInfraccion);
-                InfraccionDTO retorno = infraccionServiceNeg.updateInfraccion(infraccionDTO, usuarioDTO);
+                retorno = infraccionServiceNeg.updateInfraccion(infraccionDTO, usuarioDTO);
                 String mensaje=controlMessagesStaticEntity(ConstantesWeb.mensajes.MSG_OPERATION_SUCCESS_UPDATE,ConstantesWeb.mensajes.MSG_ENTITY_INFRACCION);
                 salida.put(ConstantesWeb.VV_MENSAJE, mensaje);
                 salida.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_EXITO);
+                salida.put("idInfraccion",retorno.getIdInfraccion());
+                salida.put("retorno", retorno);
+                
+                System.out.println("Actualiza infraccion");
             }else{
 
                 InfraccionDTO infraccionDTO = new InfraccionDTO();
@@ -2011,13 +2002,19 @@ public class MantenimientoBaseLegalController {
                 infraccionDTO.setIdObligacion(pghObligacion);
                 infraccionDTO.setIdObligacion2(new Long(codigoObligacion));
                 
-                InfraccionDTO retorno = infraccionServiceNeg.guardaInfraccion(infraccionDTO, usuarioDTO);
+                retorno = infraccionServiceNeg.guardaInfraccion(infraccionDTO, usuarioDTO);
                 LOG.info("(Registra Detalle Obligacion) retorno: "+retorno.toString());                
                 String mensaje=controlMessagesStaticEntity(ConstantesWeb.mensajes.MSG_OPERATION_SUCCESS_CREATE,ConstantesWeb.mensajes.MSG_ENTITY_INFRACCION);
                 salida.put(ConstantesWeb.VV_MENSAJE, mensaje);
                 salida.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_EXITO);
-                salida.put("idInfraccion",retorno.getIdInfraccion());                
+                salida.put("idInfraccion",retorno.getIdInfraccion());
+                salida.put("retorno", retorno);
+                
+                System.out.println("Guarda infraccion");
+
             }
+            request.getSession().removeAttribute(Constantes.CONSTANTE_ARCHIVO_INFRACCION);
+            
         }catch(Exception e){
             LOG.error("Error al Registrar Detalle Obligacion Controller: "+e.getMessage(),e);
             e.printStackTrace();

@@ -13,6 +13,7 @@ import gob.osinergmin.myc.domain.ui.base.BasePaginatorFilter;
 public class MaestroColumnaFilter extends BasePaginatorFilter {
     private Long idMaestroColumna;
     private String dominio;
+    private String codigo;  /* OSINE_SFS-480 - RSIS09 - mdiosesf */
     private String aplicacion;
     private String descripcion;
 
@@ -56,5 +57,12 @@ public class MaestroColumnaFilter extends BasePaginatorFilter {
     public void setDominio(String dominio) {
         this.dominio = dominio;
     }
-    
+
+	public String getCodigo() { /* OSINE_SFS-480 - RSIS09 - mdiosesf - Inicio */
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	} /* OSINE_SFS-480 - RSIS09 - mdiosesf - Fin */
 }

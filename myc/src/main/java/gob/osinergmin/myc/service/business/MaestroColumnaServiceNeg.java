@@ -30,4 +30,6 @@ public interface MaestroColumnaServiceNeg {
     public List<MaestroColumnaDTO> listarCriticidad();
     public List<MaestroColumnaDTO> listarNormaTecnica() throws Exception;
     public List<MaestroColumnaDTO> listarMaestroColumna(MaestroColumnaFilter filtro,int[] cuenta);
+    public List<MaestroColumnaDTO> listarMaestroColumna(MaestroColumnaFilter filtro); /* OSINE_SFS-480 - RSIS09 - mdiosesf */
+	List<MaestroColumnaDTO> buscarByDominioByAplicacionByCodigo(String dominio,String aplicacion, String codigo) throws Exception;/*OSINE_SFS_480 - RSIS25*/
 }

@@ -33,4 +33,5 @@ public interface MaestroColumnaDAO {
 	    public List<MaestroColumnaDTO> findTemas() throws Exception;
 	    public List<MaestroColumnaDTO> findCriticidad() throws Exception;
 	    public List<MaestroColumnaDTO> findNormaTecnica() throws Exception;
+		List<MaestroColumnaDTO> findMaestroColumnaByCodigo(String dominio,String aplicacion, String codigo);
 }

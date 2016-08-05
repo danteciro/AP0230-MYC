@@ -106,9 +106,10 @@ public class CnfObligacionDAOImpl implements CnfObligacionDAO{
 			StringBuilder jpql = new StringBuilder();
 			
 			jpql.append(" select distinct p.id_obligacion_tipo,ot.nombre FROM pgh_proceso_obligacion_tipo p ");
-			jpql.append(" left join pgh_obligacion_tipo ot on p.id_obligacion_tipo = ot.id_obligacion_tipo and ot.estado = 1 ");
+			jpql.append(" left join pgh_obligacion_tipo ot on p.id_obligacion_tipo = ot.id_obligacion_tipo ");
 			if(filtro.getEstado()!=null){
 				jpql.append(" where p.estado=:estado ");
+				jpql.append(" and ot.estado=:estado ");
 			}
 			Query query = crud.getEm().createNativeQuery(jpql.toString());
 			if(filtro.getEstado()!=null){

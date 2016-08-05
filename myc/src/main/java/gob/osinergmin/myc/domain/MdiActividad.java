@@ -34,6 +34,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @NamedQueries({
     @NamedQuery(name = "MdiActividad.findAll", query = "SELECT m FROM MdiActividad m WHERE m.estado=:estado order by m.nombre"),
     @NamedQuery(name = "MdiActividad.findByIdActividad", query = "SELECT m FROM MdiActividad m WHERE m.estado=:estado and m.idActividad=:idActividad"),
+    @NamedQuery(name = "MdiActividad.findByCodigo", query = "SELECT m FROM MdiActividad m WHERE m.estado=:estado and m.codigo=:codigo"),
     @NamedQuery(name = "MdiActividad.countAll", query = "SELECT count(m.idActividad) FROM MdiActividad m WHERE m.estado=:estado"),
     @NamedQuery(name = "MdiActividad.countByIdProcedimiento", query = "SELECT count(distinct ac.idActividad) "
                 + "FROM PghProcedimiento pro "
@@ -76,10 +77,6 @@ import org.codehaus.jackson.annotate.JsonIgnore;
             + "FROM PghCnfTramiteActividad ta "
             + "left join ta.idActividad ac "
             + "WHERE ac.estado=:estado and ta.estado=:estado and ta.idTramiteActivdad=:idTramiteActivdad")
-//    @NamedQuery(name = "MdiActividad.findByIdRubroOpcion", query = "SELECT distinct new MdiActividad(ac.idActividad,ac.nombre) "
-//            + "FROM PghCnfTramiteActividad ta "
-//            + "left join ta.idActividad ac "
-//            + "WHERE ac.estado=:estado and ta.estado=:estado and ta.idTramiteActivdad=:idTramiteActivdad")
 })
 public class MdiActividad extends Auditoria {
     private static final long serialVersionUID = 1L;
@@ -121,6 +118,8 @@ public class MdiActividad extends Auditoria {
     @OneToMany(mappedBy = "idActividad", fetch = FetchType.LAZY)
     private List<PghCnfRequProcedimiento> pghCnfRequProcedimientoList;
     @OneToMany(mappedBy = "idActividad", fetch = FetchType.LAZY)
+    private List<MdiUnidadSupervisada> mdiUnidadSupervisadaList;
+	@OneToMany(mappedBy = "idActividad", fetch = FetchType.LAZY)
     private List<PghRubroOpcion> pghRubroOpcionList;
 
     public MdiActividad() {
@@ -233,7 +232,15 @@ public class MdiActividad extends Auditoria {
     public void setMdiActividad1(MdiActividad mdiActividad1) {
         this.mdiActividad1 = mdiActividad1;
     }
+    
+    public List<MdiUnidadSupervisada> getMdiUnidadSupervisadaList() {
+        return mdiUnidadSupervisadaList;
+    }
 
+    public void setMdiUnidadSupervisadaList(List<MdiUnidadSupervisada> mdiUnidadSupervisadaList) {
+        this.mdiUnidadSupervisadaList = mdiUnidadSupervisadaList;
+    }
+    
     @XmlTransient
     @JsonIgnore
     public List<PghCnfTramiteActividad> getPghCnfTramiteActividadList() {

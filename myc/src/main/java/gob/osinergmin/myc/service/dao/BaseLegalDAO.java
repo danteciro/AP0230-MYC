@@ -43,6 +43,7 @@ public interface BaseLegalDAO{
 	public Long countToBase(BaseLegalFilter filtro);
 	public List<BaseLegalDTO> findToBase(BaseLegalFilter filtro);
 	public List<BaseLegalDTO> listarBaseLegalByObligacion(Long row_id);
+	public String obtenerCodigoBaseLegal(String flagPadre);
 	
 	
 }

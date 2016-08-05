@@ -230,7 +230,7 @@
 .ui-widget-content .ui-state-active,
 .ui-widget-header .ui-state-active {
 	border: 1px solid #dddddd;
-	background: #0073EA; //!important;
+	background: #0073EA; /*!important;*/
 	font-weight: bold;
 	color: #fff !important;
 }

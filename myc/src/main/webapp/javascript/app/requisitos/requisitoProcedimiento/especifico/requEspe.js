@@ -339,11 +339,9 @@ function limpiarTodosEspe() {
 function armaPermisosSeguridadEsp(){
 	var permisos = $('#permisosSeguridad').val();
 	var permiso = permisos.split("/");	
-	console.log(permiso);
 	var existeIn = false;
 	var existeEl = false;
 	for (var i = 0; i < permiso.length; i++) {
-		console.log(permiso[i]);
 		if(permiso[i]=="IN"){
 			existeIn = true;
 		}
@@ -351,8 +349,6 @@ function armaPermisosSeguridadEsp(){
 			existeEl = true;
 		}
 	}	
-	console.log(existeIn);
-	console.log(existeEl);
 	if(!existeIn){
 		$('#espeRequ .btns').map(function(){
 			$(this).find('span:eq(0)').css('display','none');

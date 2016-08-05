@@ -17,4 +17,5 @@ public interface ActividadServiceNeg {
     public List<ActividadDTO> listarActividad(ActividadFilter filtro, int[] cuenta);
     public List<ActividadDTO> findActividadByFilter(ActividadFilter filtro);
     public List<ProcesoObligacionTipoDTO> listarActividadConfigurada();
+	public ActividadDTO listarActividadxCodigo(ActividadFilter filtro);/*OSINE_SFS-480 - RSIS25 */
 }

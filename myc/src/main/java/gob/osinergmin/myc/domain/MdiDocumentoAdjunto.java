@@ -113,10 +113,6 @@ public class MdiDocumentoAdjunto extends Auditoria {
     
     @OneToMany(mappedBy = "idDocumentoAdjunto", fetch = FetchType.LAZY)
     private List<PghRequisito> pghRequisitoList;
-    /*Rsis 14 - Inicio*/
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idDocumentoAdjunto", fetch = FetchType.LAZY)
-    //private List<PghInfraccion> pghInfraccionList;
-    /*Rsis 14 - Inicio*/
     public MdiDocumentoAdjunto() {
     }
 
@@ -274,19 +270,8 @@ public class MdiDocumentoAdjunto extends Auditoria {
     public void setIdConcurso(Long idConcurso) {
         this.idConcurso = idConcurso;
     }
-    
-    /*Rsis 14 - Inicio*/
-    /*
-    public List<PghInfraccion> getPghInfraccionList() {
-		return pghInfraccionList;
-	}
 
-	public void setPghInfraccionList(List<PghInfraccion> pghInfraccionList) {
-		this.pghInfraccionList = pghInfraccionList;
-	}
-	*/
-	/*Rsis 14 - Fin*/
-	@XmlTransient
+    @XmlTransient
     @JsonIgnore
     public List<PghRequisito> getPghRequisitoList() {
         return pghRequisitoList;

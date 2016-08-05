@@ -57,23 +57,27 @@ public class InfraccionDAOImpl implements InfraccionDAO{
     @Override
 	public InfraccionDTO update(InfraccionDTO infraccionDTO,
 			UsuarioDTO usuarioDTO) {
-		LOG.info("Actualizar Detalle Obligacion DAO Impl");
+		LOG.info("Actualizar Ifraccion DAO Impl");
         InfraccionDTO retorno = null;
         try{
         	
             PghInfraccion infraccion = crud.find(infraccionDTO.getIdInfraccion(),PghInfraccion.class);
             infraccion.setDescripcionInfraccion(infraccionDTO.getDescripcionInfraccion());
-            if(infraccion.getIdDocumentoAdjunto() == null ){
-            	MdiDocumentoAdjunto docAdjunto=new MdiDocumentoAdjunto();
+           
+            /*	MdiDocumentoAdjunto docAdjunto=new MdiDocumentoAdjunto();
                 docAdjunto.setIdDocumentoAdjunto(infraccionDTO.getDocumentoAdjuntoDTO().getIdDocumentoAdjunto());            	
                 infraccion.setIdDocumentoAdjunto(docAdjunto);
-            }else{
-                if(infraccionDTO.getDocumentoAdjuntoDTO().getIdDocumentoAdjunto() != null){
+            }else{*/
+                if(infraccionDTO.getDocumentoAdjuntoDTO()!=null && infraccionDTO.getDocumentoAdjuntoDTO().getIdDocumentoAdjunto() != null){
                 	MdiDocumentoAdjunto docAdjunto=new MdiDocumentoAdjunto();
-                    docAdjunto.setIdDocumentoAdjunto(infraccionDTO.getDocumentoAdjuntoDTO().getIdDocumentoAdjunto());            	
+                    docAdjunto.setIdDocumentoAdjunto(infraccionDTO.getDocumentoAdjuntoDTO().getIdDocumentoAdjunto());   
+                    docAdjunto.setNombreArchivo(infraccionDTO.getDocumentoAdjuntoDTO().getNombreArchivo());
+                    docAdjunto.setRutaAlfresco(infraccionDTO.getDocumentoAdjuntoDTO().getRutaAlfresco());
                     infraccion.setIdDocumentoAdjunto(docAdjunto);
+                }else{
+                	
                 }
-            }            
+         
             infraccion.setCodTrazabilidad(infraccionDTO.getCodTrazabilidad());
             infraccion.setDescripcionInfraccion(infraccionDTO.getDescripcionInfraccion());
             infraccion.setEstado(infraccionDTO.getEstado());            

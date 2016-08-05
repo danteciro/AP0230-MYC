@@ -1,3 +1,2 @@
 SET SERVEROUTPUT ON
-@datos/03_SCRIPT_DML_OSI.sql
 commit;

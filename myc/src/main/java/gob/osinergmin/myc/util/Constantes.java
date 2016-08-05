@@ -20,6 +20,7 @@ public class Constantes {
     public static final String DOMINIO_TIPO_CRITERIO= "TIPO_CRITERIO";    
     public static final String APPLICACION_MYC="MYC";
     public static final String APPLICACION_SGLSS="SGLSS";
+    public static final String APPLICACION_INPS="INPS"; /* OSINE_SFS-480 - RSIS10 */
     
     public static final String APPLICACION_SPACE_REQUISITOS="REQUISITOS";
     public static final String APPLICACION_SPACE_LOCADOR="LOCADOR";
@@ -38,6 +39,10 @@ public class Constantes {
     public static final String DOMINIO_NIVEL_TIPIFICACION = "NIVEL_TIPIFICACION";
     public static final String DOMINIO_NIVEL_CRITERIO="NIVEL_CRITERIO";
     public static final String DOMINIO_NIVEL_SANCION="NIVEL_SANCION";
+    public static final String DOMINIO_FILTRO_EMP_SUPERVISORA="FILTRO_EMP_SUP"; /* OSINE_SFS-480 - RSIS10 */
+    public static final String DOMINIO_NIVEL_UNIDAD_ORGA ="NIVEL_UNIDAD_ORGA"; /* OSINE_SFS-480 - RSIS09 */
+    
+    public static final Long CONSTANTE_SEDE_UNIDAD_ORGANICA = 1L; /* OSINE_SFS-480 - RSIS09 */
     
     public static final String CONSTANTE_ARCHIVO_CRITERIO = "archivoCriterio";
     public static final String CONSTANTE_ARCHIVO_OBLIGACION = "archivoObligacion";
@@ -60,4 +65,24 @@ public class Constantes {
 	public static final long ID_REQUISITO = 166;
 	public static final String CONSTANTE_APLICAION_MYC= "MYC";
 	public static final String ID_TIPO_SUPERVISION="ID_TIPO_SUPERV";
+    
+    /* Inicio: OSINE_SFS-480 - RSIS25 */
+    public static final String IDENTIFICADOR_SELECCION_MUESTRAL = "S";	
+    public static final String DOMINIO_PORC_SUPERV_MUESTRAL = "PORC_SUPERV_MUESTRAL"; 
+    public static final String CODIGO_VALOR_CRITICO = "VALOR_CRITICO";
+    public static final String CODIGO_PROBABILIDAD = "PROBABILIDAD"; 
+    public static final String CODIGO_ERROR = "ERROR"; 
+    public static final String DOMINIO_DIRE_INPS_SM = "DIRE_INPS_SM";
+    public static final String DOMINIO_TIPO_DIRECCION = "TIPO_DIRECCION";
+    public static final String CODIGO_CONTINGENCIA = "CONTINGENCIA";
+    public static final String FLAG_SI_CONTINGENCIA = "C";
+    public static final String FLAG_NO_CONTINGENCIA = "M";
+    public static final String DOMINIO_SUPERV_MUEST_PERIODO = "SUPERV_MUEST_PERIODO";
+    public static final String CODIGO_PERIODO = "PERIODO";
+    public static final String DOMINIO_SUPERVISION_MUESTRAL_CODIGO_ACTIVIDAD = "SUP_MUE_COD_ACTI";
+    public static final String DOMINIO_TIPO_SELECCION_ORDEN_SERVICIO = "TIPO_SEL_ORD_SER";	
+    public static final String CODIGO_SUPERVISION_MUESTRAL_CODIGO_CONTIGENCIA = "TPOS03";
+    public static final String CODIGO_SUPERVISION_MUESTRAL_CODIGO_MUESTRAL = "TPOS02";
+    public static final String CODIGO_SUPERVISION_MUESTRAL_CODIGO_ASIGNACION = "TPOS01";
+    /* Fin: OSINE_SFS-480 - RSIS25 */
 }

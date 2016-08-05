@@ -51,5 +51,5 @@
 .pui-paginator-last span
 {
 	background-image: url(images/ui-icons_ffffff_256x240.png) !important;
-	background-position: -64px -160px; !important;
+	background-position: -64px -160px; /*!important;*/
 }

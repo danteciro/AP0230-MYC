@@ -146,6 +146,7 @@ var busquedaBaseLegal = (function() {
                     gestionBaseLegal.validaArticuloBaseLegal();
                     $('#chkModificatoria').removeAttr('disabled');
             		$('#chkConcordancia').removeAttr('disabled');
+            		
                 }
             });
         }

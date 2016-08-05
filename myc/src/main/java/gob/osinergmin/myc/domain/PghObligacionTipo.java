@@ -36,7 +36,6 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "PghObligacionTipo.findValida", query = "SELECT p FROM PghObligacionTipo p where p.estado=:estado and upper(p.nombre)=:nombre ")
     })
 public class PghObligacionTipo extends Auditoria {
-    private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "ID_OBLIGACION_TIPO")
@@ -50,7 +49,9 @@ public class PghObligacionTipo extends Auditoria {
     private String estado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pghObligacionTipo", fetch = FetchType.LAZY)
     private List<PghProcesoObligacionTipo> pghProcesoObligacionTipoList;
-
+    @OneToMany(mappedBy = "idObligacionTipo", fetch = FetchType.LAZY)
+    private List<PghObligacionSubTipo> pghObligacionSubTipoList;
+    
     public PghObligacionTipo() {
     }
 
@@ -94,16 +95,24 @@ public class PghObligacionTipo extends Auditoria {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-
-    public List<PghProcesoObligacionTipo> getPghProcesoObligacionTipoList() {
+    
+	public List<PghProcesoObligacionTipo> getPghProcesoObligacionTipoList() {
         return pghProcesoObligacionTipoList;
     }
 
     public void setPghProcesoObligacionTipoList(List<PghProcesoObligacionTipo> pghProcesoObligacionTipoList) {
         this.pghProcesoObligacionTipoList = pghProcesoObligacionTipoList;
+    }       
+    
+    public List<PghObligacionSubTipo> getPghObligacionSubTipoList() {
+        return pghObligacionSubTipoList;
     }
 
-    @Override
+    public void setPghObligacionSubTipoList(List<PghObligacionSubTipo> pghObligacionSubTipoList) {
+        this.pghObligacionSubTipoList = pghObligacionSubTipoList;
+    }
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (idObligacionTipo != null ? idObligacionTipo.hashCode() : 0);

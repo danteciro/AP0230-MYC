@@ -16,4 +16,5 @@ public interface ObligacionTipoServiceNeg {
 	GuardarObligacionTipoOutRO eliminarObligacionTipo(GuardarObligacionTipoInRO in) throws ObligacionTipoException;
 	List<ObligacionTipoDTO> listarObligacion();
 	List<ObligacionTipoDTO> listarObligacionTipoConf();
-}
+	List<ObligacionTipoDTO> listaObligacionTipoSelecccionMuestral(String identificador);/*OSINE_SFS-480 - RSIS25*/
+ }

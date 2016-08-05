@@ -29,22 +29,25 @@
                 <div class="filaForm">
                     <div class="lblc" style="width:140px;text-align: right;"><label for="slcTipoNormaLegaAsigBL">Tipo Norma Legal:</label></div>
                     <div style="width: 200px;">
-                        <select id="slcTipoNormaLegaAsigBL" name="tipoNormaLegal" >
+                        <select id="slcTipoNormaLegaAsigBL" name="tipoNormaLegal" class="lbld" >
                             <option value="">--Seleccione--</option>
                             <c:forEach items="${listTipoNormaLegal}" var="t">
                                   <option value='${t.idMaestroColumna}'>${t.descripcion}</option>
                             </c:forEach>
                         </select>
                     </div>
-                    <div class="lblc" style="width:120px;" ><label for="txtNumeroAsigBL" >Número:</label></div>
+                    
+                </div>
+                <div class="filaForm">
+                <div class="lblc" style="width:140px;" ><label for="txtNumeroAsigBL" >Número:</label></div>
                     <div style="width:120px;">
                         <input id="txtNumeroAsigBL" type="text" name="numeroNormaLegal" validate="[SN]" maxlength="3" style="width:70px;" >
                     </div>
-                    <div class="lblc" style="width:130px;"><label for="txtAnoAsigBL">Año:</label></div>
+                    <div class="lblc" style="width:200px;"><label for="txtAnoAsigBL">Año:</label></div>
                     <div style="width:120px;">
                         <input id="txtAnoAsigBL" name="anioNormaLegal" placeholder="--2000--" style="width:100px;" maxlength="4" >
                     </div>
-                    <div class="lblc" style="width:70px;"><label for="slcSiglaAsigBL">Sigla:</label></div>
+                    <div class="lblc" style="width:130px;"><label for="slcSiglaAsigBL">Sigla:</label></div>
                     <div>
                         <select style="width:100px;" id="slcSiglaAsigBL" name="siglaNormaLegal">
                             <option value="">--Seleccione--</option>

@@ -434,8 +434,8 @@ var gestionBaseLegal = (function() {
                     $('#dateFecVigencia').removeAttr('disabled');
                     $('#dateFecPublicacion').removeAttr('disabled');
                     $('#txtaTitBaseLegal').removeAttr('disabled');
-		    $('#dateFecVigenciaNorma').datepicker('option','minDate',data.fechaVigencia).trigger('change');
-                    $('#dateFecVigenciaNormaAnexo').datepicker('option','minDate',data.fechaVigencia).trigger('change');
+                    $('#dateFecVigenciaNorma').datepicker('option','minDate',data.fechaVigencia).trigger('change');
+                	$('#dateFecVigenciaNormaAnexo').datepicker('option','minDate',data.fechaVigencia).trigger('change');
                 }else{
                 	$('#cmbHideTipoBaseLegal').val('');
                 	$('#cmbTipBaseLegal').val('');
@@ -457,7 +457,7 @@ var gestionBaseLegal = (function() {
     function confirmEliminarBaseLegal(rowid) {
         confirm.start();
 //        var mensaje = "¿Ud est&aacute; seguro de eliminar esta Base Legal?";
-        var mensaje = "Esta operaci&oacuten es irreversible y no elimina las obligaciones relacionadas, ¿Est&aacute seguro de eliminar la base legal que tiene obligaciones relacionadas?";
+        var mensaje = "Esta operaci&oacute;n es irreversible y no elimina las obligaciones relacionadas, ¿Est&aacute; seguro de eliminar la base legal que tiene obligaciones relacionadas?";
         confirm.open(mensaje,
                 "gestionBaseLegal.eliminarBaseLegal('" + rowid + "')");/*function: busquedaBaseLegal.confirmEliminarBaseLegal*/
     }
@@ -816,7 +816,8 @@ var gestionBaseLegal = (function() {
         document.getElementById("divDownloadImg").innerHTML="";
         document.getElementById("divDownloadDetalleImg").innerHTML="";
         document.getElementById("divDownloadDetalleImgInfraccion").innerHTML="";   
-
+	$("#cmbMedidaSeguirdad > option[codigo='GG2']").attr('selected',true);        
+        $("#cmbAccionInfraccion > option[codigo='AA2']").attr('selected',true);  
     }
     
     function evaluaDetalle(){
@@ -3157,6 +3158,7 @@ var nuevaObligacionNormativa = (function() {
         	//$('#cmbMedidaSeguirdad').val('-1');
         	//$('#cmbAccionInfraccion').val('-1');
         	/* OSINE_SFS-610 - Fin */
+        	document.getElementById("divDownloadDetalleImgInfraccion").innerHTML="";
         	$('#contenedorImgMedidaSeguridad').remove();
         }
                 
@@ -3268,6 +3270,7 @@ var nuevaObligacionNormativa = (function() {
         	//$('#cmbMedidaSeguirdad').val('-1');
         	//$('#cmbAccionInfraccion').val('-1');
         	/* OSINE_SFS-610 - Fin */        	
+        	document.getElementById("divDownloadDetalleImgInfraccion").innerHTML="";
         	$('#contenedorImgMedidaSeguridad').remove();        	
         	
         }
@@ -3948,11 +3951,11 @@ var nuevaObligacionNormativa = (function() {
             $('#cmbAccionInfraccion').addClass("error");
             errorCheck += error;
       	 }
-    	 if($('#imgMedidaSeguridad').val()==undefined){
+    	 /*if($('#imgMedidaSeguridad').val()==undefined){
        		validaInfraccion=false;
              error = "Se Debe ingresar Documento Adjunto.";
              errorCheck += error;
-       	 }
+       	 }*/
     	 if (error != ""){
     	   $('#divMensajeValMedidaSeg').show();
            $('#divMensajeValMedidaSeg').focus();
@@ -3984,6 +3987,14 @@ var nuevaObligacionNormativa = (function() {
                         mensajeGrowl("success",data.mensaje);                        
                         if(data.idInfraccion>0){
                             $('#idInfraccion').val(data.idInfraccion);
+                            if(data.retorno.documentoAdjuntoDTO!=null){
+                        		var nombreArchivo=data.retorno.documentoAdjuntoDTO.nombreArchivo;
+                        		var rutaAlfresco=data.retorno.documentoAdjuntoDTO.rutaAlfresco;
+                        		document.getElementById("divDownloadDetalleImgInfraccion").innerHTML="";
+                                $('#divDownloadDetalleImgInfraccion').append('<a class="link" href="'+baseURL + 'pages/documentoAdjunto/descargaArchivoAlfresco?aplicacionSpace=OBLIGACIONES&nombreArchivo='+nombreArchivo+'&rutaAlfresco='+rutaAlfresco+'"><img class="vam" width="20" height="24" src="'+baseURL+'images/stickers.png"></a>');
+                        	}else{
+                        		document.getElementById("divDownloadDetalleImgInfraccion").innerHTML="";
+                        	}
 
                         }
                         ocultaLoading();

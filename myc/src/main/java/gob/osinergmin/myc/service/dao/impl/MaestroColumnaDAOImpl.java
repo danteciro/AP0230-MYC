@@ -4,14 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import gob.osinergmin.myc.domain.MdiMaestroColumna;
 import gob.osinergmin.myc.domain.MdiMaestroTabla;
 import gob.osinergmin.myc.domain.builder.MaestroColumnaBuilder;
@@ -138,6 +135,8 @@ public class MaestroColumnaDAOImpl implements MaestroColumnaDAO{
             }else {
                 if(filtro.getDescripcion()!=null && filtro.getAplicacion()!=null && filtro.getDominio()!=null){
                     query = crud.getEm().createNamedQuery("MdiMaestroColumna.findByValidate");
+                }else if(filtro.getAplicacion()!=null && filtro.getDominio()!=null && filtro.getCodigo()!=null){ /* OSINE_SFS-480 - RSIS09 - mdiosesf - Inicio */
+                	query = crud.getEm().createNamedQuery("MdiMaestroColumna.findByCodigoDominio"); /* OSINE_SFS-480 - RSIS09 - mdiosesf - Fin */
                 }else if (filtro.getDominio()!= null && !filtro.getDominio().equals("") && filtro.getAplicacion()!= null && !filtro.getAplicacion().equals("")) {
                     query = crud.getEm().createNamedQuery("MdiMaestroColumna.findByFilter");
                 }else {
@@ -153,6 +152,9 @@ public class MaestroColumnaDAOImpl implements MaestroColumnaDAO{
             }
             if (filtro.getDescripcion()!= null && !filtro.getDescripcion().equals("")) {
                 query.setParameter("descripcion",filtro.getDescripcion());
+            }
+            if (filtro.getCodigo()!= null && !filtro.getCodigo().equals("")) { /* OSINE_SFS-480 - RSIS09 - mdiosesf - Inicio */
+                query.setParameter("codigo",filtro.getCodigo()); /* OSINE_SFS-480 - RSIS09 - mdiosesf - Fin */
             }
             
         }catch(Exception e){
@@ -173,6 +175,25 @@ public class MaestroColumnaDAOImpl implements MaestroColumnaDAO{
                     parameters.put("dominio", dominio);
                     parameters.put("aplicacion", aplicacion);
                     listaMaestroColumna = crud.findByNamedQuery("MdiMaestroColumna.findByDominioAplicacion", parameters);       	
+                    listaMaestroColumnaDTO = MaestroColumnaBuilder.getMaestroColumnaDTOList(listaMaestroColumna);
+            } catch (Exception e) {  
+                    LOG.error("error", e);
+                    e.printStackTrace();
+            }
+            return listaMaestroColumnaDTO;
+        }
+    @Override
+    @Transactional(readOnly=true)
+    public List<MaestroColumnaDTO> findMaestroColumnaByCodigo(String dominio, String aplicacion, String codigo){
+                    LOG.info("entro findMaestroColumna");
+            List<MaestroColumnaDTO> listaMaestroColumnaDTO = null;
+            try {                	
+                    List<MdiMaestroColumna> listaMaestroColumna = null;
+                    Map<String, Object> parameters = new HashMap<String, Object>();
+                    parameters.put("dominio", dominio);
+                    parameters.put("aplicacion", aplicacion);
+                    parameters.put("codigo", codigo);
+                    listaMaestroColumna = crud.findByNamedQuery("MdiMaestroColumna.findByDominioAplicacionCodigo", parameters);       	
                     listaMaestroColumnaDTO = MaestroColumnaBuilder.getMaestroColumnaDTOList(listaMaestroColumna);
             } catch (Exception e) {  
                     LOG.error("error", e);

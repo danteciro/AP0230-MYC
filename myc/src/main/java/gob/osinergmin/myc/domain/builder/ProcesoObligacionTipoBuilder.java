@@ -176,8 +176,12 @@ public class ProcesoObligacionTipoBuilder {
 			ObligacionTipoDTO oblTipo;
 			for(Object[] obj:lstObligacionesTipo){
 				oblTipo = new ObligacionTipoDTO();
-				oblTipo.setIdObligacionTipo(new Long(obj[0].toString()));
-				oblTipo.setNombre(obj[1].toString());
+				if(obj[0]!=null){
+					oblTipo.setIdObligacionTipo(new Long(obj[0].toString()));
+				}				
+				if(obj[1]!=null){
+					oblTipo.setNombre(obj[1].toString());
+				}				
 				retorno.add(oblTipo);
 			}
 		}

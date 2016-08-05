@@ -31,7 +31,7 @@ public class InfraccionBuilder {
                 registro.setEstado(infraccionDTO.getEstado());
                 registro.setIdAccionMaestro(infraccionDTO.getIdAccionMaestro());
                 registro.setIdMedidaSeguridadMaestro(infraccionDTO.getIdMedidaSeguridadMaestro());                
-                if (infraccionDTO.getDocumentoAdjuntoDTO()!=null){
+                if (infraccionDTO.getDocumentoAdjuntoDTO()!=null && infraccionDTO.getDocumentoAdjuntoDTO().getIdDocumentoAdjunto()!=null){
                     MdiDocumentoAdjunto docAdjunto=new MdiDocumentoAdjunto();
                     docAdjunto.setIdDocumentoAdjunto(infraccionDTO.getDocumentoAdjuntoDTO().getIdDocumentoAdjunto());
                     docAdjunto.setEstado(infraccionDTO.getEstado());                  
@@ -72,11 +72,13 @@ public class InfraccionBuilder {
         infraccionDTO.setCodTrazabilidad(infraccion.getCodTrazabilidad());
         infraccionDTO.setIdAccionMaestro(infraccion.getIdAccionMaestro());
         infraccionDTO.setIdMedidaSeguridadMaestro(infraccion.getIdMedidaSeguridadMaestro());
+        if(infraccion.getIdDocumentoAdjunto()!=null){
         DocumentoAdjuntoDTO documento = new DocumentoAdjuntoDTO();
         documento.setIdDocumentoAdjunto(infraccion.getIdDocumentoAdjunto().getIdDocumentoAdjunto());
         documento.setNombreArchivo(infraccion.getIdDocumentoAdjunto().getNombreArchivo());
         documento.setRutaAlfresco(infraccion.getIdDocumentoAdjunto().getRutaAlfresco());
         infraccionDTO.setDocumentoAdjuntoDTO(documento);
+        }
         ObligacionNormativaDTO obligacion = new ObligacionNormativaDTO();
         obligacion.setIdObligacion(infraccion.getIdObligacion().getIdObligacion());
         infraccionDTO.setObligacionDTO(obligacion);

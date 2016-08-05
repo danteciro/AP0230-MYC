@@ -88,7 +88,7 @@
                                     <div class="lblc" style="width:140px;text-align: right;"><label for="cmbTipBaseLegal">Tipo Norma Legal(*):</label></div>
                                     <div style="width: 200px;">
                                         <input id="cmbHideTipoBaseLegal" value="${baseLegal.tipoNormaLegal}" style="display:none;">
-                                        <select id="cmbTipBaseLegal" name="tipoNormaLegal" validate="[O]">
+                                        <select id="cmbTipBaseLegal" name="tipoNormaLegal" validate="[O]" class="lbld">
                                             <option value="-1">--Seleccione--</option>
                                         </select>
                                     </div>
@@ -861,7 +861,7 @@
 										<input id="idInfraccion" style="display: none;" />
 										<div class="lble vat" style="width: 180px;">
 											<label for="txtDescInfraccion">Descripción de
-												Infracción:</label>
+												Infracción(*):</label>
 										</div>
 										<div>
 											<textarea style="width: 625px;" rows="3" class=""
@@ -888,7 +888,7 @@
 										<input id="idHideMedidaDeSeguridad" style="display: none;" />
 										<div class="lble vat" style="width: 180px;">
 										
-											<label for="cmbMedidaSeguirdad">Medida de seguridad:</label>
+											<label for="cmbMedidaSeguirdad">Medida de seguridad(*):</label>
 										</div>
 										<div>																						
 											<input id="cmbHideMedidaSeguridad" style="display: none;" />
@@ -901,7 +901,7 @@
 									<div class="filaForm">
 										<input id="idHideCodAccion" style="display: none;" />
 										<div class="lble vat" style="width: 180px;">
-											<label for="idAccionMaestro">Acci&oacute;n:</label>
+											<label for="idAccionMaestro">Acci&oacute;n(*):</label>
 										</div>
 										<div>
 											<input id="cmbHideAccionInfraccion" value="${infraccion.idAccionMaestro}" style="display:none;"/>											

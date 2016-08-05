@@ -14,4 +14,5 @@ public interface ObligacionTipoDAO {
 	ObligacionTipoDTO changeEstado(ObligacionTipoDTO obligacionTipoDTO,UsuarioDTO userDTO) throws ObligacionTipoException;
 	ObligacionTipoDTO editar(ObligacionTipoDTO obligacionTipoDTO,UsuarioDTO userDTO) throws ObligacionTipoException ;
 	List<ObligacionTipoDTO> listarObligacionTipo(ObligacionTipoFilter filtro);
+	List<ObligacionTipoDTO> listaObligacionTipoSeleccionMuestral(String identificador);
 }

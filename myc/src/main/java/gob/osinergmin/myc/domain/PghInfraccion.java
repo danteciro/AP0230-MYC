@@ -73,8 +73,14 @@ public class PghInfraccion extends ColumAddObligacionesTmp{
     @JoinColumn(name = "ID_OBLIGACION", referencedColumnName = "ID_OBLIGACION")
     @ManyToOne(fetch = FetchType.LAZY,optional=false)
     private PghObligacion idObligacion;
+//    @JoinColumn(name = "ID_OBLIGACION", referencedColumnName = "ID_OBLIGACION")
+//    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+//    private PghObligacion idObligacion;
+//    @JoinColumn(name = "ID_DOCUMENTO_ADJUNTO", referencedColumnName = "ID_DOCUMENTO_ADJUNTO")
+//    @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
+//    private MdiDocumentoAdjunto idDocumentoAdjunto;
     @JoinColumn(name = "ID_DOCUMENTO_ADJUNTO", referencedColumnName = "ID_DOCUMENTO_ADJUNTO")
-    @ManyToOne(fetch = FetchType.LAZY,optional=false)
+    @ManyToOne(fetch = FetchType.LAZY)
     private MdiDocumentoAdjunto idDocumentoAdjunto;
     
     

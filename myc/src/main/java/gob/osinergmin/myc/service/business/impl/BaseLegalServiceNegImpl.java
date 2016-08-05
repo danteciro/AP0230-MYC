@@ -370,6 +370,17 @@ public class BaseLegalServiceNegImpl implements BaseLegalServiceNeg{
         }
         return listado;
 	}
+
+	@Override
+	public String obtenerCodigoBaseLegal(String flagPadre) {		
+        String codigo=null;
+        try{
+        	codigo = baseLegalDAO.obtenerCodigoBaseLegal(flagPadre);
+        }catch(Exception ex){
+        	LOG.error("",ex);
+        }
+        return codigo;
+	}
 	
 	//
 }

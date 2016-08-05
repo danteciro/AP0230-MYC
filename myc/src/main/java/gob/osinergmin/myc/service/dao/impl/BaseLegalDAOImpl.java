@@ -176,14 +176,14 @@ public class BaseLegalDAOImpl implements BaseLegalDAO {
 		try{
 			String estado="1";
 			//Inserta código
-			String flagPadre=baseLegalDTO.getFlagPadre();
-                        String codigoBaseLegal = armaCodigoBaseLegal(flagPadre);
+//			String flagPadre=baseLegalDTO.getFlagPadre();
+//                        String codigoBaseLegal = armaCodigoBaseLegal(flagPadre);
 //			BaseLegalDTO lastBaseLegal=findUltimoRegistro();
 //			String ultimoCodigo=lastBaseLegal.getCodigoBaseLegal();
 //                        Long codigoBaseLegal = crud.findSequence("PGH_CODIGO_BASE_LEGAL_SEQ");
 //			String codBaseLegal= MycUtil.generaCodigoBaseLegal(codigoBaseLegal);
 			//
-			baseLegalDTO.setCodigoBaseLegal(codigoBaseLegal);
+//			baseLegalDTO.setCodigoBaseLegal(codigoBaseLegal);
                         baseLegalDTO.setEstado(estado);
 			PghBaseLegal baseLegal=BaseLegalBuilder.getBaseLegal(baseLegalDTO);
 			baseLegal.setDatosAuditoria(usuarioDTO);
@@ -828,11 +828,14 @@ public class BaseLegalDAOImpl implements BaseLegalDAO {
             baseLegalDTO.setEstado(estado);
             PghBaseLegal baseAct = crud.find(baseLegalDTO.getIdBaseLegal(), PghBaseLegal.class);
             PghBaseLegal baseUpd = BaseLegalBuilder.getBaseLegal(baseLegalDTO);
+            //Inicio correcciones MYC-5
             if(baseUpd.getIdDocumentoAdjunto()!=null && baseUpd.getIdDocumentoAdjunto().getIdDocumentoAdjunto()!=null){
             	
             }else{            	
             	baseUpd.setIdDocumentoAdjunto(baseAct.getIdDocumentoAdjunto());
             }
+            //Fin
+            
             boolean validarDetalle=validarDetalleBaseLegal(baseLegalDTO);
             
             LOG.info("SE PROCEDE A ACTUALIZAR BASE LEGAL");
@@ -1494,5 +1497,12 @@ public class BaseLegalDAOImpl implements BaseLegalDAO {
         listado = BaseLegalBuilder.toListBaseLegalToBaseLegalDto(query.getResultList());
         LOG.info("listado: "+listado.size());
         return listado;	
+	}
+
+	@Override
+	public String obtenerCodigoBaseLegal(String flagPadre) {
+        String codigoBaseLegal = armaCodigoBaseLegal(flagPadre);
+        return codigoBaseLegal;
+        
 	}
 }

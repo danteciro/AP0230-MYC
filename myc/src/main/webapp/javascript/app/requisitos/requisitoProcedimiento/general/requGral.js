@@ -137,11 +137,9 @@ function procAgregarRequisitoGeneral() {
 function armaPermisosSeguridadGral(){
 	var permisos = $('#permisosSeguridad').val();
 	var permiso = permisos.split("/");	
-	console.log(permiso);
 	var existeIn = false;
 	var existeEl = false;
 	for (var i = 0; i < permiso.length; i++) {
-		console.log(permiso[i]);
 		if(permiso[i]=="IN"){
 			existeIn = true;
 		}
@@ -149,8 +147,6 @@ function armaPermisosSeguridadGral(){
 			existeEl = true;
 		}
 	}	
-	console.log(existeIn);
-	console.log(existeEl);
 	if(!existeIn){
 		$('#gralRequ .btns').map(function(){
 			$(this).find('span:eq(0)').css('display','none');

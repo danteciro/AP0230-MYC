@@ -40,7 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
         @NamedQuery(name = "MdiMaestroColumna.findByValidate", query = "SELECT m FROM MdiMaestroColumna m where m.estado='1' and m.mdiMaestroTabla.mdiMaestroTablaPK.dominio=:dominio and m.mdiMaestroTabla.mdiMaestroTablaPK.aplicacion=:aplicacion and m.descripcion=:descripcion "),
         @NamedQuery(name = "MdiMaestroColumna.findByCodigoDominio", query = "SELECT mc FROM MdiMaestroColumna mc " +
                                               "left join mc.mdiMaestroTabla mt  " +
-                                              "WHERE " +
+                                              "WHERE mc.estado='1' and " +
                                               "mc.mdiMaestroTabla.mdiMaestroTablaPK.dominio = :dominio and " +
                                               "mc.mdiMaestroTabla.mdiMaestroTablaPK.aplicacion = :aplicacion and "+
                                               "mc.codigo = :codigo"),
@@ -49,7 +49,14 @@ import javax.xml.bind.annotation.XmlRootElement;
                                               "WHERE " +
                                               "mc.mdiMaestroTabla.mdiMaestroTablaPK.dominio = :dominio and " +
                                               "mc.mdiMaestroTabla.mdiMaestroTablaPK.aplicacion = :aplicacion " +
-                                              " and mc.estado=1 order by mc.descripcion "),
+                                              " and mc.estado='1' order by mc.descripcion "),
+        @NamedQuery(name = "MdiMaestroColumna.findByDominioAplicacionCodigo", query = "SELECT mc FROM MdiMaestroColumna mc " +
+                                                      "left join mc.mdiMaestroTabla mt  " +
+                                                      "WHERE " +
+                                                      "mc.mdiMaestroTabla.mdiMaestroTablaPK.dominio = :dominio and " +
+                                                      "mc.mdiMaestroTabla.mdiMaestroTablaPK.aplicacion = :aplicacion " +
+                                                      "and mc.codigo= :codigo " +
+                                                      "and mc.estado='1' order by mc.descripcion "),
         /*Rsis 11 - inicio*/
         @NamedQuery(name = "MdiMaestroColumna.findByDominioAplicacionMedSeg", query = "SELECT distinct mc FROM MdiMaestroColumna mc " +
                                                 "left join mc.mdiMaestroTabla mt  " +
@@ -69,10 +76,10 @@ import javax.xml.bind.annotation.XmlRootElement;
                                                 "mc.mdiMaestroTabla.mdiMaestroTablaPK.dominio = :dominio and " +                                               
                                                 "mc.mdiMaestroTabla.mdiMaestroTablaPK.aplicacion = :aplicacion" +
                                                 " and mc.estado=1 order by mc.descripcion "),                                                       
-        /*Rsis 11 - fin*/                                                
+        /*Rsis 11 - fin*/
         @NamedQuery(name = "MdiMaestroColumna.findIdMaestroColumnaByFiltro", query = "SELECT mc FROM MdiMaestroColumna mc " +
                                               "left join mc.mdiMaestroTabla mt  " +
-                                              "WHERE " +
+                                              "WHERE mc.estado='1' and " +
                                               "mc.mdiMaestroTabla.mdiMaestroTablaPK.dominio = :dominio and " +
                                               "mc.mdiMaestroTabla.mdiMaestroTablaPK.aplicacion = :aplicacion and "+
                                               "mc.codigo = :codigo and mc.descripcion = :descripcion"),

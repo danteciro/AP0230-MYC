@@ -77,7 +77,7 @@ public class MaestroColumnaServiceNegImpl implements MaestroColumnaServiceNeg{
     @Override
     @Transactional(readOnly=true)
     public List<MaestroColumnaDTO> listarMaestroColumna(MaestroColumnaFilter filtro,int[] cuenta){
-        LOG.info("Neg listarRequisito");
+        LOG.info("Neg listarMaestroColumna");
         List<MaestroColumnaDTO> retorno=null;
         try{
             cuenta[0] = maestroColumnaDAO.count(filtro).intValue();
@@ -90,6 +90,20 @@ public class MaestroColumnaServiceNegImpl implements MaestroColumnaServiceNeg{
         }
         return retorno;
     }
+    
+    @Override
+    @Transactional(readOnly=true)
+    public List<MaestroColumnaDTO> listarMaestroColumna(MaestroColumnaFilter filtro){ /* OSINE_SFS-480 - RSIS09 - mdiosesf - Inicio */
+        LOG.info("Neg listarMaestroColumna");
+        List<MaestroColumnaDTO> retorno=null;
+        try{
+            retorno = maestroColumnaDAO.find(filtro);
+            LOG.info("cuenta -size: "+retorno.size());
+        }catch(Exception ex){
+            LOG.error("",ex);
+        }
+        return retorno;
+    } /* OSINE_SFS-480 - RSIS09 - mdiosesf - Fin */
     
     @Override
     public List<MaestroColumnaDTO> buscarMycByDominio(String dominio) throws Exception {
@@ -110,6 +124,16 @@ public class MaestroColumnaServiceNegImpl implements MaestroColumnaServiceNeg{
         List<MaestroColumnaDTO>  retorno = null; 	
     	try{    		
             retorno = maestroColumnaDAO.findMaestroColumna(dominio, aplicacion);    		
+    	}catch(Exception ex){    		
+    		LOG.info("error web service",ex);
+    	}    	    
+    	return retorno;
+    }
+    @Override
+    public List<MaestroColumnaDTO> buscarByDominioByAplicacionByCodigo(String dominio,String aplicacion,String codigo) throws Exception{
+        List<MaestroColumnaDTO>  retorno = null; 	
+    	try{    		
+            retorno = maestroColumnaDAO.findMaestroColumnaByCodigo(dominio,aplicacion,codigo);    		
     	}catch(Exception ex){    		
     		LOG.info("error web service",ex);
     	}    	    

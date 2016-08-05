@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -64,6 +65,8 @@ public class MdiUbigeo implements Serializable {
     private List<MdiDireccionRegion> mdiDireccionRegionList;*/
     @OneToMany(mappedBy = "mdiUbigeo", fetch = FetchType.LAZY)
     private List<PghZonificacionDetalle> pghZonificacionDetalleList;
+    @OneToMany(mappedBy = "mdiUbigeo", fetch = FetchType.LAZY)
+    private List<PghEstratoUbigeo> pghEstratoUbigeoList;
 
     public MdiUbigeo() {
     }
@@ -148,6 +151,16 @@ public class MdiUbigeo implements Serializable {
 
     public void setPghZonificacionDetalleList(List<PghZonificacionDetalle> pghZonificacionDetalleList) {
         this.pghZonificacionDetalleList = pghZonificacionDetalleList;
+    }
+    
+    @XmlTransient
+    @JsonIgnore
+    public List<PghEstratoUbigeo> getPghEstratoUbigeoList() {
+        return pghEstratoUbigeoList;
+    }
+
+    public void setPghEstratoUbigeoList(List<PghEstratoUbigeo> pghEstratoUbigeoList) {
+        this.pghEstratoUbigeoList = pghEstratoUbigeoList;
     }
 
     @Override

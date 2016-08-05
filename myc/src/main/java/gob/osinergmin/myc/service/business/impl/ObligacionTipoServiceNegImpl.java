@@ -147,4 +147,17 @@ public class ObligacionTipoServiceNegImpl implements  ObligacionTipoServiceNeg{
 	        }
 			return retorno;
 		}
+
+
+		@Override
+		public List<ObligacionTipoDTO> listaObligacionTipoSelecccionMuestral(String identificador) {
+			List<ObligacionTipoDTO> retorno=null;
+	        try{	        	
+	        	retorno = obligacionTipoDAO.listaObligacionTipoSeleccionMuestral(identificador); 
+	        	
+	        }catch(Exception ex){
+	        	ex.printStackTrace();
+	        }
+			return retorno;
+		}
 }

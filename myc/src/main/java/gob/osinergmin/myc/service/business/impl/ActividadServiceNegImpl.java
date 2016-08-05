@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -65,5 +66,18 @@ public class ActividadServiceNegImpl implements ActividadServiceNeg{
             LOG.error("",ex);
         }
 		return retorno;
+	}
+
+	@Override
+	@Transactional
+	public ActividadDTO listarActividadxCodigo(ActividadFilter filtro) {
+		LOG.info("Negocio Actividad");
+        ActividadDTO retorno=null;
+        try{
+            retorno = actividadDAO.listarActividadxCodigo(filtro);
+        }catch(Exception ex){
+            LOG.error("",ex);
+        }
+        return retorno;
 	}
 }

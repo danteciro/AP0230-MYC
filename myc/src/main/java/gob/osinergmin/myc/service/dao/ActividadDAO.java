@@ -18,4 +18,5 @@ public interface ActividadDAO {
     public List<ActividadDTO> find(ActividadFilter filtro) throws ActividadException;
     public Long count(ActividadFilter filtro) throws ActividadException;
     public List<ProcesoObligacionTipoDTO> listarConfigurada();
+	public ActividadDTO listarActividadxCodigo(ActividadFilter filtro);
 }

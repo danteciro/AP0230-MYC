@@ -12,7 +12,7 @@
     </head>
     
     <body>
-        <form id="formBusqAvanBL" class="tac">  
+        <form id="formBusqAvanBL" class="tac" style="width:945px;">  
             <div id="divMensajeValidaBusqAvanBL" class="errorMensaje" tabindex='1' style="display: none" ></div>
             <div class="form"> 
             	<div class="filaForm">
@@ -36,17 +36,20 @@
                 <div class="filaForm" id="divBaseLegal2">
                     <div class="lblc" style="width:140px;text-align: right;"><label for="slcTipoNormaLegaBusqAvanBL">Tipo Norma Legal:</label></div>
                     <div style="width: 200px;">
-                        <select id="slcTipoNormaLegaBusqAvanBL"  >
+                        <select id="slcTipoNormaLegaBusqAvanBL" class="lbld" >
                             <option value="">--Seleccione--</option>
                             <c:forEach items="${listTipoNormaLegal}" var="t">
                                   <option value='${t.idMaestroColumna}'>${t.descripcion}</option>
                             </c:forEach>
                         </select>
                     </div> 
-                    <div class="lblc" style="width:140px;" ><label for="txtFechaEntrVigeBusqAvanBL" >Fecha Entrada Vigencia: </label></div>
+                                       
+                </div>
+                <div class="filaForm">
+                <div class="lblc" style="width:140px;" ><label for="txtFechaEntrVigeBusqAvanBL" >Fecha Entrada Vigencia: </label></div>
                     <div style="width:200px;">
                         <input id="txtFechaEntrVigeBusqAvanBL" type="text" readonly>
-                    </div>                   
+                    </div>
                 </div>
                 <div class="filaForm" id="divBaseLegal2a">
                   <div class="lblc" style="width:140px;text-align: right;" ><label for="txtNumeroBusqAvanBL" >Número:</label></div>

@@ -195,4 +195,14 @@ public class ObligacionTipoDAOImpl implements  ObligacionTipoDAO{
         return retorno;
     }
 
+	@Override
+	public List<ObligacionTipoDTO> listaObligacionTipoSeleccionMuestral(String identificador) {
+		List<ObligacionTipoDTO> listado=null;
+		Query query = crud.getEm().createNamedQuery("PghObligacionSubTipo.findTipoSupervisionSelMuestral");
+		query.setParameter("identiSeleMuestral",identificador);
+        listado = ObligacionTipoBuilder.toListObligacionTipoDto(query.getResultList());        
+        return listado;     
+     
+	}
+
 }

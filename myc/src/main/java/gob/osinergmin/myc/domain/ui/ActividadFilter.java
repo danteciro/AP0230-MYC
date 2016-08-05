@@ -16,7 +16,8 @@ public class ActividadFilter extends BasePaginatorFilter {
     private Long idTramite;
     private String estado;
     private Long idTramiteActividad;
-    private Long idRubroOpcion;
+    private String codigo;/*OSINE_SFS-480 - RSIS25*/
+	private Long idRubroOpcion;
 
     public ActividadFilter(){
     }
@@ -66,7 +67,13 @@ public class ActividadFilter extends BasePaginatorFilter {
 	public void setIdTramiteActividad(Long idTramiteActividad) {
 		this.idTramiteActividad = idTramiteActividad;
 	}
-	public Long getIdRubroOpcion() {
+	public String getCodigo() {
+		return codigo;
+	}
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+    public Long getIdRubroOpcion() {
 		return idRubroOpcion;
 	}
 	public void setIdRubroOpcion(Long idRubroOpcion) {

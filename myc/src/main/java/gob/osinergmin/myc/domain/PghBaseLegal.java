@@ -89,10 +89,6 @@ public class PghBaseLegal extends ColumAddObligacionesTmp  {
     private String titulo;
     @Column(name = "DESCRIPCION")
     private String descripcion;
-    /*Rsis 1 - Inicio*/
-    //@Column(name = "NUMERO_TIPO_ANEXO")
-    //private String numeroAnexo;
-    /*Rsis 1 - Inicio*/
     @Column(name = "ID_BASE_LEGAL_REF")
     private Long idBaseLegalRef;
     @Basic(optional = false)
@@ -306,17 +302,7 @@ public class PghBaseLegal extends ColumAddObligacionesTmp  {
         this.idDocumentoAdjunto = idDocumentoAdjunto;
     }
     
-    /*Rsis 1 - Inicio*/
-    /*public String getNumeroAnexo() {
-		return numeroAnexo;
-	}
-
-	public void setNumeroAnexo(String numeroAnexo) {
-		this.numeroAnexo = numeroAnexo;
-	}
-	*/
-	/*Rsis 1 - Fin*/
-	@XmlTransient
+    @XmlTransient
     public List<PghObligacionBaseLegal> getPghObligacionBaseLegalList() {
         return pghObligacionBaseLegalList;
     }

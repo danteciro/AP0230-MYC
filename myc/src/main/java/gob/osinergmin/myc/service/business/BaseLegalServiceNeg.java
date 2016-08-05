@@ -45,5 +45,6 @@ public interface BaseLegalServiceNeg {
 	public List<BaseLegalDTO> listarBaseLegalByObligacion(Long row_id);
 	public List<DetalleNormaTecnicaDTO> findDetalleNormaTecnicaById(Long idDetalleBaseLegal);
 	public List<BaseLegalDTO> verificarBaseLegalExistente(BaseLegalFilter filtro);
+	public String obtenerCodigoBaseLegal(String flagPadre);
 	
 }
