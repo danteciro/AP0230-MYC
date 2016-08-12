@@ -1,3 +1,6 @@
+-- ACTULIZAR ESTADO DE ACTIVIDAD
+UPDATE MDI_ACTIVIDAD MA SET MA.ESTADO = '1' WHERE MA.CODIGO = '050';
+
 --MAESTRO_COLUMNA TIPO DIRECCION OPERATIVA
 INSERT INTO mdi_maestro_columna (descripcion,Codigo,Id_Maestro_Columna,Dominio,fecha_creacion,usuario_creacion,terminal_creacion,aplicacion,estado) values 
 ('OPERATIVA','OPE',mdi_maestro_columna_seq.nextval,'TIPO_DIRECCION',sysdate,'usu01','localhost','SGLSS',1);
