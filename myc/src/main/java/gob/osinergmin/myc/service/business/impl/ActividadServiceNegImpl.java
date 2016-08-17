@@ -101,7 +101,10 @@ public class ActividadServiceNegImpl implements ActividadServiceNeg{
 		LOG.info("Neg listarActividadConfigurada");
 		List<ProcesoObligacionTipoDTO> retorno=null;
 		try{
-            retorno = actividadDAO.listarConfigurada(filtro);
+			if(filtro.getIdsActividades()!=null){
+				retorno = actividadDAO.listarConfigurada(filtro);
+			}
+            
         }catch(Exception ex){
             LOG.error("",ex);
         }

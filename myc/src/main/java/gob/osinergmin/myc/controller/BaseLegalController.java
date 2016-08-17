@@ -101,7 +101,7 @@ public class BaseLegalController {
         if(listPersona.size()>0){
             personal=listPersona.get(0);
         }                
-        if(personal!=null && personal.getRol()!=null && personal.getRol().getIdentificadorRol()!=null){
+        if(personal!=null){
             request.getSession().setAttribute("idPersonal", personal.getIdPersonal());
             request.getSession().setAttribute("idPersonalSiged", personal.getIdPersonalSiged());
             request.getSession().setAttribute("identificadorRol", personal.getRol().getIdentificadorRol());
