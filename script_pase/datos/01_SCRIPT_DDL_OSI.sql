@@ -96,13 +96,9 @@ increment by 1
 cache 20;
 
 
--- Create sequence 
-create sequence MDI_ACTIVIDAD_SEQ
-minvalue 200
-maxvalue 9999999999999999999999999999
-start with 2078
-increment by 1
-nocache;
+-- Alter sequence 
+alter sequence MDI_ACTIVIDAD_SEQ 
+minvalue 201;
 
 --cambio de paquete bd
 
