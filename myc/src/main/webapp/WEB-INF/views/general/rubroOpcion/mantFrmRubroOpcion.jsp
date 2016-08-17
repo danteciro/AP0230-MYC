@@ -24,7 +24,7 @@
             
             <div id="tabsMantProcedimiento">
                 <ul>
-                    <li><a href="#tabTramiteActividad">RUBRO - OPCI&Oacute;N</a></li>
+                    <li><a href="#tabTramiteActividad">RUBRO - OPCIÓN</a></li>
                 </ul>
     
                 <div id="tabTramiteActividad" style="width:620px;">

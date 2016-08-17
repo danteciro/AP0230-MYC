@@ -92,7 +92,8 @@ public class PghTipificacion extends Auditoria {
     
     @Column(name = "ID_TIPIFICACION_PADRE")
     private Long idTipificacionPadre;
-
+    @Transient
+    private Long tieneAct;
     
     public Long getIdTipificacionPadre() {
 		return idTipificacionPadre;
@@ -119,6 +120,16 @@ public class PghTipificacion extends Auditoria {
         this.sancionMonetaria=sancionMonetaria;
         this.tieneSanc=tieneSanc;
         this.descTipiPadre=descTipiPadre;
+    }
+    
+    public PghTipificacion(Long idTipificacion, String codTipificacion, String descripcion, String sancionMonetaria, String estado, String basesLegales, Long tieneAct) {
+        this.idTipificacion = idTipificacion;
+        this.codTipificacion=codTipificacion;
+        this.descripcion=descripcion;
+        this.sancionMonetaria=sancionMonetaria;
+        this.estado = estado;
+        this.basesLegales = basesLegales;
+        this.tieneAct = tieneAct;
     }
 
     public String getDescTipiPadre() {
@@ -258,6 +269,15 @@ public class PghTipificacion extends Auditoria {
     public void setPghTipificacionSancionList(List<PghTipificacionSancion> pghTipificacionSancionList) {
         this.pghTipificacionSancionList = pghTipificacionSancionList;
     }
+    
+
+    public Long getTieneAct() {
+		return tieneAct;
+	}
+
+	public void setTieneAct(Long tieneAct) {
+		this.tieneAct = tieneAct;
+	}
 
     @Override
     public int hashCode() {

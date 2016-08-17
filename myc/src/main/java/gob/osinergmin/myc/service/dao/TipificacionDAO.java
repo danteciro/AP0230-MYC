@@ -23,6 +23,7 @@ public interface TipificacionDAO {
     
     public TipificacionDTO obtenerTipificacion(Long idTipificacion);
     public List<TipificacionDTO> obtenerTipificacionByCodigo(String codigoTipificacion);
+    public List<TipificacionDTO> obtenerTipificacionByCodigo(String codigoTipificacion, String basesLegales);
     public List<TipificacionDTO> obtenerTipificaciones(String codigoTipificacion);
     public List<TipificacionSancionDTO> obtenerTipificacionSancion(String codigoTipificacion);
     
@@ -35,5 +36,6 @@ public interface TipificacionDAO {
 	public Long buscarSancionEspecifica(Long idTipificacion);
 	public List<TipificacionSancionDTO> obtenerTipificacionSancionNivel(String codTipificacion, Long idNivel);
 	public List<TipificacionDTO> findTipificacionPadre(TipificacionFilter filtro);
+	public List<TipificacionDTO> obtenerTipificacionesFiltrada(String codigoTipificacion);
     
 }

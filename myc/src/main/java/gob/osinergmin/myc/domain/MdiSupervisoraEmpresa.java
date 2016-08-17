@@ -46,6 +46,9 @@ public class MdiSupervisoraEmpresa extends Auditoria {
     @Size(min = 1, max = 200)
     @Column(name = "RAZON_SOCIAL")
     private String razonSocial;
+    @Size(max = 500)
+    @Column(name = "NOMBRE_CONSORCIO")
+    private String nombreConsorcio;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 15)
@@ -75,7 +78,9 @@ public class MdiSupervisoraEmpresa extends Auditoria {
     public MdiSupervisoraEmpresa(Long idSupervisoraEmpresa) {
         this.idSupervisoraEmpresa = idSupervisoraEmpresa;
     }
-
+    public String getNombreConsorcio() {
+        return nombreConsorcio;
+    }
     public MdiSupervisoraEmpresa(Long idSupervisoraEmpresa, long tipoEmpresaConstitucion, String razonSocial, String ruc, char estado, String usuarioCreacion, Date fechaCreacion, String terminalCreacion) {
         this.idSupervisoraEmpresa = idSupervisoraEmpresa;
         this.tipoEmpresaConstitucion = tipoEmpresaConstitucion;
@@ -176,6 +181,10 @@ public class MdiSupervisoraEmpresa extends Auditoria {
         hash += (idSupervisoraEmpresa != null ? idSupervisoraEmpresa.hashCode() : 0);
         return hash;
     }
+    
+    public void setNombreConsorcio(String nombreConsorcio) {
+		this.nombreConsorcio = nombreConsorcio;
+	}
 
     @Override
     public boolean equals(Object object) {

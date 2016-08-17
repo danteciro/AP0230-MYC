@@ -97,6 +97,13 @@
                     <li><a class="menuItem" image="/myc/images/unidad_organica.png" href="/myc/pages/unidadOrganica"><p>UNIDAD ORGANICA</p></a></li> <!-- OSINE_SFS-480 - RSIS09 - mdiosesf  -->
                     <li><a class="menuItem" image="/myc/images/system.png" href="/myc/pages/inps"><p>INPS</p></a></li> <!-- OSINE_SFS-480 - RSIS10 - mdiosesf -->
 <!--                     <li><a class="menuItem" image="/myc/images/criterio.png" href="/myc/pages/criterio"><p>CRITERIO</p></a></li> -->
+
+					<!-- OSINE_SFS-600 - REQF-0011 - Inicio -->		    
+				    <li><a class="menuItem" image="/myc/images/barras_1.png" href="/myc/pages/prioridadNormaAgente"><p>PRIORIDAD NORMA AGENTE</p></a></li>
+				    <!-- OSINE_SFS-600 - REQF-0011 - Fin -->	
+		                    <!-- OSINE_SFS-600 - REQF-0005 - Inicio -->
+				    <li><a class="menuItem" image="/myc/images/actividad.jpg" href="/myc/pages/mantenimientoActividad"><p>AGENTE Y ACTIVIDAD</p></a></li>
+				    <!-- OSINE_SFS-600 - REQF-0005 - Fin -->
                 </ul>  
             </li>  
         </ul>

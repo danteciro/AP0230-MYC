@@ -1,12 +1,12 @@
 package gob.osinergmin.myc.domain.ui;
 
 import gob.osinergmin.myc.domain.dto.MaestroColumnaDTO;
-
+import gob.osinergmin.myc.domain.ui.base.BasePaginatorFilter;
 /**
  *
  * @author mdiosesf
  */
-public class UnidadOrganicaFilter {
+public class UnidadOrganicaFilter extends BasePaginatorFilter {
     private Long idUnidadOrganica;
     private Long idUnidadOrganicaSuperior;
     private String descripcion;
@@ -16,8 +16,14 @@ public class UnidadOrganicaFilter {
     private String sigla;
     private Long nivel;
     private MaestroColumnaDTO nombreNivel;
+	private Long idPersonal;
 
     public UnidadOrganicaFilter(){}
+
+    public UnidadOrganicaFilter(Long idUnidadOrganica, Long idUnidadOrganicaSuperior) {
+        this.idUnidadOrganica = idUnidadOrganica;
+        this.idUnidadOrganicaSuperior = idUnidadOrganicaSuperior;
+    }
     
     public UnidadOrganicaFilter(String codDepSiga,String sigla){
         this.codDepSiga=codDepSiga;
@@ -28,6 +34,14 @@ public class UnidadOrganicaFilter {
         this.idUnidadOrganica = idUnidadOrganica;
         this.idUnidadOrganicaSuperior = idUnidadOrganicaSuperior;
         this.nivel = nivel;
+    }
+	
+	public Long getIdPersonal() {
+        return idPersonal;
+    }
+
+    public void setIdPersonal(Long idPersonal) {
+        this.idPersonal = idPersonal;
     }
     
     public String getCodDepSiga() {

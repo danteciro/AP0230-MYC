@@ -33,6 +33,7 @@ public class TipificacionDTO {
     /**/
     private String activo;
     private String seleccionado;
+    private String tieneAct;
     
 	private String sancionEspecifica;
 	private List<TipificacionSancionDTO> TipificacionSancion;
@@ -200,5 +201,14 @@ public class TipificacionDTO {
 	public void setTipificacionSancion(List<TipificacionSancionDTO> tipificacionSancion) {
 		TipificacionSancion = tipificacionSancion;
 	}
+
+	public String getTieneAct() {
+		return tieneAct;
+	}
+
+	public void setTieneAct(String tieneAct) {
+		this.tieneAct = tieneAct;
+	}
+	
     
 }

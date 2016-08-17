@@ -1033,8 +1033,32 @@ $(function() {
         btnRegresarMenu                                 : $('#btnRegresar')
     };
 });
+//Cargar Unidad Divison
+var uniDiv={
+    //Busqueda_Unidad_Division
+    cargarUnidadDivision : function (){
+	//Captura_IdPersonal
+	$.ajax({
+            url:baseURL + "pages/baseLegal/findUnidadDivisionPersonal",
+            type:'get',
+            async:false,
+            data:{  
+                idPersonal:$('#idPersonalSesion').val()  
+            },
+            beforeSend:muestraLoading,
+            success:function(data){
+            	ocultaLoading();
+                $('#divDivision').html(data.division);
+                $('#divUnidad').html(data.unidad);
+                $('#divActividades').html(data.listaActividades);
+            },
+            error:errorAjax
+	});
+}
+};
 $(function() {
     busquedaBaseLegal.constructor();
+    uniDiv.cargarUnidadDivision();
 });
 
 

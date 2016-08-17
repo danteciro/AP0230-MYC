@@ -1,11 +1,21 @@
 package gob.osinergmin.myc.controller;
 
+import gob.osinergmin.myc.service.business.CnfActUniOrganicaServiceNeg;
+import gob.osinergmin.myc.domain.dto.ActividadDTO;
+import gob.osinergmin.myc.service.business.UnidadOrganicaServiceNeg;
+import gob.osinergmin.myc.util.Constantes;
+import gob.osinergmin.myc.domain.dto.UnidadOrganicaDTO;
+import gob.osinergmin.myc.domain.ui.UnidadOrganicaFilter;
+import gob.osinergmin.myc.domain.dto.PersonalDTO;
+import gob.osinergmin.myc.domain.ui.PersonalFilter;
+import gob.osinergmin.myc.util.ConstantesWeb;
 import gob.osinergmin.myc.common.util.JsonUtil;
 import gob.osinergmin.myc.domain.dto.BaseLegalDTO;
 import gob.osinergmin.myc.domain.dto.BaseLegalFilterDTO;
 import gob.osinergmin.myc.domain.dto.CnfObligacionDTO;
 import gob.osinergmin.myc.domain.dto.MaestroColumnaDTO;
 import gob.osinergmin.myc.domain.dto.ObligacionNormativaDTO;
+import gob.osinergmin.myc.domain.dto.TramiteDTO;
 import gob.osinergmin.myc.domain.ui.BaseLegalFilter;
 import gob.osinergmin.myc.domain.ui.ObligacionFilter;
 import gob.osinergmin.myc.service.business.BaseLegalServiceNeg;
@@ -13,7 +23,7 @@ import gob.osinergmin.myc.service.business.MaestroColumnaServiceNeg;
 import gob.osinergmin.myc.service.business.ObligacionNormativaServiceNeg;
 import gob.osinergmin.myc.service.business.ObligacionTipoServiceNeg;
 import gob.osinergmin.myc.util.ConstantesWeb;
-
+import gob.osinergmin.myc.service.business.PersonalServiceNeg;
 import java.beans.PropertyEditorSupport;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,11 +33,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.ServletContext;
  
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,13 +75,42 @@ public class BaseLegalController {
     
     @Autowired
     private ObligacionTipoServiceNeg obligacionTipoService;
-       
+    
+    @Autowired
+    private PersonalServiceNeg personalServiceNeg;
+    
+    @Inject
+    private UnidadOrganicaServiceNeg unidadOrganicaServiceNeg;
+    
+    // gvillanueva - Cambio de Alcance - Inicio
+    @Inject
+    private CnfActUniOrganicaServiceNeg cnfActiUniOrganicaServiceNeg;
+    // Fin
     //al cargar la página
     @RequestMapping(method=RequestMethod.GET)
     public String inicio(Model model,HttpServletRequest request) {
+    	String username=ConstantesWeb.getUSUARIO(request);
+    	String navegacion=ConstantesWeb.Navegacion.PAGE_INICIO_MANTENIMIENTO_BASE_LEGAL;
+        LOG.info("username:"+username);
     	model.addAttribute("fecha", ConstantesWeb.getFECHA());
     	model.addAttribute("usuario", ConstantesWeb.getUSUARIO(request));
-        return ConstantesWeb.Navegacion.PAGE_INICIO_MANTENIMIENTO_BASE_LEGAL;
+    	
+    	PersonalDTO personal=null;
+        List<PersonalDTO> listPersona=personalServiceNeg.findPersonal(new PersonalFilter(username,null));
+        LOG.info("listPersona:"+listPersona);
+        if(listPersona.size()>0){
+            personal=listPersona.get(0);
+        }                
+        if(personal!=null && personal.getRol()!=null && personal.getRol().getIdentificadorRol()!=null){
+            request.getSession().setAttribute("idPersonal", personal.getIdPersonal());
+            request.getSession().setAttribute("idPersonalSiged", personal.getIdPersonalSiged());
+            request.getSession().setAttribute("identificadorRol", personal.getRol().getIdentificadorRol());
+            model.addAttribute("nombreRol", personal.getRol().getNombreRol());          
+        }        
+        model.addAttribute("personal",personal);
+        model.addAttribute("idPersonal", ConstantesWeb.getIDPERSONAL(request));    	
+        return navegacion;
+        
     }
     
     @InitBinder
@@ -474,7 +515,7 @@ public class BaseLegalController {
     }
     @RequestMapping(value = "/listarBaseLegalPadreGet", method = RequestMethod.POST)
     public @ResponseBody
-	Map<String, Object> findBaseLegalPadreGet(BaseLegalFilter filtro,Long varLista, int rows, int page, HttpSession session,HttpServletRequest request) {
+	Map<String, Object> findBaseLegalPadreGet(BaseLegalFilter filtro,Long varLista, int rows, int page, HttpSession session,HttpServletRequest request,HttpSession sesion) {
 		LOG.info("Funcion: listar de Bases Legales -- Controller -- Metodo-> listarBaseLegal");
         Map<String, Object> listaResultado = new HashMap<String, Object>();
         try{
@@ -715,6 +756,47 @@ public class BaseLegalController {
         return "moduloObligaciones/baseLegal/mantenimiento/nuevo";
     }
     
-    
+    //Busca_Division-Unidad: MDI_Unidad_Organica -- gvillanueva - Cambio de Alcance - Inicio
+    @RequestMapping(value="/findUnidadDivisionPersonal",method= RequestMethod.GET)
+    public @ResponseBody 
+    Map<String,Object> findUnidadDivisionPersonal(PersonalFilter filtro, HttpSession sesion, HttpServletRequest request) {
+    	LOG.info("Funcion: Find Unidad-Division -- Controller -- Metodo-> findUnidadDivision");    	
+        Map<String,Object> listaResultado=new HashMap<String,Object>();     
+        try{
+            filtro.setFlagDefault(Constantes.ESTADO_ACTIVO);
+            List<PersonalDTO> personalUnidOrgDefault = personalServiceNeg.findPersonal(filtro);
+            if(personalUnidOrgDefault!=null && personalUnidOrgDefault.size()>0 
+                    && personalUnidOrgDefault.get(0).getPersonalUnidadOrganicaDefault()!=null 
+                    && personalUnidOrgDefault.get(0).getPersonalUnidadOrganicaDefault().getUnidadOrganica()!=null){
+                
+                List<UnidadOrganicaDTO> unidadUO=unidadOrganicaServiceNeg.findUnidadOrganica(new UnidadOrganicaFilter(personalUnidOrgDefault.get(0).getPersonalUnidadOrganicaDefault().getUnidadOrganica().getIdUnidadOrganica(),null));
+                List<UnidadOrganicaDTO> subDivUO=unidadOrganicaServiceNeg.findUnidadOrganica(new UnidadOrganicaFilter(unidadUO.get(0).getIdUnidadOrganicaSuperior(),null));
+                List<UnidadOrganicaDTO> divUO=unidadOrganicaServiceNeg.findUnidadOrganica(new UnidadOrganicaFilter(subDivUO.get(0).getIdUnidadOrganicaSuperior(),null));
+                List<ActividadDTO> actividadDivUO=cnfActiUniOrganicaServiceNeg.findActividadDivision(new UnidadOrganicaFilter(divUO.get(0).getIdUnidadOrganica(),null));
+             
+                
+                request.getSession().setAttribute(Constantes.PERSONAL_UNIDAD_ORGANICA_DIVISION, divUO.get(0).getIdUnidadOrganica());
+                request.getSession().setAttribute(Constantes.ACTIVIDAD_ORGANICA_DIVISION, actividadDivUO);
+                request.getSession().setAttribute(Constantes.ACTIVIDADES_ORGANICA_DIVISION_CONCATENADA, concatenaActividades(actividadDivUO));
+                listaResultado.put("division", divUO.get(0).getDescripcion());
+                listaResultado.put("unidad", unidadUO.get(0).getDescripcion());
+                listaResultado.put("listaActividades", concatenaActividades(actividadDivUO));
+            }
+        }catch(Exception ex){
+        	LOG.error("error controller",ex);
+        }        
+        return listaResultado;
+    }
+    public static String concatenaActividades(List<ActividadDTO> actividades){
+        String retorno="";
+        if(actividades!=null && actividades.size()>0){
+            String[] s = new String[actividades.size()];
+            int cont=0;
+            for(ActividadDTO maestra : actividades){s[cont]=maestra.getIdActividad().toString();cont++;}
+            retorno = StringUtils.join(s, ",");
+        }        
+        return retorno;
+    }
+    //Fin
     
 }

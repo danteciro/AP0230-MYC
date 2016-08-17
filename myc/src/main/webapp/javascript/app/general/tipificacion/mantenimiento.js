@@ -151,15 +151,16 @@ function procesarGridTipificacion(flg_load){
     });
     $("#gridContenedorTipificacion").append(grid).append(pager);
 
-    var nombres = ['IDTIPIFICACIÓN','DESCRIPCIÓN','TIPO SANCIÓN','SANC. MONETARIA','CODIGO TIPIFICACIÓN','idTipificacionPadre','CODIGO TIPIFICACIÓN PADRE','tieneSanc'];
+    var nombres = ['IDTIPIFICACIÓN','DESCRIPCIÓN','TIPO SANCIÓN','SANC. MONETARIA','BASE LEGAL','CODIGO TIPIFICACIÓN','idTipificacionPadre','CODIGO TIPIFICACIÓN PADRE','tieneSanc'];
     var columnas = [
         {name: "idTipificacion",width: 50,sortable: false,align: "center",hidden:true},
         {name: "descripcion",width: 50,sortable: false,align: "center"}, 
         {name: "descClaseSancion",width: 35,sortable: false,align: "center"},
-        {name: "sancionMonetaria",width: 35,sortable: false,align: "center"},
-        {name: "codTipificacion",width: 50,sortable: false,align: "center"},
+        {name: "sancionMonetaria",width: 30,sortable: false,align: "center"},
+        {name: "basesLegales",width: 60,sortable: false,align: "center"},
+        {name: "codTipificacion",width: 35,sortable: false,align: "center"},
         {name: "idTipificacionPadre",width: 50,sortable: false,hidden: true,align: "center"},
-        {name: "descTipiPadre",width: 50,sortable: false,align: "center"},        
+        {name: "descTipiPadre",width: 45,sortable: false,align: "center"},        
         {name: "tieneSanc",width: 30,sortable: false,hidden: true,align: "center"}
     ];
     var nombresSubGrid = ['SANCION ADMINISTRATIVA'];

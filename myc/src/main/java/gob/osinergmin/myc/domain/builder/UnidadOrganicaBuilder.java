@@ -32,6 +32,7 @@ public class UnidadOrganicaBuilder {
     	registroDTO.setSede(registro.getSede());
     	registroDTO.setSigla(registro.getSigla());
     	registroDTO.setNivel(registro.getNivel());
+		registroDTO.setEstado(registro.getEstado());
     	if(registro.getNombreNivel()!=null){
     		registroDTO.setNombreNivel(new MaestroColumnaDTO(registro.getNombreNivel().getIdMaestroColumna(), registro.getNombreNivel().getDescripcion()));
     	}

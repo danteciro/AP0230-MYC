@@ -41,6 +41,8 @@
                 <table>
                     <tr>
                         <td class="tar">${usuario}</td> 
+                        <input type="hidden" id="idPersonalSesion" value="${idPersonal}">
+                        <input type="hidden" id="rolSesion" value="${nombreRol}">
                     </tr>
                     <tr>
                         <td class="tar">${fecha}</td>

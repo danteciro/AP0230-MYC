@@ -65,6 +65,10 @@ public class TipificacionBuilder {
         
         tipificacionDTO.setActivo(tipificacion.getEstado());
         tipificacionDTO.setTieneSanc(tipificacion.getTieneSanc());
+        if(tipificacion.getTieneAct() !=null && !tipificacion.getTieneAct().equals("0")){
+        	tipificacionDTO.setTieneAct(tipificacion.getTieneAct().toString());
+        }
+        
 
         return tipificacionDTO;
     }

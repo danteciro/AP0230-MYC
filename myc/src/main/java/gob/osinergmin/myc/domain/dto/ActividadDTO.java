@@ -12,7 +12,15 @@ public class ActividadDTO {
     private String codigo;
     private Integer nivel;
     private String activo;
-    private String esMayor;
+    private String esMayor;    
+	/* OSINE_SFS-600 - REQF-0009 - Inicio */
+    private Integer orden;
+    private Integer ordenPadre;
+	private String nombrePadre;
+	private String codigoPadre;
+	private String estado;
+	
+    /* OSINE_SFS-600 - REQF-0009 - Fin */
 
     public ActividadDTO(){
     }
@@ -84,8 +92,47 @@ public class ActividadDTO {
     public void setEsMayor(String esMayor) {
         this.esMayor = esMayor;
     }
-    
-    
-   
+	
+	
+	/* OSINE_SFS-600 - REQF-0009 - Inicio */
+    public Integer getOrden() {
+        return orden;
+    }
+
+    public void setOrden(Integer orden) {
+        this.orden = orden;
+    }
+    public Integer getOrdenPadre() {
+		return ordenPadre;
+	}
+
+	public void setOrdenPadre(Integer ordenPadre) {
+		this.ordenPadre = ordenPadre;
+	}
+
+	public String getNombrePadre() {
+		return nombrePadre;
+	}
+
+	public void setNombrePadre(String nombrePadre) {
+		this.nombrePadre = nombrePadre;
+	}
+	
+	public String getCodigoPadre() {
+		return codigoPadre;
+	}
+
+	public void setCodigoPadre(String codigoPadre) {
+		this.codigoPadre = codigoPadre;
+	}
+	
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+    /* OSINE_SFS-600 - REQF-0009 - Fin */
     
 }

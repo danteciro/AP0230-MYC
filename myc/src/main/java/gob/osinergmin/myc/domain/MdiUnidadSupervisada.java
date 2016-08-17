@@ -1,7 +1,18 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+/**
+* Resumen		
+* Objeto		: MdiUnidadSupervisada.java
+* Descripci�n		: Clase del modelo de dominio MdiUnidadSupervisada
+* Fecha de Creaci�n	: 
+* PR de Creaci�n	: OSINE_SFS-480
+* Autor			: Julio Piro Gonzales
+* ---------------------------------------------------------------------------------------------------
+* Modificaciones
+* Motivo            Fecha           Nombre                      Descripci�n
+* ---------------------------------------------------------------------------------------------------
+* OSINE_SFS-480     19/05/2016      Luis Garc�a Reyna           Crear la interfaz "devolver asignaciones" de acuerdo a especificaciones.
+* 
+*/ 
+
 package gob.osinergmin.myc.domain;
 
 import java.io.Serializable;
@@ -23,13 +34,17 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import javax.persistence.Transient;
 /**
  *
  * @author gvillanueva
  */
 @Entity
 @Table(name = "MDI_UNIDAD_SUPERVISADA")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "MdiUnidadSupervisada.findAll", query = "SELECT m FROM MdiUnidadSupervisada m"),
     @NamedQuery(name = "MdiUnidadSupervisada.countByIdActividad", query = "SELECT count(m.idUnidadSupervisada) FROM MdiUnidadSupervisada m where m.estado='1' and m.idActividad.idActividad= :idActividad "),
@@ -137,7 +152,11 @@ public class MdiUnidadSupervisada extends Auditoria {
     private List<PghUnidObliSubTipo> pghUnidObliSubTipoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUnidadSupervisada", fetch = FetchType.LAZY)
     private List<MdiDirccionUnidadSuprvisada> mdiDirccionUnidadSuprvisadaList;
-    
+    @OneToMany(mappedBy = "idUnidadSupervisada", fetch = FetchType.LAZY)
+    private List<PghExpediente> pghExpedienteList;
+	
+	@Transient
+    private String numeroRegistroHidrocarburo;
     public MdiUnidadSupervisada() {
     }
 
@@ -153,6 +172,14 @@ public class MdiUnidadSupervisada extends Auditoria {
         this.terminalCreacion = terminalCreacion;
         this.estado = estado;
     }
+    public MdiUnidadSupervisada(Long idUnidadSupervisada,String codigoOsinergmin,String nombreUnidad,String numeroRegistroHidrocarburo, String nombreActividad
+    	    ) {
+    	        this.idUnidadSupervisada = idUnidadSupervisada;
+    	        this.codigoOsinergmin=codigoOsinergmin;
+    	        this.nombreUnidad=nombreUnidad;
+    	        this.numeroRegistroHidrocarburo=numeroRegistroHidrocarburo;
+    	        this.idActividad= new MdiActividad(nombreActividad);
+    	    }
 
     public String getCodigoOsinergmin() {
         return codigoOsinergmin;
@@ -168,22 +195,6 @@ public class MdiUnidadSupervisada extends Auditoria {
 
     public void setNombreUnidad(String nombreUnidad) {
         this.nombreUnidad = nombreUnidad;
-    }
-
-    public Date getFechaActualizacion() {
-        return fechaActualizacion;
-    }
-
-    public void setFechaActualizacion(Date fechaActualizacion) {
-        this.fechaActualizacion = fechaActualizacion;
-    }
-
-    public Date getFechaCreacion() {
-        return fechaCreacion;
-    }
-
-    public void setFechaCreacion(Date fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
     }
 
     public Long getIdUnidadSupervisada() {
@@ -297,7 +308,16 @@ public class MdiUnidadSupervisada extends Auditoria {
     public void setIdActividad(MdiActividad idActividad) {
         this.idActividad = idActividad;
     }
+	@XmlTransient
+    @JsonIgnore
+    public List<PghExpediente> getPghExpedienteList() {
+        return pghExpedienteList;
+    }
 
+    public void setPghExpedienteList(List<PghExpediente> pghExpedienteList) {
+        this.pghExpedienteList = pghExpedienteList;
+    }
+	
     public List<PghUnidObliSubTipo> getPghUnidObliSubTipoList() {
         return pghUnidObliSubTipoList;
     }

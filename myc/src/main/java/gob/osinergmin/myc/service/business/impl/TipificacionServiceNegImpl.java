@@ -99,7 +99,8 @@ public class TipificacionServiceNegImpl implements TipificacionServiceNeg {
     public List<TipificacionDTO> obtenerTipificaciones(String codigoTipificacion) {
         log.info("Funcion: obtenerTipificaciones -- Service Impl -- Clase: TipificacionServiceNeg");
         log.info("-- parametro codigoTipificacion : " + codigoTipificacion);
-        List<TipificacionDTO> listaTipificacion = tipificacionDAO.obtenerTipificaciones(codigoTipificacion);
+//        List<TipificacionDTO> listaTipificacion = tipificacionDAO.obtenerTipificaciones(codigoTipificacion);
+        List<TipificacionDTO> listaTipificacion = tipificacionDAO.obtenerTipificacionesFiltrada(codigoTipificacion);        
         return listaTipificacion;
     }
     
@@ -110,6 +111,19 @@ public class TipificacionServiceNegImpl implements TipificacionServiceNeg {
         log.info("-- parametro codigoTipificacion : " + codigoTipificacion);
         TipificacionDTO tipificacion = null;
         List<TipificacionDTO> listaTipificacion = tipificacionDAO.obtenerTipificacionByCodigo(codigoTipificacion);
+        if(!listaTipificacion.isEmpty()){
+            tipificacion = listaTipificacion.get(0);
+        }
+        return tipificacion;
+    }
+    
+    @Override
+    @Transactional
+    public TipificacionDTO obtenerTipificacion(String codigoTipificacion,String basesLegales) {
+        log.info("Funcion: obtenerTipificaciones -- Service Impl -- Clase: TipificacionServiceNeg");
+        log.info("-- parametro codigoTipificacion : " + codigoTipificacion);
+        TipificacionDTO tipificacion = null;
+        List<TipificacionDTO> listaTipificacion = tipificacionDAO.obtenerTipificacionByCodigo(codigoTipificacion,basesLegales);
         if(!listaTipificacion.isEmpty()){
             tipificacion = listaTipificacion.get(0);
         }

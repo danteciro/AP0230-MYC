@@ -4,6 +4,8 @@
  */
 package gob.osinergmin.myc.domain;
 
+import gob.osinergmin.myc.domain.PghEtapa;
+
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -80,7 +82,10 @@ public class PghTramite extends Auditoria {
     public PghTramite(Long idTramite) {
         this.idTramite = idTramite;
     }
-    
+    public PghTramite(Long idTramite,Long idEtapa,Long idProceso) {
+        this.idTramite = idTramite;
+        this.idEtapa=new PghEtapa(idEtapa,idProceso);
+    }
     public PghTramite(Long idTramite , String descripcion) {
         this.idTramite = idTramite;
         this.descripcion=descripcion;

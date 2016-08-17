@@ -816,7 +816,7 @@ var gestionBaseLegal = (function() {
         document.getElementById("divDownloadImg").innerHTML="";
         document.getElementById("divDownloadDetalleImg").innerHTML="";
         document.getElementById("divDownloadDetalleImgInfraccion").innerHTML="";   
-	$("#cmbMedidaSeguirdad > option[codigo='GG2']").attr('selected',true);        
+        $("#cmbMedidaSeguirdad > option[codigo='GG2']").attr('selected',true);        
         $("#cmbAccionInfraccion > option[codigo='AA2']").attr('selected',true);  
     }
     
@@ -1794,6 +1794,12 @@ concatenaDescripcionBaseLegal();
         if (Ano == null) {
             AnoValidado = "";
         } else {
+        	// OSINE_SFS-600 - REQF-0001 - Inicio
+        	if(Ano<=1999){
+        		var valido = Ano.toString().substring(2);
+        		Ano=valido;
+        	}
+        	// OSINE_SFS-600 - REQF-0001 - Fin
             AnoValidado = "-" + Ano;
         }
 
@@ -1821,9 +1827,15 @@ concatenaDescripcionBaseLegal();
             Inciso1Validado = "";
         } else {
             if (isNaN(Letra1)) {
-                Inciso1Validado = " Lit. " + Inciso1+",";
+            	// OSINE_SFS-600 - REQF-0005 - Inicio
+                //Inciso1Validado = " Lit. " + Inciso1+",";
+            	Inciso1Validado = " lit. " + Inciso1+",";
+                // OSINE_SFS-600 - REQF-0005 - Inicio
             } else {
-                Inciso1Validado = " Num. " + Inciso1+",";
+            	// OSINE_SFS-600 - REQF-0005 - Inicio
+                //Inciso1Validado = " Num. " + Inciso1+",";
+                Inciso1Validado = " num. " + Inciso1+",";
+                // OSINE_SFS-600 - REQF-0005 - Inicio
             }
         }
 
@@ -1835,9 +1847,15 @@ concatenaDescripcionBaseLegal();
             Inciso2Validado = "";
         } else {
             if (isNaN(Letra2)) {
-                Inciso2Validado = " Lit. " + Inciso2+",";
+            	// OSINE_SFS-600 - REQF-0005 - Inicio
+                //Inciso2Validado = " Lit. " + Inciso2+",";
+                Inciso2Validado = " lit. " + Inciso2+",";
+                // OSINE_SFS-600 - REQF-0005 - Inicio
             } else {
-                Inciso2Validado = " Num. " + Inciso2+",";
+            	// OSINE_SFS-600 - REQF-0005 - Inicio
+                //Inciso2Validado = " Num. " + Inciso2+",";
+            	Inciso2Validado = " num. " + Inciso2+",";
+                // OSINE_SFS-600 - REQF-0005 - Fin
             }
         }
         var TipoAnexo = $("#cmbTipAneBaseLegal option:selected").text();
@@ -1866,9 +1884,15 @@ concatenaDescripcionBaseLegal();
             Inciso3Validado = "";
         } else {
             if (isNaN(Letra3)) {
-                Inciso3Validado = " Lit. " + Inciso3+",";
+            	// OSINE_SFS-600 - REQF-0005 - Inicio
+                //Inciso3Validado = " Lit. " + Inciso3+",";
+                Inciso3Validado = " lit. " + Inciso3+",";
+                // OSINE_SFS-600 - REQF-0005 - Inicio
             } else {
-                Inciso3Validado = " Num. " + Inciso3+",";
+            	// OSINE_SFS-600 - REQF-0005 - Inicio
+                //Inciso3Validado = " Num. " + Inciso3+",";
+            	Inciso3Validado = " num. " + Inciso3+",";
+                // OSINE_SFS-600 - REQF-0005 - Fin
             }
         }
         var Inciso4 = $("#txtInc4BaseLegal").val();
@@ -1879,9 +1903,15 @@ concatenaDescripcionBaseLegal();
             Inciso4Validado = "";
         } else {
             if (isNaN(Letra4)) {
-                Inciso4Validado = " Lit. " + Inciso4+",";
+            	// OSINE_SFS-600 - REQF-0005 - Inicio
+                //Inciso4Validado = " Lit. " + Inciso4+",";
+            	Inciso4Validado = " lit. " + Inciso4+",";
+            	// OSINE_SFS-600 - REQF-0005 - Fin
             } else {
-                Inciso4Validado = " Num. " + Inciso4+",";
+            	// OSINE_SFS-600 - REQF-0005 - Inicio
+                //Inciso4Validado = " Num. " + Inciso4+",";
+            	Inciso4Validado = " num. " + Inciso4+",";
+                // OSINE_SFS-600 - REQF-0005 - Fin
             }
         }
         var NormaTecnica = $("#cmbNorTecBaseLegal option:selected").text();
@@ -4300,7 +4330,7 @@ var nuevaObligacionNormativa = (function() {
              response($.map(result, function(item) {
                   return {
                       // following property gets displayed in drop down
-                      label: item.codTipificacion,
+                      label: (item.tieneAct==1)?item.codTipificacion + " " + item.basesLegales:item.codTipificacion,
                       // following property gets entered in the textbox
                       value: item.codTipificacion,
                       // following property is added for our own use

@@ -85,4 +85,45 @@ public class Constantes {
     public static final String CODIGO_SUPERVISION_MUESTRAL_CODIGO_MUESTRAL = "TPOS02";
     public static final String CODIGO_SUPERVISION_MUESTRAL_CODIGO_ASIGNACION = "TPOS01";
     /* Fin: OSINE_SFS-480 - RSIS25 */
+	public static Long IDPERSONAL;
+	public static final String ESTADO_ACTIVO="1";
+    public static final String ESTADO_INACTIVO="0";
+    public static final String PERSONAL_UNIDAD_ORGANICA_DIVISION = "PERSONAL_UNIDAD_ORGANICA_DIVISION";
+	public static final String ACTIVIDAD_ORGANICA_DIVISION = "ACTIVIDAD_UNIDAD_ORGANICA";
+	public static final String ACTIVIDADES_ORGANICA_DIVISION_CONCATENADA = "ACTIVIDAD_UNIDAD_ORGANICA_CONCATENADA";
+
+
+/* OSINE_SFS-600 - REQF-0009 - Inicio */
+	public static final String ESMAYOR_DEFAULT = "1";
+	public static final String NOMBRE_CORTO_DEFAULT = ".";
+	public static final char FLAG_GABINETE_DEFAULT = '0';
+	public static final String AMBITO_DEFAULT = "NPS";
+	public static final Integer PLAZO_DESCARGO_DEFAULT = 5;
+		
+	public static final String RELACION_MDI_ACTIVIDAD_AGENTE = "Agentes";
+	public static final String RELACION_MDI_UNIDAD_SUPERVISADA = "Unidades supervisadas";
+	public static final String RELACION_PGH_CNF_ACT_UNI_ORGANICA = "Unidades org&aacute;nicas(divisi&oacute;n/gerencia)";
+	public static final String RELACION_PGH_CNF_REQU_PROCEDIMIENTO = "Configuraciones de requisitos y procedimientos";
+	public static final String RELACION_PGH_CNF_TRAMITE_ACTIVIDAD =	"Configuraciones de tr&aacute;mites";
+	public static final String RELACION_PGH_CONFIGURACION =	"Unidades de medida";
+	public static final String RELACION_PGH_EMPR_SUPE_ACTI_OBLI = "Configuraciones de Empresa supervisora y tipo de supervisi&oacute;n";
+	public static final String RELACION_PGH_MAESTRO_X_ACTIVIDAD = "Configurados de Maestros columna";
+	public static final String RELACION_PGH_MODULO_X_ACTIVIDAD = "M&oacute;dulos SIGUO";
+	public static final String RELACION_PGH_NORMA_AGENTE_PRIORIDAD = "Prioridades de normas y agentes relacionados";
+	public static final String RELACION_PGH_OPCION_ACTIVIDAD = "Opciones";
+	public static final String RELACION_PGH_PLANTILLA_RESULTADO = "Registros de plantillas de documentos";
+	public static final String RELACION_PGH_PROC_TRAM_ACTIVIDAD = "Procedimientos y Tr&aacute;mites";
+	public static final String RELACION_PGH_PROCESO_OBLIGACION_TIPO = "Proceso y tipo de supervisi&oacute;n";
+	public static final String RELACION_ACTIVIDAD = "No se pudo eliminar la actividad, se encontraron las siguientes relaciones activas: ";
+	public static final String RELACION_ACTIVIDAD_AGENTE = "No se pudo eliminar el agente, se encontraron las siguientes relaciones activas: ";
+	
+	/* OSINE_SFS-600 - REQF-0009 - Fin */
+	
+	/* OSINE_SFS-600 - REQF-0012 - Inicio */
+	public static final String ELIMINAR_ORDEN_NORMA_ID_NORMA_PRIORIDAD = "NORMA_PRIORIDAD";
+	public static final String ELIMINAR_ORDEN_NORMA_ID_BASE_LEGAL = "BASE_LEGAL";
+	public static final String ELIMINAR_ORDEN_NORMA_ID_OBLIGACION = "OBLIGACION";
+	public static final String ELIMINAR_ORDEN_NORMA_ID_RELACION_BASE_OBLIGACION = "REL_BASE_OBL";
+	public static final String ELIMINAR_ORDEN_NORMA_ID_CONF_OBLIGACION = "CONG_OBLIGACION";
+	/* OSINE_SFS-600 - REQF-0012 - Fin */
 }

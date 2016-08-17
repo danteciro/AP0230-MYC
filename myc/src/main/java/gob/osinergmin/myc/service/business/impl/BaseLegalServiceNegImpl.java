@@ -1,6 +1,7 @@
 package gob.osinergmin.myc.service.business.impl;
 
 
+import gob.osinergmin.myc.domain.dto.ActividadDTO;
 import gob.osinergmin.myc.domain.dto.BaseLegalDTO;
 import gob.osinergmin.myc.domain.dto.DetalleBaseLegalDTO;
 import gob.osinergmin.myc.domain.dto.DetalleNormaTecnicaDTO;
@@ -15,6 +16,7 @@ import gob.osinergmin.myc.service.dao.ObligacionBaseLegalDAO;
 import java.util.List;
 import javax.inject.Inject;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

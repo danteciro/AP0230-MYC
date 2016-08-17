@@ -1,7 +1,18 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+/**
+* Resumen		
+* Objeto		: PghObligacionSubTipo.java
+* Descripción		: Clase del modelo de dominio PghObligacionSubTipo
+* Fecha de Creación	: 
+* PR de Creación	: OSINE_SFS-480
+* Autor			: Julio Piro Gonzales
+* ---------------------------------------------------------------------------------------------------
+* Modificaciones
+* Motivo            Fecha           Nombre                              Descripción
+* ---------------------------------------------------------------------------------------------------
+* OSINE_SFS-480     24/05/2016      Giancarlo Villanueva Andrade        Crear componente de selección de "subtipo de supervisión".Relacionar y adecuar el subtipo de supervisión, el cual deberá depender del tipo de supervisión seleccionado
+* 
+*/ 
+
 package gob.osinergmin.myc.domain;
 
 import java.util.Date;
@@ -25,6 +36,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -50,7 +63,7 @@ public class PghObligacionSubTipo extends Auditoria {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="ID_OBLIGACION_SUB_TIPO_SEQ")
     @Column(name = "ID_OBLIGACION_SUB_TIPO")
     private Long idObligacionSubTipo;
-    @Size(max = 500)
+    @Size(max = 400)
     @Column(name = "NOMBRE")
     private String nombre;
     @Basic(optional = false)
@@ -64,6 +77,8 @@ public class PghObligacionSubTipo extends Auditoria {
     @JoinColumn(name = "ID_OBLIGACION_TIPO", referencedColumnName = "ID_OBLIGACION_TIPO")
     @ManyToOne(fetch = FetchType.LAZY)
     private PghObligacionTipo idObligacionTipo;
+    @OneToMany(mappedBy = "idObligacionSubTipo", fetch = FetchType.LAZY)
+    private List<PghExpediente> pghExpedienteList;
 
     public PghObligacionSubTipo() {
     }
@@ -130,6 +145,16 @@ public class PghObligacionSubTipo extends Auditoria {
         this.idObligacionTipo = idObligacionTipo;
     }
 
+    @XmlTransient
+    @JsonIgnore
+    public List<PghExpediente> getPghExpedienteList() {
+        return pghExpedienteList;
+    }
+
+    public void setPghExpedienteList(List<PghExpediente> pghExpedienteList) {
+        this.pghExpedienteList = pghExpedienteList;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

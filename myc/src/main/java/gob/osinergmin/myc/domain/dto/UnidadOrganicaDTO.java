@@ -17,7 +17,14 @@ public class UnidadOrganicaDTO {
     private Long identificadorEntidad;
     private Long nivel;
     private MaestroColumnaDTO nombreNivel;
+	
+	public UnidadOrganicaDTO() {
+    }
 
+    public UnidadOrganicaDTO(Long idUnidadOrganica) {
+        this.idUnidadOrganica = idUnidadOrganica;
+    }
+	
     public Long getNivel() {
 		return nivel;
 	}

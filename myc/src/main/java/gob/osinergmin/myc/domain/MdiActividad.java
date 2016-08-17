@@ -11,12 +11,15 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -77,12 +80,24 @@ import org.codehaus.jackson.annotate.JsonIgnore;
             + "FROM PghCnfTramiteActividad ta "
             + "left join ta.idActividad ac "
             + "WHERE ac.estado=:estado and ta.estado=:estado and ta.idTramiteActivdad=:idTramiteActivdad")
+	/* OSINE_SFS-600 - REQF-0009 - Inicio */
+    ,@NamedQuery(name = "MdiActividad.findActividadPadre", query = "SELECT m FROM MdiActividad m WHERE m.estado=1 and m.idActividadPadre is null order by m.nombre")
+    ,@NamedQuery(name = "MdiActividad.findAgentesByIdActividadPadre", query = "SELECT m FROM MdiActividad m WHERE m.estado=1 and m.idActividadPadre=:idActividadPadre order by m.nombre")
+    /* OSINE_SFS-600 - REQF-0009 - Fin */
+//    @NamedQuery(name = "MdiActividad.findByIdRubroOpcion", query = "SELECT distinct new MdiActividad(ac.idActividad,ac.nombre) "
+//            + "FROM PghCnfTramiteActividad ta "
+//            + "left join ta.idActividad ac "
+//            + "WHERE ac.estado=:estado and ta.estado=:estado and ta.idTramiteActivdad=:idTramiteActivdad")
 })
 public class MdiActividad extends Auditoria {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
+    /* OSINE_SFS-600 - REQF-0009 - Inicio */
+    @SequenceGenerator(name = "SEQ_GENERATOR", sequenceName = "MDI_ACTIVIDAD_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_GENERATOR")
+    /* OSINE_SFS-600 - REQF-0009 - Fin */
     @Column(name = "ID_ACTIVIDAD")
     private Long idActividad;
     @Column(name = "ID_ACTIVIDAD_PADRE")
@@ -106,6 +121,18 @@ public class MdiActividad extends Auditoria {
     private String esMayor;
     @Column(name = "ETAPA")
     private Long etapa;
+    /* OSINE_SFS-600 - REQF-0009 - Inicio */
+    @Column(name = "ORDEN_NPS")
+    private Integer ordenNps;
+    @Column(name = "NOMBRE_CORTO")
+    private String nombreCorto;
+	@Column(name = "FLAG_GABINETE")
+    private Character flagGabinete;
+    @Column(name = "AMBITO")
+    private String ambito;
+    @Column(name = "PLAZO_DESCARGO")
+    private Integer plazoDescargo;
+	/* OSINE_SFS-600 - REQF-0009 - Fin */
     @OneToMany(mappedBy = "idActividad", fetch = FetchType.LAZY)
     private List<PghProcTramActividad> pghProcTramActividadList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "mdiActividad1", fetch = FetchType.LAZY)
@@ -121,12 +148,23 @@ public class MdiActividad extends Auditoria {
     private List<MdiUnidadSupervisada> mdiUnidadSupervisadaList;
 	@OneToMany(mappedBy = "idActividad", fetch = FetchType.LAZY)
     private List<PghRubroOpcion> pghRubroOpcionList;
-
+	
+	@OneToMany(mappedBy = "idActividad", fetch = FetchType.LAZY)
+    private List<PghCnfActUniOrganica> pghCnfActUniOrganicaList;
+	
+	/* OSINE_SFS-600 - REQF-0008 - Inicio */
+    @OneToMany(mappedBy = "idAgente", fetch = FetchType.LAZY)
+    private List<PghNormaAgentePrioridad> pghNormaAgentePrioridadList;
+    /* OSINE_SFS-600 - REQF-0008 - Fin */
+	
     public MdiActividad() {
     }
 
     public MdiActividad(Long idActividad) {
         this.idActividad = idActividad;
+    }
+    public MdiActividad(String nombre) {
+        this.nombre = nombre;
     }
     
     public MdiActividad(Long idActividad,String nombre) {
@@ -271,7 +309,14 @@ public class MdiActividad extends Auditoria {
 	public void setPghRubroOpcionList(List<PghRubroOpcion> pghRubroOpcionList) {
 		this.pghRubroOpcionList = pghRubroOpcionList;
 	}
+	@XmlTransient
+    public List<PghCnfActUniOrganica> getPghCnfActUniOrganicaList() {
+        return pghCnfActUniOrganicaList;
+    }
 
+    public void setPghCnfActUniOrganicaList(List<PghCnfActUniOrganica> pghCnfActUniOrganicaList) {
+        this.pghCnfActUniOrganicaList = pghCnfActUniOrganicaList;
+    }
 	@Override
     public int hashCode() {
         int hash = 0;
@@ -296,5 +341,58 @@ public class MdiActividad extends Auditoria {
     public String toString() {
         return "gob.osinergmin.myc.domain.MdiActividad[ idActividad=" + idActividad + " ]";
     }
+	
+	/* OSINE_SFS-600 - REQF-0009 - Inicio */
+    public Integer getOrdenNps() {
+		return ordenNps;
+	}
+
+	public void setOrdenNps(Integer ordenNps) {
+		this.ordenNps = ordenNps;
+	}
+	
+	public String getNombreCorto() {
+		return nombreCorto;
+	}
+
+	public void setNombreCorto(String nombreCorto) {
+		this.nombreCorto = nombreCorto;
+	}
+
+	public Character getFlagGabinete() {
+		return flagGabinete;
+	}
+
+	public void setFlagGabinete(Character flagGabinete) {
+		this.flagGabinete = flagGabinete;
+	}
+
+	public String getAmbito() {
+		return ambito;
+	}
+
+	public void setAmbito(String ambito) {
+		this.ambito = ambito;
+	}
+
+	public Integer getPlazoDescargo() {
+		return plazoDescargo;
+	}
+
+	public void setPlazoDescargo(Integer plazoDescargo) {
+		this.plazoDescargo = plazoDescargo;
+	}
+	/* OSINE_SFS-600 - REQF-0009 - Fin */
+	
+	/* OSINE_SFS-600 - REQF-0008 - Inicio */
+    public List<PghNormaAgentePrioridad> getPghNormaAgentePrioridadList() {
+		return pghNormaAgentePrioridadList;
+	}
+
+	public void setPghNormaAgentePrioridadList(
+			List<PghNormaAgentePrioridad> pghNormaAgentePrioridadList) {
+		this.pghNormaAgentePrioridadList = pghNormaAgentePrioridadList;
+	}
+	/* OSINE_SFS-600 - REQF-0008 - Fin */
     
 }

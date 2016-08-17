@@ -16,6 +16,9 @@ package gob.osinergmin.myc.domain.dto;
 
 public class PersonalUnidadOrganicaDTO {
     private Long idPersonalUnidadOrganica;
+    private UnidadOrganicaDTO unidadOrganica;
+    private String flagDefault;
+    private String estado;
 
     public Long getIdPersonalUnidadOrganica() {
         return idPersonalUnidadOrganica;
@@ -24,4 +27,29 @@ public class PersonalUnidadOrganicaDTO {
     public void setIdPersonalUnidadOrganica(Long idPersonalUnidadOrganica) {
         this.idPersonalUnidadOrganica = idPersonalUnidadOrganica;
     }
+
+    public UnidadOrganicaDTO getUnidadOrganica() {
+        return unidadOrganica;
+    }
+
+    public void setUnidadOrganica(UnidadOrganicaDTO unidadOrganica) {
+        this.unidadOrganica = unidadOrganica;
+    }
+
+    public String getFlagDefault() {
+        return flagDefault;
+    }
+
+    public void setFlagDefault(String flagDefault) {
+        this.flagDefault = flagDefault;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    
 }

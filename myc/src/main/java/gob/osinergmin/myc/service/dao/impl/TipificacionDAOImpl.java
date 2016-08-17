@@ -314,7 +314,25 @@ public class TipificacionDAOImpl implements TipificacionDAO{
         List<TipificacionDTO> listaTipificacion = TipificacionBuilder.toListTipificacionDto(lstTipificacion);
         return listaTipificacion;
     }
-    
+    @Override
+    public List<TipificacionDTO> obtenerTipificacionesFiltrada(String codigoTipificacion){
+        log.info("-- TipificacionDAO - obtenerTipificaciones --");
+        log.info("-- parametros codigoTipificacion : " + codigoTipificacion);
+        StringBuilder jpql = new StringBuilder();
+        jpql.append("Select new PghTipificacion(t.idTipificacion, t.codTipificacion, t.descripcion,");
+        jpql.append(" t.sancionMonetaria,t.estado,t.basesLegales, ");
+        jpql.append(" sum(case when (select count(x.idTipificacion) from PghTipificacion x where x.codTipificacion=t.codTipificacion and x.estado='1') > 1 then 1 else 0 end) as tieneAct) ");
+        jpql.append(" from PghTipificacion t ");
+        jpql.append(" where 1=1 ");
+        jpql.append(" and t.estado=1 ");
+        jpql.append(" and t.codTipificacion like '").append(codigoTipificacion).append("%'");
+        jpql.append(" GROUP BY  t.codTipificacion,t.basesLegales,t.idTipificacion,t.descripcion,t.sancionMonetaria,t.estado ");
+        String queryString = jpql.toString();
+        Query query = crud.getEm().createQuery(queryString);
+        List<PghTipificacion> lstTipificacion = query.getResultList();
+        List<TipificacionDTO> listaTipificacion = TipificacionBuilder.toListTipificacionDto(lstTipificacion);
+        return listaTipificacion;
+    }
     @Override
     public List<TipificacionDTO> obtenerTipificacionByCodigo(String codigoTipificacion){
         log.info("-- TipificacionDAO - obtenerTipificaciones --");
@@ -325,6 +343,23 @@ public class TipificacionDAOImpl implements TipificacionDAO{
         jpql.append(" where 1=1 ");
         jpql.append(" and t.estado=1 ");
         jpql.append(" and t.codTipificacion = '").append(codigoTipificacion).append("'");
+        String queryString = jpql.toString();
+        Query query = crud.getEm().createQuery(queryString);
+        List<PghTipificacion> lstTipificacion = query.getResultList();
+        List<TipificacionDTO> listaTipificacion = TipificacionBuilder.toListTipificacionDto(lstTipificacion);
+        return listaTipificacion;
+    }
+    @Override
+    public List<TipificacionDTO> obtenerTipificacionByCodigo(String codigoTipificacion,String basesLegales){
+        log.info("-- TipificacionDAO - obtenerTipificaciones --");
+        log.info("-- parametros codigoTipificacion : " + codigoTipificacion);
+        StringBuilder jpql = new StringBuilder();
+        jpql.append(" select t ");
+        jpql.append(" from PghTipificacion t ");
+        jpql.append(" where 1=1 ");
+        jpql.append(" and t.estado=1 ");
+        jpql.append(" and t.codTipificacion = '").append(codigoTipificacion).append("'");
+        jpql.append(" and t.basesLegales = '").append(basesLegales).append("'");
         String queryString = jpql.toString();
         Query query = crud.getEm().createQuery(queryString);
         List<PghTipificacion> lstTipificacion = query.getResultList();

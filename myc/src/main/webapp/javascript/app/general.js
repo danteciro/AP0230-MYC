@@ -28,6 +28,23 @@ var global = {
     } /* OSINE_SFS-480 - RSIS09 - mdiosesf - Fin */
 };
 
+/* OSINE_SFS-600 - REQF-0009 - Inicio */
+var constant = {
+		valida:{
+	        alphanum:{
+	            nombre:{
+	            	allowNumeric:true, allowLatin:true,
+	            	allow: 'ÁÉÍÓÚÑ/-_.,()'
+	            },
+	            numeros:{
+	            	allowNumeric:true,allowLatin:false,
+	            	allowOtherCharSets	: false,allowSpace	: false,
+	            }
+	        }
+	    }
+};
+/* OSINE_SFS-600 - REQF-0009 - Fin */
+
 $(function() {
     baseURL = "/myc/";
     $.ajaxSetup({
@@ -70,6 +87,14 @@ $(function() {
     //cierra dialogs, que tengas boton atributo css "btnCloseDialog"
     boton.closeDialog();
 });
+
+var numericMonto = {
+		allowNumeric   : true,
+		allowLatin : false,
+		allowOtherCharSets : false,
+	    allowSpace    : false,
+	    allow    : '.'
+	};
 // -- Caracteres permitidos
 var charAllow = {
         allowNumeric  : true,
@@ -104,6 +129,15 @@ var tipificacion = {
 	    allowSpace    : false,
 	    allow    : '.'
 	};
+
+/* OSINE_SFS-600 - REQF-0008 - Inicio */
+var onlyNumericOptions = { 
+	allowMinus : false, 
+	allowThouSep : false, 
+	disallow : ",.-+", 
+	allowDecSep : false
+};
+/* OSINE_SFS-600 - REQF-0008 - Fin */
 
 var numericOptions = {
     allowMinus   : false,
@@ -152,6 +186,27 @@ var alphaOptions = {
  * funciones para llenado de datos
  */
 var fill={
+	/*
+     * ordenar combo 
+     */
+	sortSelect:function(select, attr, order) {
+		/* order > asc, desc */
+		if(attr === 'text'){
+	        if(order === 'asc'){
+	            $(select).html($(select).children('option').sort(function (x, y) {
+	                return $(x).text().toUpperCase() < $(y).text().toUpperCase() ? -1 : 1;
+	            }));
+	            $(select).get(0).selectedIndex = 0;
+	        }
+	        if(order === 'desc'){
+	            $(select).html($(select).children('option').sort(function (y, x) {
+	                return $(x).text().toUpperCase() < $(y).text().toUpperCase() ? -1 : 1;
+	            }));
+	            $(select).get(0).selectedIndex = 0;
+	        }
+		} 
+	},	
+		
     /*
      * llena combo 
      */

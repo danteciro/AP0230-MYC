@@ -14,6 +14,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -22,6 +24,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -29,11 +34,11 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "MDI_EMPRESA_SUPERVISADA")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "MdiEmpresaSupervisada.findAll", query = "SELECT m FROM MdiEmpresaSupervisada m")})
-public class MdiEmpresaSupervisada implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+    @NamedQuery(name = "MdiEmpresaSupervisada.findAll", query = "SELECT m FROM MdiEmpresaSupervisada m")
+})
+public class MdiEmpresaSupervisada extends Auditoria {
     @Id
     @Basic(optional = false)
     @NotNull
@@ -57,45 +62,23 @@ public class MdiEmpresaSupervisada implements Serializable {
     @Size(max = 30)
     @Column(name = "TELEFONO")
     private String telefono;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 38)
-    @Column(name = "USUARIO_CREACION")
-    private String usuarioCreacion;
-    @Size(max = 38)
-    @Column(name = "USUARIO_ACTUALIZACION")
-    private String usuarioActualizacion;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "FECHA_CREACION")
-    @Temporal(TemporalType.DATE)
-    private Date fechaCreacion;
-    @Column(name = "FECHA_ACTUALIZACION")
-    @Temporal(TemporalType.DATE)
-    private Date fechaActualizacion;
     @Size(max = 50)
     @Column(name = "NOMBRE")
     private String nombre;
-    @Size(max = 38)
-    @Column(name = "TERMINAL_ACTUALIZACION")
-    private String terminalActualizacion;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 38)
-    @Column(name = "TERMINAL_CREACION")
-    private String terminalCreacion;
-    @Column(name = "CIIU_PRINCIPAL")
-    private BigInteger ciiuPrincipal;
+    @JoinColumn(name = "CIIU_PRINCIPAL")
+    @ManyToOne
+    private MdiMaestroColumna ciiuPrincipal;
     @Size(max = 2)
     @Column(name = "FLAG_BANDERA")
     private String flagBandera;
-    @Column(name = "TIPO_DOCUMENTO_IDENTIDAD")
-    private Long tipoDocumentoIdentidad;
+//    @Column(name = "TIPO_DOCUMENTO_IDENTIDAD")
+//    private Long tipoDocumentoIdentidad;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TIPO_DOCUMENTO_IDENTIDAD")
+    private MdiMaestroColumna tipoDocumentoIdentidad;
     @Column(name = "NATURALEZA")
-    private Character naturaleza;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2)
+    private String naturaleza;
+    @Size(max = 2)
     @Column(name = "ORIGEN_INFORMACION")
     private String origenInformacion;
     @Column(name = "CODIGO_EMPRESA")
@@ -109,18 +92,18 @@ public class MdiEmpresaSupervisada implements Serializable {
     @Size(max = 50)
     @Column(name = "NOMBRE_CORTO")
     private String nombreCorto;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "ESTADO")
-    private Character estado;
+    private String estado;
     @Size(max = 18)
     @Column(name = "CELULAR")
     private String celular;
     @Size(max = 50)
     @Column(name = "CORREO_ELECTRONICO")
     private String correoElectronico;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEmpresaSupervisada", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idEmpresaSupervisada", fetch = FetchType.LAZY)
     private List<MdiUnidadSupervisada> mdiUnidadSupervisadaList;
+    @OneToMany(mappedBy = "idEmpresaSupervisada", fetch = FetchType.LAZY)
+    private List<PghExpediente> pghExpedienteList;
 
     public MdiEmpresaSupervisada() {
     }
@@ -128,14 +111,16 @@ public class MdiEmpresaSupervisada implements Serializable {
     public MdiEmpresaSupervisada(Long idEmpresaSupervisada) {
         this.idEmpresaSupervisada = idEmpresaSupervisada;
     }
-
-    public MdiEmpresaSupervisada(Long idEmpresaSupervisada, String usuarioCreacion, Date fechaCreacion, String terminalCreacion, String origenInformacion, Character estado) {
+    
+    public MdiEmpresaSupervisada(Long idEmpresaSupervisada,String razonSocial,String ruc,String numeroIdentificacion,Long tipoDocumentoIdentidad,String descripcion) {
         this.idEmpresaSupervisada = idEmpresaSupervisada;
-        this.usuarioCreacion = usuarioCreacion;
-        this.fechaCreacion = fechaCreacion;
-        this.terminalCreacion = terminalCreacion;
-        this.origenInformacion = origenInformacion;
-        this.estado = estado;
+        this.razonSocial=razonSocial;
+        this.ruc=ruc;
+        this.numeroIdentificacion=numeroIdentificacion;
+        MdiMaestroColumna tipoDocIdentidad= new MdiMaestroColumna();
+        tipoDocIdentidad.setIdMaestroColumna(tipoDocumentoIdentidad);
+        tipoDocIdentidad.setDescripcion(descripcion);
+        this.tipoDocumentoIdentidad=tipoDocIdentidad;
     }
 
     public Long getIdEmpresaSupervisada() {
@@ -194,38 +179,6 @@ public class MdiEmpresaSupervisada implements Serializable {
         this.telefono = telefono;
     }
 
-    public String getUsuarioCreacion() {
-        return usuarioCreacion;
-    }
-
-    public void setUsuarioCreacion(String usuarioCreacion) {
-        this.usuarioCreacion = usuarioCreacion;
-    }
-
-    public String getUsuarioActualizacion() {
-        return usuarioActualizacion;
-    }
-
-    public void setUsuarioActualizacion(String usuarioActualizacion) {
-        this.usuarioActualizacion = usuarioActualizacion;
-    }
-
-    public Date getFechaCreacion() {
-        return fechaCreacion;
-    }
-
-    public void setFechaCreacion(Date fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
-    }
-
-    public Date getFechaActualizacion() {
-        return fechaActualizacion;
-    }
-
-    public void setFechaActualizacion(Date fechaActualizacion) {
-        this.fechaActualizacion = fechaActualizacion;
-    }
-
     public String getNombre() {
         return nombre;
     }
@@ -250,14 +203,6 @@ public class MdiEmpresaSupervisada implements Serializable {
         this.terminalCreacion = terminalCreacion;
     }
 
-    public BigInteger getCiiuPrincipal() {
-        return ciiuPrincipal;
-    }
-
-    public void setCiiuPrincipal(BigInteger ciiuPrincipal) {
-        this.ciiuPrincipal = ciiuPrincipal;
-    }
-
     public String getFlagBandera() {
         return flagBandera;
     }
@@ -266,19 +211,35 @@ public class MdiEmpresaSupervisada implements Serializable {
         this.flagBandera = flagBandera;
     }
 
-    public Long getTipoDocumentoIdentidad() {
+//    public Long getTipoDocumentoIdentidad() {
+//        return tipoDocumentoIdentidad;
+//    }
+//
+//    public void setTipoDocumentoIdentidad(Long tipoDocumentoIdentidad) {
+//        this.tipoDocumentoIdentidad = tipoDocumentoIdentidad;
+//    }
+
+    public MdiMaestroColumna getCiiuPrincipal() {
+		return ciiuPrincipal;
+	}
+
+	public void setCiiuPrincipal(MdiMaestroColumna ciiuPrincipal) {
+		this.ciiuPrincipal = ciiuPrincipal;
+	}
+
+	public MdiMaestroColumna getTipoDocumentoIdentidad() {
         return tipoDocumentoIdentidad;
     }
 
-    public void setTipoDocumentoIdentidad(Long tipoDocumentoIdentidad) {
+    public void setTipoDocumentoIdentidad(MdiMaestroColumna tipoDocumentoIdentidad) {
         this.tipoDocumentoIdentidad = tipoDocumentoIdentidad;
     }
 
-    public Character getNaturaleza() {
+    public String getNaturaleza() {
         return naturaleza;
     }
 
-    public void setNaturaleza(Character naturaleza) {
+    public void setNaturaleza(String naturaleza) {
         this.naturaleza = naturaleza;
     }
 
@@ -322,11 +283,11 @@ public class MdiEmpresaSupervisada implements Serializable {
         this.nombreCorto = nombreCorto;
     }
 
-    public Character getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(Character estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 
@@ -346,12 +307,24 @@ public class MdiEmpresaSupervisada implements Serializable {
         this.correoElectronico = correoElectronico;
     }
 
+    @XmlTransient
+    @JsonIgnore
     public List<MdiUnidadSupervisada> getMdiUnidadSupervisadaList() {
         return mdiUnidadSupervisadaList;
     }
 
     public void setMdiUnidadSupervisadaList(List<MdiUnidadSupervisada> mdiUnidadSupervisadaList) {
         this.mdiUnidadSupervisadaList = mdiUnidadSupervisadaList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<PghExpediente> getPghExpedienteList() {
+        return pghExpedienteList;
+    }
+
+    public void setPghExpedienteList(List<PghExpediente> pghExpedienteList) {
+        this.pghExpedienteList = pghExpedienteList;
     }
 
     @Override
@@ -376,7 +349,7 @@ public class MdiEmpresaSupervisada implements Serializable {
 
     @Override
     public String toString() {
-        return "Z.MdiEmpresaSupervisada[ idEmpresaSupervisada=" + idEmpresaSupervisada + " ]";
+        return "gob.osinergmin.inps.domain.MdiEmpresaSupervisada[ idEmpresaSupervisada=" + idEmpresaSupervisada + " ]";
     }
     
 }

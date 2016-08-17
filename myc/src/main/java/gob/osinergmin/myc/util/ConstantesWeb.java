@@ -1,5 +1,6 @@
 package gob.osinergmin.myc.util;
 
+import gob.osinergmin.myc.util.Constantes;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,11 @@ public class ConstantesWeb {
     
     private ConstantesWeb() {
     }
-    
+    public static Long getIDPERSONAL(HttpServletRequest request) {
+        Long idPersonal = (Long) request.getSession().getAttribute("idPersonal");
+        Constantes.IDPERSONAL=idPersonal;
+        return Constantes.IDPERSONAL;
+    } 
     public static String getFECHA() {
         Date today = new Date();
         SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
@@ -150,7 +155,22 @@ public class ConstantesWeb {
         public static final String PAGE_GENERAL_MANT_INPS="general/inps/mantenimiento"; /* OSINE_SFS-480 - RSIS10 - mdiosesf */
         public static final String PAGE_GENERAL_MANT_FILTROEMPSUPERVISORAS_INPS="general/inps/filtroEmpSupervisoras/mantfiltroEmpSupervisoras"; /* OSINE_SFS-480 - RSIS10 - mdiosesf */
         public static final String PAGE_GENERAL_MANT_SELECCION_MUESTRAL="general/inps/seleccionMuestral/mantSeleccionMuestral"; /* OSINE_SFS-480 - RSIS23 */
-    }
+    	public static final String PAGE_MYC_VISTA_DESAUTORIZADA = "/unauthorized";
+
+		/* OSINE_SFS-600 - REQF-0011 - Inicio */
+        public static final String PAGE_GENERAL_MANT_PRIORIDAD_NORMA_AGENTE="general/prioridadNormaAgente/mantenimiento";
+        public static final String PAGE_GENERAL_MANT_FRM_PRIORIDAD_NORMA_AGENTE="general/prioridadNormaAgente/mantFrmPrioridadNormaAgente";
+        /* OSINE_SFS-600 - REQF-0011 - Fin */
+        /* OSINE_SFS-600 - REQF-0005 - Inicio */
+        // actividad
+        public static final String PAGE_GENERAL_MANT_ACTIVIDAD_AGENTE_INSTALACION="general/actividad/mantenimientoActividad";
+        public static final String PAGE_GENERAL_FRM_ACTIVIDAD="general/actividad/mantFrmActividad";
+        public static final String PAGE_GENERAL_FRM_ACTIVIDAD_AGENTE="general/actividad/mantFrmActividadAgente";
+        // agente
+        public static final String PAGE_GENERAL_FRM_BUSQ_AGENTE="general/actividad/mantFrmBusqAgente";
+        public static final String PAGE_GENERAL_FRM_AGENTE="general/actividad/mantFrmAgente";
+        /* OSINE_SFS-600 - REQF-0005 - Fin */
+	}
     
     public static class mensajes{
     	//Mensajes 

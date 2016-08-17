@@ -244,10 +244,10 @@ public class TipificacionController {
             TipificacionDTO tipificacionDTO = new TipificacionDTO();
             TipificacionDTO tipificacionValidar = new TipificacionDTO();
             
-            tipificacionValidar = tipificacionserviceNeg.obtenerTipificacion(codigoTipificacion);
+            tipificacionValidar = tipificacionserviceNeg.obtenerTipificacion(codigoTipificacion,basesLegales);
             if(tipificacionValidar != null){
                 retorno.put("resultado", 1);
-                retorno.put("mensaje", Constantes.CONSTANTE_MSJE_YA_EXISTE+" Tipificacion con el mismo codigo.");
+                retorno.put("mensaje", Constantes.CONSTANTE_MSJE_YA_EXISTE+" Tipificaci&oacute;n con el mismo c&oacute;digo y base legal.");
             }else{
                 UsuarioDTO usuarioDTO = new UsuarioDTO();
                 usuarioDTO.setCodigo("00002");
@@ -335,10 +335,10 @@ public class TipificacionController {
             TipificacionDTO tipificacionDTO = new TipificacionDTO();
             TipificacionDTO tipificacionValidar = new TipificacionDTO();
             
-            tipificacionValidar = tipificacionserviceNeg.obtenerTipificacion(codigoTipificacion);
+            tipificacionValidar = tipificacionserviceNeg.obtenerTipificacion(codigoTipificacion,basesLegales);
             if(tipificacionValidar != null && !tipificacionValidar.getIdTipificacion().equals(new Long(idTipificacion)) ){
                 retorno.put("resultado", 1);
-                retorno.put("mensaje", "No se puede editar la tipificacion con el mismo codigo");
+                retorno.put("mensaje", "No se puede editar la tipificaci&oacute;n con el mismo c&oacute;digo y base legal");
             }else{
                 UsuarioDTO usuarioDTO = new UsuarioDTO();
                 usuarioDTO.setCodigo("00002");

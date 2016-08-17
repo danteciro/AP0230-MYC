@@ -24,6 +24,7 @@ public interface TipificacionServiceNeg {
     public TipificacionDTO obtenerTipificacion(Long idTipificacion);
     public List<TipificacionDTO> obtenerTipificaciones(String codigoTipificacion);
     public TipificacionDTO obtenerTipificacion(String codigoTipificacion);
+    public TipificacionDTO obtenerTipificacion(String codigoTipificacion, String basesLegales);
 	public TipificacionDTO obtenerTipificacionCriterio(String codigo);
 	public TipificacionDTO obtenerTipificacionCriterio(Long idTipificacion);
 	public TipificacionDTO obtenerTipificacionNivel(Long idTipificacion);

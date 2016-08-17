@@ -45,7 +45,17 @@ public class UnidadOrganicaServiceNegImpl implements UnidadOrganicaServiceNeg {
             throw new UnidadOrganicaException(ex.getMessage(),null);
         }
 	}
-
+	@Override
+	public List<UnidadOrganicaDTO> obtenerListadoUnidadOrganica(
+			UnidadOrganicaFilter filtro) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Long obtenerIdUnidadOrganicaByIdEntidad(Long idEntidad) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	@Override
 	public UnidadOrganicaDTO editarUnidadOrganica(UnidadOrganicaDTO unidadOrganicaDTO,
 			UsuarioDTO usuarioDTO) throws UnidadOrganicaException {

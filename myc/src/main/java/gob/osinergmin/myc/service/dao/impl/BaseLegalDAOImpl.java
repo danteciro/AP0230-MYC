@@ -43,7 +43,7 @@ import org.springframework.util.CollectionUtils;
  */
 @Service
 @Transactional
-public class BaseLegalDAOImpl implements BaseLegalDAO {
+public class BaseLegalDAOImpl implements BaseLegalDAO {	
 	private static final Logger LOG = LoggerFactory.getLogger(BaseLegalDAOImpl.class);
 	
 	@Inject
@@ -282,7 +282,7 @@ public class BaseLegalDAOImpl implements BaseLegalDAO {
     }
     
     private Query getFindQueryPadre(BaseLegalFilter filtro, boolean count) {
-        Query query=null;
+    	Query query=null;
         
         try{
             if (count) {
@@ -1232,8 +1232,11 @@ public class BaseLegalDAOImpl implements BaseLegalDAO {
 			jpql.append("select p.id_base_legal,p.codigo_base_legal,trim(p.descripcion),p.estado,p.flag_padre  from pgh_base_legal p ");
 			jpql.append("left join pgh_detalle_base_legal d on p.id_base_legal = d.id_base_legal and d.estado='1' ");
 			jpql.append("where p.estado='1' ");
-			jpql.append("and p.id_base_legal_padre ='"+row_id+"' ");
-			jpql.append("order by to_number(d.articulo),d.inciso_1,d.inciso_2,d.id_tipo_anexo,to_number(d.articulo_anexo),d.inciso_1_anexo,d.inciso_2_anexo ,p.descripcion ");					
+			jpql.append("and p.id_base_legal_padre ='"+row_id+"' ");			
+			// OSINE_SFS-480 - REQF-0007 - Inicio
+			//jpql.append("order by to_number(d.articulo),d.inciso_1,d.inciso_2,d.id_tipo_anexo,to_number(d.articulo_anexo),d.inciso_1_anexo,d.inciso_2_anexo ,p.descripcion ");
+			jpql.append("order by to_number(d.articulo),nps_ordenar_numeral_fun(d.inciso_1) nulls first,nps_ordenar_numeral_fun(d.inciso_2) nulls first,d.id_tipo_anexo,to_number(d.articulo_anexo),nps_ordenar_numeral_fun(d.inciso_1_anexo) nulls first,nps_ordenar_numeral_fun(d.inciso_2_anexo) nulls first,p.descripcion ");
+			// OSINE_SFS-480 - REQF-0007 - Fin
 			Query query=crud.getEm().createNativeQuery(jpql.toString());
 			LOG.info("query : " + jpql.toString());
 			List<Object[]> resultados = query.getResultList();
@@ -1504,5 +1507,10 @@ public class BaseLegalDAOImpl implements BaseLegalDAO {
         String codigoBaseLegal = armaCodigoBaseLegal(flagPadre);
         return codigoBaseLegal;
         
+	}
+	@Override
+	public List<BaseLegalDTO> findNormaLegalByDivision(BaseLegalFilter filtro) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

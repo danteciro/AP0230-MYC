@@ -14,6 +14,7 @@
 
 package gob.osinergmin.myc.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -25,7 +26,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -43,7 +47,7 @@ public class PghPersonalUnidadOrganica extends Auditoria {
     @Column(name = "ID_PERSONAL_UNIDAD_ORGANICA")
     private Long idPersonalUnidadOrganica;
     @Column(name = "FLAG_DEFAULT")
-    private Character flagDefault;
+    private String flagDefault;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ESTADO")
@@ -62,6 +66,12 @@ public class PghPersonalUnidadOrganica extends Auditoria {
         this.idPersonalUnidadOrganica = idPersonalUnidadOrganica;
     }
 
+    public PghPersonalUnidadOrganica(Long idPersonalUnidadOrganica, String flagDefault, Long idUnidadOrganica) {
+        this.idPersonalUnidadOrganica = idPersonalUnidadOrganica;
+        this.flagDefault = flagDefault;
+        this.idUnidadOrganica = new MdiUnidadOrganica(idUnidadOrganica);
+    }
+
     public PghPersonalUnidadOrganica(Long idPersonalUnidadOrganica, String estado, String usuarioCreacion, Date fechaCreacion, String terminalCreacion) {
         this.idPersonalUnidadOrganica = idPersonalUnidadOrganica;
         this.estado = estado;
@@ -78,11 +88,11 @@ public class PghPersonalUnidadOrganica extends Auditoria {
         this.idPersonalUnidadOrganica = idPersonalUnidadOrganica;
     }
 
-    public Character getFlagDefault() {
+    public String getFlagDefault() {
         return flagDefault;
     }
 
-    public void setFlagDefault(Character flagDefault) {
+    public void setFlagDefault(String flagDefault) {
         this.flagDefault = flagDefault;
     }
 

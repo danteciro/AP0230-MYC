@@ -44,6 +44,7 @@ public interface BaseLegalDAO{
 	public List<BaseLegalDTO> findToBase(BaseLegalFilter filtro);
 	public List<BaseLegalDTO> listarBaseLegalByObligacion(Long row_id);
 	public String obtenerCodigoBaseLegal(String flagPadre);
+	public List<BaseLegalDTO> findNormaLegalByDivision(BaseLegalFilter filtro);
 	
 	
 }

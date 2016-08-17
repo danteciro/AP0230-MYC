@@ -4,6 +4,7 @@
  */
 package gob.osinergmin.myc.domain;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Basic;
@@ -64,9 +65,13 @@ public class PghOpcion extends Auditoria {
     @Basic(optional = false)
     @Column(name = "IDENTIFICADOR_OPCION")
     private String identificador_opcion;
+    @Size(max = 500)
+    @Column(name = "PAGE_OPCION")
+    private String pageOpcion;
     @OneToMany(mappedBy = "idOpcion", fetch = FetchType.LAZY)
     private List<PghRubroOpcion> pghRubroOpcionList;
-    
+    @OneToMany(mappedBy = "idOpcion", fetch = FetchType.LAZY)
+    private List<PghRolOpcion> pghRolOpcionList;
     public PghOpcion() {
     }
     
@@ -135,7 +140,14 @@ public class PghOpcion extends Auditoria {
 	public void setPghRubroOpcionList(List<PghRubroOpcion> pghRubroOpcionList) {
 		this.pghRubroOpcionList = pghRubroOpcionList;
 	}
+	@XmlTransient
+    public List<PghRolOpcion> getPghRolOpcionList() {
+        return pghRolOpcionList;
+    }
 
+    public void setPghRolOpcionList(List<PghRolOpcion> pghRolOpcionList) {
+        this.pghRolOpcionList = pghRolOpcionList;
+    }
 	@Override
     public int hashCode() {
         int hash = 0;

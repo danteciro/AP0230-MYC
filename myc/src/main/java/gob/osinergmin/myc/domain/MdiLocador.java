@@ -4,6 +4,8 @@
  */
 package gob.osinergmin.myc.domain;
 
+import gob.osinergmin.myc.domain.MdiMaestroColumna;
+
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -11,6 +13,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -41,8 +45,11 @@ public class MdiLocador extends Auditoria {
     private Long idLocador;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "ID_TIPO_DOCUMENTO_IDENTIDAD")
-    private long idTipoDocumentoIdentidad;
+//    @Column(name = "ID_TIPO_DOCUMENTO_IDENTIDAD")
+//    private long idTipoDocumentoIdentidad;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_TIPO_DOCUMENTO_IDENTIDAD")
+    private MdiMaestroColumna idTipoDocumentoIdentidad;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 10)
@@ -146,9 +153,10 @@ public class MdiLocador extends Auditoria {
         this.idLocador = idLocador;
     }
 
-    public MdiLocador(Long idLocador, long idTipoDocumentoIdentidad, String numeroDocumento, String primerNombre, String apellidoPaterno, String apellidoMaterno, char estado, String usuarioCreacion, Date fechaCreacion, String terminalCreacion) {
+    public MdiLocador(Long idLocador, Long idTipoDocumentoIdentidad,String descTipoDocumentoIdentidad ,String numeroDocumento, String primerNombre, String apellidoPaterno, String apellidoMaterno, char estado, String usuarioCreacion, Date fechaCreacion, String terminalCreacion) {
         this.idLocador = idLocador;
-        this.idTipoDocumentoIdentidad = idTipoDocumentoIdentidad;
+//        this.idTipoDocumentoIdentidad = idTipoDocumentoIdentidad;
+        this.idTipoDocumentoIdentidad=new MdiMaestroColumna(idTipoDocumentoIdentidad,descTipoDocumentoIdentidad);
         this.numeroDocumento = numeroDocumento;
         this.primerNombre = primerNombre;
         this.apellidoPaterno = apellidoPaterno;
@@ -166,14 +174,15 @@ public class MdiLocador extends Auditoria {
     public void setIdLocador(Long idLocador) {
         this.idLocador = idLocador;
     }
+    
+    public MdiMaestroColumna getIdTipoDocumentoIdentidad() {
+		return idTipoDocumentoIdentidad;
+	}
 
-    public long getIdTipoDocumentoIdentidad() {
-        return idTipoDocumentoIdentidad;
-    }
-
-    public void setIdTipoDocumentoIdentidad(long idTipoDocumentoIdentidad) {
-        this.idTipoDocumentoIdentidad = idTipoDocumentoIdentidad;
-    }
+	public void setIdTipoDocumentoIdentidad(
+			MdiMaestroColumna idTipoDocumentoIdentidad) {
+		this.idTipoDocumentoIdentidad = idTipoDocumentoIdentidad;
+	}
 
     public String getNumeroDocumento() {
         return numeroDocumento;

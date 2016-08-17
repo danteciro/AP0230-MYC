@@ -14,6 +14,7 @@
 
 package gob.osinergmin.myc.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -25,6 +26,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -35,8 +38,16 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Table(name = "PGH_CARGO")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "PghCargo.findAll", query = "SELECT p FROM PghCargo p")
-})
+    @NamedQuery(name = "PghCargo.findAll", query = "SELECT p FROM PghCargo p"),
+    @NamedQuery(name = "PghCargo.findByIdCargo", query = "SELECT p FROM PghCargo p WHERE p.idCargo = :idCargo"),
+    @NamedQuery(name = "PghCargo.findByNombreCargo", query = "SELECT p FROM PghCargo p WHERE p.nombreCargo = :nombreCargo"),
+    @NamedQuery(name = "PghCargo.findByEstado", query = "SELECT p FROM PghCargo p WHERE p.estado = :estado"),
+    @NamedQuery(name = "PghCargo.findByUsuarioCreacion", query = "SELECT p FROM PghCargo p WHERE p.usuarioCreacion = :usuarioCreacion"),
+    @NamedQuery(name = "PghCargo.findByFechaCreacion", query = "SELECT p FROM PghCargo p WHERE p.fechaCreacion = :fechaCreacion"),
+    @NamedQuery(name = "PghCargo.findByTerminalCreacion", query = "SELECT p FROM PghCargo p WHERE p.terminalCreacion = :terminalCreacion"),
+    @NamedQuery(name = "PghCargo.findByUsuarioActualizacion", query = "SELECT p FROM PghCargo p WHERE p.usuarioActualizacion = :usuarioActualizacion"),
+    @NamedQuery(name = "PghCargo.findByFechaActualizacion", query = "SELECT p FROM PghCargo p WHERE p.fechaActualizacion = :fechaActualizacion"),
+    @NamedQuery(name = "PghCargo.findByTerminalActualizacion", query = "SELECT p FROM PghCargo p WHERE p.terminalActualizacion = :terminalActualizacion")})
 public class PghCargo extends Auditoria {
     @Id
     @Basic(optional = false)

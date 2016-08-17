@@ -55,7 +55,9 @@ public class PghRol extends Auditoria {
     @Column(name = "ESTADO")
     private String estado;
     @OneToMany(mappedBy = "idRol", fetch = FetchType.LAZY)
-    private List<PghPersonal> pghPersonalList;
+    private List<PghPersonal> pghPersonalList;    
+    @OneToMany(mappedBy = "idRol", fetch = FetchType.LAZY)
+    private List<PghRolOpcion> pghRolOpcionList;
 
     public PghRol() {
     }
@@ -113,7 +115,16 @@ public class PghRol extends Auditoria {
     public void setPghPersonalList(List<PghPersonal> pghPersonalList) {
         this.pghPersonalList = pghPersonalList;
     }
+    
+    @XmlTransient
+    public List<PghRolOpcion> getPghRolOpcionList() {
+        return pghRolOpcionList;
+    }
 
+    public void setPghRolOpcionList(List<PghRolOpcion> pghRolOpcionList) {
+        this.pghRolOpcionList = pghRolOpcionList;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

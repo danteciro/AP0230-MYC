@@ -1,7 +1,18 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+/**
+* Resumen		
+* Objeto		: PghUnidObliSubTipo.java
+* Descripción		: Clase del modelo de dominio PghUnidObliSubTipo
+* Fecha de Creación	: 
+* PR de Creación	: OSINE_SFS-480
+* Autor			: Julio Piro Gonzales
+* ---------------------------------------------------------------------------------------------------
+* Modificaciones
+* Motivo            Fecha           Nombre                              Descripción
+* ---------------------------------------------------------------------------------------------------
+* OSINE_SFS-480     24/05/2016      Giancarlo Villanueva Andrade        Crear componente de selección de "subtipo de supervisión".Relacionar y adecuar el subtipo de supervisión, el cual deberá depender del tipo de supervisión seleccionado.
+* 
+*/ 
+
 package gob.osinergmin.myc.domain;
 
 import java.util.Date;
@@ -32,7 +43,12 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "PghUnidObliSubTipo.findByPeriodoBySubTipo", query = "SELECT p FROM PghUnidObliSubTipo p " +
     		"where p.estado= :estado " +
     		"and p.idObligacionSubTipo.idObligacionSubTipo= :idObligacionSubTipo " +
-    		"and p.periodo= :periodo")
+    		"and p.periodo= :periodo"),
+    @NamedQuery(name = "PghUnidObliSubTipo.findByParameters", query = "SELECT p FROM PghUnidObliSubTipo p " +
+    	    " where p.estado= :estado " +
+    	    " and p.idUnidadSupervisada.idUnidadSupervisada =:idUnidadSupervisada" +
+    	    " and p.flagSupOrdenServicio =:flagSupOrdenServicio " +
+    	    " and p.periodo= :periodo")		
     })
 public class PghUnidObliSubTipo extends Auditoria {
 

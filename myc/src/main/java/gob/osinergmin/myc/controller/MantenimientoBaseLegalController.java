@@ -72,6 +72,7 @@ import gob.osinergmin.myc.service.business.ObliTipiServiceNeg;
 import gob.osinergmin.myc.service.business.ObligacionBaseLegalServiceNeg;
 import gob.osinergmin.myc.service.business.ObligacionNormativaServiceNeg;
 import gob.osinergmin.myc.service.business.ObligacionTipificacionServiceNeg;
+import gob.osinergmin.myc.service.business.PrioridadNormaAgenteServiceNeg;
 import gob.osinergmin.myc.service.business.TipificacionServiceNeg;
 import gob.osinergmin.myc.service.business.TrazabilidadObligacionesServiceNeg;
 import gob.osinergmin.myc.util.Constantes;
@@ -168,6 +169,12 @@ public class MantenimientoBaseLegalController {
     @Autowired
     private IncumplimientoServiceNeg incumplimientoServiceNeg ;
     /*PR_OSINE119 - Item 14 - Fin*/
+	
+	/* OSINE_SFS-600 - REQF-0012 - Inicio */
+    @Inject
+    private PrioridadNormaAgenteServiceNeg prioridadNormaAgenteNeg; 
+	/* OSINE_SFS-600 - REQF-0012 - Fin */
+	
     @InitBinder
     public void binder(WebDataBinder binder) {
         binder.registerCustomEditor(Date.class, new PropertyEditorSupport() {
@@ -1700,6 +1707,15 @@ public class MantenimientoBaseLegalController {
         	baseLegalDTO.setEstado("0");
         	BaseLegalDTO retorno=baseLegalService.eliminarBaseLegal(baseLegalDTO,usuarioDTO);
         	
+        	
+        	/* OSINE_SFS-600 - REQF-0012 - Inicio */
+        	try{
+        		prioridadNormaAgenteNeg.eliminarPrioridadNormaAgente(baseLegalDTO.getIdBaseLegal(), Constantes.ELIMINAR_ORDEN_NORMA_ID_BASE_LEGAL, usuarioDTO);
+        	}catch(Exception e){
+        		LOG.error("borrar prioridad norma agente",e);
+        	}
+        	/* OSINE_SFS-600 - REQF-0012 - Fin */
+        	
         	String mensaje = controlMessagesStaticEntity(ConstantesWeb.mensajes.MSG_OPERATION_SUCCESS_DELETE, ConstantesWeb.mensajes.MSG_ENTITY_BASELEGAL);
         	salida.put(ConstantesWeb.VV_MENSAJE, mensaje);
         	salida.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_EXITO);
@@ -1730,6 +1746,14 @@ public class MantenimientoBaseLegalController {
         	obligacionNormativaDTO.setIdObligacion(idObligacion);
         	obligacionNormativaDTO.setEstado("0");
         	ObligacionNormativaDTO retorno=obligacionNormativaService.eliminarObligacion(obligacionNormativaDTO,usuarioDTO);
+        	
+			/* OSINE_SFS-600 - REQF-0012 - Inicio */
+        	try{
+        		prioridadNormaAgenteNeg.eliminarPrioridadNormaAgente(idObligacion, Constantes.ELIMINAR_ORDEN_NORMA_ID_OBLIGACION, usuarioDTO);
+        	}catch(Exception e){
+        		LOG.error("borrar prioridad norma agente",e);
+        	}
+			/* OSINE_SFS-600 - REQF-0012 - Fin */
         	
         	String mensaje = controlMessagesStaticEntity(ConstantesWeb.mensajes.MSG_OPERATION_SUCCESS_DELETE, ConstantesWeb.mensajes.MSG_ENTITY_OBLIGACION);
         	salida.put(ConstantesWeb.VV_MENSAJE, mensaje);
@@ -2198,6 +2222,13 @@ public class MantenimientoBaseLegalController {
             	BaseLegalDTO retorno=baseLegalService.editarBaseLegal(baseLegalDTO,usuarioDTO);
             	LOG.info("(Actualiza Base Legal) retorno: "+retorno.toString());
             	
+            	/* OSINE_SFS-600 - REQF-0012 - Inicio */
+            	try{
+            		prioridadNormaAgenteNeg.eliminarPrioridadNormaAgente(baseLegalDTO.getIdBaseLegal(), Constantes.ELIMINAR_ORDEN_NORMA_ID_RELACION_BASE_OBLIGACION, usuarioDTO);
+            	}catch(Exception e){
+            		LOG.error("borrar prioridad norma agente",e);
+            	}
+            	/* OSINE_SFS-600 - REQF-0012 - Fin */
             	String mensaje = controlMessagesStaticEntity(ConstantesWeb.mensajes.MSG_OPERATION_SUCCESS_UPDATE, ConstantesWeb.mensajes.MSG_ENTITY_BASELEGAL);
             	salida.put(ConstantesWeb.VV_MENSAJE, mensaje);
             	salida.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_EXITO);

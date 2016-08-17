@@ -390,14 +390,17 @@ public class ActividadesController {
      * @return
      */    
     @RequestMapping(value="/loadActividadConfigurada",method=RequestMethod.POST)
-    public @ResponseBody Map<String,Object> loadActividadConfigurada(){
+    public @ResponseBody Map<String,Object> loadActividadConfigurada(HttpSession session,HttpServletRequest request){
         LOG.info("procesando loadActividad");
 
         Map<String,Object> retorno=new HashMap<String,Object>();
         try{
-        	
+        	ActividadFilter filtro = new ActividadFilter();
+        	String actividades = (String) request.getSession().getAttribute(Constantes.ACTIVIDADES_ORGANICA_DIVISION_CONCATENADA);
+        	filtro.setIdsActividades(actividades);
             List<ProcesoObligacionTipoDTO> listado;
-            listado=actividadServiceNeg.listarActividadConfigurada();
+//            listado=actividadServiceNeg.listarActividadConfigurada();
+            listado=actividadServiceNeg.listarActividadConfigurada(filtro);
             retorno.put("filas", listado);                                   
 
         }catch(Exception ex){
@@ -405,5 +408,21 @@ public class ActividadesController {
         }
         return retorno;
     }  
+	
+	/* OSINE_SFS-600 - REQF-0009 - Inicio */
+    @RequestMapping(value="/listarActividad",method=RequestMethod.POST)
+    public @ResponseBody Map<String,Object> listarActividad(ActividadFilter filtro){
+        LOG.info("procesando listarActividad");
+        Map<String,Object> retorno=new HashMap<String,Object>();
+        try{
+            List<ActividadDTO> listado;
+            listado=actividadServiceNeg.findActividadByFilter(filtro);
+            retorno.put("filas", listado);
+        }catch(Exception ex){
+            LOG.error("",ex);
+        }
+        return retorno;
+    }
+    /* OSINE_SFS-600 - REQF-0009 - Fin */
     
 }

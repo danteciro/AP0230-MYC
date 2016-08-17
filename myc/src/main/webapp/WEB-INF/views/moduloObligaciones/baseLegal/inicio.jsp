@@ -71,6 +71,20 @@
                     <span class="ui-panel-title">GESTI&Oacute;N DE BASE LEGAL</span>
                 </div>
                 <div class="pui-panel-content ui-widget-content">
+                	<div id="divUnidadDivision" style="display:none;">
+                	<div class="filaForm">
+                      	<div class="lbl-small"><label class="fwb">División:</label></div>
+                      	<div id="divDivision"></div>
+                  	</div>
+                  	<div class="filaForm">
+                      	<div class="lbl-small"><label class="fwb">Unidad:</label></div>
+                      	<div id="divUnidad"></div>
+                  	</div>
+                  	<div class="filaForm">
+                      	<div class="lbl-small"><label class="fwb">Actividades:</label></div>
+                      	<div id="divActividades"></div>
+                  	</div>                  	
+                  	</div>
                     <fieldset id="busquedaBaseLegal">
                         <form id="formBaseLegal" class="tac"> 
                             <div id="divMensajeValidacionBusqueda" class="errorMensaje" tabindex='1' style="display: none" ></div>

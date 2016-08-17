@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package gob.osinergmin.myc.domain;
+
+import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -20,6 +22,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -68,6 +71,8 @@ public class MdiUnidadOrganica extends Auditoria {
     private MdiMaestroColumna nombreNivel;
     @OneToMany(mappedBy = "idUnidadOrganica", fetch = FetchType.LAZY)
     private List<PghPersonalUnidadOrganica> pghPersonalUnidadOrganicaList;
+    @OneToMany(mappedBy = "idUnidadOrganica", fetch = FetchType.LAZY)
+    private List<PghCnfActUniOrganica> pghCnfActUniOrganicaList;
     
     public MdiUnidadOrganica() {
     }
@@ -164,6 +169,16 @@ public class MdiUnidadOrganica extends Auditoria {
         this.nombreNivel = nombreNivel;
     }    
     
+	@XmlTransient
+    public List<PghCnfActUniOrganica> getPghCnfActUniOrganicaList() {
+		return pghCnfActUniOrganicaList;
+	}
+
+	public void setPghCnfActUniOrganicaList(
+			List<PghCnfActUniOrganica> pghCnfActUniOrganicaList) {
+		this.pghCnfActUniOrganicaList = pghCnfActUniOrganicaList;
+	}
+	
     @XmlTransient
     @JsonIgnore
     public List<PghPersonalUnidadOrganica> getPghPersonalUnidadOrganicaList() {
