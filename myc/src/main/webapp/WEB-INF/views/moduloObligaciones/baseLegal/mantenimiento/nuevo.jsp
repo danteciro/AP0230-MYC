@@ -425,7 +425,7 @@
                                     <div class="slcta" ><label for="txtDesOblNor">Descripción Obligación Normativa(*):</label></div>
                                 </div>
                                 <div style="width:57%">
-                                    <textarea id="txtDesOblNor" validate="[O]" rows="4" class="" name="descripcionObligacion" style="width:95%" maxlength="2000"></textarea>
+                                    <textarea id="txtDesOblNor" validate="[O]" rows="4" class="" name="descripcionObligacion" style="width:95%" maxlength="4000"></textarea>
                                 </div>
                                 
 			                    </div> 
@@ -686,7 +686,7 @@
                                            					<input id="idDetalleObligacion" style="display:none;" />
                                                 <div class="lble vat" style="width:180px;"><label for="txtDescObligacionNormativaActa">Descripción Obligación Normativa (Acta y Declaración Jurada):</label></div>
                                                 <div>
-                                                    <textarea style="width: 670px;" rows="3" class="" name="descripcionActaObligacion" id="txtDescObligacionNormativaActa" maxlength="2000"></textarea>
+                                                    <textarea style="width: 670px;" rows="3" class="" name="descripcionActaObligacion" id="txtDescObligacionNormativaActa" maxlength="4000"></textarea>
                                                 </div>
                                             </div>
                                             <div class="filaForm">
