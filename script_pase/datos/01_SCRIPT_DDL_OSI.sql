@@ -95,6 +95,12 @@ start with 241
 increment by 1
 cache 20;
 
+create sequence PGH_CNF_ACT_UNI_ORGANICA_SEQ
+minvalue 1
+maxvalue 9999999999999999999999999999
+start with 1
+increment by 1
+nocache;
 
 -- Alter sequence 
 alter sequence MDI_ACTIVIDAD_SEQ 
