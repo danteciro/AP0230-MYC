@@ -1570,10 +1570,10 @@ concatenaDescripcionBaseLegal();
             $('#txtInc4BaseLegal').addClass("error");
         }
         
-        if($('#cmbNumeroAnexo option:selected').text() == '--Seleccione--' && $('#cmbTipAneBaseLegal option:selected').text() != '--Seleccione--'){
-        	mensajeValidacion += "* Debe ingresar un n&uacute;mero de anexo <br>";
-        	nuevoBL.cmbNumeroAnexo.addClass("error");
-        }
+//        if($('#cmbNumeroAnexo option:selected').text() == '--Seleccione--' && $('#cmbTipAneBaseLegal option:selected').text() != '--Seleccione--'){
+//        	mensajeValidacion += "* Debe ingresar un n&uacute;mero de anexo <br>";
+//        	nuevoBL.cmbNumeroAnexo.addClass("error");
+//        }
         
         if($('#txtArtAneBaseLegal').val()=="" && $('#cmbTipAneBaseLegal option:selected').text() != '--Seleccione--'){
         	mensajeValidacion += "* Debe ingresar un valor en el campo Artículo del Anexo <br>";

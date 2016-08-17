@@ -13,9 +13,9 @@ var global = {
     rowNum:5,
     rowNumPrinc:10,
     confirm:{
-        save:"Se registró satisfactoriamente.",
-        edit:"Se actualizó el registro satisfactoriamente.",
-        delete:"Se eliminó el registro satisfactoriamente."
+        save:"Se  &nbsp;registró  satisfactoriamente.",
+        edit:"Se  &nbsp;actualizó el registro satisfactoriamente.",
+        delete:"Se  &nbsp;eliminó el registro satisfactoriamente."
     },
     accion:{ /* OSINE_SFS-480 - RSIS09 - mdiosesf - Inicio */
         save:1,
