@@ -1,16 +1,17 @@
 /**
 * Resumen           
 * Objeto            : ActividadServiceNegImpl.java
-* Descripción       : Clase service implementación del mantenimiento de actividades en el MYC.
-* Fecha de Creación : 
-* PR de Creación    : OSINE_SFS-600
+* Descripcion       : Clase service implementacion del mantenimiento de actividades en el MYC.
+* Fecha de Creacion : 
+* PR de Creacion    : OSINE_SFS-600
 * Autor             : GMD.
 * ---------------------------------------------------------------------------------------------------
 * Modificaciones
-* Motivo            Fecha           Nombre                      Descripción
+* Motivo            Fecha           Nombre                      Descripcion
 * REQF-0009			04/07/2016		Hernan Torres Saenz
 * ---------------------------------------------------------------------------------------------------
 ***/
+
 package gob.osinergmin.myc.service.business.impl;
 
 import gob.osinergmin.myc.domain.base.BaseConstantesOutBean;

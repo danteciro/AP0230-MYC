@@ -1,18 +1,17 @@
 /**
 * Resumen		
 * Objeto		: PghUnidObliSubTipo.java
-* Descripción		: Clase del modelo de dominio PghUnidObliSubTipo
-* Fecha de Creación	: 
-* PR de Creación	: OSINE_SFS-480
+* Descripcion		: Clase del modelo de dominio PghUnidObliSubTipo
+* Fecha de Creacion	: 
+* PR de Creacion	: OSINE_SFS-480
 * Autor			: Julio Piro Gonzales
 * ---------------------------------------------------------------------------------------------------
 * Modificaciones
-* Motivo            Fecha           Nombre                              Descripción
+* Motivo            Fecha           Nombre                              Descripcion
 * ---------------------------------------------------------------------------------------------------
-* OSINE_SFS-480     24/05/2016      Giancarlo Villanueva Andrade        Crear componente de selección de "subtipo de supervisión".Relacionar y adecuar el subtipo de supervisión, el cual deberá depender del tipo de supervisión seleccionado.
+* OSINE_SFS-480     24/05/2016      Giancarlo Villanueva Andrade        Crear componente de seleccion de "subtipo de supervision".Relacionar y adecuar el subtipo de supervision, el cual debera depender del tipo de supervision seleccionado.
 * 
-*/ 
-
+*/
 package gob.osinergmin.myc.domain;
 
 import java.util.Date;

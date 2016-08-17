@@ -1,17 +1,18 @@
 /**
 * Resumen           
 * Objeto            : ActividadDAOImpl.java
-* Descripción       : Clase implementación del acceso a datos del mantenimiento de actividades en el MYC.
-* Fecha de Creación : 
-* PR de Creación    : OSINE_SFS-600
+* Descripcion       : Clase implementacion del acceso a datos del mantenimiento de actividades en el MYC.
+* Fecha de Creacion : 
+* PR de Creacion    : OSINE_SFS-600
 * Autor             : GMD.
 * ---------------------------------------------------------------------------------------------------
 * Modificaciones
-* Motivo            Fecha           Nombre                      Descripción
+* Motivo            Fecha           Nombre                      Descripcion
 * REQF-0009			04/07/2016		Hernan Torres Saenz
-* REQF-0008			05/07/2016		Mario Dioses Fernández
+* REQF-0008			05/07/2016		Mario Dioses Fernandez
 * ---------------------------------------------------------------------------------------------------
 */
+
 package gob.osinergmin.myc.service.dao.impl;
 import gob.osinergmin.myc.common.util.StringUtil;
 import gob.osinergmin.myc.domain.MdiActividad;
