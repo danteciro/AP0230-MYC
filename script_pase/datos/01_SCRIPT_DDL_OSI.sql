@@ -98,7 +98,7 @@ cache 20;
 
 -- Alter sequence 
 alter sequence MDI_ACTIVIDAD_SEQ 
-minvalue 201;
+minvalue 2000;
 
 --cambio de paquete bd
 
