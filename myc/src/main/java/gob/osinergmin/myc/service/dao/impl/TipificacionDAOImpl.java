@@ -33,7 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class TipificacionDAOImpl implements TipificacionDAO{
+public class TipificacionDAOImpl implements TipificacionDAO{	
     private static final Logger log = LoggerFactory.getLogger(TipificacionDAOImpl.class);
     
     @Inject
@@ -520,5 +520,33 @@ public class TipificacionDAOImpl implements TipificacionDAO{
         
         return listado;	
 	}
+
+	@Override
+	public List<TipificacionSancionDTO> obtenerTipificacionSancionById(
+			Long idTipificacion) {
+		log.info("-- TipificacionDAO - obtenerTipificacionSancion --");
+        log.info("-- parametros idTipificacion : " + idTipificacion);
+        String dominio = Constantes.DOMINIO_NIVEL_TIPIFICACION;
+    	String aplicacion = Constantes.APPLICACION_MYC;
+        StringBuilder jpql = new StringBuilder();
+        jpql.append(" select ts ");
+        jpql.append(" from PghTipificacion t "
+                + " inner join t. pghTipificacionSancionList ts");
+        jpql.append(" where 1=1 ");
+        jpql.append(" and t.estado=1 ");
+        jpql.append(" and ts.estado=1 ");
+        jpql.append(" and ts.nivel = (SELECT mc FROM MdiMaestroColumna mc " +
+        		"left join mc.mdiMaestroTabla mt " +
+        		"WHERE " +
+        		"mc.mdiMaestroTabla.mdiMaestroTablaPK.dominio = '"+dominio+"' " +
+        		"and mc.mdiMaestroTabla.mdiMaestroTablaPK.aplicacion = '"+aplicacion+"' ) ");
+        jpql.append(" and t.idTipificacion = '").append(idTipificacion).append("'");
+        String queryString = jpql.toString();
+        Query query = crud.getEm().createQuery(queryString);
+        List<PghTipificacionSancion> lstTipificacionSancion = query.getResultList();
+        List<TipificacionSancionDTO> listaTipificacionSancion = TipificacionSancionBuilder.getListaTipificacionSancion(lstTipificacionSancion);
+        return listaTipificacionSancion;
+	}
+
 	
 }

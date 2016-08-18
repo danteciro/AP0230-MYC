@@ -88,8 +88,8 @@ public class TipificacionServiceNegImpl implements TipificacionServiceNeg {
         log.info("Funcion: obtenerTipificacion -- Service Impl -- Clase: TipificacionServiceNeg");
         log.info("-- parametro idTipificacion : " + idTipificacion);
         TipificacionDTO tipificacion = tipificacionDAO.obtenerTipificacion(idTipificacion);
-        List<TipificacionSancionDTO> listaTipificacionSancion = tipificacionDAO.obtenerTipificacionSancion(tipificacion.getCodTipificacion());
-        
+//        List<TipificacionSancionDTO> listaTipificacionSancion = tipificacionDAO.obtenerTipificacionSancion(tipificacion.getCodTipificacion());
+        List<TipificacionSancionDTO> listaTipificacionSancion = tipificacionDAO.obtenerTipificacionSancionById(idTipificacion);
         tipificacion.setListaTipificacionSancion(listaTipificacionSancion);
         return tipificacion;
     }
