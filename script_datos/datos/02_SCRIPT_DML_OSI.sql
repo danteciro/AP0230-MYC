@@ -276,7 +276,7 @@ begin
       for filaListado in c_listado_bl(fila.id_base_legal) loop  
           c_lbl_concordancia_array := c_lbl_concordancia_array || chr(13)||chr(10) || '>' ||filaListado.descripcion;
       end loop;
-      c_d_concordancia_validada  := ' en Concordancia con: ' || substr(c_lbl_concordancia_array,3000);
+      c_d_concordancia_validada  := ' en Concordancia con: ' || substr(c_lbl_concordancia_array,0,3000);
    else
       c_d_concordancia_validada := '';
    end if;   
