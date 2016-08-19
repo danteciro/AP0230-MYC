@@ -33,8 +33,8 @@ declare
   c_norma_tecnica_validada varchar2(1000);
   c_descripcion_norma_tecnica varchar2(1000);
   c_modificatorias_validado varchar2(1000);
-  c_lbl_concordancia_array varchar2(2000); 
-  c_d_concordancia_validada varchar2(1000);
+  c_lbl_concordancia_array varchar2(3000); 
+  c_d_concordancia_validada varchar2(4000);
   c_concatenado varchar2(5000);
   
   c_tiene_normas_tecnicas varchar2(2000);
@@ -276,7 +276,7 @@ begin
       for filaListado in c_listado_bl(fila.id_base_legal) loop  
           c_lbl_concordancia_array := c_lbl_concordancia_array || chr(13)||chr(10) || '>' ||filaListado.descripcion;
       end loop;
-      c_d_concordancia_validada  := ' en Concordancia con: ' || c_lbl_concordancia_array;
+      c_d_concordancia_validada  := ' en Concordancia con: ' || substr(c_lbl_concordancia_array,3000);
    else
       c_d_concordancia_validada := '';
    end if;   
