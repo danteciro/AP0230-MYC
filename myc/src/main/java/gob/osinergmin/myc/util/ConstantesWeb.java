@@ -170,6 +170,11 @@ public class ConstantesWeb {
         public static final String PAGE_GENERAL_FRM_BUSQ_AGENTE="general/actividad/mantFrmBusqAgente";
         public static final String PAGE_GENERAL_FRM_AGENTE="general/actividad/mantFrmAgente";
         /* OSINE_SFS-600 - REQF-0005 - Fin */
+        /* OSINE_ */
+        public static final String PAGE_GENERAL_MANT_CONFIGURACION_SIGUO="general/siguo/configuracion/mantConfiguracionSiguo";
+        public static final String PAGE_GENERAL_MANT_FRM_CONFIGURACION_SIGUO="general/siguo/configuracion/mantFrmConfiguracionSiguo";
+        public static final String PAGE_REQUISITOS_FRM_SELECT_ACTIVIDADES_MODAL="general/siguo/configuracion/popupBusqActividadModal";
+        /**/
 	}
     
     public static class mensajes{

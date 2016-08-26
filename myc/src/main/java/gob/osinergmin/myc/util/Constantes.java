@@ -126,4 +126,11 @@ public class Constantes {
 	public static final String ELIMINAR_ORDEN_NORMA_ID_RELACION_BASE_OBLIGACION = "REL_BASE_OBL";
 	public static final String ELIMINAR_ORDEN_NORMA_ID_CONF_OBLIGACION = "CONG_OBLIGACION";
 	/* OSINE_SFS-600 - REQF-0012 - Fin */
+	/* OSINE_SFS-600 - REQF-0012 - Inicio */
+	public static final Long NIVEL_OSINERGMIN = new Long(1);
+	public static final Long NIVEL_GERENCIA = new Long(2);
+	public static final Long NIVEL_DIVISION = new Long(3);
+	public static final Long NIVEL_SUB_DIVISION = new Long(4);
+	public static final Long NIVEL_UNIDAD = new Long(5);
+	/* OSINE_SFS-600 - REQF-0012 - Fin */
 }

@@ -23,7 +23,7 @@ $(function(){
     var fechaActual = new Date();
     var anio = fechaActual.getFullYear();
     $('#formBusqAvanBL').validarForm(); 
-    $("#txtAnoBusqAvanBL").spinner({max:(anio+1)},{min:1990});
+    $("#txtAnoBusqAvanBL").spinner({max:(anio+1)},{min:1960});
 //    $("#txtFechaEntrVigeBusqAvanBL").datepicker();
     $("#txtFechaEntrVigeBusqAvanBL").datepicker(configuracionBasicaFechas());
 //    nuevoBL.dateFechaVigenciaArtNormaLegal.datepicker(configuracionBasicaFechas());
@@ -37,8 +37,8 @@ $(function(){
         var fechaActual = new Date();
         var anioFinal = fechaActual.getFullYear();
         var anio = $('#txtAnoBusqAvanBL').val();
-        if(anio != "" && ( parseInt(anio) < 1990 || parseInt(anio) > (anioFinal+1) )){
-            mensajeValidacion += "* Debe ingresar un año valido (mayor a 1990 y menor a "+(anioFinal+1)+") <br>";       
+        if(anio != "" && ( parseInt(anio) < 1960 || parseInt(anio) > (anioFinal+1) )){
+            mensajeValidacion += "* Debe ingresar un año valido (mayor o igual a 1960 y menor a "+(anioFinal+1)+") <br>";       
         }
         if(mensajeValidacion != ""){
             divValidacion.show();
