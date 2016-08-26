@@ -159,6 +159,12 @@ public class MdiActividad extends Auditoria {
 	
     public MdiActividad() {
     }
+    
+    public MdiActividad(String codigo, Long idActividad, String nombre) {
+		this.codigo = codigo;
+		this.idActividad = idActividad;
+		this.nombre = nombre;
+	}
 
     public MdiActividad(Long idActividad) {
         this.idActividad = idActividad;

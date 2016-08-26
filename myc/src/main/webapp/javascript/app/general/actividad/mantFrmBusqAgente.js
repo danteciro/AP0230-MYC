@@ -14,10 +14,10 @@ function initFrmBusqAgente(){
 }
 
 function abrirMantAgente(tipo,rowid,idGrid){
-	var idActividad=-1;
+	var idActividad;
 	var codigo='';
 	var nombre='';
-	var orden=-1;
+	var orden;
 	switch (tipo){
 	    case "nuevo" :
 	        title="NUEVO AGENTE";break;

@@ -79,12 +79,7 @@ public class MantenimientoActividadController {
     @RequestMapping(value = "/abrirMantFrmAgente", method = {RequestMethod.GET, RequestMethod.POST})
     public String abrirMantFrmAgente (ActividadDTO actividad, String tipo, HttpSession sesion,Model model ) {
         try{
-//        	if(actividad.getOrden()==-1){
-//        		actividad.setOrden(null);
-//        	}
-//        	if(actividad.getIdActividad()==-1){
-//        		actividad.setIdActividad(null);
-//        	}
+        	
         	model.addAttribute("tipo", tipo);
         	model.addAttribute("act", actividad);
         	model.addAttribute("act3", actividad);

@@ -76,7 +76,14 @@ public class MdiUnidadOrganica extends Auditoria {
     
     public MdiUnidadOrganica() {
     }
-
+    public MdiUnidadOrganica(Long idUnidadOrganica, String descripcion, String detalle, String codDepSiga, String sigla, String estado) {
+        this.idUnidadOrganica = idUnidadOrganica;
+        this.descripcion = descripcion;
+        this.detalle = detalle;
+        this.codDepSiga = codDepSiga;
+        this.sigla = sigla;
+        this.estado = estado;
+    }
     public MdiUnidadOrganica(Long idUnidadOrganica) {
         this.idUnidadOrganica = idUnidadOrganica;
     }

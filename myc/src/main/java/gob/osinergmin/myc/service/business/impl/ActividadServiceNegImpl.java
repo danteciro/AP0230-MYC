@@ -163,9 +163,11 @@ public class ActividadServiceNegImpl implements ActividadServiceNeg{
 					filtro.setFlagListarActividadesPadre(true);
 				List<ActividadDTO> listaActividadBd = findActividadByFilter(filtro);
 				for(ActividadDTO actividadBd : listaActividadBd){
-					if(actividadBd.getOrden()>=actividad.getOrden()){
-						actividadBd.setOrden(actividadBd.getOrden()+1);
-						actividadDAO.actualizarActividad(actividadBd, usuario);
+					if(actividadBd.getOrden()!=null){
+						if(actividadBd.getOrden()>=actividad.getOrden()){
+							actividadBd.setOrden(actividadBd.getOrden()+1);
+							actividadDAO.actualizarActividad(actividadBd, usuario);
+						}
 					}
 				}
 			}
@@ -194,9 +196,11 @@ public class ActividadServiceNegImpl implements ActividadServiceNeg{
 					filtro.setFlagListarActividadesPadre(true);
 				List<ActividadDTO> listaActividadBd = findActividadByFilter(filtro);
 				for(ActividadDTO actividadBd : listaActividadBd){
-					if(actividadBd.getOrden()>=actividad.getOrden()){
-						actividadBd.setOrden(actividadBd.getOrden()+1);
-						actividadDAO.actualizarActividad(actividadBd, usuario);
+					if(actividadBd.getOrden()!=null){
+						if(actividadBd.getOrden()>=actividad.getOrden()){
+							actividadBd.setOrden(actividadBd.getOrden()+1);
+							actividadDAO.actualizarActividad(actividadBd, usuario);
+						}
 					}
 				}
 			}
