@@ -184,7 +184,7 @@
                                             <div style="width:200px;">
                                                  <!-- PR119 - Item 21 - Inicio -->
                                                  <!--<input id="dateFecVigenciaNorma" value="" name="" type="text" readonly> -->
-                                                <input id="dateFecVigenciaNorma" value="${baseLegalFechavigencia}" name="" type="text" readonly>
+                                                <input id="dateFecVigenciaNorma" value="${fechaPublicacionDetalleNormaLegalController}" name="" type="text" readonly>
                                                 <!-- PR119 - Item 21 - Fin -->
                                             </div>
                                         </div>
@@ -198,11 +198,14 @@
                                     <legend>Anexo</legend> 
                                     <div class="filaForm">
                                         <div class="lblc" style="width:127px;"><label for="cmbTipAneBaseLegal"><Strong>Tipo de Anexo:</Strong></label></div>
-                                        <div style="">
+                                        <div style="width:200px;">
                                         	<input id="cmbHideTipoAnexoBaseLegal" value="${detalleBaseLegal.tipoAnexo}" style="display:none;"/>
                                             <select id="cmbTipAneBaseLegal" name="tipoAnexo" validate="" >
                                             </select>
-											<!--Rsis 1 - Inicio -->
+											
+                                        </div>
+                                       
+                                        <!--Rsis 1 - Inicio -->
 											<div class="lblc">
 												<label id="lblNumeroAnexo" for="cmbNumeroAnexo" style="display:none;"><strong>N°:</strong></label>
 											</div>
@@ -214,7 +217,7 @@
 												</select>
 											</div>
 											<!--Rsis 1 - Fin -->
-                                        </div>
+                                       
                                     </div>
                                     <div id="divAnexoBaseLegal" style="display:none;">
                                         <div class="filaForm">
@@ -235,7 +238,7 @@
                                         <div class="filaForm"> 
                                             <div class="lblc" style="width:127px;" ><label for="dateFecVigenciaNorma" >Fecha Entrada Vigencia: </label></div>
                                             <div style="width:200px;">
-                                                <input id="dateFecVigenciaNormaAnexo" value="" name="" type="text" readonly>
+                                                <input id="dateFecVigenciaNormaAnexo" value="${fechaPublicacionDetalleNormaLegalController}" name="" type="text" readonly>
                                             </div>
                                         </div>
                                     </div>

@@ -34,4 +34,12 @@ public class CommonRequisitoController {
         model.addAttribute("idTramiteAct", idTramite);
         return ConstantesWeb.Navegacion.PAGE_REQUISITOS_FRM_SELECT_ACTIVIDADES;
     }	
+    @RequestMapping(value = "/abrirPopupBusqActividadModal", method = RequestMethod.GET)
+    public String abrirPopupBusqActividadModal ( String seleccion, Long idProcedimiento,Long idTramite,HttpSession sesion , HttpServletRequest request , Model model, String codActividad) {
+        LOG.info("abrirPopupBusqActividad");
+        model.addAttribute("seleccion", seleccion);
+        model.addAttribute("idProcedimientoAct", idProcedimiento);
+        model.addAttribute("idTramiteAct", idTramite);
+        return ConstantesWeb.Navegacion.PAGE_REQUISITOS_FRM_SELECT_ACTIVIDADES_MODAL;
+    }	
 }

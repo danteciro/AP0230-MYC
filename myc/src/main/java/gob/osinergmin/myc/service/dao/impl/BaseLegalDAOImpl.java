@@ -275,7 +275,7 @@ public class BaseLegalDAOImpl implements BaseLegalDAO {
         LOG.info("validarDetalleBaseLegal:  "+baseLegalDTO.getArticuloNormaLegal());
         Boolean retorno=false;
         System.out.println(" articulo  "+baseLegalDTO.getArticuloNormaLegal());
-        if(baseLegalDTO.getArticuloNormaLegal()!=null){
+        if(baseLegalDTO.getArticuloNormaLegal()!=null || baseLegalDTO.getArticuloAnexo()!=null){
                 retorno=true;
         }
         return retorno;

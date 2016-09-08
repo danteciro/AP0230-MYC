@@ -146,6 +146,8 @@ var busquedaBaseLegal = (function() {
                     gestionBaseLegal.validaArticuloBaseLegal();
                     $('#chkModificatoria').removeAttr('disabled');
             		$('#chkConcordancia').removeAttr('disabled');
+            		$('#cmbTipAneBaseLegal').removeAttr('disabled');
+            	    $('#cmbNorTecBaseLegal').removeAttr('disabled');
             		
                 }
             });
@@ -462,6 +464,15 @@ var busquedaBaseLegal = (function() {
                 	gestionBaseLegal.validaComportamientoRegistroBaseLegal();
                 	$('#chkNormaLegalPadre').attr('disabled','disabled');
                 	$('#cmbNormaLegal').attr('validate','[O]');
+                	// Inicio MYC-7 Cambio de Alcance
+                    nuevoBL.cmbTipoAnexoNormaLegal.removeAttr('disabled');
+                	nuevoBL.cmbNumeroAnexo.removeAttr('disabled');
+                	nuevoBL.cmbTipoNormaTecnica.removeAttr('disabled');     
+                	if(nuevoBL.cmbTipoAnexoNormaLegal.val()!="-1"){
+                		$('#dateFecVigenciaNormaAnexo').removeAttr('disabled');
+                	}
+                	$('#chkCrearObligacion').removeAttr('disabled');
+                	// Fin MYC-7 Cambio de Alcance
             	}else if(flagPadre=="padre"){
             		gestionBaseLegal.validaComportamientoRegistroBaseLegal();
             		$('#divBaseLegalPadre').css('display','inline-block');
