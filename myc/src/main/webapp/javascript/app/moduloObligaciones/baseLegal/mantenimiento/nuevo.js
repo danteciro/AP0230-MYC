@@ -2042,7 +2042,7 @@ concatenaDescripcionBaseLegal();
             concatenado = SiglaNormaLegal + NumeroValidado + AnoValidado + SiglaValidado + ModificatoriasValidado
                     + NormaTecnicaValidada + DescripcionNormaTecnica + DescripcionConcordanciaValidada;
         } else if (Articulo == "" && TipoAnexo != "--Seleccione--" && NormaTecnica != "--Seleccione--") {
-            concatenado = ArticuloAnexoValidado + Inciso3Validado + Inciso4Validado + TipoAnexoValidado +
+            concatenado = ArticuloAnexoValidado + Inciso3Validado + Inciso4Validado + " del " +  TipoAnexoValidado +
                     SiglaNormaLegal + NumeroValidado + AnoValidado + SiglaValidado + ModificatoriasValidado
                     + NormaTecnicaValidada + DescripcionNormaTecnica + DescripcionConcordanciaValidada;
         } else if (Articulo != "" && TipoAnexo != "--Seleccione--" && NormaTecnica != "--Seleccione--") {
@@ -2239,7 +2239,7 @@ concatenaDescripcionBaseLegal();
     		nuevoBL.txtArticuloNormaLegal.removeAttr('disabled');
     		nuevoBL.chkModificatoria.removeAttr('disabled');
             nuevoBL.chkConcordancia.removeAttr('disabled');
-            
+          
     		validaArticuloBaseLegal(retorno);
 //            concatenaDescripcionBaseLegal();//Funcion: Genera Descripcion
     		
@@ -2306,7 +2306,7 @@ concatenaDescripcionBaseLegal();
     		nuevoBL.dateFechaVigenciaArtNormaLegal.removeAttr('disabled');
     	}
     	
-//    	concatenaDescripcionBaseLegal();//Funcion: Genera Descripcion
+    	concatenaDescripcionBaseLegal();//Funcion: Genera Descripcion
    
     }
     
@@ -2325,24 +2325,21 @@ concatenaDescripcionBaseLegal();
 //    	alert(17);
     	nuevoBL.txtIncisoDosNormaLegal.removeAttr('disabled');
     	
-//    	concatenaDescripcionBaseLegal();//Funcion: Genera Descripcion
+    	concatenaDescripcionBaseLegal();//Funcion: Genera Descripcion
     }
     function validaIncisoArticuloBaseLegalFalse(retorno){
 //    	alert(18);
     	nuevoBL.txtIncisoDosNormaLegal.attr('disabled', 'disabled');
     	nuevoBL.txtIncisoDosNormaLegal.val('');
-    	
-//    	concatenaDescripcionBaseLegal();//Funcion: Genera Descripcion
+    	concatenaDescripcionBaseLegal();//Funcion: Genera Descripcion
     }
         
     function validaArticuloBaseLegalFalse(retorno){
 //    	deshabilitarArticuloBaseLegal();
     	nuevoBL.txtIncisoUnoNormaLegal.attr('disabled', 'disabled');
     	nuevoBL.txtIncisoDosNormaLegal.attr('disabled', 'disabled');
-        limpiarArticulo();
-
-        
-//        concatenaDescripcionBaseLegal();
+        limpiarArticulo();        
+      concatenaDescripcionBaseLegal();
     }
     
     function validaComboTipoAnexoBaseLegal(retorno){
@@ -2373,7 +2370,7 @@ concatenaDescripcionBaseLegal();
 
         validaArticuloAnexoBaseLegal(retorno);
         
-//        concatenaDescripcionBaseLegal();
+        concatenaDescripcionBaseLegal();
     	
     }
     
@@ -2393,7 +2390,7 @@ concatenaDescripcionBaseLegal();
     	nuevoBL.txtIncisoUnoAnexoNormaLegal.removeAttr('disabled');
     	validaIncisoAnexoBaseLegal(retorno);
     	
-//    	concatenaDescripcionBaseLegal();
+    	concatenaDescripcionBaseLegal();
     	
     }
     
@@ -2404,7 +2401,7 @@ concatenaDescripcionBaseLegal();
         nuevoBL.txtIncisoUnoAnexoNormaLegal.val("");
         nuevoBL.txtIncisoDosAnexoNormaLegal.val("");
         
-//        concatenaDescripcionBaseLegal();
+        concatenaDescripcionBaseLegal();
     }
     
     function validaIncisoAnexoBaseLegal(retorno){
@@ -2422,14 +2419,14 @@ concatenaDescripcionBaseLegal();
 //    	alert(22);
     	nuevoBL.txtIncisoDosAnexoNormaLegal.removeAttr('disabled');
     	
-//    	concatenaDescripcionBaseLegal();
+    	concatenaDescripcionBaseLegal();
     }
     function validaIncisoAnexoBaseLegalFalse(retorno){
 //    	alert(23);
     	nuevoBL.txtIncisoDosAnexoNormaLegal.attr('disabled', 'disabled');
     	nuevoBL.txtIncisoDosAnexoNormaLegal.val('');
     	
-//    	concatenaDescripcionBaseLegal();
+    	concatenaDescripcionBaseLegal();
     }
     
     function validaComboTipoAnexoBaseLegalFalse(retorno){
@@ -2440,7 +2437,7 @@ concatenaDescripcionBaseLegal();
     	nuevoBL.txtIncisoDosAnexoNormaLegal.val("");
     	nuevoBL.dateFechaVigenciaAnexoNormaLegal.val("");
     	
-//    	concatenaDescripcionBaseLegal();
+    	concatenaDescripcionBaseLegal();
     }
     
     function validaComboTipoNormaTecnica(retorno){
@@ -2454,13 +2451,13 @@ concatenaDescripcionBaseLegal();
     			
     			
     			$("#btnAgregarNormaTecnica").css("display","none");
-//    			concatenaDescripcionBaseLegal();
+    			concatenaDescripcionBaseLegal();
     		} else{
     			nuevoBL.txtDescripcionNormaTecnica.css("display","inline-block");
     			nuevoBL.txtDescripcionNormaTecnica.removeAttr('disabled');
     			
     			$("#btnAgregarNormaTecnica").css("display","inline-block");
-//    			concatenaDescripcionBaseLegal();
+    			concatenaDescripcionBaseLegal();
     		}
     	});
     }
