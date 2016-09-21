@@ -16,7 +16,7 @@
         <script type="text/javascript" src='<c:url value="/javascript/app/general/siguo/configuracion/mantFrmConfiguracionSiguo.js" />' charset="utf-8"></script>
     </head>
     <body>
-        <form id="frmMantModulo" class="tac">
+        <form id="frmMantModulo" class="">
             <div id="divMensajeValidaModulo" class="errorMensaje" tabindex='1' style="display: none;" ></div>
             <input id="tipoP" type="hidden" value="${tipo}"/>  
             <input type="hidden" name="idOrgaActiModuSecc" value="${idOrgaActiModuSecc}"/>  
@@ -24,13 +24,13 @@
 	                                <div class="filaForm">
 	                                    <div class="lbla"><label for="txtNro">Actividad - Componente - Secci&oacute;n:</label></div>
                                         <div >
-                                            <input id="txtNroModal" name="item"  value="${idOrgaActiModuSecc}" type="text" class="lblc" disabled />
+                                            <input id="txtNroModal" name="item"  value="${item}" type="text" class="lblc" disabled />
                                         </div>
 	                                </div>
 	                                <div class="filaForm">
-	                                    <div class="lbla" ><label for="cmbGerenciaModal">Gerencia:</label></div>
+	                                    <div class="lbla" ><label for="cmbGerenciaModal">Gerencia(*) :</label></div>
 	                                    <div>
-	                                        <select id="cmbGerenciaModal" name="idUnidadOrganicaSuperior.idUnidadOrganica" validate="[O]">
+	                                        <select id="cmbGerenciaModal" name="idUnidadOrganicaSuperior.idUnidadOrganica" validate="[O]" class="lblxa">
 	                                            <option value="">--Seleccione--</option>
 							                    <c:forEach items="${listadoGerenciaModal}" var="lts">
 							                        <option value='${lts.idUnidadOrganica}' <c:if test='${configuracion.idUnidadOrganicaSuperior.idUnidadOrganica==lts.idUnidadOrganica}'>selected</c:if> >${lts.descripcion}</option>
@@ -39,25 +39,25 @@
 	                                    </div>
 	                                </div>
 	                                <div class="filaForm">
-	                                    <div class="lbla" ><label for="cmbDivisionModal">Divisi&oacute;n:</label></div>
+	                                    <div class="lbla" ><label for="cmbDivisionModal">Divisi&oacute;n(*) :</label></div>
 	                                    <div>
 	                                    	 <input id="txtIdDivisionModal" value="${configuracion.idUnidadOrganica.idUnidadOrganica}" type="hidden" />
-	                                        <select id="cmbDivisionModal" name="idUnidadOrganica.idUnidadOrganica" validate="[O]">
+	                                        <select id="cmbDivisionModal" name="idUnidadOrganica.idUnidadOrganica" validate="[O]"  class="lblxa">
 	                                            <option value="">--Seleccione--</option>
 	                                        </select>
 	                                    </div>
 	                                </div>
 	                                <div class="filaForm">
-	                                    <div class="lbla"><label for="txtActivP1Modal">Actividad:</label></div>
+	                                    <div class="lbla"><label for="txtActivP1Modal">Actividad(*) :</label></div>
                                         <div >
-                                            <input id="txtActivP1Modal" value="${configuracion.idActividad.descripcionActividad}" validate="[O]" onclick="abrirPopupBusqActividadModal()" type="text" style="cursor: pointer;" readonly placeholder="Click para seleccionar rubro"/>
+                                            <input id="txtActivP1Modal" style="width:325px;" value="${configuracion.idActividad.descripcionActividad}" validate="[O]" onclick="abrirPopupBusqActividadModal()" type="text" style="cursor: pointer;" readonly placeholder="Click para seleccionar rubro"/>
                                             <input id="txtIdActivP1Modal" value="${configuracion.idActividad.idActividad}" name="idActividad.idActividad" type="hidden" />
                                         </div>                                        
 	                                </div>
 	                                <div class="filaForm">
-	                                    <div class="lbla" ><label for="cmbComponenteModal">Componente:</label></div>
+	                                    <div class="lbla" ><label for="cmbComponenteModal">Componente(*) :</label></div>
 	                                    <div>
-	                                        <select id="cmbComponenteModal" name="idModulo.idModulo" validate="[O]">
+	                                        <select id="cmbComponenteModal" name="idModulo.idModulo" validate="[O]"  class="lblxa">
 	                                            <option value="">--Seleccione--</option>
 	                                            <c:forEach items="${listadoComponenteModal}" var="ltra">
 							                        <option value='${ltra.idModulo}' <c:if test='${configuracion.idModulo.idModulo==ltra.idModulo}'>selected</c:if> >${ltra.descripcion}</option>
@@ -66,24 +66,24 @@
 	                                    </div>
 	                                </div> 
 	                                <div class="filaForm">
-	                                    <div class="lbla"><label for="txtNro">Orden de Visualizaci&oacute;n del Componente:</label></div>
+	                                    <div class="lbla"><label for="txtNro">Orden de Visualizaci&oacute;n del Componente(*) :</label></div>
                                         <div >
                                             <input id="txtOrdenComponenteModal" maxlength="5" validate="[O]" name="ordenComponente" type="text" class="lblc" value="${configuracion.ordenComponente}"/>
                                         </div>
 	                                </div>
 	                                <div class="filaForm">
-	                                    <div class="lbla" ><label for="cmbComponenteModal">Secci&oacute;n:</label></div>
+	                                    <div class="lbla" ><label for="cmbComponenteModal">Secci&oacute;n(*) :</label></div>
 	                                    <div>
-	                                        <select id="cmbComponenteModal" name="idSeccion.idSeccion" validate="[O]">
+	                                        <select id="cmbComponenteModal" name="idSeccion.idSeccion" validate="[O]"  class="lblxa">
 	                                            <option value="">--Seleccione--</option>
 	                                            <c:forEach items="${listadoSeccionModal}" var="ltra">
-							                        <option value='${ltra.idSeccion}' <c:if test='${configuracion.idSeccion.idSeccion==ltra.idSeccion}'>selected</c:if> >${ltra.descripcion}</option>
+							                        <option value='${ltra.idSeccion}' <c:if test='${configuracion.idSeccion.idSeccion==ltra.idSeccion}'>selected</c:if> >${ltra.descripcion} ${ltra.descripcionLarga}</option>
 							                    </c:forEach>
 	                                        </select>
 	                                    </div>
 	                                </div> 
 	                                <div class="filaForm">
-	                                    <div class="lbla"><label for="txtNro">Orden de Visualizaci&oacute;n de la Secci&oacute;n:</label></div>
+	                                    <div class="lbla"><label for="txtNro">Orden de Visualizaci&oacute;n de la Secci&oacute;n(*) :</label></div>
                                         <div >
                                             <input id="txtOrdenSeccionModal" validate="[O]" maxlength="5" name="ordenSeccion" value="${configuracion.ordenSeccion}" type="text" class="lblc" />
                                         </div>

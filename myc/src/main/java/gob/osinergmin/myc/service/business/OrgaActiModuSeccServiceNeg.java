@@ -18,4 +18,6 @@ public interface OrgaActiModuSeccServiceNeg {
 
 	OrgaActiModuSeccDTO actualizaConfiguracion(OrgaActiModuSeccDTO orgaActiModuSeccDTO, UsuarioDTO usuarioDTO);
 
+	List<OrgaActiModuSeccDTO> validaConfiguracion(OrgaActiModuSeccDTO orgaActiModuSeccDTO);
+
 }

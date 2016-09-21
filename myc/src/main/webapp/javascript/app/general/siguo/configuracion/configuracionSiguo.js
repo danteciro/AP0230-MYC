@@ -16,9 +16,9 @@ function initInicioFiltroEmpSupe() {
     $('#btnBuscar').click(function(){procesarModulo();});
     $('#btnLimpiar').click(function(){limpiar();});
     $('#btnNuevoModulo').click(function(){abrirMantModulo("new");});
-    $('#btnCloseConfiguracion').click(function(){ $('#dialogMantModulo').dialog('close'); });    
+      
 }
-function abrirMantModulo(tipo,rowid){
+function abrirMantModulo(tipo,rowid,item){
     var title="CONSULTAR ACTIVIDAD - COMPONENTE - SECCION";
     if(tipo=='edit'){
         title="EDITAR ACTIVIDAD - COMPONENTE - SECCION";
@@ -33,6 +33,7 @@ function abrirMantModulo(tipo,rowid){
         async:false,
         data:{
             tipo:tipo,
+            item:item,
             idOrgaActiModuSecc:rowid
         },
         beforeSend:muestraLoading,
@@ -154,19 +155,19 @@ function procesarModulo(flg_load) {
     });
     $("#gridContenedorModulo").append(grid).append(pager);
 
-    var nombres = ['Nro','Nro','GERENCIA','DIVISION','Gerencia/Divisi&oacute;n','ID_ACTIVIDAD','Actividad','Orden Visualizaci&oacute;n Componente','ID_COMPONENTE','Componente','Orden Visualizaci&oacute;n Secci&oacute;n','ID_SECCION','Secci&oacute;n'];
+    var nombres = ['Nro','Nro','GERENCIA','DIVISION','Gerencia/Divisi&oacute;n','ID_ACTIVIDAD','Actividad','Orden Componente','ID_COMPONENTE','Componente','Orden Secci&oacute;n','ID_SECCION','Secci&oacute;n'];
     var columnas = [
-        {name: "idOrgaActiModuSecc", width: 40, sortable: false, hidden: false, align: "center"},
-        {name: "item", width: 140, sortable: false, hidden: true, align: "center"},
+        {name: "idOrgaActiModuSecc", width: 40, sortable: false, hidden: true, align: "center"},
+        {name: "item", width: 40, sortable: false, hidden: false, align: "center"},
         {name: "idUnidadOrganicaSuperior.descripcion", width: 120, sortable: false, hidden: true, align: "center"},
         {name: "idUnidadOrganica.descripcion", width: 100, sortable: false, hidden: true, align: "center"},
         {name: "GerDiv", width: 140, sortable: false, hidden: false, align: "left",formatter:"concatenaGerenciaDivision"},
         {name: "idActividad.idActividad", width: 100, sortable: false, hidden: true, align: "left"},
         {name: "idActividad.descripcionActividad", width: 120, sortable: false, hidden: false, align: "left"},
-        {name: "ordenComponente", width: 100, sortable: false, hidden: false, align: "left"},
+        {name: "ordenComponente", width: 100, sortable: false, hidden: false, align: "center"},
         {name: "idModulo.idModulo", width: 100, sortable: false, hidden: true, align: "left"},
         {name: "idModulo.descripcion", width: 100, sortable: false, hidden: false, align: "left"},
-        {name: "ordenSeccion", width: 100, sortable: false, hidden: false, align: "left"},
+        {name: "ordenSeccion", width: 100, sortable: false, hidden: false, align: "center"},
         {name: "idSeccion.idSeccion", width: 100, sortable: false, hidden: true, align: "left"},
         {name: "idSeccion.descripcion", width: 100, sortable: false, hidden: false, align: "left"}
     ];
@@ -205,8 +206,10 @@ function procesarModulo(flg_load) {
         },
         onRightClickRow: function(rowid, iRow, iCol, e) {
             var row = grid.jqGrid('getRowData', rowid);
-            $('#linkVerModulo').attr('onClick', 'abrirMantModulo("view","' + rowid + '")');
-            $('#linkEditarModulo').attr('onClick', 'abrirMantModulo("edit","' + rowid + '")');
+            item = row.item;
+            console.info('item : - >'+item);
+            $('#linkVerModulo').attr('onClick', 'abrirMantModulo("view","' + rowid + '","'+item+'")');
+            $('#linkEditarModulo').attr('onClick', 'abrirMantModulo("edit","' + rowid + '","'+item+'")');
             $('#linkEliminarModulo').attr('onClick', 'eliminarModulo("' + rowid + '")');
             
             if($('#divEnlaceTagVerModulo input').html()!=null){
@@ -269,7 +272,10 @@ function procGuardarConfiguracionSiguo(){
                 mensajeGrowl("success", global.confirm.save, "");
                 procesarModulo();
                 $('#dialogMantModulo').dialog('close');
-            }else{
+            }else if(data.resultado == '3'){
+            	mensajeGrowl("warn", data.mensaje, "");
+            }
+            else{
                 mensajeGrowl("error", data.mensaje, "");
             }
         },
@@ -295,6 +301,8 @@ function procEditarConfiguracionSiguo(){
                 mensajeGrowl("success", global.confirm.edit, "");
                 procesarModulo();
                 $('#dialogMantModulo').dialog('close');
+            }else if(data.resultado == '3'){
+            	mensajeGrowl("warn", data.mensaje, "");
             }else{
                 mensajeGrowl("error", data.mensaje, "");
             }

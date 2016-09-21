@@ -18,6 +18,19 @@
 <t:template pageTitle="Configuracion del siguo" scrollPanelTitle="">
     <jsp:attribute name="headArea">
         <script type="text/javascript" src='<c:url value="/javascript/app/general/siguo/configuracion/configuracionSiguo.js" />' charset="utf-8"></script>
+    	<style>
+    		.ui-jqgrid tr.jqgrow td {
+                font-size: 12px !important;
+                white-space: normal !important;
+            } 
+            .ui-jqgrid .ui-jqgrid-htable th div {
+                font-size: 12px !important;
+                text-transform: none;
+                white-space:normal !important;
+                position:relative;
+/*                 overflow:hidden; */
+            }
+    	</style>
     </jsp:attribute>
     <jsp:attribute name="bodyArea">    	
         <div id="form_registro">
@@ -35,7 +48,7 @@
 	                                <div class="filaForm">
 	                                    <div class="lble" ><label for="cmbGerencia">Gerencia:</label></div>
 	                                    <div>
-	                                        <select id="cmbGerencia" name="idGerencia" validate="[O]">
+	                                        <select id="cmbGerencia" name="idGerencia" validate="[O]" class="lblxa">
 	                                            <option value="">--Seleccione--</option>
 							                    <c:forEach items="${listadoGerencia}" var="lts">
 							                        <option value='${lts.idUnidadOrganica}'>${lts.descripcion}</option>
@@ -46,7 +59,7 @@
 	                                <div class="filaForm">
 	                                    <div class="lble" ><label for="cmbDivision">Divisi&oacute;n:</label></div>
 	                                    <div>
-	                                        <select id="cmbDivision" name="idDivision" validate="[O]">
+	                                        <select id="cmbDivision" name="idDivision" validate="[O]" class="lblxa">
 	                                            <option value="">--Seleccione--</option>
 	                                        </select>
 	                                    </div>
@@ -54,7 +67,7 @@
 	                                <div class="filaForm">
 	                                    <div class="lble"><label for="txtActivP1">Actividad:</label></div>
                                         <div >
-                                            <input id="txtActivP1" onclick="abrirPopupBusqActividad()" type="text" style="cursor: pointer;" readonly placeholder="Click para seleccionar rubro"/>
+                                            <input id="txtActivP1"  style="width:325px;" onclick="abrirPopupBusqActividad()" type="text" style="cursor: pointer;" readonly placeholder="Click para seleccionar rubro"/>
                                             <input id="txtIdActivP1" type="hidden" />
                                         </div>
                                         <div id="dialogBusqActividad" class="dialog" style="display:none;"></div>
@@ -63,7 +76,7 @@
 	                                <div class="filaForm">
 	                                    <div class="lble" ><label for="cmbComponente">Componente:</label></div>
 	                                    <div>
-	                                        <select id="cmbComponente" name="cmbComponente" validate="[O]">
+	                                        <select id="cmbComponente" name="cmbComponente" validate="[O]" class="lblxa">
 	                                            <option value="">--Seleccione--</option>
 	                                            <c:forEach items="${listadoComponente}" var="ltra">
 							                        <option value='${ltra.idModulo}'>${ltra.descripcion}</option>

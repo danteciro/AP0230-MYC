@@ -23,6 +23,7 @@ function initInicioFiltroEmpSupe() {
     });
     $('#btnGuardarModulo').click(btnGuardarConfiguracionSiguo);
     $('#btnEditarModulo').click(btnEditarConfiguracionSiguo);  
+    $('#btnCloseConfiguracion').click(function(){ $('#dialogMantModulo').dialog('close'); });  
 }
 function listarDivisionesModal() {
     fill.clean("#cmbDivisionModal");

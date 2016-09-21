@@ -96,4 +96,17 @@ public class OrgaActiModuSeccionServiceNegImpl implements OrgaActiModuSeccServic
 		return registro;
 	}
 
+	@Override
+	public List<OrgaActiModuSeccDTO> validaConfiguracion(OrgaActiModuSeccDTO orgaActiModuSeccDTO) {
+		LOG.info("Se valida configuracion");
+		List<OrgaActiModuSeccDTO> registro=null;
+		try{
+			registro=orgaActiModuSeccDAO.valida(orgaActiModuSeccDTO);
+
+		}catch(Exception ex){
+			LOG.error("",ex);
+		}
+		return registro;
+	}
+
 }

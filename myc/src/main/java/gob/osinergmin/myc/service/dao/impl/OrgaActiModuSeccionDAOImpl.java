@@ -1,5 +1,6 @@
 package gob.osinergmin.myc.service.dao.impl;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -9,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import gob.osinergmin.myc.common.util.StringUtil;
 import gob.osinergmin.myc.domain.MdiActividad;
@@ -100,10 +102,10 @@ public class OrgaActiModuSeccionDAOImpl implements OrgaActiModuSeccDAO{
 		List<OrgaActiModuSeccDTO> listado=null;
 		Query query = getFindQuery(filtro);
         
-        if (filtro.getStartIndex() != null && filtro.getResultsNumber() != null) {
-            query.setFirstResult(filtro.getStartIndex());
-            query.setMaxResults(filtro.getResultsNumber());
-        }
+//        if (filtro.getStartIndex() != null && filtro.getResultsNumber() != null) {
+//            query.setFirstResult(filtro.getStartIndex());
+//            query.setMaxResults(filtro.getResultsNumber());
+//        }
 
         listado = OrgaActiModuSeccBuilder.toListOrgaActiModuSeccDto(query.getResultList());
 
@@ -204,6 +206,59 @@ public class OrgaActiModuSeccionDAOImpl implements OrgaActiModuSeccDAO{
 			LOG.error("",ex);
 		}
 		return retorno;
+	}
+
+	@Override
+	public List<OrgaActiModuSeccDTO> valida(OrgaActiModuSeccDTO orgaActiModuSeccDTO) {
+		List<OrgaActiModuSeccDTO> retorno =null;
+		Query query=null;
+		StringBuilder jpql = new StringBuilder();
+       	//
+       	jpql.append(" select ams.id_orga_acti_modu_secc,uos.id_unidad_organica as ID_ORGANICA_SUPERIOR,uos.descripcion as DESCRIPCION_SUPERIOR,ams.id_unidad_organica as ID_ORGANICA, uo.descripcion as DESCRIPCION_UNIDAD," +
+       				" ma.id_actividad,ma.nombre,ams.orden_componente, mo.id_modulo,mo.descripcion as MODULO_DESCRIPCION,ams.orden_seccion,se.id_seccion,se.descripcion as SECCION_DESCRIPCION");
+       	jpql.append(" from pgh_orga_acti_modu_secc ams ");
+       	jpql.append(" left join mdi_unidad_organica uo on ams.id_unidad_organica = uo.id_unidad_organica ");
+       	jpql.append(" left join mdi_unidad_organica uos on uo.id_unidad_organica_superior = uos.id_unidad_organica ");
+       	jpql.append(" left join mdi_actividad ma on ams.id_actividad = ma.id_actividad ");
+       	jpql.append(" left join pgh_modulo mo on ams.id_modulo = mo.id_modulo ");
+       	jpql.append(" left join pgh_seccion se on ams.id_seccion = se.id_seccion ");
+       	jpql.append(" where ams.estado = '1' ");
+       	//condiciones
+       	if(!StringUtil.isEmptyNum(orgaActiModuSeccDTO.getIdUnidadOrganica().getIdUnidadOrganica())){
+       		jpql.append(" and ams.id_unidad_organica =:idUnidadOrganica ");
+       	}
+       	if(!StringUtil.isEmptyNum(orgaActiModuSeccDTO.getIdActividad().getIdActividad())){
+       	    jpql.append(" and ams.id_actividad =:idActividad ");
+       	}
+       	if(!StringUtil.isEmptyNum(orgaActiModuSeccDTO.getIdModulo().getIdModulo())){
+       	    jpql.append(" and ams.id_modulo =:idModulo ");
+       	}
+       	if(!StringUtil.isEmptyNum(orgaActiModuSeccDTO.getIdSeccion().getIdSeccion())){
+       	    jpql.append(" and ams.id_seccion =:idSeccion ");
+       	}
+       	
+        //order by 
+        jpql.append(" order by uos.id_unidad_organica,uo.id_unidad_organica,ma.id_actividad,ams.orden_componente,ams.orden_seccion ");	
+        query = crud.getEm().createNativeQuery(jpql.toString());        
+        if(!StringUtil.isEmptyNum(orgaActiModuSeccDTO.getIdUnidadOrganica().getIdUnidadOrganica())){
+        	query.setParameter("idUnidadOrganica", orgaActiModuSeccDTO.getIdUnidadOrganica().getIdUnidadOrganica());
+        }    
+        if(!StringUtil.isEmptyNum(orgaActiModuSeccDTO.getIdActividad().getIdActividad())){
+        	query.setParameter("idActividad", orgaActiModuSeccDTO.getIdActividad().getIdActividad());
+        }  
+        if(!StringUtil.isEmptyNum(orgaActiModuSeccDTO.getIdModulo().getIdModulo())){
+        	query.setParameter("idModulo", orgaActiModuSeccDTO.getIdModulo().getIdModulo());
+        }  
+        if(!StringUtil.isEmptyNum(orgaActiModuSeccDTO.getIdSeccion().getIdSeccion())){
+        	query.setParameter("idSeccion", orgaActiModuSeccDTO.getIdSeccion().getIdSeccion());
+        }
+        
+        List<Object[]> listado = query.getResultList();
+        if(!CollectionUtils.isEmpty(listado)){
+        	retorno = OrgaActiModuSeccBuilder.toListOrgaActiModuSeccDto(listado);
+        }       
+
+        return retorno;
 	}	
 	
 

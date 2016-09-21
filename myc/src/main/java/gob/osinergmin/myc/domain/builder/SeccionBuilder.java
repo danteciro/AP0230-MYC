@@ -34,7 +34,10 @@ public class SeccionBuilder {
         }
         if(maestro.getObservaciones()!=null){
         	registroDTO.setObservaciones(maestro.getObservaciones());
-        }        
+        }     
+        if(maestro.getDescripcionLarga()!=null){
+        	registroDTO.setDescripcionLarga(maestro.getDescripcionLarga());
+        }
 
         return registroDTO;
 	}

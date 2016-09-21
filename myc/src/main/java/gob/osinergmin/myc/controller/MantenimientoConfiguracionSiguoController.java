@@ -13,18 +13,14 @@
 */ 
 
 package gob.osinergmin.myc.controller;
-import gob.osinergmin.myc.domain.base.BaseConstantesOutBean;
 import gob.osinergmin.myc.domain.dto.ActividadDTO;
-import gob.osinergmin.myc.domain.dto.BaseLegalDTO;
 import gob.osinergmin.myc.domain.dto.ModuloDTO;
 import gob.osinergmin.myc.domain.dto.OrgaActiModuSeccDTO;
-import gob.osinergmin.myc.domain.dto.ProcesoObligacionTipoDTO;
 import gob.osinergmin.myc.domain.dto.SeccionDTO;
+import gob.osinergmin.myc.domain.dto.TipificacionDTO;
 import gob.osinergmin.myc.domain.dto.UnidadOrganicaDTO;
 import gob.osinergmin.myc.domain.dto.UsuarioDTO;
-import gob.osinergmin.myc.domain.in.GuardarProcesoObligacionTipoInRO;
 import gob.osinergmin.myc.service.business.TipificacionServiceNeg;
-import gob.osinergmin.myc.domain.out.GuardarProcesoObligacionTipoOutRO;
 import gob.osinergmin.myc.domain.ui.ModuloFilter;
 import gob.osinergmin.myc.domain.ui.OrgaActiModuSeccionFilter;
 import gob.osinergmin.myc.domain.ui.SeccionFilter;
@@ -40,6 +36,7 @@ import gob.osinergmin.myc.util.Constantes;
 import gob.osinergmin.myc.util.ConstantesWeb;
 
 import java.net.Inet4Address;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -125,14 +122,28 @@ public class MantenimientoConfiguracionSiguoController {
             
                 listado =orgaActiModuSeccServiceNeg.listarOrgaActiModuSeccion(filtro,auxiliar); //procesoObligacionTipoNeg.listarProcesoObligacionTipo(filtro, auxiliar);//obligacionTipoNeg.listarObligacionTipo(filtro, auxiliar);
                 LOG.info("cuenta Controller findActividadComponenteSeccion="+auxiliar[0]);
-                cuenta=auxiliar[0];
                 
-                if (cuenta > 0) {
-                    total = (int) Math.ceil((double) cuenta / (double) rows);
+                Long contador = new Long(listado.size());
+                int indiceInicial = (page - 1) * rows;
+                int indiceFinal = indiceInicial + rows;
+                List<OrgaActiModuSeccDTO> listaTipificacionPaginada = new ArrayList<OrgaActiModuSeccDTO>();
+                listaTipificacionPaginada = listado.subList(
+                        indiceInicial, indiceFinal > listado
+                        .size() ? listado.size()
+                        : indiceFinal);
+                Long numeroFilas = (contador / rows);
+                if ((contador % rows) > 0) {
+                    numeroFilas = numeroFilas + 1L;
                 }
-                retorno.put("total", total);	            
-	            retorno.put("registros", cuenta);
-	            retorno.put("filas", listado);
+                
+//                cuenta=auxiliar[0];
+//                
+//                if (cuenta > 0) {
+//                    total = (int) Math.ceil((double) cuenta / (double) rows);
+//                }
+                retorno.put("total", numeroFilas);	            
+	            retorno.put("registros", contador);
+	            retorno.put("filas", listaTipificacionPaginada);
             }
                 
                         
@@ -142,7 +153,7 @@ public class MantenimientoConfiguracionSiguoController {
         return retorno;
     }
     @RequestMapping(value = "/abrirMantModulo", method = RequestMethod.GET)
-    public String abrirMantObligacionProceso( String tipo,Long idOrgaActiModuSecc,HttpSession sesion,Model model ) {
+    public String abrirMantObligacionProceso( String tipo,Long idOrgaActiModuSecc,Long item,HttpSession sesion,Model model ) {
         try{
         	List<UnidadOrganicaDTO> GerUO=unidadOrganicaServiceNeg.findUnidadOrganica(new UnidadOrganicaFilter(null,null,Constantes.NIVEL_GERENCIA));
         	List<ModuloDTO> Componente=moduloServiceNeg.findModulo(new ModuloFilter(Constantes.ESTADO_ACTIVO));
@@ -153,7 +164,7 @@ public class MantenimientoConfiguracionSiguoController {
                 model.addAttribute("idOrgaActiModuSecc", idOrgaActiModuSecc);   
                 model.addAttribute("configuracion", configuracion);
             }
-
+            model.addAttribute("item",item);
             model.addAttribute("listadoGerenciaModal",GerUO);
         	model.addAttribute("listadoComponenteModal",Componente);
         	model.addAttribute("listadoSeccionModal",Seccion);
@@ -172,12 +183,20 @@ public class MantenimientoConfiguracionSiguoController {
             usuarioDTO.setCodigo(ConstantesWeb.getUSUARIO(request));
             usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
             
-            orgaActiModuSeccDTO.setIdOrgaActiModuSecc(null);
-            orgaActiModuSeccDTO.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
-            OrgaActiModuSeccDTO configuracion=orgaActiModuSeccServiceNeg.guardaConfiguracion(orgaActiModuSeccDTO,usuarioDTO);
-            String mensaje = "Exito";
-            retorno.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_EXITO);           
-            retorno.put(ConstantesWeb.VV_MENSAJE, mensaje);
+            List<OrgaActiModuSeccDTO> validaConfiguracion = orgaActiModuSeccServiceNeg.validaConfiguracion(orgaActiModuSeccDTO);
+            if(validaConfiguracion!=null){
+            	String mensaje = "Configuraci&oacute;n existente";
+            	retorno.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_ADVERTENCIA_EXISTENCIA);   
+                retorno.put(ConstantesWeb.VV_MENSAJE, mensaje);
+            }else{
+            	orgaActiModuSeccDTO.setIdOrgaActiModuSecc(null);
+                orgaActiModuSeccDTO.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
+                OrgaActiModuSeccDTO configuracion=orgaActiModuSeccServiceNeg.guardaConfiguracion(orgaActiModuSeccDTO,usuarioDTO);
+                String mensaje = "Exito";
+                retorno.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_EXITO);           
+                retorno.put(ConstantesWeb.VV_MENSAJE, mensaje);
+            }
+            
         }catch(Exception e){            
             retorno.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_ERROR);
             retorno.put(ConstantesWeb.VV_MENSAJE, e.getMessage());
@@ -195,12 +214,19 @@ public class MantenimientoConfiguracionSiguoController {
             usuarioDTO.setCodigo(ConstantesWeb.getUSUARIO(request));
             usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
             
+            List<OrgaActiModuSeccDTO> validaConfiguracion = orgaActiModuSeccServiceNeg.validaConfiguracion(orgaActiModuSeccDTO);
+            if(validaConfiguracion!=null){
+            	String mensaje = "Configuraci&oacute;n existente";
+            	retorno.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_ADVERTENCIA_EXISTENCIA);   
+                retorno.put(ConstantesWeb.VV_MENSAJE, mensaje);
+            }else{
             orgaActiModuSeccDTO.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
             OrgaActiModuSeccDTO configuracion=orgaActiModuSeccServiceNeg.actualizaConfiguracion(orgaActiModuSeccDTO,usuarioDTO);
             
             String mensaje = "Exito";
             retorno.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_EXITO);
             retorno.put(ConstantesWeb.VV_MENSAJE, mensaje);
+            }
         }catch(Exception e){            
             retorno.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_ERROR);
             retorno.put(ConstantesWeb.VV_MENSAJE, e.getMessage());

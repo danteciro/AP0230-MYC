@@ -16,6 +16,7 @@ package gob.osinergmin.myc.domain.dto;
 public class SeccionDTO {
 	private Long idSeccion;
 	private String descripcion;
+	private String descripcionLarga;
 	private String ruta;
 	private String observaciones;
 	private String estado;
@@ -50,4 +51,11 @@ public class SeccionDTO {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
+	public String getDescripcionLarga() {
+		return descripcionLarga;
+	}
+	public void setDescripcionLarga(String descripcionLarga) {
+		this.descripcionLarga = descripcionLarga;
+	}
+	
 }

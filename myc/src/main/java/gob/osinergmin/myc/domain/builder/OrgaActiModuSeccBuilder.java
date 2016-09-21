@@ -20,17 +20,21 @@ public class OrgaActiModuSeccBuilder {
 		OrgaActiModuSeccDTO registroDTO;
         List<OrgaActiModuSeccDTO> retorno = new ArrayList<OrgaActiModuSeccDTO>();
         if (listado != null) {
+        	Long contador = new Long(0);
             for (Object[] maestro : listado) {
-                registroDTO = toOrgaActiModuSeccDto(maestro);
+            	contador++;
+                registroDTO = toOrgaActiModuSeccDto(contador,maestro);
                 retorno.add(registroDTO);
             }
         }
         return retorno;
 	}
 
-	public static OrgaActiModuSeccDTO toOrgaActiModuSeccDto(Object[] maestro) {
+	public static OrgaActiModuSeccDTO toOrgaActiModuSeccDto(Long contador, Object[] maestro) {
 		OrgaActiModuSeccDTO orgaActiModuSeccDTO = new OrgaActiModuSeccDTO();
 		
+		orgaActiModuSeccDTO.setItem(contador);
+		System.out.println(orgaActiModuSeccDTO.getItem());
 		if(maestro[0]!=null){
 			orgaActiModuSeccDTO.setIdOrgaActiModuSecc(new Long(maestro[0].toString()));
 		}

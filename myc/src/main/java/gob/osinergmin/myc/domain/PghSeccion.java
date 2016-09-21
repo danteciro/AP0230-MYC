@@ -46,6 +46,8 @@ public class PghSeccion extends Auditoria {
     @Basic(optional = false)
     @Column(name = "DESCRIPCION")
     private String descripcion;
+    @Column(name = "DESCRIPCION_LARGA")
+    private String descripcionLarga;
     @Column(name = "RUTA")
     private String ruta;
     @Column(name = "OBSERVACIONES")
@@ -114,9 +116,17 @@ public class PghSeccion extends Auditoria {
 
     public void setEstado(String estado) {
         this.estado = estado;
-    }    
+    }      
 
-    @XmlTransient
+    public String getDescripcionLarga() {
+		return descripcionLarga;
+	}
+
+	public void setDescripcionLarga(String descripcionLarga) {
+		this.descripcionLarga = descripcionLarga;
+	}
+
+	@XmlTransient
     public List<PghOrgaActiModuSecc> getPghOrgaActiModuSeccList() {
         return pghOrgaActiModuSeccList;
     }

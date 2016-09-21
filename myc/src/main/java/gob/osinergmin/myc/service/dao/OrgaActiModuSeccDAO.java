@@ -14,5 +14,6 @@ public interface OrgaActiModuSeccDAO {
 	OrgaActiModuSeccDTO delete(OrgaActiModuSeccDTO orgaActiModuSeccDTO,UsuarioDTO usuarioDTO);
 	OrgaActiModuSeccDTO find(Long idOrgaActiModuSecc);
 	OrgaActiModuSeccDTO update(OrgaActiModuSeccDTO orgaActiModuSeccDTO,UsuarioDTO usuarioDTO);
+	List<OrgaActiModuSeccDTO> valida(OrgaActiModuSeccDTO orgaActiModuSeccDTO);
 
 }
