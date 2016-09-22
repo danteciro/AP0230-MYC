@@ -2697,7 +2697,10 @@ var nuevaObligacionNormativa = (function() {
             //beforeSend:muestraLoading,
             success: function(data) {
                 //ocultaLoading();
-            	treeDataActividad = fxTreeActividad.build(data.filas);
+            	if(data.filas!=null){
+            		treeDataActividad = fxTreeActividad.build(data.filas);
+            	}
+            	
             },
             error:errorAjax
         });

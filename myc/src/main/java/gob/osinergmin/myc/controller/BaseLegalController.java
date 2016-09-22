@@ -89,6 +89,10 @@ public class BaseLegalController {
     //al cargar la página
     @RequestMapping(method=RequestMethod.GET)
     public String inicio(Model model,HttpServletRequest request) {
+    	request.getSession().removeAttribute("idPersonal");
+    	request.getSession().removeAttribute("idPersonalSiged");
+    	request.getSession().removeAttribute("identificadorRol");
+    	
     	String username=ConstantesWeb.getUSUARIO(request);
     	String navegacion=ConstantesWeb.Navegacion.PAGE_INICIO_MANTENIMIENTO_BASE_LEGAL;
         LOG.info("username:"+username);
@@ -106,7 +110,7 @@ public class BaseLegalController {
             request.getSession().setAttribute("idPersonalSiged", personal.getIdPersonalSiged());
             request.getSession().setAttribute("identificadorRol", personal.getRol().getIdentificadorRol());
             model.addAttribute("nombreRol", personal.getRol().getNombreRol());          
-        }        
+        }
         model.addAttribute("personal",personal);
         model.addAttribute("idPersonal", ConstantesWeb.getIDPERSONAL(request));    	
         return navegacion;
@@ -763,6 +767,7 @@ public class BaseLegalController {
     	LOG.info("Funcion: Find Unidad-Division -- Controller -- Metodo-> findUnidadDivision");    	
         Map<String,Object> listaResultado=new HashMap<String,Object>();     
         try{
+        	request.getSession().removeAttribute(Constantes.ACTIVIDADES_ORGANICA_DIVISION_CONCATENADA);
             filtro.setFlagDefault(Constantes.ESTADO_ACTIVO);
             List<PersonalDTO> personalUnidOrgDefault = personalServiceNeg.findPersonal(filtro);
             if(personalUnidOrgDefault!=null && personalUnidOrgDefault.size()>0 
