@@ -213,19 +213,35 @@ public class MantenimientoConfiguracionSiguoController {
         	UsuarioDTO usuarioDTO = new UsuarioDTO();
             usuarioDTO.setCodigo(ConstantesWeb.getUSUARIO(request));
             usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
-            
+            OrgaActiModuSeccDTO cnfIni = orgaActiModuSeccServiceNeg.find(orgaActiModuSeccDTO.getIdOrgaActiModuSecc());
+            LOG.info("INICIAL ID UNI : "+cnfIni.getIdUnidadOrganica().getIdUnidadOrganica() + " ID ACTI : "+cnfIni.getIdActividad().getIdActividad() + " ID MOD : "+ cnfIni.getIdModulo().getIdModulo() + " ID SEC : "+cnfIni.getIdSeccion().getIdSeccion());
+            LOG.info("FINAL ID UNI : "+orgaActiModuSeccDTO.getIdUnidadOrganica().getIdUnidadOrganica() + " ID ACTI : "+orgaActiModuSeccDTO.getIdActividad().getIdActividad() + " ID MOD : "+ orgaActiModuSeccDTO.getIdModulo().getIdModulo() + " ID SEC : "+orgaActiModuSeccDTO.getIdSeccion().getIdSeccion());
             List<OrgaActiModuSeccDTO> validaConfiguracion = orgaActiModuSeccServiceNeg.validaConfiguracion(orgaActiModuSeccDTO);
             if(validaConfiguracion!=null){
-            	String mensaje = "Configuraci&oacute;n existente";
-            	retorno.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_ADVERTENCIA_EXISTENCIA);   
-                retorno.put(ConstantesWeb.VV_MENSAJE, mensaje);
+            	if(cnfIni.getIdUnidadOrganica().getIdUnidadOrganica().equals(orgaActiModuSeccDTO.getIdUnidadOrganica().getIdUnidadOrganica()) 
+            			&& cnfIni.getIdActividad().getIdActividad().equals(orgaActiModuSeccDTO.getIdActividad().getIdActividad())
+            			&& cnfIni.getIdModulo().getIdModulo().equals(orgaActiModuSeccDTO.getIdModulo().getIdModulo())
+            			&& cnfIni.getIdSeccion().getIdSeccion().equals(orgaActiModuSeccDTO.getIdSeccion().getIdSeccion())){
+            		
+            		orgaActiModuSeccDTO.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
+                    OrgaActiModuSeccDTO configuracionA=orgaActiModuSeccServiceNeg.actualizaConfiguracion(orgaActiModuSeccDTO,usuarioDTO);
+                    
+                    String mensaje = "Exito";
+                    retorno.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_EXITO);
+                    retorno.put(ConstantesWeb.VV_MENSAJE, mensaje);
+            		
+            	}else{
+            		String mensaje = "Configuraci&oacute;n existente";
+            		retorno.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_ADVERTENCIA_EXISTENCIA);   
+            		retorno.put(ConstantesWeb.VV_MENSAJE, mensaje);
+            	}
             }else{
-            orgaActiModuSeccDTO.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
-            OrgaActiModuSeccDTO configuracion=orgaActiModuSeccServiceNeg.actualizaConfiguracion(orgaActiModuSeccDTO,usuarioDTO);
-            
-            String mensaje = "Exito";
-            retorno.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_EXITO);
-            retorno.put(ConstantesWeb.VV_MENSAJE, mensaje);
+	            orgaActiModuSeccDTO.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
+	            OrgaActiModuSeccDTO configuracionB=orgaActiModuSeccServiceNeg.actualizaConfiguracion(orgaActiModuSeccDTO,usuarioDTO);
+	            
+	            String mensaje = "Exito";
+	            retorno.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_EXITO);
+	            retorno.put(ConstantesWeb.VV_MENSAJE, mensaje);
             }
         }catch(Exception e){            
             retorno.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_ERROR);
