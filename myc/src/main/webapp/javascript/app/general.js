@@ -89,9 +89,9 @@ $(function() {
 });
 
 var numericMonto = {
-		allowNumeric   : true,
-		allowLatin : false,
-		allowOtherCharSets : false,
+            allowNumeric   : true,
+            allowLatin : false,
+            allowOtherCharSets : false,
 	    allowSpace    : false,
 	    allow    : '.'
 	};
@@ -158,6 +158,14 @@ var enteroMonto = {
 	    allowSpace    : false,
 	    disallow : '.eE'
 	};
+/* OSINE_SFS-1232 */
+var numericPorcentaje = {
+    allowNumeric   : true,
+    allowLatin : false,
+    allowOtherCharSets : false,
+    allowSpace    : false,
+};
+/* OSINE_SFS-1232 */
 
 var alphaNumOptions = {
     allowNumeric  : true,

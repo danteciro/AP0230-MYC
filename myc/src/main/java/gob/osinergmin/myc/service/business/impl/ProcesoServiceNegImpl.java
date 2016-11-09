@@ -8,6 +8,7 @@ import gob.osinergmin.myc.domain.dto.ProcesoDTO;
 import gob.osinergmin.myc.domain.ui.ProcesoFilter;
 import gob.osinergmin.myc.service.business.ProcesoServiceNeg;
 import gob.osinergmin.myc.service.dao.ProcesoDAO;
+import gob.osinergmin.myc.service.exception.ProcesoException;
 import gob.osinergmin.myc.util.Constantes;
 import java.util.List;
 import javax.inject.Inject;
@@ -38,4 +39,18 @@ public class ProcesoServiceNegImpl implements ProcesoServiceNeg {
         }
         return retorno;
     }
+    /* OSINE_SFS-1232 - REQF- - Inicio */
+	@Override
+	public List<ProcesoDTO> listarProcesoByIdentificador(ProcesoFilter filtro){
+		    LOG.info("Neg listarProcesoByIdentificador");
+		    List<ProcesoDTO> retorno=null;
+		    try{
+		        retorno = procesoDAO.listarProcesoByIdentificador(filtro);
+		    }catch(Exception ex){
+		        LOG.error("",ex);
+		    }
+		    return retorno;
+
+	}
+	/* OSINE_SFS-1232 - REQF- - Inicio */
 }

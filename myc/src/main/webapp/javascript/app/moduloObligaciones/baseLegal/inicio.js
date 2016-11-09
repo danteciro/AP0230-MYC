@@ -472,6 +472,7 @@ var busquedaBaseLegal = (function() {
                 		$('#dateFecVigenciaNormaAnexo').removeAttr('disabled');
                 	}
                 	$('#chkCrearObligacion').removeAttr('disabled');
+                	gestionBaseLegal.concatenaDescripcionBaseLegal();
                 	// Fin MYC-7 Cambio de Alcance
             	}else if(flagPadre=="padre"){
             		gestionBaseLegal.validaComportamientoRegistroBaseLegal();

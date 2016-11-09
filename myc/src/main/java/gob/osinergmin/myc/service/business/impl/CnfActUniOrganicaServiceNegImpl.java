@@ -5,6 +5,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import gob.osinergmin.myc.domain.dto.ActividadDTO;
+import gob.osinergmin.myc.domain.dto.CnfActUniOrganicaDTO;
+import gob.osinergmin.myc.domain.ui.ActividadFilter;
 import gob.osinergmin.myc.domain.ui.UnidadOrganicaFilter;
 import gob.osinergmin.myc.service.business.CnfActUniOrganicaServiceNeg;
 import gob.osinergmin.myc.service.dao.CnfActUniOrganicaDAO;
@@ -32,4 +34,19 @@ public class CnfActUniOrganicaServiceNegImpl implements CnfActUniOrganicaService
         return listado;	
 	}
 
+	/* OSINE_SFS-1232 - REQF- - Inicio */
+	@Override
+	public List<CnfActUniOrganicaDTO> findByActividadAndUnidadOrganica(
+			UnidadOrganicaFilter unidadOrganicaFilter,
+			ActividadFilter actividadFilter) {
+		LOG.info("Capa Negocio => findByActividadAndUnidadOrganica");
+		List<CnfActUniOrganicaDTO> listado=null;
+        try{
+        	listado = cnfActUniOrganicaDAO.findByActividadAndUnidadOrganica(unidadOrganicaFilter, actividadFilter);            	
+        }catch(Exception ex){
+            LOG.error("Error ",ex);
+        }
+        return listado;	
+	}
+	/* OSINE_SFS-1232 - REQF- - Inicio */
 }

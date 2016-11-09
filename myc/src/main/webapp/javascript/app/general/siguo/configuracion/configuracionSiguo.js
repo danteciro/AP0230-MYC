@@ -19,14 +19,15 @@ function initInicioFiltroEmpSupe() {
       
 }
 function abrirMantModulo(tipo,rowid,item){
-    var title="CONSULTAR ACTIVIDAD - COMPONENTE - SECCION";
+	// &Oacute
+	var row = $('#gridModulo').jqGrid('getRowData', rowid);
+    var title="CONSULTAR ACTIVIDAD - COMPONENTE - SECCIÓN";
     if(tipo=='edit'){
-        title="EDITAR ACTIVIDAD - COMPONENTE - SECCION";
+        title="EDITAR ACTIVIDAD - COMPONENTE - SECCIÓN";
     }else if(tipo=='new'){
-        title="NUEVO ACTIVIDAD - COMPONENTE - SECCION";
+        title="NUEVO ACTIVIDAD - COMPONENTE - SECCIÓN";
+        item = $("#gridModulo").jqGrid('getGridParam', 'records')+1;
     }
-    
-    var row = $('#gridModulo').jqGrid('getRowData', rowid);
     $.ajax({
         url:baseURL + "pages/mantenimientoConfiguracionSiguo/abrirMantModulo", 
         type:'get',
@@ -155,7 +156,7 @@ function procesarModulo(flg_load) {
     });
     $("#gridContenedorModulo").append(grid).append(pager);
 
-    var nombres = ['Nro','Nro','GERENCIA','DIVISION','Gerencia/Divisi&oacute;n','ID_ACTIVIDAD','Actividad','Orden Componente','ID_COMPONENTE','Componente','Orden Secci&oacute;n','ID_SECCION','Secci&oacute;n'];
+    var nombres = ['Nro','Nro','GERENCIA','DIVISI&OacuteM;N','Gerencia/Divisi&oacute;n','ID_ACTIVIDAD','Actividad','Orden Componente','ID_COMPONENTE','Componente','Orden Secci&oacute;n','ID_SECCION','Secci&oacute;n'];
     var columnas = [
         {name: "idOrgaActiModuSecc", width: 40, sortable: false, hidden: true, align: "center"},
         {name: "item", width: 40, sortable: false, hidden: false, align: "center"},
@@ -206,8 +207,11 @@ function procesarModulo(flg_load) {
         },
         onRightClickRow: function(rowid, iRow, iCol, e) {
             var row = grid.jqGrid('getRowData', rowid);
-            item = row.item;
+            //item = row.item;
+            var item = row['item'];
             console.info('item : - >'+item);
+            
+            
             $('#linkVerModulo').attr('onClick', 'abrirMantModulo("view","' + rowid + '","'+item+'")');
             $('#linkEditarModulo').attr('onClick', 'abrirMantModulo("edit","' + rowid + '","'+item+'")');
             $('#linkEliminarModulo').attr('onClick', 'eliminarModulo("' + rowid + '")');

@@ -19,8 +19,11 @@ import gob.osinergmin.myc.domain.dto.ActividadDTO;
 import gob.osinergmin.myc.domain.dto.ProcesoObligacionTipoDTO;
 import gob.osinergmin.myc.domain.dto.UsuarioDTO;
 import gob.osinergmin.myc.domain.ui.ActividadFilter;
+import gob.osinergmin.myc.domain.ui.CnfActUniOrganicaFilter;
+import gob.osinergmin.myc.domain.ui.UnidadOrganicaFilter;
 import gob.osinergmin.myc.service.business.ActividadServiceNeg;
 import gob.osinergmin.myc.service.dao.ActividadDAO;
+import gob.osinergmin.myc.service.exception.ActividadException;
 import gob.osinergmin.myc.util.Constantes;
 import gob.osinergmin.myc.util.ConstantesWeb;
 
@@ -250,4 +253,32 @@ public class ActividadServiceNegImpl implements ActividadServiceNeg{
         }
         return retorno;
 	}
+	  /* OSINE_SFS-1232 - REQF- - Inicio */
+	@Override
+	public List<ActividadDTO> findActividadByEtapaConfiguracion(ActividadFilter filtro, UnidadOrganicaFilter unidadOrganicaFilter) throws ActividadException {
+		List<ActividadDTO> lista = actividadDAO.findActividadByEtapaConfiguracion(filtro, unidadOrganicaFilter);
+		return lista;
+	}
+
+	@Override
+	public List<ActividadDTO> findActividadesPadre(ActividadFilter filtro, UnidadOrganicaFilter unidadOrganicaFilter)	throws ActividadException {
+		List<ActividadDTO> lista = actividadDAO.findActividadesPadre(filtro, unidadOrganicaFilter);
+		return lista;
+	
+	}
+
+	@Override
+	public List<ActividadDTO> findActividadesHijasJoinEtapaConfiguracion(ActividadFilter filtro) throws ActividadException {
+		List<ActividadDTO> lista = actividadDAO.findActividadesHijasJoinEtapaConfiguracion(filtro);
+		return lista;
+	
+	}
+	
+	@Override
+	public List<ActividadDTO> findActividadByIdCnfActUniOrganicaDTO(CnfActUniOrganicaFilter cnfActUniOrganicaFilter) throws ActividadException {
+		List<ActividadDTO> lista = actividadDAO.findActividadByIdCnfActUniOrganicaDTO(cnfActUniOrganicaFilter);
+		return lista;
+	}
+	  /* OSINE_SFS-1232 - REQF- - Fin */
+
 }

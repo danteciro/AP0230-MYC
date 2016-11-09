@@ -7,6 +7,7 @@ import gob.osinergmin.myc.domain.MdiUnidadOrganica;
 import gob.osinergmin.myc.domain.builder.UnidadOrganicaBuilder;
 import gob.osinergmin.myc.domain.dto.UnidadOrganicaDTO;
 import gob.osinergmin.myc.domain.dto.UsuarioDTO;
+import gob.osinergmin.myc.domain.ui.CnfActUniOrganicaFilter;
 import gob.osinergmin.myc.domain.ui.UnidadOrganicaFilter;
 import gob.osinergmin.myc.service.dao.CrudDAO;
 import gob.osinergmin.myc.service.dao.UnidadOrganicaDAO;
@@ -99,4 +100,101 @@ public class UnidadOrganicaDAOImpl implements UnidadOrganicaDAO{
         }
 		return null;
 	}
+	 /* OSINE_SFS-1232 - REQF- - Inicio */
+	@Override
+	public List<UnidadOrganicaDTO> findUnidadOrganicaByEtapaConfiguracion(UnidadOrganicaFilter filtro) throws UnidadOrganicaException {
+		Query query = null;
+		StringBuilder sql = new StringBuilder();
+		String queryString = new String();
+		List<UnidadOrganicaDTO> lista = new ArrayList<UnidadOrganicaDTO>();
+		List<MdiUnidadOrganica> listaMdiUO =  new ArrayList<MdiUnidadOrganica>();
+		sql.append(" select distinct uo from MdiUnidadOrganica uo, PghCnfActUniOrganica cuo where uo.idUnidadOrganica = cuo.idUnidadOrganica.idUnidadOrganica ");
+		queryString = sql.toString();
+		query = crud.getEm().createQuery(queryString);
+		listaMdiUO = query.getResultList();
+		lista = UnidadOrganicaBuilder.toListUnidadOrganicaDto(listaMdiUO); 
+		return lista;
+	}
+
+	
+	public boolean estaEnLista(List<UnidadOrganicaDTO> lista, UnidadOrganicaDTO unidadOrganicaDTO){
+		for (UnidadOrganicaDTO unidad : lista) {
+			if(unidad.getIdUnidadOrganica()== unidadOrganicaDTO.getIdUnidadOrganica())
+				return true;
+		}
+		return false;
+	}
+	
+	
+	@Override
+	public List<UnidadOrganicaDTO> findUnidadOrganicaGerencia(UnidadOrganicaFilter filtro) throws UnidadOrganicaException {
+		List<UnidadOrganicaDTO> listaUnidadesHijas = findUnidadOrganicaByEtapaConfiguracion(filtro);
+	    List<UnidadOrganicaDTO> listaUnidadPadre = new ArrayList<UnidadOrganicaDTO>();
+	    
+	    UnidadOrganicaFilter unidadOrganicaFilter = new UnidadOrganicaFilter();
+	    unidadOrganicaFilter.setIdUnidadOrganica(listaUnidadesHijas.get(0).getIdUnidadOrganicaSuperior());
+	    UnidadOrganicaDTO unidadOrganicaDTOPadre = findUnidadOrganica(unidadOrganicaFilter).get(0);
+	    
+		if(listaUnidadesHijas.size()>0)
+			listaUnidadPadre.add(unidadOrganicaDTOPadre);
+		
+		for (UnidadOrganicaDTO unidadOrganicaDTO : listaUnidadesHijas) {
+			unidadOrganicaFilter = new UnidadOrganicaFilter();
+		    unidadOrganicaFilter.setIdUnidadOrganica(unidadOrganicaDTO.getIdUnidadOrganicaSuperior());
+		    unidadOrganicaDTOPadre = findUnidadOrganica(unidadOrganicaFilter).get(0);
+			
+			if(!estaEnLista(listaUnidadPadre, unidadOrganicaDTOPadre)){
+				listaUnidadPadre.add(unidadOrganicaDTOPadre);
+			}
+		}
+		return listaUnidadPadre;
+	}
+
+	@Override
+	public List<UnidadOrganicaDTO> findUnidadesNivelTresJoinEtapaConfiguracion(
+			UnidadOrganicaFilter filtro) throws UnidadOrganicaException {
+		Query query = null;
+		StringBuilder sql = new StringBuilder();
+		String queryString = new String();
+		List<UnidadOrganicaDTO> lista = new ArrayList<UnidadOrganicaDTO>();
+		List<MdiUnidadOrganica> listaMdiUO =  new ArrayList<MdiUnidadOrganica>();
+		sql.append(" select distinct uo from MdiUnidadOrganica uo, PghCnfActUniOrganica cuo where uo.idUnidadOrganica = cuo.idUnidadOrganica.idUnidadOrganica ");
+		if(filtro.getIdUnidadOrganica()!=null){
+			sql.append(" and uo.idUnidadOrganicaSuperior = " + filtro.getIdUnidadOrganica()); 
+		}
+		queryString = sql.toString();
+		query = crud.getEm().createQuery(queryString);
+		listaMdiUO = query.getResultList();
+		lista = UnidadOrganicaBuilder.toListUnidadOrganicaDto(listaMdiUO); 
+		return lista;
+	}
+
+	@Override
+	public List<UnidadOrganicaDTO> findUnidadUnidadOrganicaDTOByIdCnfActUniOrganicaDTO(
+			CnfActUniOrganicaFilter cnfActUniOrganicaFilter)
+			throws UnidadOrganicaException {
+		Query query = null;
+		StringBuilder sql = new StringBuilder();
+		String queryString = new String();
+		List<UnidadOrganicaDTO> lista = new ArrayList<UnidadOrganicaDTO>();
+		List<MdiUnidadOrganica> listaMdiUO =  new ArrayList<MdiUnidadOrganica>();
+		sql.append(" select distinct uo from MdiUnidadOrganica uo, PghCnfActUniOrganica cuo where uo.idUnidadOrganica = cuo.idUnidadOrganica.idUnidadOrganica ");
+		if(cnfActUniOrganicaFilter.getIdCnfActUniOrganicaFilter()!=null){
+			sql.append(" and cuo.idCnfActUniOrganica = " + cnfActUniOrganicaFilter.getIdCnfActUniOrganicaFilter()); 
+		}
+		queryString = sql.toString();
+		query = crud.getEm().createQuery(queryString);
+		listaMdiUO = query.getResultList();
+		lista = UnidadOrganicaBuilder.toListUnidadOrganicaDto(listaMdiUO); 
+		return lista;
+	}
+	
+	
+	
+	/* OSINE_SFS-1232 - REQF- - Fin */
+	
+	
+	
+	
+	
 }

@@ -10,9 +10,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
+import gob.osinergmin.myc.domain.PghCnfActUniOrganica;
 import gob.osinergmin.myc.domain.builder.CnfActUniOrganicaBuilder;
 import gob.osinergmin.myc.domain.dto.ActividadDTO;
+import gob.osinergmin.myc.domain.dto.CnfActUniOrganicaDTO;
+import gob.osinergmin.myc.domain.ui.ActividadFilter;
 import gob.osinergmin.myc.domain.ui.UnidadOrganicaFilter;
 import gob.osinergmin.myc.service.dao.CnfActUniOrganicaDAO;
 import gob.osinergmin.myc.service.dao.CrudDAO;
@@ -40,22 +44,48 @@ public class CnfActUniOrganicaDAOImpl implements CnfActUniOrganicaDAO {
         return listado;
 	}
 	
-
-    
     private Query getFindQuery(UnidadOrganicaFilter filtro) {
         Query query;
-        
         if(filtro.getIdUnidadOrganica()!=null){
             query = crud.getEm().createNamedQuery("PghCnfActUniOrganica.findByIdUnidadOrganica");
         }else{
             query = crud.getEm().createNamedQuery("PghCnfActUniOrganica.findAll");
         }
-        
         if (filtro.getIdUnidadOrganica()!= null) {
             query.setParameter("idUnidadOrganica",filtro.getIdUnidadOrganica());
         }
-                
         return query;
     }
 
+    /* OSINE_SFS-1232 - REQF- - Inicio */
+    @Override
+	public List<CnfActUniOrganicaDTO> findByActividadAndUnidadOrganica(UnidadOrganicaFilter unidadOrganicaFilter, ActividadFilter actividadFilter) {
+    	List<CnfActUniOrganicaDTO> listado=null;
+        try{
+            Query query = null;
+            query = crud.getEm().createNamedQuery("PghCnfActUniOrganica.findByUnidadAndActividad");
+            if(unidadOrganicaFilter.getIdUnidadOrganica()!=null){
+            	query.setParameter("idUnidadOrganica", unidadOrganicaFilter.getIdUnidadOrganica());
+            }
+            if(actividadFilter.getIdActividad()!=null){
+            	query.setParameter("idActividad", actividadFilter.getIdActividad());
+            }            
+            
+            List<PghCnfActUniOrganica> lista = query.getResultList();
+            if(!CollectionUtils.isEmpty(lista)){
+            	listado = CnfActUniOrganicaBuilder.toListCnfActUniOrganicaDTO(lista);
+            }
+            
+        }catch(Exception e){
+            LOG.error("Exception en find, locadorServiceImpl");
+            LOG.error(e.getMessage());
+        }
+        return listado;
+	}
+	
+    /* OSINE_SFS-1232 - REQF- - Fin */
+    
+    
+    
+    
 }

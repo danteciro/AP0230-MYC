@@ -664,19 +664,19 @@ var gestionBaseLegal = (function() {
         	if(nuevoBL.chkObligacion.val()==1){
         		nuevoBL.chkObligacion.attr('checked',true);
         		nuevoBL.chkObligacion.removeAttr('disabled');
-//        		concatenaDescripcionBaseLegal();
+        		concatenaDescripcionBaseLegal();
         	}
         	
         	if(nuevoBL.chkModificatoria.val()==1){
         		nuevoBL.chkModificatoria.attr('checked',true);
         		nuevoBL.chkModificatoria.removeAttr('disabled');
-//        		concatenaDescripcionBaseLegal();
+        		concatenaDescripcionBaseLegal();
         	}
         	
         	if(nuevoBL.chkConcordancia.val()==1){
         		nuevoBL.chkConcordancia.attr('checked',true);
         		nuevoBL.chkConcordancia.removeAttr('disabled');
-//        		concatenaDescripcionBaseLegal();
+        		concatenaDescripcionBaseLegal();
         	}
         	if(nuevoBL.chkConcordancia.attr('checked')){
         		nuevoBL.divListadoBasesLegalesConcordancia.css("display","block");
@@ -741,6 +741,9 @@ var gestionBaseLegal = (function() {
     	$('#dateFecVigenciaNorma').datepicker('option','minDate',$('#dateFecVigencia').val()).trigger('change');
     	$('#dateFecVigenciaNormaAnexo').datepicker('option','minDate',$('#dateFecVigencia').val()).trigger('change');
     	console.info('ingreso');
+    	
+    	gestionBaseLegal.concatenaDescripcionBaseLegal();
+    	console.info('paso concatenar');
    	}
     
     function configuracionBasicaFechaVigencia() {
@@ -2058,9 +2061,11 @@ concatenaDescripcionBaseLegal();
             concatenado = ArticuloValidado + Inciso1Validado + Inciso2Validado + " de " +
                     SiglaNormaLegal + NumeroValidado + AnoValidado + SiglaValidado + ModificatoriasValidado +
                     NormaTecnicaValidada + DescripcionNormaTecnica + DescripcionConcordanciaValidada;
-            ;
         } else {
             concatenado = "";
+        }
+        if(flagBaseLegal=="ver"){
+        	concatenado = "";
         }
         $("#txtDesConcatenado").val(concatenado);
         $('#txtDesConcatenadoOculto').val(concatenado);
@@ -5443,7 +5448,7 @@ var cargaInicial=(function(){
 		/*jsifuentes - Inicio*/
 		cargarDetalleNormaTecnica();
 		/*jsifuentes - Fin*/
-		setTimeout(function(){ obtenerNumeroAnexos();}, 1000);
+		setTimeout(function(){ obtenerNumeroAnexos();}, 500);
 		// Inicio MYC-7 Cambio de Alcance
 		$('#cmbTipAneBaseLegal').change(function() {
 		if ($('#cmbTipAneBaseLegal option:selected').text() == '--Seleccione--') {
@@ -5592,6 +5597,15 @@ var cargaInicial=(function(){
             	}            
             }  
             $("#cmbNumeroAnexo").html(html);
+            if(flagBaseLegal=="editar"){
+            	gestionBaseLegal.concatenaDescripcionBaseLegal();
+                console.info('concatena nuevamente editar');
+            }
+            if(flagBaseLegal=="nuevo"){
+            	gestionBaseLegal.concatenaDescripcionBaseLegal();
+            	console.info('concatena nuevamente ver');
+            }
+            
         });
     }     
     /*Rsis1 - Fin*/

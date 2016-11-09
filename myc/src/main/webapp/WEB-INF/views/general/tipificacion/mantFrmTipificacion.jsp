@@ -85,7 +85,7 @@
                 <div class="filaForm">
                     <div class="lble vat"><label for="basesLegales">BASES LEGALES:</label></div>
                     <div>
-                        <textarea name="basesLegales" id="txtBasesLegales" maxlength="500" style="height:50px;" class="inputGrande" <c:if test="${tipo=='view'}">disabled</c:if> >${r.basesLegales}</textarea>
+                        <textarea validate="[O]"  name="basesLegales" id="txtBasesLegales" maxlength="500" style="height:50px;" class="inputGrande" <c:if test="${tipo=='view'}">disabled</c:if> >${r.basesLegales}</textarea>
                         <input id="edit_descp" type="hidden" value="${r.basesLegales}">
                     </div>
                 </div>
@@ -95,7 +95,7 @@
                         <select id="txtTipificacionPadre" name="tipificacionPadre" <c:if test="${tipo=='view'}">disabled</c:if>>
                             <option value="">--Seleccione--</option>
                             <c:forEach items="${listaTipificacionPadre}" var="t">
-                                <option value='${t.idTipificacion}' <c:if test="${r.idTipificacionPadre==t.idTipificacion}">selected</c:if>>${t.codTipificacion}</option>
+                                <option value='${t.idTipificacion}' <c:if test="${r.idTipificacionPadre==t.idTipificacion}">selected</c:if>>${t.codTipificacion}<c:if test="${t.tieneAct==1}"> - ${t.basesLegales}</c:if></option>
                             </c:forEach>
                         </select>
                     </div>

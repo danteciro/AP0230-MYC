@@ -175,12 +175,27 @@ public class ConstantesWeb {
         public static final String PAGE_GENERAL_MANT_FRM_CONFIGURACION_SIGUO="general/siguo/configuracion/mantFrmConfiguracionSiguo";
         public static final String PAGE_REQUISITOS_FRM_SELECT_ACTIVIDADES_MODAL="general/siguo/configuracion/popupBusqActividadModal";
         /**/
-	}
+	
+        /* OSINE_SFS-1232 - REQF- - Inicio */
+    	public static final String PAGE_GENERAL_MANTENIMIENTO_ETAPAS = "general/etapaSubEtapa/mantenimientoEtapa";
+    	public static final String PAGE_GENERAL_NUEVA_CONFIGURACION_ETAPA = "general/etapaSubEtapa/nuevaConfiguracion";
+    	public static final String PAGE_GENERAL_MODIFICAR_CONFIGURACION_ETAPA = "general/etapaSubEtapa/modificarConfiguracion";
+    	public static final String PAGE_GENERAL_NUEVA_ETAPA_TRAMITE = "general/etapaSubEtapa/nuevaEtapaTramite";
+    	public static final String PAGE_GENERAL_NUEVA_SUBETAPA_ETAPATRAMITE = "general/etapaSubEtapa/nuevaSubEtapaEtapaTramite";
+    	public static final String PAGE_GENERAL_NUEVA_ETAPA = "general/etapaSubEtapa/nuevaEtapa";
+    	public static final String PAGE_GENERAL_NUEVA_SUBETAPA = "general/etapaSubEtapa/nuevaSubEtapa";
+    	public static final String PAGE_GENERAL_MODIFICAR_SUBETAPA = "general/etapaSubEtapa/modificarSubEtapa";
+    	public static final String PAGE_GENERAL_MODIFICAR_ETAPA_TRAMITE = "general/etapaSubEtapa/modificarEtapaTramite";
+    	public static final String PAGE_SUBETAPAS_MODIFICAR_SUBETAPA_TRAMITE = "general/etapaSubEtapa/modificarSubEtapaTramite";    	
+    	   /* OSINE_SFS-1232 - REQF- - Inicio */
+    
+    }
     
     public static class mensajes{
     	//Mensajes 
         //Mensajes Base Legal
         public static final String MSG_OPERATION_SUCCESS_CREATE="Se guard\u00F3 satisfactoriamente: ";
+        public static final String MSG_OPERATION_FAILED_CREATE_ETAPA="El plazo ingreso no puede ser menor que la suma de los plazos actuales de las sub etapas";
         public static final String MSG_OPERATION_SUCCESS_UPDATE="Se actualiz\u00F3 satisfactoriamente:";
         public static final String MSG_OPERATION_SUCCESS_DELETE="Se elimin\u00F3 satisfactoriamente:";
         
@@ -211,6 +226,13 @@ public class ConstantesWeb {
         public static final String MSG_ENTITY_CONFIGURACION="Configuraci\u00F3n";
         public static final String MSG_ENTITY_TEMA="Tema";
         public static final String MSG_ENTITY_CRITERIO="Criterio";
+        
+        //Mensajes de validacion
+        public static final String MSG_OPERATION_FAIL_EXISTS="No se puede crear, Configuraci\u00F3n por Tramite ya existente.";
+        public static final String MSG_OPERATION_FAIL_EXISTS_CONF="No existe Configuraci\u00F3n de Actividad por Unidad Organica";
+        
+    	
+        public static final String MSG_OPERATION_FAIL_ETAPA = "La SubEtapa que intenta eliminar está asociada a más de 1 una configuración";
     }
     
 }

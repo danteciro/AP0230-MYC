@@ -15,4 +15,7 @@ import java.util.List;
  */
 public interface ProcesoDAO {
     public List<ProcesoDTO> listarProceso(ProcesoFilter filtro) throws ProcesoException;
+    /* OSINE_SFS-600 - REQF-0012 - Inicio */
+    public List<ProcesoDTO> listarProcesoByIdentificador(ProcesoFilter filtro)  throws ProcesoException;
+    /* OSINE_SFS-600 - REQF-0012 - Fin */
 }

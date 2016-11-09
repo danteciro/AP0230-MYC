@@ -4,11 +4,17 @@
  */
 package gob.osinergmin.myc.service.dao;
 
+
 import gob.osinergmin.myc.domain.dto.ActividadDTO;
 import gob.osinergmin.myc.domain.dto.ProcesoObligacionTipoDTO;
+import gob.osinergmin.myc.domain.dto.UnidadOrganicaDTO;
 import gob.osinergmin.myc.domain.dto.UsuarioDTO;
 import gob.osinergmin.myc.domain.ui.ActividadFilter;
+import gob.osinergmin.myc.domain.ui.CnfActUniOrganicaFilter;
+import gob.osinergmin.myc.domain.ui.UnidadOrganicaFilter;
 import gob.osinergmin.myc.service.exception.ActividadException;
+import gob.osinergmin.myc.service.exception.UnidadOrganicaException;
+
 import java.util.List;
 
 /**
@@ -31,4 +37,13 @@ public interface ActividadDAO {
     public String verificarEliminarActividad (ActividadFilter filtro) throws ActividadException;
     public List<ActividadDTO> listarAgente(ActividadFilter filtro) throws ActividadException;
     /* OSINE_SFS-600 - REQF-0009 - Fin */
+    /* OSINE_SFS-1232 - REQF- - Inicio */
+    public List<ActividadDTO> findActividadByEtapaConfiguracion(ActividadFilter filtro, UnidadOrganicaFilter unidadOrganicaFilter) throws ActividadException;
+	public List<ActividadDTO> findActividadesPadre(ActividadFilter filtro, UnidadOrganicaFilter unidadOrganicaFilter) throws ActividadException;
+	public List<ActividadDTO> findActividadesHijasJoinEtapaConfiguracion(ActividadFilter filtro) throws ActividadException;	
+    
+	public List<ActividadDTO> findActividadByIdCnfActUniOrganicaDTO(CnfActUniOrganicaFilter cnfActUniOrganicaFilter);
+	/* OSINE_SFS-1232 - REQF- - Inicio */
+    
+    
 }

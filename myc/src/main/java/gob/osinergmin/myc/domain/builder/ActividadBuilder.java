@@ -37,6 +37,12 @@ public class ActividadBuilder {
         registroDTO.setCodigo(registro.getCodigo());
         registroDTO.setOrden(registro.getOrdenNps());
         /* OSINE_SFS-600 - REQF-0009 - Fin */
+        
+        /* OSINE_SFS-1232 - REQF- - Inicio */
+        registroDTO.setEstado(registro.getEstado());
+        
+        /* OSINE_SFS-1232 - REQF- - Fin */
+        
         return registroDTO;
     }
     

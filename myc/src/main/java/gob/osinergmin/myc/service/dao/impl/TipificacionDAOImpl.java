@@ -327,6 +327,7 @@ public class TipificacionDAOImpl implements TipificacionDAO{
         jpql.append(" and t.estado=1 ");
         jpql.append(" and t.codTipificacion like '").append(codigoTipificacion).append("%'");
         jpql.append(" GROUP BY  t.codTipificacion,t.basesLegales,t.idTipificacion,t.descripcion,t.sancionMonetaria,t.estado ");
+        jpql.append(" ORDER BY  t.codTipificacion ");
         String queryString = jpql.toString();
         Query query = crud.getEm().createQuery(queryString);
         List<PghTipificacion> lstTipificacion = query.getResultList();

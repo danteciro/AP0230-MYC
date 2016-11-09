@@ -28,7 +28,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "PGH_PROCESO")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "PghProceso.findAll", query = "SELECT p FROM PghProceso p where p.estado=:estado")
+    @NamedQuery(name = "PghProceso.findAll", query = "SELECT p FROM PghProceso p where p.estado=:estado"),
+    @NamedQuery(name = "PghProceso.findByIdentificadorProceso", query = "SELECT p FROM PghProceso p WHERE p.identificadorProceso = :identificadorProceso")
 })
 public class PghProceso extends Auditoria {
     private static final long serialVersionUID = 1L;
@@ -38,7 +39,8 @@ public class PghProceso extends Auditoria {
     private Long idProceso;
     @Column(name = "DESCRIPCION")
     private String descripcion;
-   
+    @Column(name = "IDENTIFICADOR_PROCESO")
+    private String identificadorProceso;
     @Column(name = "ESTADO")
     private String estado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pghProceso", fetch = FetchType.LAZY)

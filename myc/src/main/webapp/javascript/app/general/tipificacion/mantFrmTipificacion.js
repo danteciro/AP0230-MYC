@@ -284,7 +284,7 @@ function procGuardarTipificacion(){
             tipoMoneda:$('#txtTipoMoneda').val(),
             sancionMonetaria:$('#txtSancionMonetaria').val().toUpperCase(),
             descripcion:$('#txtDescripcion').val(),
-            basesLegales:$('#txtBasesLegales').val(),
+            basesLegales:$('#txtBasesLegales').val().trim(),
             tipificacionPadre:$('#txtTipificacionPadre').val(),
             tipoSanciones:SancAdm
         },//$('#frmMantZonificacionDetalle').serialize(),

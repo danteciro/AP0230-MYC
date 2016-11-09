@@ -1,3 +1,18 @@
+/**
+* Resumen		
+* Objeto            : PghCnfActUniOrganica.java
+* Descripción       : Clase del modelo de dominio PghCnfActUniOrganica
+* Fecha de Creación : 
+* PR de Creación    : 
+* Autor             : GMD
+* =====================================================================================================================================================================
+* Modificaciones |
+* Motivo         |   Fecha       |    Nombre                    |   Descripción
+* =====================================================================================================================================================================
+* OSINE_SFS-1232 | 07/11/2016    |   Luis García Reyna          |   Busqueda por filtros
+*
+*/ 
+
 package gob.osinergmin.myc.domain;
 
 import java.io.Serializable;
@@ -35,6 +50,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "PghCnfActUniOrganica.findByUsuarioActualizacion", query = "SELECT p FROM PghCnfActUniOrganica p WHERE p.usuarioActualizacion = :usuarioActualizacion"),
     @NamedQuery(name = "PghCnfActUniOrganica.findByFechaActualizacion", query = "SELECT p FROM PghCnfActUniOrganica p WHERE p.fechaActualizacion = :fechaActualizacion"),
     @NamedQuery(name = "PghCnfActUniOrganica.findByTerminalActualizacion", query = "SELECT p FROM PghCnfActUniOrganica p WHERE p.terminalActualizacion = :terminalActualizacion"),
+    /* OSINE_SFS-1232 - REQF- - Inicio */
+    @NamedQuery(name = "PghCnfActUniOrganica.findByUnidadAndActividad", query = "SELECT p FROM PghCnfActUniOrganica p WHERE p.idUnidadOrganica.idUnidadOrganica = :idUnidadOrganica and  p.idActividad.idActividad = :idActividad"),
+    /* OSINE_SFS-1232 - REQF- - Fin */
     @NamedQuery(name = "PghCnfActUniOrganica.findByIdUnidadOrganica", query = "SELECT a FROM PghCnfActUniOrganica c " +
     		" left join c.idActividad a " +
     		" where " +
@@ -51,7 +69,7 @@ public class PghCnfActUniOrganica implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ESTADO")
-    private Character estado;
+    private String estado;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 38)
@@ -80,11 +98,12 @@ public class PghCnfActUniOrganica implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private PghObligacionTipo idObligacionTipo;
     @JoinColumn(name = "ID_UNIDAD_ORGANICA", referencedColumnName = "ID_UNIDAD_ORGANICA")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private MdiUnidadOrganica idUnidadOrganica;
+    @ManyToOne(fetch = FetchType.EAGER)//Victor
+    private MdiUnidadOrganica idUnidadOrganica; //Victor
     @JoinColumn(name = "ID_ACTIVIDAD", referencedColumnName = "ID_ACTIVIDAD")
     @ManyToOne(fetch = FetchType.LAZY)
     private MdiActividad idActividad;
+    
 
     public PghCnfActUniOrganica() {
     }
@@ -92,8 +111,15 @@ public class PghCnfActUniOrganica implements Serializable {
     public PghCnfActUniOrganica(Long idCnfActUniOrganica) {
         this.idCnfActUniOrganica = idCnfActUniOrganica;
     }
+    
+    /* OSINE_SFS-1232 - lgarciar - Inicio */
+    public PghCnfActUniOrganica(Long idCnfActUniOrganica, Long idActividad, String nombre) {
+        this.idCnfActUniOrganica = idCnfActUniOrganica;
+        this.idActividad = new MdiActividad(idActividad, nombre);
+    }
+    /* OSINE_SFS-1232 - lgarciar - Fin */
 
-    public PghCnfActUniOrganica(Long idCnfActUniOrganica, Character estado, String usuarioCreacion, Date fechaCreacion, String terminalCreacion) {
+    public PghCnfActUniOrganica(Long idCnfActUniOrganica, String estado, String usuarioCreacion, Date fechaCreacion, String terminalCreacion) {
         this.idCnfActUniOrganica = idCnfActUniOrganica;
         this.estado = estado;
         this.usuarioCreacion = usuarioCreacion;
@@ -109,11 +135,11 @@ public class PghCnfActUniOrganica implements Serializable {
         this.idCnfActUniOrganica = idCnfActUniOrganica;
     }
 
-    public Character getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(Character estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 

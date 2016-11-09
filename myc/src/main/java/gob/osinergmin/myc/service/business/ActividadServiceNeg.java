@@ -8,6 +8,10 @@ import gob.osinergmin.myc.domain.dto.ActividadDTO;
 import gob.osinergmin.myc.domain.dto.ProcesoObligacionTipoDTO;
 import gob.osinergmin.myc.domain.dto.UsuarioDTO;
 import gob.osinergmin.myc.domain.ui.ActividadFilter;
+import gob.osinergmin.myc.domain.ui.CnfActUniOrganicaFilter;
+import gob.osinergmin.myc.domain.ui.UnidadOrganicaFilter;
+import gob.osinergmin.myc.service.exception.ActividadException;
+
 import java.util.List;
 import java.util.Map;
 
@@ -32,4 +36,16 @@ public interface ActividadServiceNeg {
     public ActividadDTO eliminarActividad (Long idActividad, String estado,UsuarioDTO usuario);
     public Map<String, Object> verificarEliminarActividad (ActividadFilter filtro);
     /* OSINE_SFS-600 - REQF-0009 - Fin */
+    
+    
+    /* OSINE_SFS-1232 - REQF-- Inicio */
+    
+    public List<ActividadDTO> findActividadByEtapaConfiguracion(ActividadFilter filtro, UnidadOrganicaFilter unidadOrganicaFilter) throws ActividadException;
+	public List<ActividadDTO> findActividadesPadre(ActividadFilter filtro, UnidadOrganicaFilter unidadOrganicaFilter) throws ActividadException;
+	public List<ActividadDTO> findActividadesHijasJoinEtapaConfiguracion(ActividadFilter filtro) throws ActividadException;	
+
+	public List<ActividadDTO> findActividadByIdCnfActUniOrganicaDTO(CnfActUniOrganicaFilter cnfActUniOrganicaFilter) throws ActividadException;	
+	
+	
+	  /* OSINE_SFS-1232 - REQF-- Fin */
 }

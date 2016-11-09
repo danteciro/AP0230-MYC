@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 package gob.osinergmin.myc.service.dao.impl;
-
+import gob.osinergmin.myc.domain.PghProceso;
 import gob.osinergmin.myc.domain.builder.ProcesoBuilder;
 import gob.osinergmin.myc.domain.dto.ProcesoDTO;
 import gob.osinergmin.myc.domain.ui.ProcesoFilter;
@@ -11,6 +11,8 @@ import gob.osinergmin.myc.service.dao.CrudDAO;
 import gob.osinergmin.myc.service.dao.EtapaDAO;
 import gob.osinergmin.myc.service.dao.ProcesoDAO;
 import gob.osinergmin.myc.service.exception.ProcesoException;
+
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.Query;
@@ -54,4 +56,26 @@ public class ProcesoDAOImpl implements ProcesoDAO {
         
         return query;
     }
+    /* OSINE_SFS-1232 - REQF- - Inicio */
+    public List<ProcesoDTO> listarProcesoByIdentificador(ProcesoFilter filtro) throws ProcesoException{
+    	Query query=null;
+        List<PghProceso> lista = new ArrayList<PghProceso>();
+        List<ProcesoDTO> listaDto = new ArrayList<ProcesoDTO>();
+    	
+        try{
+            query = crud.getEm().createNamedQuery("PghProceso.findByIdentificadorProceso");
+            if (filtro.getIdentificadorProceso()!= null) {
+                query.setParameter("identificadorProceso",filtro.getIdentificadorProceso());
+            }
+            lista = query.getResultList();
+            listaDto = ProcesoBuilder.toListProcesoDto(lista);
+            
+        }catch(Exception e){
+            LOG.error("Error listarProcesoByIdentificador: " + e.getMessage());
+        }
+		return listaDto;
+        
+    }
+    /* OSINE_SFS-1232 - REQF- - Inicio */
+    
 }

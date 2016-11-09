@@ -1,10 +1,12 @@
 package gob.osinergmin.myc.service.business.impl;
 import gob.osinergmin.myc.domain.dto.UnidadOrganicaDTO;
 import gob.osinergmin.myc.domain.dto.UsuarioDTO;
+import gob.osinergmin.myc.domain.ui.CnfActUniOrganicaFilter;
 import gob.osinergmin.myc.domain.ui.UnidadOrganicaFilter;
 import gob.osinergmin.myc.service.business.UnidadOrganicaServiceNeg;
 import gob.osinergmin.myc.service.dao.UnidadOrganicaDAO;
 import gob.osinergmin.myc.service.exception.UnidadOrganicaException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import org.slf4j.Logger;
@@ -66,4 +68,36 @@ public class UnidadOrganicaServiceNegImpl implements UnidadOrganicaServiceNeg {
             throw new UnidadOrganicaException(ex.getMessage(),null);
         }
 	}
+	/* OSINE_SFS-1232 - REQF- - Inicio */
+	@Override
+	public List<UnidadOrganicaDTO> findUnidadOrganicaByEtapaConfiguracion(UnidadOrganicaFilter filtro) throws UnidadOrganicaException {
+		List<UnidadOrganicaDTO> lista = new ArrayList<UnidadOrganicaDTO>();
+		lista = unidadOrganicaDAO.findUnidadOrganicaByEtapaConfiguracion(filtro);
+		return lista;
+	}
+
+	@Override
+	public List<UnidadOrganicaDTO> findUnidadOrganicaGerencia(UnidadOrganicaFilter filtro) throws UnidadOrganicaException {
+		List<UnidadOrganicaDTO> lista = new ArrayList<UnidadOrganicaDTO>();
+		lista = unidadOrganicaDAO.findUnidadOrganicaGerencia(filtro);
+		return lista;
+	}
+
+	@Override
+	public List<UnidadOrganicaDTO> findUnidadesNivelTresJoinEtapaConfiguracion(UnidadOrganicaFilter filtro) throws UnidadOrganicaException {
+		List<UnidadOrganicaDTO> lista = new ArrayList<UnidadOrganicaDTO>();
+		lista = unidadOrganicaDAO.findUnidadesNivelTresJoinEtapaConfiguracion(filtro);
+		return lista;
+	}
+	/* OSINE_SFS-1232 - REQF- - Inicio */
+
+	@Override
+	public List<UnidadOrganicaDTO> findUnidadUnidadOrganicaByIdCnfActUniOrganicaDTO(CnfActUniOrganicaFilter cnfActUniOrganicaFilter) throws UnidadOrganicaException {
+		List<UnidadOrganicaDTO> lista = new ArrayList<UnidadOrganicaDTO>();
+		lista = unidadOrganicaDAO.findUnidadUnidadOrganicaDTOByIdCnfActUniOrganicaDTO(cnfActUniOrganicaFilter);
+		return lista;
+	}
+	
+	
+	
 }

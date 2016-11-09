@@ -72,7 +72,8 @@ public class TipificacionController {
             
             model.addAttribute("tipo", tipo);
             model.addAttribute("listaTipoSancion", maestroColumnaServiceNeg.buscarMycByDominio(Constantes.DOMINIO_TIPO_SANCION));
-            model.addAttribute("listaTipificacionPadre", tipificacionserviceNeg.listarTipificacionesPadre(filtro1));
+//            model.addAttribute("listaTipificacionPadre", tipificacionserviceNeg.listarTipificacionesPadre(filtro1));
+            model.addAttribute("listaTipificacionPadre", tipificacionserviceNeg.obtenerTipificaciones(""));
 
             if(!tipo.equals("new") && idTipificacion!=null){
                 TipificacionFilter filtro=new TipificacionFilter();

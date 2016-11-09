@@ -107,6 +107,10 @@
 				            <!-- OSINE_SFS-600 - REQF-0005 - Inicio -->
 				    <li><a class="menuItem" image="/myc/images/configuracionSiguo.png" href="/myc/pages/mantenimientoConfiguracionSiguo"><p>CONFIGURACION SIGUO</p></a></li>
 				    <!-- OSINE_SFS-600 - REQF-0005 - Fin -->
+				    
+				    <!-- OSINE_SFS-1232 - REQF- - Inicio -->
+				    <li><a class="menuItem" image="/myc/images/configuracionSiguo.png" href="/myc/pages/mantenimientoEtapa"><p>CONFIGURACIÓN DE ETAPAS Y SUBETAPAS</p></a></li> 
+				    <!-- OSINE_SFS-1232 - REQF- - Fin -->
                 </ul>  
             </li>  
         </ul>

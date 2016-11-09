@@ -133,4 +133,20 @@ public class Constantes {
 	public static final Long NIVEL_SUB_DIVISION = new Long(4);
 	public static final Long NIVEL_UNIDAD = new Long(5);
 	/* OSINE_SFS-600 - REQF-0012 - Fin */
+
+	
+    /* OSINE_SFS-1232 - REQF- - Inicio */
+	public static final String SECTOR_DOMINIO = "NPS_SECTOR";
+	public static final String RESPONSABLE_DOMINIO = "NPS_RESPONSABLE";
+	public static final String PROCESO_PRE_OPERATIVO = "PROCESO_PREOPERATIVO";
+	public static final String MANTENIMIENTO_MOFIDICAR = "modificar";
+	public static final String MANTENIMIENTO_CONSULTAR = "consultar";
+	
+	/* OSINE_SFS-1232 - REQF- - Inicio */
+	
+	
+
 }
+
+
+

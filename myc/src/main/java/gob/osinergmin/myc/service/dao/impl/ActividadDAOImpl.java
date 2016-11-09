@@ -16,19 +16,22 @@
 package gob.osinergmin.myc.service.dao.impl;
 import gob.osinergmin.myc.common.util.StringUtil;
 import gob.osinergmin.myc.domain.MdiActividad;
+import gob.osinergmin.myc.domain.MdiUnidadOrganica;
 import gob.osinergmin.myc.domain.builder.ActividadBuilder;
-import gob.osinergmin.myc.domain.builder.ObligacionSubTipoBuilder;
 import gob.osinergmin.myc.domain.builder.ProcesoObligacionTipoBuilder;
+import gob.osinergmin.myc.domain.builder.UnidadOrganicaBuilder;
 import gob.osinergmin.myc.domain.dto.ActividadDTO;
-import gob.osinergmin.myc.domain.dto.ObligacionSubTipoDTO;
 import gob.osinergmin.myc.domain.dto.ProcesoObligacionTipoDTO;
+import gob.osinergmin.myc.domain.dto.UnidadOrganicaDTO;
 import gob.osinergmin.myc.domain.dto.UsuarioDTO;
 import gob.osinergmin.myc.domain.ui.ActividadFilter;
+import gob.osinergmin.myc.domain.ui.CnfActUniOrganicaFilter;
+import gob.osinergmin.myc.domain.ui.UnidadOrganicaFilter;
 import gob.osinergmin.myc.service.dao.ActividadDAO;
 import gob.osinergmin.myc.service.dao.CrudDAO;
 import gob.osinergmin.myc.service.exception.ActividadException;
 import gob.osinergmin.myc.util.Constantes;
-
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.Query;
@@ -36,7 +39,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-
 /**
  *
  * @author jpiro
@@ -439,4 +441,98 @@ public class ActividadDAOImpl implements ActividadDAO {
 		}
 		return retorno;
 	}
+
+	@Override
+	public List<ActividadDTO> findActividadByEtapaConfiguracion(ActividadFilter filtro, UnidadOrganicaFilter unidadOrganicaFilter) throws ActividadException {
+		Query query = null;
+		StringBuilder sql = new StringBuilder();
+		String queryString = new String();
+		List<ActividadDTO> lista = new ArrayList<ActividadDTO>();
+		List<MdiActividad> listaMdiActividad =  new ArrayList<MdiActividad>();
+		sql.append(" select distinct act from MdiActividad act, PghCnfActUniOrganica cuo where act.idActividad = cuo.idActividad.idActividad ");
+		if(unidadOrganicaFilter.getIdUnidadOrganica()!=null){
+			sql.append(" and cuo.idUnidadOrganica.idUnidadOrganica = " + unidadOrganicaFilter.getIdUnidadOrganica());
+		}
+		
+		queryString = sql.toString();
+		query = crud.getEm().createQuery(queryString);
+		listaMdiActividad = query.getResultList();
+		lista = ActividadBuilder.toListActividadDto(listaMdiActividad); 
+		return lista;
+	}
+
+	public boolean estaEnLista(List<ActividadDTO> lista, ActividadDTO actividadDTO){
+		for (ActividadDTO actividad : lista) {
+			if(actividad.getIdActividad().equals(actividadDTO.getIdActividad()))
+				return true;
+		}
+		return false;
+	}   
+	
+	 /* OSINE_SFS-1232 - REQF- - Inicio */
+	@Override
+	public List<ActividadDTO> findActividadesPadre(ActividadFilter actividadFilter, UnidadOrganicaFilter unidadOrganicaFilter)throws ActividadException {
+		List<ActividadDTO> listaActividadHijas = findActividadByEtapaConfiguracion(actividadFilter, unidadOrganicaFilter);
+	    List<ActividadDTO> listaActividadPadre = new ArrayList<ActividadDTO>();
+	    actividadFilter.setIdActividad(listaActividadHijas.get(0).getIdActividadPadre());
+	    actividadFilter.setEstado(Constantes.ESTADO_ACTIVO);
+	    ActividadDTO actividadDTOPadre = this.find(actividadFilter).get(0);
+	    
+		if(listaActividadHijas!=null && listaActividadHijas.size()>0)
+			listaActividadPadre.add(actividadDTOPadre);
+		
+		for (ActividadDTO actividadDTO : listaActividadHijas) {
+			 actividadFilter.setIdActividad(actividadDTO.getIdActividadPadre());
+			 actividadFilter.setEstado(Constantes.ESTADO_ACTIVO);
+			 List<ActividadDTO> listaActividadDTOPadre = find(actividadFilter);
+			 if(listaActividadDTOPadre!=null && listaActividadDTOPadre.size()>0){
+				 
+				 actividadDTOPadre = listaActividadDTOPadre.get(0);
+			 }
+			 if(actividadDTOPadre!=null){
+			  if(!estaEnLista(listaActividadPadre, actividadDTOPadre)){
+				listaActividadPadre.add(actividadDTOPadre);
+			  }
+		    }
+	    }
+		return listaActividadPadre;
+	}
+
+	@Override
+	public List<ActividadDTO> findActividadesHijasJoinEtapaConfiguracion( ActividadFilter filtro) throws ActividadException {
+		Query query = null;
+		StringBuilder sql = new StringBuilder();
+		String queryString = new String();
+		List<ActividadDTO> lista = new ArrayList<ActividadDTO>();
+		List<MdiActividad> listaMdiActividad =  new ArrayList<MdiActividad>();
+		sql.append(" select distinct act from MdiActividad act, PghCnfActUniOrganica cuo where act.idActividad = cuo.idActividad.idActividad  ");
+		if(filtro.getIdActividad()!=null){
+			sql.append(" and act.idActividadPadre = " + filtro.getIdActividad()); 
+		}
+		queryString = sql.toString();
+		query = crud.getEm().createQuery(queryString);
+		listaMdiActividad = query.getResultList();
+		lista = ActividadBuilder.toListActividadDto(listaMdiActividad); 
+		return lista;
+	}
+
+	@Override
+	public List<ActividadDTO> findActividadByIdCnfActUniOrganicaDTO(CnfActUniOrganicaFilter cnfActUniOrganicaFilter) {
+		Query query = null;
+		StringBuilder sql = new StringBuilder();
+		String queryString = new String();
+		List<ActividadDTO> lista = new ArrayList<ActividadDTO>();
+		List<MdiActividad> listaMdi =  new ArrayList<MdiActividad>();
+		sql.append(" select distinct act from MdiActividad act, PghCnfActUniOrganica cuo where act.idActividad = cuo.idActividad.idActividad ");
+		if(cnfActUniOrganicaFilter.getIdCnfActUniOrganicaFilter()!=null){
+			sql.append(" and cuo.idCnfActUniOrganica = " + cnfActUniOrganicaFilter.getIdCnfActUniOrganicaFilter()); 
+		}
+		queryString = sql.toString();
+		query = crud.getEm().createQuery(queryString);
+		listaMdi = query.getResultList();
+		lista = ActividadBuilder.toListActividadDto(listaMdi); 
+		return lista;
+	}
+
+	 /* OSINE_SFS-1232 - REQF- - Fin */
 }
