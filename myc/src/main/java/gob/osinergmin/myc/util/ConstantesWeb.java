@@ -232,7 +232,7 @@ public class ConstantesWeb {
         public static final String MSG_OPERATION_FAIL_EXISTS_CONF="No existe Configuraci\u00F3n de Actividad por Unidad Organica";
         
     	
-        public static final String MSG_OPERATION_FAIL_ETAPA = "La SubEtapa que intenta eliminar está asociada a más de 1 una configuración";
+        public static final String MSG_OPERATION_FAIL_ETAPA = "La SubEtapa que intenta eliminar esta asociada a mas de 1 una configuraci\u00F3n";
     }
     
 }

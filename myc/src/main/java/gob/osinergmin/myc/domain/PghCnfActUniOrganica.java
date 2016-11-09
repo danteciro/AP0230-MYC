@@ -1,18 +1,3 @@
-/**
-* Resumen		
-* Objeto            : PghCnfActUniOrganica.java
-* Descripción       : Clase del modelo de dominio PghCnfActUniOrganica
-* Fecha de Creación : 
-* PR de Creación    : 
-* Autor             : GMD
-* =====================================================================================================================================================================
-* Modificaciones |
-* Motivo         |   Fecha       |    Nombre                    |   Descripción
-* =====================================================================================================================================================================
-* OSINE_SFS-1232 | 07/11/2016    |   Luis García Reyna          |   Busqueda por filtros
-*
-*/ 
-
 package gob.osinergmin.myc.domain;
 
 import java.io.Serializable;
