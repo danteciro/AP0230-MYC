@@ -1089,7 +1089,7 @@ public class MantenimientoEtapaController {
 	            	}
 	        	}
 	        	/**/
-	        	if(plazo>plazoMinimo){
+	        	if(plazo>=plazoMinimo){
 	        		etapaNpsDTO.setDescripcion(nombreEtapa);//nombre actual
 		            etapaNpsDTO.setPlazo(plazo);//plazo actual
 		            etapaNpsServiceNeg.update(etapaNpsDTO, usuarioDTO);

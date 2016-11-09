@@ -28,6 +28,7 @@ COMMENT ON COLUMN NPS_ETAPA.PLAZO IS 'Plazo de atención de la Etapa';
 COMMENT ON COLUMN NPS_ETAPA.ESTADO IS 'Indica si el registro está vigente.
 0: El registro ya no se encuentra vigente.
 1: El registro está vigente.';
+COMMENT ON TABLE NPS_ETAPA IS 'Tabla que almacena las etapas por las que pasará los tramites generados por los inversionistas';
 
 -- INDICE 
 CREATE UNIQUE INDEX NPS_ETAPA_ID_ETA_IDX ON NPS_ETAPA
@@ -66,6 +67,7 @@ COMMENT ON COLUMN NPS_TRAMITE.TERMINAL_ACTUALIZACION IS 'Terminal que modificó e
 COMMENT ON COLUMN NPS_TRAMITE.ESTADO IS 'Indica si el registro está vigente.
 0: El registro ya no se encuentra vigente.
 1: El registro está vigente.';
+COMMENT ON TABLE NPS_TRAMITE IS 'Tabla que almacena los tramites que podra realizar el inversionista';
   
 --- INDICE
 CREATE UNIQUE INDEX NPS_TRAMITE_ID_TRA_IDX ON NPS_TRAMITE
@@ -106,6 +108,7 @@ COMMENT ON COLUMN NPS_CONF_TRAMITE.ID_TRAMITE IS 'Identificador del tramite';
 COMMENT ON COLUMN NPS_CONF_TRAMITE.ORIENTACION IS 'Información de Orientación relacionada al trámite';
 COMMENT ON COLUMN NPS_CONF_TRAMITE.PORCENTAJE_NOTIFICACION IS 'Porcentaje de Notificaciones efectuadas';
 
+COMMENT ON TABLE NPS_CONF_TRAMITE IS 'Tabla que almacena las configuraciones entre los tramites y las configuraciones de las unidades organicas por actividad ';
 -- INDICE 
 CREATE UNIQUE INDEX NPS_CONF_TRAMITE_ID_CONF_IDX ON NPS_CONF_TRAMITE
 (ID_CONF_TRAMITE   ASC);
@@ -146,7 +149,7 @@ COMMENT ON COLUMN NPS_ETAPA_TRAMITE.FECHA_ACTUALIZACION IS 'Fecha en la que se m
 COMMENT ON COLUMN NPS_ETAPA_TRAMITE.TERMINAL_ACTUALIZACION IS 'Terminal que modificó el registro por última vez.';
 COMMENT ON COLUMN NPS_ETAPA_TRAMITE.ID_CONF_TRAMITE IS 'Identificador de configuracion del Tramite';
 COMMENT ON COLUMN NPS_ETAPA_TRAMITE.ESTADO IS 'Indica si el registro se encuentra vigente: 1, no se encuentra vigente: 0.';
-
+COMMENT ON TABLE NPS_ETAPA_TRAMITE IS 'Tabla que almacena las configuraciones entre las etapas y los tramites configurados';
 
 -- INDICE 
 CREATE UNIQUE INDEX NPS_ETAPA_TRA_ID_ETA_IDX ON NPS_ETAPA_TRAMITE
@@ -194,6 +197,8 @@ COMMENT ON COLUMN NPS_SUBETAPA.ID_ETAPA IS 'Identificador etapa';
 COMMENT ON COLUMN NPS_SUBETAPA.ESTADO IS 'Indica si el registro está vigente.
 0: El registro ya no se encuentra vigente.
 1: El registro está vigente.';
+COMMENT ON TABLE NPS_SUBETAPA IS 'Tabla que almacena las subetapas';
+
 --- INDICE
 CREATE UNIQUE INDEX NPS_SUBETAPA_ID_SUB_ETA_IDX ON NPS_SUBETAPA
 (ID_SUBETAPA   ASC);
