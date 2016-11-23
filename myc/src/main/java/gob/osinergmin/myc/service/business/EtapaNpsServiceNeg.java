@@ -13,4 +13,5 @@ public interface EtapaNpsServiceNeg {
 	public List<EtapaNpsDTO> listarEtapasIds(String idEtapas);
 	public List<EtapaNpsDTO> listarEtapas(EtapaNpsFilter etapaNpsFilter);
 	public EtapaNpsDTO findByIdEtapa(Long idEtapa);
+	public List<EtapaNpsDTO> validaEtapa(EtapaNpsDTO etapaNpsDTO);
 }

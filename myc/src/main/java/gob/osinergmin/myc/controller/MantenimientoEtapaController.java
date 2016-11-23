@@ -406,11 +406,16 @@ public class MantenimientoEtapaController {
 //              procesoDTO.setIdProceso(listaProceso.get(0).getIdProceso());
 //              etapaNpsDTO.setIdProceso(procesoDTO);
 //            }
+            List<EtapaNpsDTO> validaEtapa = etapaNpsServiceNeg.validaEtapa(etapaNpsDTO);
+            if(validaEtapa!=null && validaEtapa.size()>0){
+            	retorno.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_ADVERTENCIA);           
+                retorno.put(ConstantesWeb.VV_MENSAJE, "No se puede crear Etapa: Etapa existente.");
+            }else{
+            	etapaNpsServiceNeg.create(etapaNpsDTO, usuarioDTO);            
+                retorno.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_EXITO);           
+                retorno.put(ConstantesWeb.VV_MENSAJE, ConstantesWeb.mensajes.MSG_OPERATION_SUCCESS_CREATE);
+            }
             
-            etapaNpsServiceNeg.create(etapaNpsDTO, usuarioDTO);
-            
-            retorno.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_EXITO);           
-            retorno.put(ConstantesWeb.VV_MENSAJE, ConstantesWeb.mensajes.MSG_OPERATION_SUCCESS_CREATE);
         }catch(Exception e){            
             retorno.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_ERROR);
             retorno.put(ConstantesWeb.VV_MENSAJE, e.getMessage());

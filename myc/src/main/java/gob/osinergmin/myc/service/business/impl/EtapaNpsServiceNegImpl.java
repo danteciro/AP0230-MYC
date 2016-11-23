@@ -11,6 +11,7 @@ import gob.osinergmin.myc.domain.ui.EtapaNpsFilter;
 import gob.osinergmin.myc.service.business.EtapaNpsServiceNeg;
 import gob.osinergmin.myc.service.dao.EtapaNpsDAO;
 
+import org.jfree.util.Log;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,5 +68,16 @@ public class EtapaNpsServiceNegImpl implements EtapaNpsServiceNeg{
 	public EtapaNpsDTO findByIdEtapa(Long idEtapa){
 		return etapaNpsDAO.findByIdEtapa(idEtapa);
 	}
-	
+
+	@Override
+	@Transactional
+	public List<EtapaNpsDTO> validaEtapa(EtapaNpsDTO etapaNpsDTO) {
+		List<EtapaNpsDTO> listar = null;
+		try {
+			listar= etapaNpsDAO.validaEtapa(etapaNpsDTO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+		return listar;
+	}	
 }

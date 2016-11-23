@@ -92,6 +92,7 @@ public class ConfTramiteNpsDAOImpl implements ConfTramiteNpsDAO {
 	}
 
 	@Override
+	@Transactional
 	public ConfTramiteDTO validaConfiguracion(ConfTramiteDTO confTramiteDTO) {
 		ConfTramiteDTO retorno=null;
         try{

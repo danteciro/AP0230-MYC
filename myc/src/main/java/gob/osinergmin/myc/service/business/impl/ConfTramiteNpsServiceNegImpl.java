@@ -57,6 +57,7 @@ public class ConfTramiteNpsServiceNegImpl implements ConfTramiteNpsServiceNeg {
 	}
 
 	@Override
+	@Transactional
 	public ConfTramiteDTO validaConfiguracion(ConfTramiteDTO confTramiteDTO) {
 		ConfTramiteDTO retorno = null;
 		try {

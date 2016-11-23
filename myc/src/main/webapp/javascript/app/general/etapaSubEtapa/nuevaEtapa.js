@@ -21,7 +21,7 @@ function registrarNuevaEtapa() {
         type:'post',
         async:false,
         data:{
-        	descripcion : $('#descripcionEtapa').val(),
+        	descripcion : $('#descripcionEtapa').val().trim(),
         	plazo : $('#plazoEtapa').val(),
         	'idProceso.idProceso' : $('#cmbProcesoEtapa').val()
         },
@@ -40,38 +40,9 @@ function registrarNuevaEtapa() {
                 	procesarLista.listarEtapa();
                 }
                 
-                if($('#codigoConfiguracionTramite').val()!=""){
-                	console.info('Con codigo ->'+$('#codigoConfiguracionTramite').val());
-                	procesarLista.listarEtapa('',$('#codigoConfiguracionTramite').val());
-                }else{
-                	console.info('sin codigo');
-                	procesarLista.listarEtapa();
-                }
                 
-                if($('#codigoConfiguracionTramite').val()!=""){
-                	console.info('Con codigo ->'+$('#codigoConfiguracionTramite').val());
-                	procesarLista.listarEtapa('',$('#codigoConfiguracionTramite').val());
-                }else{
-                	console.info('sin codigo');
-                	procesarLista.listarEtapa();
-                }
-                
-                if($('#codigoConfiguracionTramite').val()!=""){
-                	console.info('Con codigo ->'+$('#codigoConfiguracionTramite').val());
-                	procesarLista.listarEtapa('',$('#codigoConfiguracionTramite').val());
-                }else{
-                	console.info('sin codigo');
-                	procesarLista.listarEtapa();
-                }
-                
-                if($('#codigoConfiguracionTramite').val()!=""){
-                	console.info('Con codigo ->'+$('#codigoConfiguracionTramite').val());
-                	procesarLista.listarEtapa('',$('#codigoConfiguracionTramite').val());
-                }else{
-                	console.info('sin codigo');
-                	procesarLista.listarEtapa();
-                }
-                
+            }else if(data.resultado=="2"){
+            	mensajeGrowl("warn", data.mensaje, "");
             }
         },
         error:errorAjax

@@ -84,6 +84,10 @@ public class NpsConfTramite extends Auditoria {
     public NpsConfTramite() {
     }
     
+    public NpsConfTramite(Long idConfTramite) {
+    	this.idConfTramite = idConfTramite;
+    }
+    
     /* OSINE_SFS-1232 - lgarciar - Inicio */
     public NpsConfTramite(Long idCnfActUniOrganica, Long idActividad, String nombre, Long idConfTramite , String descTramite, Long idTramite) {
         this.idCnfActUniOrganica = new PghCnfActUniOrganica(idCnfActUniOrganica,idActividad, nombre);

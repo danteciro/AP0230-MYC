@@ -7,8 +7,12 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.Query;
 
+import org.jfree.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import gob.osinergmin.myc.domain.MdiMaestroColumna;
 import gob.osinergmin.myc.domain.NpsEtapa;
@@ -25,11 +29,13 @@ import gob.osinergmin.myc.service.dao.EtapaDAO;
 import gob.osinergmin.myc.service.dao.EtapaNpsDAO;
 import gob.osinergmin.myc.service.exception.EtapaException;
 import gob.osinergmin.myc.util.Constantes;
+import gob.osinergmin.myc.util.StringUtil;
 
 
 @Repository("EtapaNpsDAO")
 public class EtapaNpsDAOImpl implements EtapaNpsDAO{
-
+	private static final Logger LOG = LoggerFactory.getLogger(EtapaNpsDAOImpl.class);
+	
 	@Inject
 	private CrudDAO crudDAO;
 	
@@ -187,5 +193,26 @@ public class EtapaNpsDAOImpl implements EtapaNpsDAO{
 			EtapaNpsDTO etapaNpsDTO = EtapaNpsBuilder.toEtapaNpsDTO(npsEtapa);
 			return etapaNpsDTO;
 		}
+
+		@Override
+		@Transactional
+		public List<EtapaNpsDTO> validaEtapa(EtapaNpsDTO etapaNpsDTO) {
+			
+			Query query;
+			List<EtapaNpsDTO> listaDto = null;
+			query =  crudDAO.getEm().createNamedQuery("NpsEtapa.findByDescripcion");
+			if(!StringUtil.isEmpty(etapaNpsDTO.getDescripcion())){
+				query.setParameter("descripcion", StringUtil.removeBlank(etapaNpsDTO.getDescripcion().toUpperCase()));
+				
+			}			
+			LOG.info("Query:"+query.toString());
+			List<NpsEtapa> listaNps =  query.getResultList();
+			if(!CollectionUtils.isEmpty(listaNps)){
+				listaDto =  EtapaNpsBuilder.toListEtapaDTO(listaNps);
+			}
+			
+			return listaDto;
+		}
+		
 
 }
