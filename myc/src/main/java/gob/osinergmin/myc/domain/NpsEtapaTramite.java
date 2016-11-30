@@ -78,6 +78,12 @@ public class NpsEtapaTramite extends Auditoria {
         this.idResponsable = idResponsable;
         this.countSubEtapa = countSubEtapa;               
     }
+    public NpsEtapaTramite(Long idEtapaTramite, Long idConfTramite, Long idTramite, String descTramite, Long idEtapa, String descEtapa, Long plazo, Long idCnfActUniOrganica, Long idActividad, String nombre, Long countSubEtapa) {
+        this.idEtapaTramite = idEtapaTramite;
+        this.idConfTramite = new NpsConfTramite(idCnfActUniOrganica, idActividad, nombre, idConfTramite, descTramite, idTramite);
+        this.idEtapa = new NpsEtapa(idEtapa, descEtapa, plazo);
+        this.countSubEtapa = countSubEtapa;               
+    }
     /* OSINE_SFS-1232 - lgarciar - Fin */
     
     public NpsEtapaTramite() {

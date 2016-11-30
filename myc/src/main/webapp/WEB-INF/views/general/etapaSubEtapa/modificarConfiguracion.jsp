@@ -82,7 +82,7 @@
         </div>
                 
         <div id="botones" style="margin: 20px 0px;">
-            <input type="button" id="btnGuardarEditarConfig" title="Agregar Guardar" class="btn-azul btn-small" value="Guardar">
+            <input type="button" id="btnGuardarEditarConfig" title="Guardar" class="btn-azul btn-small" value="Guardar">
             <input type="button" title="Cerrar" class="btnCloseDialog btn-azul btn-small" value="Cerrar">
         </div>
                 

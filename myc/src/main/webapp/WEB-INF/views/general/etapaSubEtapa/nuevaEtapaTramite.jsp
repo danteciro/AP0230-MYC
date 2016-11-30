@@ -25,7 +25,7 @@
           							<div class="filaForm">
 	                                    <div class="lble" ><label for="cmbConfiguracion">Información General de Trámite</label></div>
 	                                    <div style="float:right">
-											<input id="btnNuevaConfig_etapaTramite" class="btn_a btn_small" type="button" title="Nueva Etapa" name="" value="Nuevo">
+											<input id="btnNuevaConfig_etapaTramite" class="btn_a btn_small" type="button" title="Nuevo" name="" value="Nuevo">
 										</div>
 	                                </div>
 	                                <div>
@@ -48,7 +48,7 @@
 	                                <div class="filaForm">
 	                                  	<div class="lble" ><label>Etapa :</label></div>
 	                                    <div style="float:right">
-											<input id="btnNuevaEtapa_etapaTramite" class="btn_a btn_small" type="button" title="Nueva Etapa" name="" value="Nuevo">
+											<input id="btnNuevaEtapa_etapaTramite" class="btn_a btn_small" type="button" title="Nuevo" name="" value="Nuevo">
 										</div>
 	                                </div>
 	                                 </br>    
@@ -58,7 +58,7 @@
 	                                <div class="filaForm">
 	                                    <div class="lble"><label>SubtEtapa (*) :</label></div>
 	                                    <div style="float:right">
-											<input id="btnNuevaSubEtapa_etapaTramite" class="btn_a btn_small" type="button" title="Nueva SubEtapa" name="" value="Nuevo">
+											<input id="btnNuevaSubEtapa_etapaTramite" class="btn_a btn_small" type="button" title="Nuevo" name="" value="Nuevo">
 										</div>
                                     </div>
                                     </br>

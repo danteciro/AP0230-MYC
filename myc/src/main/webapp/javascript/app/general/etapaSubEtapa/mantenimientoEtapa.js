@@ -981,7 +981,7 @@ var mantenimientoEtapa = {
 			
 	abrirMantenimientoEtapaTramite : function(accion, rowid, idGrid){
 		switch(accion){
-			case 'modificar' : title = 'Editar Configuracion de Etapas y SubEtapas de Atención ';break;
+			case 'modificar' : title = 'Editar Configuración de Etapas y SubEtapas de Atención ';break;
 			case 'consultar' : title = 'Consultar Configuración de Etapas y SubEtapas de Atención ';break;
 		}
 	

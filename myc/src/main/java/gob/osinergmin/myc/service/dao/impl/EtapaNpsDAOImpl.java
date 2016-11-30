@@ -101,7 +101,7 @@ public class EtapaNpsDAOImpl implements EtapaNpsDAO{
 	   List<EtapaNpsDTO> listaDto = new ArrayList<EtapaNpsDTO>();
 	   if(idConfTramite!=null){			
 			jpql.append(" select et.id_etapa,et.estado from nps_etapa_tramite et " );
-			jpql.append(" where et.id_conf_tramite="+idConfTramite);
+			jpql.append(" where et.estado = '1' and et.id_conf_tramite="+idConfTramite);
 			
 			System.out.println("QUERYY:::"+jpql.toString());
        	    Query query = crudDAO.getEm().createNativeQuery(jpql.toString());//createNativeQuery createQuer

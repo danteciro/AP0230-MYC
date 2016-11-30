@@ -23,13 +23,13 @@
                                   
                                   <input type="hidden" id="idEtapaEdit" value="${idEtapaVal}" >
                                   <div class="filaForm">
-									    <div class="lblc" ><label for="idInforGeneralMod">Información General de Trámite:</label></div>
+									    <div class="lblc" ><label for="idInforGeneralMod">Informaci&oacute;n General de Tr&aacute;mite:</label></div>
 									    <input id="idInforGeneralMod" name="notificacion" validate="[O]" type="text" style="width:400px;text-transform:uppercase" value="${etapaTramite.idConfTramite.idTramite.descripcion}" />
 									    
 									    <input type="hidden" value="${etapaTramite.idConfTramite.idConfTramite}"  id="idConfTramite"/>
 									    
 									    <div style="float:right">
-											<input id="btnModConfiguracion_modificarEtapaTramite" class="btn_a btn_small" type="button" title="Nueva SubEtapa" name="" value="Editar">
+											<input id="btnModConfiguracion_modificarEtapaTramite" class="btn_a btn_small" type="button" title="" name="" value="Editar">
 										</div>
 	                              </div>
 								  <div class="filaForm">

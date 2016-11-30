@@ -288,8 +288,11 @@ public class EtapaTramiteDAOImpl implements EtapaTramiteDAO {
             jpql.append("SELECT distinct new NpsEtapaTramite"
             + "("
             + "et.idEtapaTramite, nct.idConfTramite, nt.idTramite, nt.descripcion as descTramite, "
-            + "ne.idEtapa, ne.descripcion as descEtapa, ne.plazo, pcauo.idCnfActUniOrganica, act.idActividad, act.nombre, ns.idResponsable.idMaestroColumna , "
-            + " (select count(se.idSubetapa) from NpsSubetapa se where se.estado=1 and se.idEtapa.idEtapa=ns.idEtapa) as countSubEtapa "
+            + "ne.idEtapa, ne.descripcion as descEtapa, ne.plazo, pcauo.idCnfActUniOrganica, act.idActividad, act.nombre, " );
+            if(filtro.getIdResponsable()!=null && !filtro.getIdResponsable().equals("")){
+            	jpql.append("ns.idResponsable.idMaestroColumna , ");	
+            }            
+            jpql.append(" (select count(se.idSubetapa) from NpsSubetapa se where se.estado=1 and se.idEtapa.idEtapa=ns.idEtapa) as countSubEtapa "
             + ") "
             + "FROM NpsEtapaTramite et "  
             + "LEFT JOIN et.idConfTramite nct "

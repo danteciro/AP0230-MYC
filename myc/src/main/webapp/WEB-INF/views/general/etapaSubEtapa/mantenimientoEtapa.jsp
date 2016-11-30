@@ -36,7 +36,7 @@
         <div class="container pui-panel ui-widget-content">
             
             <div class="pui-panel-titlebar ui-corner-all">
-                <span class="ui-panel-title"> CONFIGURACI&Oacute;N DE ETAPAS Y SUBETAPAS DE ATENCIÓN </span>
+                <span class="ui-panel-title"> CONFIGURACI&Oacute;N DE ETAPAS Y SUBETAPAS DE ATENCI&Oacute;N </span>
             </div>
             
             <div class="pui-panel-content ui-widget-content">
@@ -118,7 +118,7 @@
                 </fieldset>
 
                 <div id="botonesDerecha" style="margin: 10px 25px;">
-                    <input type="button" id="btnNuevaEtapaTramite_mantEtapa" title="Buscar" class="btn-azul btn-small" value="Nuevo">
+                    <input type="button" id="btnNuevaEtapaTramite_mantEtapa" title="Nuevo" class="btn-azul btn-small" value="Nuevo">
                 </div>
 
                 <div class="gridMargin">
