@@ -625,7 +625,7 @@
                         						<div>
                         							<!-- PR119 - Item 22 - Inicio -->
                         							<!--<textarea id="txtIncumplimientoCriterio" style="width: 700px;" value="" name="descripcion" class="lbld" maxlength="400" rows="2" validate="[O]" ></textarea> -->
-                            						<textarea id="txtIncumplimientoCriterio" style="width: 650px;" value="" name="descripcion" class="lbld" maxlength="400" rows="2" validate="[O]" ></textarea>
+                            						<textarea id="txtIncumplimientoCriterio" style="width: 650px;" value="" name="descripcion" class="lbld" maxlength="3990" rows="2" validate="[O]" ></textarea>
                             						<!-- PR119 - Item 22 - Fin -->
                         						</div>
                     						</div>
