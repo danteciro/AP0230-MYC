@@ -4,14 +4,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.Query;
-
-import org.jfree.util.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
-
 import gob.osinergmin.myc.domain.PghConfObligacion;
-import gob.osinergmin.myc.domain.PghProceso;
 import gob.osinergmin.myc.domain.PghProcesoObligacionTipo;
 import gob.osinergmin.myc.domain.builder.CnfObligacionBuilder;
 import gob.osinergmin.myc.domain.builder.ProcesoObligacionTipoBuilder;
@@ -23,7 +19,6 @@ import gob.osinergmin.myc.domain.ui.ObligacionTipoFilter;
 import gob.osinergmin.myc.service.dao.CnfObligacionDAO;
 import gob.osinergmin.myc.service.dao.CrudDAO;
 import gob.osinergmin.myc.service.exception.ObligacionException;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,13 +69,24 @@ public class CnfObligacionDAOImpl implements CnfObligacionDAO{
 			StringBuilder jpql = new StringBuilder();
 			
 			jpql.append(" SELECT distinct p FROM PghProcesoObligacionTipo p ");
+			//Ajuste RSIS - mdiosesf - Inicio
+			jpql.append(" join p.pghObligacionTipo ot ");
+			//Ajuste RSIS - mdiosesf - Fin
 			jpql.append(" where p.estado='1' ");
-			if(idActividad !=null){
-				jpql.append(" and p.pghProcesoObligacionTipoPK.idProceso=:proceso ");	
+			//Ajuste RSIS - mdiosesf - Inicio
+			jpql.append(" and ot.estado='1' ");
+			//Ajuste RSIS - mdiosesf - Fin
+			if(idTipoProceso !=null){
+				jpql.append(" and p.pghProcesoObligacionTipoPK.idProceso=:proceso ");				
 			}
-			if(idTipoProceso!=null){
+			if(idActividad!=null){
 				jpql.append(" and p.pghProcesoObligacionTipoPK.idActividad=:idActividad  ");
-			}			
+			}
+			//Ajuste RSIS - mdiosesf - Inicio
+			jpql.append(" and (select ob.estado from PghProceso ob where ob.idProceso=p.pghProcesoObligacionTipoPK.idProceso and ob.estado='1') = '1' ");
+			jpql.append(" and (select acti.estado from MdiActividad acti where acti.idActividad=p.pghProcesoObligacionTipoPK.idActividad and acti.estado='1') = '1' ");
+			//Ajuste RSIS - mdiosesf - Fin
+			
 			Query query = crud.getEm().createQuery(jpql.toString());
 			if(idTipoProceso!=null){
 			query.setParameter("proceso", idTipoProceso);

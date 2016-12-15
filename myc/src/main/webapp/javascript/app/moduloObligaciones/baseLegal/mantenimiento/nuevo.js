@@ -740,10 +740,8 @@ var gestionBaseLegal = (function() {
     	});
     	$('#dateFecVigenciaNorma').datepicker('option','minDate',$('#dateFecVigencia').val()).trigger('change');
     	$('#dateFecVigenciaNormaAnexo').datepicker('option','minDate',$('#dateFecVigencia').val()).trigger('change');
-    	console.info('ingreso');
     	
     	gestionBaseLegal.concatenaDescripcionBaseLegal();
-    	console.info('paso concatenar');
    	}
     
     function configuracionBasicaFechaVigencia() {
@@ -3770,7 +3768,10 @@ var nuevaObligacionNormativa = (function() {
             //beforeSend:muestraLoading,
             success: function(data) {
                 //ocultaLoading();
-            	treeDataObligacionTipo = fxTreeObligacionTipo.build(data.filas);
+            	//Ajuste RSIS - mdiosesf - Inicio
+            	if(data.filas!=null)
+            	//Ajuste RSIS - mdiosesf - Fin
+            		treeDataObligacionTipo = fxTreeObligacionTipo.build(data.filas);
             },
             error:errorAjax
         });
@@ -5599,11 +5600,9 @@ var cargaInicial=(function(){
             $("#cmbNumeroAnexo").html(html);
             if(flagBaseLegal=="editar"){
             	gestionBaseLegal.concatenaDescripcionBaseLegal();
-                console.info('concatena nuevamente editar');
             }
             if(flagBaseLegal=="nuevo"){
             	gestionBaseLegal.concatenaDescripcionBaseLegal();
-            	console.info('concatena nuevamente ver');
             }
             
         });
