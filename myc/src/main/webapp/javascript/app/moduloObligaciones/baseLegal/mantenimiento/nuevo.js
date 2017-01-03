@@ -1,4 +1,4 @@
-﻿var prueba;
+var prueba;
 var codObligacion;
 var datajson = [];
 var validaCerrar=0;
@@ -226,7 +226,7 @@ var gestionBaseLegal = (function() {
                 if(this.width > 800 || this.height > 600){
                     validarArchivoObligacion.show();
                     validarArchivoObligacion.focus();
-                    validarArchivoObligacion.html("* El tamaño de la imagen no corresponde con la permitida (800 x 600)");
+                    validarArchivoObligacion.html("* El tamaÃ±o de la imagen no corresponde con la permitida (800 x 600)");
                     $('#botoGuardarFile').css('display','none');
                     /* OSINE_SFS-610 - INICIO */
                     $('#formFileOblNor').css('margin-top',0);
@@ -262,7 +262,7 @@ var gestionBaseLegal = (function() {
                 if(this.width > 800 || this.height > 600){
                     validarArchivoDescripcion.show();
                     validarArchivoDescripcion.focus();
-                    validarArchivoDescripcion.html("* El tamaño de la imagen no corresponde con la permitida (800 x 600)");
+                    validarArchivoDescripcion.html("* El tamaÃ±o de la imagen no corresponde con la permitida (800 x 600)");
                     //Limpiando archivo adjunto
                     document.getElementById('formFileDesOblNor').reset();
                     /* OSINE_SFS-610 - INICIO */
@@ -286,7 +286,7 @@ var gestionBaseLegal = (function() {
                 if(this.width > 800 || this.height > 600){
                     validarArchivoDescripcion.show();
                     validarArchivoDescripcion.focus();
-                    validarArchivoDescripcion.html("* El tamaño de la imagen no corresponde con la permitida (800 x 600)");
+                    validarArchivoDescripcion.html("* El tamaÃ±o de la imagen no corresponde con la permitida (800 x 600)");
                     $('#botoGuardarFileInfraccion').css('display','none');
                     $('#formFileInfraccion').css('margin-top',0);
                     //Limpiando archivo adjunto
@@ -347,7 +347,7 @@ var gestionBaseLegal = (function() {
         	    allowCaseless : true,
         	    allowOtherCharSets : false,
         	    allowSpace    : true,
-        	    allow    : 'Ñ,ñ',
+        	    allow    : 'Ã‘,Ã±',
 //        	      forceUpper    : true, 
         	   };
         
@@ -369,7 +369,7 @@ var gestionBaseLegal = (function() {
             allowCaseless : true,
             allowOtherCharSets : false,
             allowSpace    : true,
-            allow         : 'áéíóúÁÉÍÓÚÑñ.'
+            allow         : 'Ã¡Ã©Ã­Ã³ÃºÃ�Ã‰Ã�Ã“ÃšÃ‘Ã±.'
         };
 // 05-11-2015        
         var SancionMonetariaCriterio = {
@@ -391,7 +391,7 @@ var gestionBaseLegal = (function() {
             allowCaseless : true,
             allowOtherCharSets : false,
             allowSpace    : true,
-            allow         : '°-/'
+            allow         : 'Â°-/'
         }; 
 //   
           $("#txtNumBaseLegal").numeric(numericOptions);
@@ -424,7 +424,7 @@ var gestionBaseLegal = (function() {
                     	  confirm.open("No se puede eliminar La Norma Legal seleccionada, existen Bases Legales dependientes","");
                       }else{
                     	  confirm.start();
-                    	  confirm.open("¿Esta seguro de eliminar la Norma Legal Padre?","gestionBaseLegal.eliminarBaseLegal('" + idBaseLegal + "')");
+                    	  confirm.open("Â¿Esta seguro de eliminar la Norma Legal Padre?","gestionBaseLegal.eliminarBaseLegal('" + idBaseLegal + "')");
                       }
                       
                   },
@@ -486,8 +486,8 @@ var gestionBaseLegal = (function() {
     
     function confirmEliminarBaseLegal(rowid) {
         confirm.start();
-//        var mensaje = "¿Ud est&aacute; seguro de eliminar esta Base Legal?";
-        var mensaje = "Esta operaci&oacute;n es irreversible y no elimina las obligaciones relacionadas, ¿Est&aacute; seguro de eliminar la base legal que tiene obligaciones relacionadas?";
+//        var mensaje = "Â¿Ud est&aacute; seguro de eliminar esta Base Legal?";
+        var mensaje = "Esta operaci&oacute;n es irreversible y no elimina las obligaciones relacionadas, Â¿Est&aacute; seguro de eliminar la base legal que tiene obligaciones relacionadas?";
         confirm.open(mensaje,
                 "gestionBaseLegal.eliminarBaseLegal('" + rowid + "')");/*function: busquedaBaseLegal.confirmEliminarBaseLegal*/
     }
@@ -520,8 +520,8 @@ var gestionBaseLegal = (function() {
     		nuevoBL.cmbNumeroDisposicion.attr('disabled','disabled');
     		nuevoBL.cmbTipoDisposicion.attr('disabled','disabled');
     		nuevoBL.txtArticuloNormaLegal.attr('disabled','disabled');
-    		$('#divDescCodigoBaseLegal').css('display','inline-block');//Descripcion código base legal
-    		$('#txtCodigoBaseLegalNuevo').css('display','block');//Text código base legal
+    		$('#divDescCodigoBaseLegal').css('display','inline-block');//Descripcion cÃ³digo base legal
+    		$('#txtCodigoBaseLegalNuevo').css('display','block');//Text cÃ³digo base legal
 // 05-11-2015    		
     		if(flagPadre=="hijo"){
     			$('#toggAsigna').css('display','inline-block'); 
@@ -590,8 +590,8 @@ var gestionBaseLegal = (function() {
 	    	$('#btnNuevaObligacionNormativa').css('display','none');
 	    	
     	}else if(flagBaseLegal=="editar"){
-    		$('#divDescCodigoBaseLegal').css('display','inline-block');//Descripcion código base legal
-    		$('#txtCodigoBaseLegalNuevo').css('display','block');//Text código base legal
+    		$('#divDescCodigoBaseLegal').css('display','inline-block');//Descripcion cÃ³digo base legal
+    		$('#txtCodigoBaseLegalNuevo').css('display','block');//Text cÃ³digo base legal
 // 05-11-2015
     		if(flagPadre=="hijo"){
     			$('#toggAsigna').css('display','inline-block'); 
@@ -835,7 +835,7 @@ var gestionBaseLegal = (function() {
     	nuevoBL.btnGuardarObligacion.css('display','inline-block');//muestra boton guardar
     	$('#imgCarOblNor').css('display','inline-block');//muestra subir archivo
     	$('#lblDocAdjExtOblNor').css('display','inline-block');//muestra subir archivo
-    	//Estilos EDITAR --> Tipificación
+    	//Estilos EDITAR --> TipificaciÃ³n
     	$('#tipificacionEditarObligacion').css('display','block');
     	//Estilos EDITAR --> Criterio
     	$('#criterioObligacionEditar').css('display','block');
@@ -844,7 +844,7 @@ var gestionBaseLegal = (function() {
     	$('#btnAgregarDescripcion').css('display','inline-block');
     	//Estilos EDITAR --> Asociar Base Legal
     	$('#asociaObligacionEditar').css('display','block');
-    	//Estilos EDITAR --> Configuración
+    	//Estilos EDITAR --> ConfiguraciÃ³n
     	nuevoBL.divConfigurarSupervision.css('display','block');
 //    	nuevaObligacionNormativa.gridConfiguracionObligacion();
     	//Estilos EDITAR --> Relaciones
@@ -1461,7 +1461,7 @@ var gestionBaseLegal = (function() {
                 beforeSend: muestraLoading,
                 success: function(data) {
                     if (data.resultado == 0) {
-                        mensajeGrowl("success", "Se registró correctamente", "Se registrarón los datos correctamente");
+                        mensajeGrowl("success", "Se registrÃ³ correctamente", "Se registrarÃ³n los datos correctamente");
                         ocultaLoading();
                         gestionBaseLegal.generaCodigoObligacion();
                         validaNuevaBaseLegal.procesarGridOblig();
@@ -1469,7 +1469,7 @@ var gestionBaseLegal = (function() {
                         muestraDivError("divMensajeValidacion", data.mensaje, "");
                         ocultaLoading();
                     } else {
-                        //mensajeGrowl("success", "Se registró correctamente", "Se registrarón los datos correctamente");
+                        //mensajeGrowl("success", "Se registrÃ³ correctamente", "Se registrarÃ³n los datos correctamente");
                         mensajeGrowl('error', "Error en el insertar", 'Intente de nuevo');
                         ocultaLoading();
                     }
@@ -1546,35 +1546,35 @@ concatenaDescripcionBaseLegal();
         }
         // Inicio MYC-7 Cambio de Alcance
         if(nuevoBL.txtArticuloNormaLegal.val() == '0' || nuevoBL.txtArticuloNormaLegal.val() == '00' || nuevoBL.txtArticuloNormaLegal.val() == '000'){
-        	mensajeValidacion += "* (Artículo) valor a registrar no permitido <br>";
+        	mensajeValidacion += "* (ArtÃ­culo) valor a registrar no permitido <br>";
         	nuevoBL.txtArticuloNormaLegal.addClass("error");
         }else{
         	nuevoBL.txtArticuloNormaLegal.removeClass("error");
         }
         if($('#txtArtAneBaseLegal').val() == '0' || $('#txtArtAneBaseLegal').val()  == '00' || $('#txtArtAneBaseLegal').val()  == '000'){
-        	mensajeValidacion += "* (Artículo del Anexo) valor a registrar no permitido <br>";
+        	mensajeValidacion += "* (ArtÃ­culo del Anexo) valor a registrar no permitido <br>";
         	$('#txtArtAneBaseLegal').addClass("error");
         }else{
         	$('#txtArtAneBaseLegal').removeClass("error");
         }
         // Fin MYC-7 Cambio de Alcance
         if(nuevoBL.txtNumeroNormaLegal.val()==""){
-            mensajeValidacion += "* Debe ingresar Número <br>";   
+            mensajeValidacion += "* Debe ingresar NÃºmero <br>";   
         }
         var fechaActual = new Date();
         var anioFinal = fechaActual.getFullYear();
         var anio = $('#txtAnioBaseLegal').val();
         if(anio != "" && ( parseInt(anio) < 1960 || parseInt(anio) > (anioFinal+1) )){
-            mensajeValidacion += "* Debe ingresar un año valido (mayor a 1960 y menor o igual a "+(anioFinal+1)+") <br>";       
+            mensajeValidacion += "* Debe ingresar un aÃ±o valido (mayor a 1960 y menor o igual a "+(anioFinal+1)+") <br>";       
         }
         if ($('#chkCrearObligacion').is(':checked')) {
             var filasGridObligaciones = $("#gridOblig").getRowData();
             if(filasGridObligaciones.length != undefined && filasGridObligaciones.length == 0){
-                mensajeValidacion += "* Debe asociar una Obligación <br>";   
+                mensajeValidacion += "* Debe asociar una ObligaciÃ³n <br>";   
             }
             // Inicio MYC-7 Cambio de Alcance
 //            else if(filasGridObligaciones.length> 0 && nuevoBL.txtArticuloNormaLegal.val()==""){
-//            	mensajeValidacion += "* Debe ingresar Artículo para poder asociar Obligaciones <br>";
+//            	mensajeValidacion += "* Debe ingresar ArtÃ­culo para poder asociar Obligaciones <br>";
 //            	nuevoBL.txtArticuloNormaLegal.addClass("error");
 //            }
             // Fin MYC-7 Cambio de Alcance
@@ -1582,7 +1582,7 @@ concatenaDescripcionBaseLegal();
         
         if ($('#chkModificatoria').is(':checked')) {
             if(nuevoBL.txtNumeroNormaLegal.val()==""){
-            	mensajeValidacion += "* Debe ingresar Número guardar con modificatorias <br>";
+            	mensajeValidacion += "* Debe ingresar NÃºmero guardar con modificatorias <br>";
             	nuevoBL.txtNumeroNormaLegal.addClass("error");
             }
         }
@@ -1592,7 +1592,7 @@ concatenaDescripcionBaseLegal();
             if(filasGridConcordancia.length != undefined && filasGridConcordancia.length == 0){
                 mensajeValidacion += "* Debe asociar una Base Legal <br>";   
             }else if(filasGridConcordancia.length> 0 && nuevoBL.txtNumeroNormaLegal.val()==""){
-            	mensajeValidacion += "* Debe ingresar Número asociar Bases Legales en Concordancia <br>";
+            	mensajeValidacion += "* Debe ingresar NÃºmero asociar Bases Legales en Concordancia <br>";
             	nuevoBL.txtNumeroNormaLegal.addClass("error");
             }
         } 
@@ -1636,12 +1636,12 @@ concatenaDescripcionBaseLegal();
 //        }
         
         if($('#txtArtAneBaseLegal').val()=="" && $('#cmbTipAneBaseLegal option:selected').text() != '--Seleccione--' && $("#cmbNumeroDisposicion option:selected").text() == '--Seleccione--'){
-        	mensajeValidacion += "* Debe ingresar un valor en el campo Artículo del Anexo <br>";
+        	mensajeValidacion += "* Debe ingresar un valor en el campo ArtÃ­culo del Anexo <br>";
         	nuevoBL.txtArticuloAnexoNormaLegal.addClass("error");
         }
 //        Inicio MYC-7 Cambio de Alcance
 //        if($('#cmbTipAneBaseLegal option:selected').text() != '--Seleccione--' && nuevoBL.txtArticuloNormaLegal.val()==""){
-//        	mensajeValidacion += "* Debe ingresar un valor en el campo Artículo <br>";
+//        	mensajeValidacion += "* Debe ingresar un valor en el campo ArtÃ­culo <br>";
 //        	nuevoBL.txtArticuloNormaLegal.addClass("error");
 //        }
         if($('#chkNormaLegalPadre').is(':checked')){
@@ -1649,14 +1649,14 @@ concatenaDescripcionBaseLegal();
         }else{
         	if($('#cmbNorTecBaseLegal option:selected').text() != '--Seleccione--' && nuevoBL.txtArticuloNormaLegal.val()=="" && $('#cmbTipAneBaseLegal option:selected').text() == '--Seleccione--' && $("#cmbNumeroDisposicion option:selected").text() == '--Seleccione--'){
         		if(nuevoBL.txtArticuloNormaLegal.val()=="" && $('#cmbTipAneBaseLegal').val()=="-1" && $("#cmbNumeroDisposicion").val() == "-1"){
-        			mensajeValidacion += "* Debe ingresar un valor en el campo Artículo o Tipo de Anexo o Nº de Disposición<br>";
+        			mensajeValidacion += "* Debe ingresar un valor en el campo ArtÃ­culo o Tipo de Anexo o NÂº de DisposiciÃ³n<br>";
         			nuevoBL.txtArticuloNormaLegal.addClass("error");
         			$('#cmbTipAneBaseLegal').addClass("error");
         			$('#cmbNumeroDisposicion').addClass("error");
         		}
 	        }
 	        if($('#cmbNorTecBaseLegal option:selected').text() == '--Seleccione--' && nuevoBL.txtArticuloNormaLegal.val()=="" && $('#cmbTipAneBaseLegal option:selected').text() == '--Seleccione--' && $("#cmbNumeroDisposicion option:selected").text() == '--Seleccione--'){
-	    			mensajeValidacion += "* Debe ingresar un valor en el campo Artículo o Tipo de Anexo o Nº de Disposición<br>";
+	    			mensajeValidacion += "* Debe ingresar un valor en el campo ArtÃ­culo o Tipo de Anexo o NÂº de DisposiciÃ³n<br>";
 	    			nuevoBL.txtArticuloNormaLegal.addClass("error");
 	    			$('#cmbTipAneBaseLegal').addClass("error");
 	    			$('#cmbNumeroDisposicion').addClass("error");
@@ -1735,7 +1735,7 @@ concatenaDescripcionBaseLegal();
     	/** <--> **/
     	$('#chkNormaLegalPadre').removeAttr('disabled');
         $("#dialogConfirmacionRegistroBaseLegal").dialog("close");
-        concatenaDescripcionBaseLegal();//genera descripción
+        concatenaDescripcionBaseLegal();//genera descripciÃ³n
         var mydata = $('#tblNormaTecnica').getGridParam('data');
         
 //        $.each( mydata, function( key, value ) {
@@ -1860,7 +1860,7 @@ concatenaDescripcionBaseLegal();
         if (Numero == null) {
             NumeroValidado = "";
         } else {
-            NumeroValidado = " N° " + Numero;
+            NumeroValidado = " NÂ° " + Numero;
         }
 
         var Ano = $("#txtAnioBaseLegal").spinner("value");
@@ -1890,7 +1890,7 @@ concatenaDescripcionBaseLegal();
         if (Articulo == "") {
             ArticuloValidado = "";
         } else {
-            ArticuloValidado = " " + "Art. N° " + Articulo+",";
+            ArticuloValidado = " " + "Art. NÂ° " + Articulo+",";
         }
 
         var Inciso1 = $("#txtInc1BaseLegal").val();
@@ -1944,7 +1944,7 @@ concatenaDescripcionBaseLegal();
         	// Inicio MYC-7 Cambio de Alcance
         	if($('#cmbNumeroAnexo option:selected').text()!='--Seleccione--'){
             	ValorNumeroAnexo = $('#cmbNumeroAnexo option:selected').text();
-            	NumeroAnexo = " N° " + ValorNumeroAnexo + " ";
+            	NumeroAnexo = " NÂ° " + ValorNumeroAnexo + " ";
             	TipoAnexoValidado = " " + TipoAnexo + NumeroAnexo + " aprobado por ";
             }else{
             	TipoAnexoValidado = " " + TipoAnexo + " aprobado por ";
@@ -1954,7 +1954,7 @@ concatenaDescripcionBaseLegal();
 //        	TipoAnexoValidado = " " + TipoAnexo + " aprobado por ";
         	// Fin MYC-7 Cambio de Alcance
         }
-        //campos de disposición
+        //campos de disposiciÃ³n
         var NumeroDisposicion = $("#cmbNumeroDisposicion option:selected").text();
         var TipoDisposicion = $("#cmbTipoDisposicion option:selected").text();
         var DisposicionValidado;
@@ -1962,9 +1962,9 @@ concatenaDescripcionBaseLegal();
         	DisposicionValidado = "";
         }else{
         	if( TipoDisposicion != '--Seleccione--' ){
-        		DisposicionValidado = " " + NumeroDisposicion + " Disposición Complementaria " + TipoDisposicion + " del Reglamento aprobado por ";
+        		DisposicionValidado = " " + NumeroDisposicion + " DisposiciÃ³n Complementaria " + TipoDisposicion + " del Reglamento aprobado por ";
         	}else{
-        		DisposicionValidado = " " + NumeroDisposicion + " Disposición Complementaria del Reglamento aprobado por ";
+        		DisposicionValidado = " " + NumeroDisposicion + " DisposiciÃ³n Complementaria del Reglamento aprobado por ";
         	}
         }
 
@@ -1974,7 +1974,7 @@ concatenaDescripcionBaseLegal();
         if (ArticuloAnexo == "") {
             ArticuloAnexoValidado = "";
         } else {
-            ArticuloAnexoValidado = "Art. N° " + ArticuloAnexo+",";
+            ArticuloAnexoValidado = "Art. NÂ° " + ArticuloAnexo+",";
         }
 
 
@@ -2092,7 +2092,7 @@ concatenaDescripcionBaseLegal();
             concatenado = "";
         }
         
-        //verificando si se debe de concatenar los datos de la disposición
+        //verificando si se debe de concatenar los datos de la disposiciÃ³n
         if (NumeroDisposicion != "--Seleccione--" && TipoAnexo == "--Seleccione--" && NormaTecnica == "--Seleccione--"){
         	concatenado = DisposicionValidado + 
         			SiglaNormaLegal + NumeroValidado + AnoValidado + SiglaValidado + ModificatoriasValidado + DescripcionConcordanciaValidada;
@@ -2832,7 +2832,7 @@ var nuevaObligacionNormativa = (function() {
             allowCaseless : true,
             allowOtherCharSets : false,
             allowSpace    : true,
-            allow         : 'áéíóúÁÉÍÓÚÑñ.'
+            allow         : 'Ã¡Ã©Ã­Ã³ÃºÃ�Ã‰Ã�Ã“ÃšÃ‘Ã±.'
         };
         var descripcionObligacion = {
                 allowNumeric  : true,
@@ -2971,7 +2971,7 @@ var nuevaObligacionNormativa = (function() {
                 if(this.width > 100 || this.height > 100){
                     validarCriterio.show();
                     validarCriterio.focus();
-                    validarCriterio.html("* El tamaño de la imagen no corresponde con la permitida ( 100 x 100)");
+                    validarCriterio.html("* El tamaÃ±o de la imagen no corresponde con la permitida ( 100 x 100)");
                     //Limpiando archivo adjunto
                     document.getElementById('file_Pauta').value = "";
                     document.getElementById('formPauta').reset();
@@ -3226,7 +3226,7 @@ var nuevaObligacionNormativa = (function() {
     	nuevoBL.btnGuardarObligacion.css('display','none');//oculta boton guardar
     	$('#imgCarOblNor').css('display','none');//oculta subir archivo
     	$('#lblDocAdjExtOblNor').css('display','none');//oculta subir archivo
-    	//Estilos VER --> Tipificación
+    	//Estilos VER --> TipificaciÃ³n
     	$('#tipificacionEditarObligacion').css('display','none');
     	//Estilos VER --> Criterio
     	$('#criterioObligacionEditar').css('display','none');
@@ -3235,7 +3235,7 @@ var nuevaObligacionNormativa = (function() {
     	$('#btnAgregarDescripcion').css('display','none');
     	//Estilos VER --> Asociar Base Legal
     	$('#asociaObligacionEditar').css('display','none');
-    	//Estilos VER --> Configuración
+    	//Estilos VER --> ConfiguraciÃ³n
     	nuevoBL.divConfigurarSupervision.css('display','none');
     	//Estilos VER --> Relaciones
     	nuevoBL.btnGuardarRelacionObligacion.css('display','none');
@@ -3282,7 +3282,7 @@ var nuevaObligacionNormativa = (function() {
         	$('#divDownloadImg').append('<a class="link" href="'+baseURL + 'pages/documentoAdjunto/descargaArchivoAlfresco?aplicacionSpace=OBLIGACIONES&nombreArchivo='+nombreArchivo+'&rutaAlfresco='+rutaAlfresco+'"><img class="vam" width="20" height="24" src="'+baseURL+'images/stickers.png"></a>');
 
     	}
-    	//Detalle Descripción
+    	//Detalle DescripciÃ³n
         if(data.detalleObligacion!=null){
         	$('#idDetalleObligacion').val(data.detalleObligacion.idDetalleObligacion);
         	$('#txtDescObligacionNormativaActa').val(data.detalleObligacion.descripcion);	
@@ -3337,7 +3337,7 @@ var nuevaObligacionNormativa = (function() {
     	nuevoBL.btnGuardarObligacion.css('display','inline-block');//muestra boton guardar
     	$('#imgCarOblNor').css('display','inline-block');//muestra subir archivo
     	$('#lblDocAdjExtOblNor').css('display','inline-block');//muestra subir archivo
-    	//Estilos EDITAR --> Tipificación
+    	//Estilos EDITAR --> TipificaciÃ³n
     	$('#tipificacionEditarObligacion').css('display','block');
     	//Estilos EDITAR --> Criterio
     	$('#criterioObligacionEditar').css('display','block');
@@ -3346,7 +3346,7 @@ var nuevaObligacionNormativa = (function() {
     	$('#btnAgregarDescripcion').css('display','inline-block');
     	//Estilos EDITAR --> Asociar Base Legal
     	$('#asociaObligacionEditar').css('display','block');
-    	//Estilos EDITAR --> Configuración
+    	//Estilos EDITAR --> ConfiguraciÃ³n
     	nuevoBL.divConfigurarSupervision.css('display','block');
     	//Estilos EDITAR --> Relaciones
     	nuevoBL.btnGuardarRelacionObligacion.css('display','inline-block');
@@ -3393,7 +3393,7 @@ var nuevaObligacionNormativa = (function() {
 
     	}
     	
-    	//Detalle Descripción
+    	//Detalle DescripciÃ³n
         if(data.detalleObligacion!=null){
         	$('#idDetalleObligacion').val(data.detalleObligacion.idDetalleObligacion);
         	$('#txtDescObligacionNormativaActa').val(data.detalleObligacion.descripcion);	
@@ -3564,13 +3564,13 @@ var nuevaObligacionNormativa = (function() {
                 if(nuevaObligacionNormativa.modoVisualizacion != modoVer){
                     $('#divContextCnfOblg').html("<ul id='contextCnfOblg'>"
                     		+"<li> <a value='EL-GRIDCONFIGURACIONOBLIGACION'></a></li>"
-//                            + "<li> <a id='linkEliminarCnf' data-icon='ui-icon-trash' title='Eliminar Configuración'>Eliminar</a></li>"
+//                            + "<li> <a id='linkEliminarCnf' data-icon='ui-icon-trash' title='Eliminar ConfiguraciÃ³n'>Eliminar</a></li>"
                             + "</ul>");
                     $('#contextCnfOblg').puicontextmenu({
                         //target: $('#gridObligacionNormativa').find('tr').not('.ui-subgrid,.ui-subgrid tr')
                         target: $('#gridCnfOblgacion')
                     });             
-                    //cargando las actividades de la obligación
+                    //cargando las actividades de la obligaciÃ³n
                     nuevaObligacionNormativa.obtenerListaConfiguracionesCompleta();
                 }
             }
@@ -3609,8 +3609,8 @@ var nuevaObligacionNormativa = (function() {
         confirm.start();
         /* modif jpiro 20150106 - fin */
         /* OSINE_SFS-610 - Inicio */
-        //confirm.open("¿Ud est&aacute; seguro de eliminar la configuracion ?",
-        confirm.open("¿Ud est&aacute; seguro de eliminar la configuraci&oacute;n ?",
+        //confirm.open("Â¿Ud est&aacute; seguro de eliminar la configuracion ?",
+        confirm.open("Â¿Ud est&aacute; seguro de eliminar la configuraci&oacute;n ?",
         /* OSINE_SFS-610 - Fin */
                 "nuevaObligacionNormativa.eliminarConfiguracion('" + rowid + "')");
     }
@@ -3706,7 +3706,7 @@ var nuevaObligacionNormativa = (function() {
             loadComplete: function(data) {
                 $('#contextPreCnf').parent().remove();
                 $('#divContextPreCnf').html("<ul id='contextPreCnf'>"
-                        + "<li> <a id='linkEliminarPreCnf' data-icon='ui-icon-trash' title='Eliminar Configuración'>Eliminar</a></li>"
+                        + "<li> <a id='linkEliminarPreCnf' data-icon='ui-icon-trash' title='Eliminar ConfiguraciÃ³n'>Eliminar</a></li>"
                         + "</ul>");
                 $('#contextPreCnf').puicontextmenu({
                     //target: $('#gridObligacionNormativa').find('tr').not('.ui-subgrid,.ui-subgrid tr')
@@ -3932,7 +3932,7 @@ var nuevaObligacionNormativa = (function() {
             var descPro=$('#inputDescTipoProceso').val();
             var descOblg=$('#inputDescObligacionTipo').val();
             addGridData(descAct,descPro,descOblg);//addData
-            //habilita pestaña Configuracion
+            //habilita pestaÃ±a Configuracion
         	nuevoBL.divConfigurarSupervision.puitabview('enable', 3);
             nuevoBL.divConfigurarSupervision.puitabview('disable', 2);
             nuevoBL.divConfigurarSupervision.puitabview('select', 3);
@@ -4291,7 +4291,7 @@ var nuevaObligacionNormativa = (function() {
         	$('#cmbEscenario').addClass("error");
             divValidacion.show();
             divValidacion.focus();
-            divValidacion.html("* Debe Seleccionar un Escenario válido");
+            divValidacion.html("* Debe Seleccionar un Escenario vÃ¡lido");
         }else{
             divValidacion.hide();
             divValidacion.html("");
@@ -4384,7 +4384,7 @@ var nuevaObligacionNormativa = (function() {
      */
     function gridTipificacion() {
     	/* OSINE_SFS-610 INICIO */
-        var colNames = ['idTipificacion','idActividad','Actividad','Cod. Tipificaci&oacute;n', 'Descripci&oacute;n Infracción', 'Sanci&oacute;n','','concatIdTipoSancion'];
+        var colNames = ['idTipificacion','idActividad','Actividad','Cod. Tipificaci&oacute;n', 'Descripci&oacute;n InfracciÃ³n', 'Sanci&oacute;n','','concatIdTipoSancion'];
         /* OSINE_SFS-610 FIN */
         var colModel = [
             {name: "idTipificacion", hidden: true, width: 200, sortable: false, align: "center"},
@@ -4468,7 +4468,7 @@ var nuevaObligacionNormativa = (function() {
         confirm.start();
         /* modif jpiro 20150106 - fin */
         /* OSINE_SFS-610 - INICIO */
-        confirm.open("¿Ud est&aacute; seguro de eliminar esta Tipificaci&oacute;n?",
+        confirm.open("Â¿Ud est&aacute; seguro de eliminar esta Tipificaci&oacute;n?",
                 "nuevaObligacionNormativa.eliminarTipificacion('" + rowid + "')");
         /* OSINE_SFS-610 - FIN */
     }
@@ -4572,7 +4572,7 @@ var nuevaObligacionNormativa = (function() {
      */
     function gridCriterio() {
 // 05-11-2015    	
-    	var nombres = ['IdTipiCriterio','IdCriterio', 'IdTipificacion', 'Actividad' ,'Cod. Tip.', 'Descripción del Incumplimiento', 'Sanción Específica','','Base Legal','','concatIdTipoSancion'];
+    	var nombres = ['IdTipiCriterio','IdCriterio', 'IdTipificacion', 'Actividad' ,'Cod. Tip.', 'DescripciÃ³n del Incumplimiento', 'SanciÃ³n EspecÃ­fica','','Base Legal','','concatIdTipoSancion'];
         var columnas = [
             {name: "idObliTipiCriterio", width: 20, hidden: true, sortable: false, align: "center"},
             {name: "idCriterio", width: 20, hidden: true, sortable: false, align: "center"},
@@ -4668,7 +4668,7 @@ var nuevaObligacionNormativa = (function() {
                     url: baseURL + "pages/mantenimiento/baseLegal/findDetalleCriterio",
                     postData: {idCriterio: dataPadre.idCriterio},
                     datatype: "json",
-                    colNames: ['ID DETALLE CRITERIO','Sanción Específica','Sanciones','concatIdTipoSancion'],
+                    colNames: ['ID DETALLE CRITERIO','SanciÃ³n EspecÃ­fica','Sanciones','concatIdTipoSancion'],
                     colModel: [
                         {name: "idDetalleCriterio", hidden: true, width: 200, sortable: false, align: "center"},
 			            {name: "sancionEspecifica", width: 460, sortable: false, align: "center"},
@@ -4709,7 +4709,7 @@ var nuevaObligacionNormativa = (function() {
     function confirmEliminarCriterio(idCriterio) {
         confirm.start();
         /* OSINE_SFS-610 - INICIO */
-        confirm.open("¿Ud est&aacute; seguro de eliminar asociaci&oacute;n con el criterio?",
+        confirm.open("Â¿Ud est&aacute; seguro de eliminar asociaci&oacute;n con el criterio?",
                 "nuevaObligacionNormativa.eliminarCriterio('" + idCriterio + "')");
         /* OSINE_SFS-610 - FIN */
     }
@@ -4836,7 +4836,7 @@ var nuevaObligacionNormativa = (function() {
      */
     function gridPautaSancionTipificacion() {
         
-        var colNames = ['idTipificacion','Cod. Tipificación', 'Descripción Infracción', 'Monto Tipificacion Hasta', 'Seleccionado','Asignar'];
+        var colNames = ['idTipificacion','Cod. TipificaciÃ³n', 'DescripciÃ³n InfracciÃ³n', 'Monto Tipificacion Hasta', 'Seleccionado','Asignar'];
         var colModel = [
             {name: "idTipificacion", hidden: true, width: 164, sortable: false, align: "center"},
             {name: "codTipificacion", width: 164, sortable: false, align: "center"},
@@ -4996,7 +4996,7 @@ var nuevaObligacionNormativa = (function() {
         var divValidacion = $("#divMensajeValidacionDependenciaCriterio");
         var mensajeValidacion = "";
         if(filasTipificaciones.length == undefined || filasTipificaciones.length == 0){
-            mensajeValidacion = "* Debe agregar alguna Tipificación <br>";   
+            mensajeValidacion = "* Debe agregar alguna TipificaciÃ³n <br>";   
         }
         if(mensajeValidacion != ""){
             divValidacion.show();
@@ -5082,9 +5082,9 @@ var nuevaObligacionNormativa = (function() {
     function comparaValor() {
         if (nuevoBL.txtCodigoTipificacionObligacion.val() === '2.1.6') {
             nuevoBL.txtIdTipificacion.val('14');
-            nuevoBL.txtDescripcionTipificacionOblig.val('Técnicas y/o Seguridad');
+            nuevoBL.txtDescripcionTipificacionOblig.val('TÃ©cnicas y/o Seguridad');
             nuevoBL.txtSancionTipificacionObligacion.val('110');
-            nuevoBL.txtBaseLegalTipificacionObligacion.val('RCD N°271-2012-OS-CD');
+            nuevoBL.txtBaseLegalTipificacionObligacion.val('RCD NÂ°271-2012-OS-CD');
             nuevoBL.chkComisoBienes.attr('checked', true);
             nuevoBL.chkParalizacionObras.attr('checked', true);
             nuevoBL.chkCierreInstalacion.attr('checked', true);
@@ -5094,9 +5094,9 @@ var nuevaObligacionNormativa = (function() {
             nuevoBL.chkSuspensionDefinitiva.attr('checked', false);
         } else if (nuevoBL.txtCodigoTipificacionObligacion.val() === '2.3') {
             nuevoBL.txtIdTipificacion.val('15');
-            nuevoBL.txtDescripcionTipificacionOblig.val('Técnicas y/o Seguridad');
+            nuevoBL.txtDescripcionTipificacionOblig.val('TÃ©cnicas y/o Seguridad');
             nuevoBL.txtSancionTipificacionObligacion.val('300');
-            nuevoBL.txtBaseLegalTipificacionObligacion.val('RCD N°271-2012-OS-CD');
+            nuevoBL.txtBaseLegalTipificacionObligacion.val('RCD NÂ°271-2012-OS-CD');
             nuevoBL.chkComisoBienes.attr('checked', false);
             nuevoBL.chkParalizacionObras.attr('checked', true);
             nuevoBL.chkCierreInstalacion.attr('checked', false);
@@ -5105,9 +5105,9 @@ var nuevaObligacionNormativa = (function() {
             nuevoBL.chkCierreEstablecimiento.attr('checked', true);
             nuevoBL.chkSuspensionDefinitiva.attr('checked', true);
         } else if (nuevoBL.txtCodigoTipificacionObligacion.val() === '2.14.3') {
-            nuevoBL.txtDescripcionTipificacionOblig.val('Técnicas y/o Seguridad');
+            nuevoBL.txtDescripcionTipificacionOblig.val('TÃ©cnicas y/o Seguridad');
             nuevoBL.txtSancionTipificacionObligacion.val('150');
-            nuevoBL.txtBaseLegalTipificacionObligacion.val('RCD N°271-2012-OS-CD');
+            nuevoBL.txtBaseLegalTipificacionObligacion.val('RCD NÂ°271-2012-OS-CD');
             nuevoBL.chkComisoBienes.attr('checked', true);
             nuevoBL.chkParalizacionObras.attr('checked', false);
             nuevoBL.chkCierreInstalacion.attr('checked', false);
@@ -5116,9 +5116,9 @@ var nuevaObligacionNormativa = (function() {
             nuevoBL.chkCierreEstablecimiento.attr('checked', true);
             nuevoBL.chkSuspensionDefinitiva.attr('checked', true);
         } else if (nuevoBL.txtCodigoTipificacionObligacion.val() === '2.1.5') {
-            nuevoBL.txtDescripcionTipificacionOblig.val('Técnicas y/o Seguridad');
+            nuevoBL.txtDescripcionTipificacionOblig.val('TÃ©cnicas y/o Seguridad');
             nuevoBL.txtSancionTipificacionObligacion.val('280');
-            nuevoBL.txtBaseLegalTipificacionObligacion.val('RCD N°271-2012-OS-CD');
+            nuevoBL.txtBaseLegalTipificacionObligacion.val('RCD NÂ°271-2012-OS-CD');
             nuevoBL.chkComisoBienes.attr('checked', true);
             nuevoBL.chkParalizacionObras.attr('checked', false);
             nuevoBL.chkCierreInstalacion.attr('checked', false);
@@ -5129,7 +5129,7 @@ var nuevaObligacionNormativa = (function() {
         } else if (nuevoBL.txtCodigoTipificacionObligacion.val() === '3.1.4') {
             nuevoBL.txtDescripcionTipificacionOblig.val('Autorizaciones y Registros');
             nuevoBL.txtSancionTipificacionObligacion.val('15');
-            nuevoBL.txtBaseLegalTipificacionObligacion.val('RCD N°271-2012-OS-CD');
+            nuevoBL.txtBaseLegalTipificacionObligacion.val('RCD NÂ°271-2012-OS-CD');
             nuevoBL.chkComisoBienes.attr('checked', true);
             nuevoBL.chkParalizacionObras.attr('checked', true);
             nuevoBL.chkCierreInstalacion.attr('checked', false);
@@ -5140,7 +5140,7 @@ var nuevaObligacionNormativa = (function() {
         } else if (nuevoBL.txtCodigoTipificacionObligacion.val() === '3.2.4') {
             nuevoBL.txtDescripcionTipificacionOblig.val('Autorizaciones y Registros');
             nuevoBL.txtSancionTipificacionObligacion.val('450');
-            nuevoBL.txtBaseLegalTipificacionObligacion.val('RCD N°271-2012-OS-CD');
+            nuevoBL.txtBaseLegalTipificacionObligacion.val('RCD NÂ°271-2012-OS-CD');
             nuevoBL.chkComisoBienes.attr('checked', true);
             nuevoBL.chkParalizacionObras.attr('checked', false);
             nuevoBL.chkCierreInstalacion.attr('checked', true);
@@ -5149,9 +5149,9 @@ var nuevaObligacionNormativa = (function() {
             nuevoBL.chkCierreEstablecimiento.attr('checked', true);
             nuevoBL.chkSuspensionDefinitiva.attr('checked', true);
         } else if (nuevoBL.txtCodigoTipificacionObligacion.val() === '2.4') {
-            nuevoBL.txtDescripcionTipificacionOblig.val('Técnicas y/o Seguridad');
+            nuevoBL.txtDescripcionTipificacionOblig.val('TÃ©cnicas y/o Seguridad');
             nuevoBL.txtSancionTipificacionObligacion.val('350');
-            nuevoBL.txtBaseLegalTipificacionObligacion.val('RCD N°271-2012-OS-CD');
+            nuevoBL.txtBaseLegalTipificacionObligacion.val('RCD NÂ°271-2012-OS-CD');
             nuevoBL.chkComisoBienes.attr('checked', false);
             nuevoBL.chkParalizacionObras.attr('checked', true);
             nuevoBL.chkCierreInstalacion.attr('checked', false);
@@ -5160,9 +5160,9 @@ var nuevaObligacionNormativa = (function() {
             nuevoBL.chkCierreEstablecimiento.attr('checked', true);
             nuevoBL.chkSuspensionDefinitiva.attr('checked', true);
         } else if (nuevoBL.txtCodigoTipificacionObligacion.val() === '2.5') {
-            nuevoBL.txtDescripcionTipificacionOblig.val('Técnicas y/o Seguridad');
+            nuevoBL.txtDescripcionTipificacionOblig.val('TÃ©cnicas y/o Seguridad');
             nuevoBL.txtSancionTipificacionObligacion.val('600');
-            nuevoBL.txtBaseLegalTipificacionObligacion.val('RCD N°271-2012-OS-CD');
+            nuevoBL.txtBaseLegalTipificacionObligacion.val('RCD NÂ°271-2012-OS-CD');
             nuevoBL.chkComisoBienes.attr('checked', false);
             nuevoBL.chkParalizacionObras.attr('checked', true);
             nuevoBL.chkCierreInstalacion.attr('checked', false);
@@ -5189,7 +5189,7 @@ var nuevaObligacionNormativa = (function() {
         if(idTipificacion === ""){
             divValidacion.show();
             divValidacion.focus();
-            divValidacion.html("* Debe seleccionar una Tipificación");
+            divValidacion.html("* Debe seleccionar una TipificaciÃ³n");
             validarCriterio = false;
         }else{
             divValidacion.hide();
@@ -5278,7 +5278,7 @@ var nuevaObligacionNormativa = (function() {
             beforeSend: muestraLoading,
             success: function(data) {
                 if (data.resultado == 0) {
-                    mensajeGrowl("success", "Se registró correctamente", "Se registrarón los datos correctamente");
+                    mensajeGrowl("success", "Se registrÃ³ correctamente", "Se registrarÃ³n los datos correctamente");
                     recargarGridArchivoCriterios();
                     $('#nueva_TituloPauta').val('');
                     ocultaLoading();
@@ -5296,7 +5296,7 @@ var nuevaObligacionNormativa = (function() {
      * @returns {undefined}
      */
     function gridListadoSancionesEspecificas() {
-        var nombres = ['Id','Sanción Específica'];
+        var nombres = ['Id','SanciÃ³n EspecÃ­fica'];
         var columnas = [
             {name: "idDetalleCriterio", sortable: false, align: "center",hidden:true},
             {name: "sancionEspecifica", sortable: false, align: "center",hidden:false}
@@ -5364,7 +5364,7 @@ var nuevaObligacionNormativa = (function() {
      */
     function procesarGridAsociaBaseLegal() {
     	
-    	var nombres = ['Id','IdBaseLegal','Codigo Base Legal','Descripción Base Legal'];
+    	var nombres = ['Id','IdBaseLegal','Codigo Base Legal','DescripciÃ³n Base Legal'];
         var columnas = [
            {name: "idOblBase", width: 130, sortable: false, align: "center", hidden: true},
            {name: "idBaseLegal", width: 130, sortable: false, align: "center", hidden: true},
@@ -5432,7 +5432,7 @@ var nuevaObligacionNormativa = (function() {
     	/* modif jpiro 20150106 - ini */
         confirm.start();
         /* modif jpiro 20150106 - fin */
-        confirm.open("¿Ud est&aacute; seguro de eliminar la Base Legal Asociada ?",
+        confirm.open("Â¿Ud est&aacute; seguro de eliminar la Base Legal Asociada ?",
                 "nuevaObligacionNormativa.eliminarBaseLegalAsociada('" + rowid + "')");
     }
     function eliminarBaseLegalAsociada(rowid){
@@ -5900,7 +5900,7 @@ var cargaInicial=(function(){
     	    rowNum: 5,
     	    hidegrid: false,
     	    	/* OSINE_SFS-610 - Inicio */
-    	       //colNames:['idDetalleNormaTecnica', 'idTipoNormaTecnica', 'Tipo De Norma Técnica','Descripcion De La Norma Técnica'],
+    	       //colNames:['idDetalleNormaTecnica', 'idTipoNormaTecnica', 'Tipo De Norma TÃ©cnica','Descripcion De La Norma TÃ©cnica'],
     	    	colNames:['idDetalleNormaTecnica', 'idTipoNormaTecnica', 'Tipo De Norma T&eacute;cnica','Descripci&oacute;n De La Norma T&eacute;cnica'],
     	       /* OSINE_SFS-610 - Fin */
     	       colModel:[
@@ -5912,7 +5912,7 @@ var cargaInicial=(function(){
     	       pager: "#pNormaTecnica",
     	       viewrecords: true,
     	       /* OSINE_SFS-610 - Inicio */
-    	       //caption: "Relacion Norma Técnica"
+    	       //caption: "Relacion Norma TÃ©cnica"
     	       caption: "Relaci&oacute;n Norma T&eacute;cnica"
     	       /* OSINE_SFS-610 - Fin */
     	});	
@@ -6046,7 +6046,7 @@ var validaNuevaBaseLegal = (function() {
         
         $("#gridContenedorObligConcordancia").append(grid);
 
-        var nombres = ['ID', 'Código Base Legal','Descripción Base Legal',''];
+        var nombres = ['ID', 'CÃ³digo Base Legal','DescripciÃ³n Base Legal',''];
         var columnas = [
             {name: "idBaseLegal", width: 130, sortable: false, align: "center", hidden: true},
             {name: "codigoBaseLegal", width: 100, sortable: false, align: "center"},
@@ -6139,10 +6139,10 @@ var validaNuevaBaseLegal = (function() {
     function confirmEliminarBaseLegalConcordancia(rowid){
     	
         confirm.start();
-//        confirm.open("¿Ud est&aacute; seguro de eliminar esta Base Legal?","validaNuevaBaseLegal.eliminarBaseLegalConcordancia('" + rowid + "')");
+//        confirm.open("Â¿Ud est&aacute; seguro de eliminar esta Base Legal?","validaNuevaBaseLegal.eliminarBaseLegalConcordancia('" + rowid + "')");
 		/* OSINE_SFS-610 - Inicio */
-        //confirm.open("¿Esta seguro de eliminar la base legal concordante?","validaNuevaBaseLegal.eliminarBaseLegalConcordancia('" + rowid + "')");
-        confirm.open("¿Est&aacute; seguro de eliminar la base legal concordante?","validaNuevaBaseLegal.eliminarBaseLegalConcordancia('" + rowid + "')");
+        //confirm.open("Â¿Esta seguro de eliminar la base legal concordante?","validaNuevaBaseLegal.eliminarBaseLegalConcordancia('" + rowid + "')");
+        confirm.open("Â¿Est&aacute; seguro de eliminar la base legal concordante?","validaNuevaBaseLegal.eliminarBaseLegalConcordancia('" + rowid + "')");
         /* OSINE_SFS-610 - Fin */
     	
     }
@@ -6163,7 +6163,7 @@ var validaNuevaBaseLegal = (function() {
 //        });
         $("#gridContenedorOblig").append(grid);
 
-        var nombres = ['ID', 'Código Obligación', 'Descripción Obligación',''];
+        var nombres = ['ID', 'CÃ³digo ObligaciÃ³n', 'DescripciÃ³n ObligaciÃ³n',''];
         var columnas = [
             {name: "idObligacion", width: 130, sortable: false, align: "center", hidden: true},
             {name: "codigoObligacion", width: 100, sortable: false, align: "center"},
@@ -6301,10 +6301,10 @@ var validaNuevaBaseLegal = (function() {
     
     function confirmEliminarObligacionBaseLegal(rowid){
     	confirm.start();
-//    	confirm.open("¿Ud est&aacute; seguro de eliminar esta Obligación?","validaNuevaBaseLegal.eliminarObligacionBaseLegal('" + rowid + "')");
+//    	confirm.open("Â¿Ud est&aacute; seguro de eliminar esta ObligaciÃ³n?","validaNuevaBaseLegal.eliminarObligacionBaseLegal('" + rowid + "')");
     	/* OSINE_SFS-610 - Inicio */
-    	//confirm.open("¿Esta seguro de eliminar la asociación con la obligación?","validaNuevaBaseLegal.eliminarObligacionBaseLegal('" + rowid + "')");
-    	confirm.open("¿Est&aacute; seguro de eliminar la asociaci&oacute;n con la obligaci&oacute;n?","validaNuevaBaseLegal.eliminarObligacionBaseLegal('" + rowid + "')");
+    	//confirm.open("Â¿Esta seguro de eliminar la asociaciÃ³n con la obligaciÃ³n?","validaNuevaBaseLegal.eliminarObligacionBaseLegal('" + rowid + "')");
+    	confirm.open("Â¿Est&aacute; seguro de eliminar la asociaci&oacute;n con la obligaci&oacute;n?","validaNuevaBaseLegal.eliminarObligacionBaseLegal('" + rowid + "')");
     	/* OSINE_SFS-610 - Fin */
     }
     function eliminarObligacionBaseLegal(rowid) {
@@ -6319,7 +6319,7 @@ var validaNuevaBaseLegal = (function() {
         /* modif jpiro 20150106 - ini */
         confirm.start();
         /* modif jpiro 20150106 - fin */
-        confirm.open("¿Ud est&aacute; seguro de eliminar esta Obligación?",
+        confirm.open("Â¿Ud est&aacute; seguro de eliminar esta ObligaciÃ³n?",
                 "validaNuevaBaseLegal.eliminarObligacion('" + idObligacion + "')");/*function: busquedaBaseLegal.confirmEliminarBaseLegal*/
     }
     /**
@@ -6495,7 +6495,7 @@ var validaNuevaBaseLegal = (function() {
     	    colModel: columnas,
     	    height: "auto",
     	    viewrecords: true,
-    	    caption: "Búsqueda Criterios",
+    	    caption: "BÃºsqueda Criterios",
     	    width: 650,
     	    jsonReader: {root: "filas", page: "pagina", total: "total", records: "registros",id:"idCriterio"},
     	    onSelectRow: function(rowid, status) {
@@ -6535,7 +6535,7 @@ var validaNuevaBaseLegal = (function() {
     	pager_id = "p_" + subgrid_table_id;
     	$("#" + subgrid_id).html("<table id='" + subgrid_table_id + "' class='scroll'></table><div id='"+pager_id+"' class='scroll'></div>");
     			
-    	var nombres = ['idDetalleCriterio','idCriterio','Descripción Sanción Específica'];
+    	var nombres = ['idDetalleCriterio','idCriterio','DescripciÃ³n SanciÃ³n EspecÃ­fica'];
         var columnas = [        
             {name: "idDetalleCriterio", width: 30, sortable: false, align: "center", hidden: true},  
             {name: "idCriterio", width: 30, sortable: false, align: "center", hidden: true},  
@@ -6595,7 +6595,7 @@ var validaNuevaBaseLegal = (function() {
 	    	}
 	    	if(validaSancion){
 	    		confirm.start();
-		        confirm.open("¿Est&aacute; seguro de guardar el criterio?","validaNuevaBaseLegal.guardarCriterioConfirmado()");
+		        confirm.open("Â¿Est&aacute; seguro de guardar el criterio?","validaNuevaBaseLegal.guardarCriterioConfirmado()");
 	    	}
 	    };
 	}
@@ -6979,7 +6979,7 @@ function settearInputsConcordancia() {
 /*Rsis 14 - Inicio*/
 function eliminarIncumplimiento (rowid){	
 	confirm.start();
-    confirm.open("¿Está seguro de quitar el escenario de incumplimiento?","procEliminarIncumplimiento('"+rowid+"')");
+    confirm.open("Â¿EstÃ¡ seguro de quitar el escenario de incumplimiento?","procEliminarIncumplimiento('"+rowid+"')");
 }
 /*Rsis 14 - Fin*/
 

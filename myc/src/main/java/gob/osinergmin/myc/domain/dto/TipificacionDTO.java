@@ -1,4 +1,4 @@
-﻿package gob.osinergmin.myc.domain.dto;
+package gob.osinergmin.myc.domain.dto;
 
 import gob.osinergmin.myc.domain.PghTipificacion;
 

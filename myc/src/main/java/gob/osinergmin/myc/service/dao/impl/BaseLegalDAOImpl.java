@@ -1,4 +1,4 @@
-﻿package gob.osinergmin.myc.service.dao.impl;
+package gob.osinergmin.myc.service.dao.impl;
 
 import java.util.List;
 

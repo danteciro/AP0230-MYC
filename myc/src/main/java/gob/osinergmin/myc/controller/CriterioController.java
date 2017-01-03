@@ -1,4 +1,4 @@
-﻿package gob.osinergmin.myc.controller;
+package gob.osinergmin.myc.controller;
 
 import gob.osinergmin.myc.common.util.MycUtil;
 import gob.osinergmin.myc.domain.base.BaseConstantesOutBean;

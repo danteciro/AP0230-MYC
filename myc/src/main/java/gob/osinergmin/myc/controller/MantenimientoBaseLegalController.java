@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Resumen.
  * Objeto            : MantenimientoBaseLegalController.java
  * Descripción       : 
