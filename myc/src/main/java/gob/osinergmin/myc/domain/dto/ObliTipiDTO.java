@@ -17,13 +17,27 @@ public class ObliTipiDTO {
 	private String basesLegales;
 	private String sancionMonetaria;
 	private String sancionEspecifica;
+	private Long idActividad;
+	private String descripcionActividad;
 	private List<TipificacionSancionDTO> TipificacionSancion;
 //	
 	public String getDescripcionCriterio() {
 		return descripcionCriterio;
 	}
+	public String getDescripcionActividad() {
+		return descripcionActividad;
+	}
+	public void setDescripcionActividad(String descripcionActividad) {
+		this.descripcionActividad = descripcionActividad;
+	}
 	public void setDescripcionCriterio(String descripcionCriterio) {
 		this.descripcionCriterio = descripcionCriterio;
+	}
+	public Long getIdActividad() {
+		return idActividad;
+	}
+	public void setIdActividad(Long idActividad) {
+		this.idActividad = idActividad;
 	}
 	public String getCodigoTipificacion() {
 		return codigoTipificacion;

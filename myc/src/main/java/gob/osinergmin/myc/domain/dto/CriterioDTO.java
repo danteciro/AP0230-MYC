@@ -1,4 +1,4 @@
-package gob.osinergmin.myc.domain.dto;
+﻿package gob.osinergmin.myc.domain.dto;
 
 import java.util.List;
 
@@ -18,7 +18,8 @@ public class CriterioDTO {
     private Long idTipificacion;
     /** código de la Obligacion**/
     private Long idObligacion;
-    
+    /** código de la actividad **/
+    private Long idActividad;
     private String sancionMonetaria;
     
     private String estado;
@@ -41,6 +42,14 @@ public class CriterioDTO {
 
 	public List<TipificacionSancionDTO> getListaTipificacionSancion() {
 		return listaTipificacionSancion;
+	}
+
+	public Long getIdActividad() {
+		return idActividad;
+	}
+
+	public void setIdActividad(Long idActividad) {
+		this.idActividad = idActividad;
 	}
 
 	public void setListaTipificacionSancion(

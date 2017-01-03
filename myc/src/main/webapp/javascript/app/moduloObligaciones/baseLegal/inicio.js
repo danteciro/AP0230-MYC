@@ -1,4 +1,4 @@
-var flagBaseLegal;
+﻿var flagBaseLegal;
 var flagPadre;
 //var nuevo;
 var busquedaBaseLegal = (function() {
@@ -148,6 +148,7 @@ var busquedaBaseLegal = (function() {
             		$('#chkConcordancia').removeAttr('disabled');
             		$('#cmbTipAneBaseLegal').removeAttr('disabled');
             	    $('#cmbNorTecBaseLegal').removeAttr('disabled');
+            	    $("#cmbNumeroDisposicion").removeAttr('disabled');
             		
                 }
             });

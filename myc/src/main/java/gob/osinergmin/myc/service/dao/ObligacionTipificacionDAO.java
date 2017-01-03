@@ -17,7 +17,7 @@ import java.util.List;
 public interface ObligacionTipificacionDAO {
     public ObligacionTipificacionDTO create(ObligacionTipificacionDTO obligacionTipificacionDTO, UsuarioDTO usuarioDTO);
     public ObligacionTipificacionDTO changeState(ObligacionTipificacionDTO obligacionTipificacionDTO);
-    
+    public List<TipificacionDTO> findTipificacionPorObligacion(ObligacionTipificacionDTO obligacionTipificacion);
     public List<TipificacionDTO> findTificacion(ObligacionTipificacionDTO obligacionTipificacion);
     public List<ObligacionTipificacionDTO> findObligacionTipificacion(ObligacionTipificacionDTO obligacionTipificacion);
     

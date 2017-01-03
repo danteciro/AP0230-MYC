@@ -1,4 +1,4 @@
-var prueba;
+﻿var prueba;
 var codObligacion;
 var datajson = [];
 var validaCerrar=0;
@@ -64,7 +64,8 @@ var gestionBaseLegal = (function() {
     	$('#txtaTitBaseLegal').alphanum(charAllow);
     	//--
     	$('#cmbTipiCriterio').change(function(){
-    			cargaInicial.obtenerTipificacion($('#cmbTipiCriterio').val());
+    			//cargaInicial.obtenerTipificacion($('#cmbTipiCriterio').val());
+    			cargaInicial.obtenerSancionesPorTipificacion($('#cmbTipiCriterio').val());
     	});
     	
     	$('#btnGuardarObliTipiCriterio').click(function(){
@@ -516,7 +517,8 @@ var gestionBaseLegal = (function() {
     function verBaseLegalCompleta(){
     	
     	if(flagBaseLegal=="ver"){
-    		
+    		nuevoBL.cmbNumeroDisposicion.attr('disabled','disabled');
+    		nuevoBL.cmbTipoDisposicion.attr('disabled','disabled');
     		nuevoBL.txtArticuloNormaLegal.attr('disabled','disabled');
     		$('#divDescCodigoBaseLegal').css('display','inline-block');//Descripcion código base legal
     		$('#txtCodigoBaseLegalNuevo').css('display','block');//Text código base legal
@@ -639,11 +641,23 @@ var gestionBaseLegal = (function() {
         	} else{
 	    		nuevoBL.divAnexoNormaLegal.css("display","none");
 	    	}
+
+        	$("#cmbNumeroDisposicion").removeAttr("disabled");
+        	if($("#cmbHideNroDisposicion").val() != -1 && $("#cmbHideNroDisposicion").val() != ''){
+        		$("#cmbTipoDisposicion").removeAttr("disabled");
+        	}
         	
-        	if(nuevoBL.txtArticuloAnexoNormaLegal.val()!=''){
+        	//inicial
+        	/*if(nuevoBL.txtArticuloAnexoNormaLegal.val()!=''){
         		nuevoBL.txtIncisoUnoAnexoNormaLegal.removeAttr('disabled');
         		validaArticuloAnexoBaseLegal();
+        	}*/
+        	
+        	//modificado
+        	if(nuevoBL.txtArticuloAnexoNormaLegal.val()!=''){
+        		nuevoBL.txtIncisoUnoAnexoNormaLegal.removeAttr('disabled');
         	}
+        	validaArticuloAnexoBaseLegal();
         	    
         	if(nuevoBL.txtIncisoUnoAnexoNormaLegal.val()!=''){
         		nuevoBL.txtIncisoDosAnexoNormaLegal.removeAttr('disabled');
@@ -1621,7 +1635,7 @@ concatenaDescripcionBaseLegal();
 //        	nuevoBL.cmbNumeroAnexo.addClass("error");
 //        }
         
-        if($('#txtArtAneBaseLegal').val()=="" && $('#cmbTipAneBaseLegal option:selected').text() != '--Seleccione--'){
+        if($('#txtArtAneBaseLegal').val()=="" && $('#cmbTipAneBaseLegal option:selected').text() != '--Seleccione--' && $("#cmbNumeroDisposicion option:selected").text() == '--Seleccione--'){
         	mensajeValidacion += "* Debe ingresar un valor en el campo Artículo del Anexo <br>";
         	nuevoBL.txtArticuloAnexoNormaLegal.addClass("error");
         }
@@ -1633,17 +1647,19 @@ concatenaDescripcionBaseLegal();
         if($('#chkNormaLegalPadre').is(':checked')){
         	
         }else{
-        	if($('#cmbNorTecBaseLegal option:selected').text() != '--Seleccione--' && nuevoBL.txtArticuloNormaLegal.val()=="" && $('#cmbTipAneBaseLegal option:selected').text() == '--Seleccione--'){
-        		if(nuevoBL.txtArticuloNormaLegal.val()=="" && $('#cmbTipAneBaseLegal').val()=="-1"){
-        			mensajeValidacion += "* Debe ingresar un valor en el campo Artículo o Debe seleccionar un Tipo de Anexo <br>";
+        	if($('#cmbNorTecBaseLegal option:selected').text() != '--Seleccione--' && nuevoBL.txtArticuloNormaLegal.val()=="" && $('#cmbTipAneBaseLegal option:selected').text() == '--Seleccione--' && $("#cmbNumeroDisposicion option:selected").text() == '--Seleccione--'){
+        		if(nuevoBL.txtArticuloNormaLegal.val()=="" && $('#cmbTipAneBaseLegal').val()=="-1" && $("#cmbNumeroDisposicion").val() == "-1"){
+        			mensajeValidacion += "* Debe ingresar un valor en el campo Artículo o Tipo de Anexo o Nº de Disposición<br>";
         			nuevoBL.txtArticuloNormaLegal.addClass("error");
         			$('#cmbTipAneBaseLegal').addClass("error");
+        			$('#cmbNumeroDisposicion').addClass("error");
         		}
 	        }
-	        if($('#cmbNorTecBaseLegal option:selected').text() == '--Seleccione--' && nuevoBL.txtArticuloNormaLegal.val()=="" && $('#cmbTipAneBaseLegal option:selected').text() == '--Seleccione--'){
-	    			mensajeValidacion += "* Debe ingresar un valor en el campo Artículo o Debe seleccionar un Tipo de Anexo <br>";
+	        if($('#cmbNorTecBaseLegal option:selected').text() == '--Seleccione--' && nuevoBL.txtArticuloNormaLegal.val()=="" && $('#cmbTipAneBaseLegal option:selected').text() == '--Seleccione--' && $("#cmbNumeroDisposicion option:selected").text() == '--Seleccione--'){
+	    			mensajeValidacion += "* Debe ingresar un valor en el campo Artículo o Tipo de Anexo o Nº de Disposición<br>";
 	    			nuevoBL.txtArticuloNormaLegal.addClass("error");
 	    			$('#cmbTipAneBaseLegal').addClass("error");
+	    			$('#cmbNumeroDisposicion').addClass("error");
 	        }
         }        
 //		  Fin MYC-7 Cambio de Alcance
@@ -1938,6 +1954,19 @@ concatenaDescripcionBaseLegal();
 //        	TipoAnexoValidado = " " + TipoAnexo + " aprobado por ";
         	// Fin MYC-7 Cambio de Alcance
         }
+        //campos de disposición
+        var NumeroDisposicion = $("#cmbNumeroDisposicion option:selected").text();
+        var TipoDisposicion = $("#cmbTipoDisposicion option:selected").text();
+        var DisposicionValidado;
+        if(NumeroDisposicion == '--Seleccione--'){
+        	DisposicionValidado = "";
+        }else{
+        	if( TipoDisposicion != '--Seleccione--' ){
+        		DisposicionValidado = " " + NumeroDisposicion + " Disposición Complementaria " + TipoDisposicion + " del Reglamento aprobado por ";
+        	}else{
+        		DisposicionValidado = " " + NumeroDisposicion + " Disposición Complementaria del Reglamento aprobado por ";
+        	}
+        }
 
         var ArticuloAnexo = $("#txtArtAneBaseLegal").val();
         var ArticuloAnexoValidado;
@@ -2062,6 +2091,24 @@ concatenaDescripcionBaseLegal();
         } else {
             concatenado = "";
         }
+        
+        //verificando si se debe de concatenar los datos de la disposición
+        if (NumeroDisposicion != "--Seleccione--" && TipoAnexo == "--Seleccione--" && NormaTecnica == "--Seleccione--"){
+        	concatenado = DisposicionValidado + 
+        			SiglaNormaLegal + NumeroValidado + AnoValidado + SiglaValidado + ModificatoriasValidado + DescripcionConcordanciaValidada;
+        } else if (NumeroDisposicion != "--Seleccione--" && TipoAnexo != "--Seleccione--" && NormaTecnica == "--Seleccione--"){
+        	concatenado = DisposicionValidado + 
+			SiglaNormaLegal + NumeroValidado + AnoValidado + SiglaValidado + ModificatoriasValidado + DescripcionConcordanciaValidada;
+        }else if (NumeroDisposicion != "--Seleccione--" && TipoAnexo == "--Seleccione--" && NormaTecnica != "--Seleccione--"){
+        	concatenado = DisposicionValidado +
+			SiglaNormaLegal + NumeroValidado + AnoValidado + SiglaValidado + ModificatoriasValidado +
+			NormaTecnicaValidada + DescripcionNormaTecnica + DescripcionConcordanciaValidada;
+        }else if (NumeroDisposicion != "--Seleccione--" && TipoAnexo != "--Seleccione--"  && NormaTecnica != "--Seleccione--"){
+        	concatenado = DisposicionValidado +
+        			SiglaNormaLegal + NumeroValidado + AnoValidado + SiglaValidado + ModificatoriasValidado +
+        			NormaTecnicaValidada + DescripcionNormaTecnica + DescripcionConcordanciaValidada;
+        }
+        
         if(flagBaseLegal=="ver"){
         	concatenado = "";
         }
@@ -2556,6 +2603,14 @@ concatenaDescripcionBaseLegal();
     		concatenaDescripcionBaseLegal();
     	});
     	
+    	nuevoBL.cmbNumeroDisposicion.change(function(){
+    		concatenaDescripcionBaseLegal();
+    	});
+    	
+    	nuevoBL.cmbTipoDisposicion.change(function(){
+    		concatenaDescripcionBaseLegal();
+    	});
+    	
     	nuevoBL.dateFechaVigenciaAnexoNormaLegal.change(function(){
 
     	});
@@ -2952,6 +3007,7 @@ var nuevaObligacionNormativa = (function() {
     /**
      * Comment
      */
+    
     function obtenerTipificacion(idTipificacion) {
         var URL = baseURL + "pages/mantenimiento/baseLegal/obtenerTipificacion";
         $.getJSON(URL, {
@@ -3135,7 +3191,6 @@ var nuevaObligacionNormativa = (function() {
             data: { idObligacion:idObligacion
             },
             success: function(data) {
-           
             $('#tabTipi').css('display',"");
             	for (var i = 0; i < data.countOpc; i++) {
                 		
@@ -3309,6 +3364,7 @@ var nuevaObligacionNormativa = (function() {
         /*Rsis 14 - Inicio*/        
         $('#idInfraccion').val(data.idInfraccion);
         /*Rsis 14 - Inicio*/
+
         cargaInicial.obtenerCriticidadObligacion();
         
         //Configuraciones
@@ -3513,11 +3569,41 @@ var nuevaObligacionNormativa = (function() {
                     $('#contextCnfOblg').puicontextmenu({
                         //target: $('#gridObligacionNormativa').find('tr').not('.ui-subgrid,.ui-subgrid tr')
                         target: $('#gridCnfOblgacion')
-                    });                    
+                    });             
+                    //cargando las actividades de la obligación
+                    nuevaObligacionNormativa.obtenerListaConfiguracionesCompleta();
                 }
             }
         });
     }
+    function obtenerListaConfiguracionesCompleta() {
+        $.getJSON("mantenimiento/baseLegal/listarConfObligacionCompleta", {
+            ajax: 'true',
+            idObligacion:$('#idObligacion').val(),
+            async: false
+        }, function(data) {
+        	var html = '';
+            try{
+            	html = '<option value="-1">--Seleccione--</option>';
+                var len = data.filas.length;
+                var codigo= [];
+                for (var i = 0; i < len; i++) {
+                	html+='<option value="'+data.filas[i].idActividad+'" codigo="'+data.filas[i].nombreActividad+'">'+data.filas[i].nombreActividad+'</option>';
+                }
+                debugger;
+                $('#cmbActividad').html(html);
+                if(len == 1){
+                	$('#cmbActividad').val(data.filas[0].idActividad).trigger("change");
+                }
+                if(len > 1){
+                	$("#cmbActividad").val("-1").trigger("change");
+                }
+            }catch(error){
+            	html = '<option value="-1">--Seleccione--</option>';
+            	$('#cmbActividad').html(html);
+            }
+        });  
+     }
     function eliminarConfiguracionConfirm(rowid){
     	/* modif jpiro 20150106 - ini */
         confirm.start();
@@ -4127,24 +4213,32 @@ var nuevaObligacionNormativa = (function() {
     function agregarTipificacion() {
         var validacion = false;
         var divValidacion = $('#divMensajeValidacionAdicionarTipificacion');
-        if($('#txtIdTipificacion').val() === ""){
-            divValidacion.show();
+        if($("#cmbActividad").val() == '-1'){
+        	divValidacion.show();
             divValidacion.focus();
-            /* OSINE_SFS-610 - INICIO */
-            divValidacion.html("* Debe Ingresar una Tipificaci&oacute;n v&aacute;lida");
-            /* OSINE_SFS-610 - FIN */
+            divValidacion.html("* Debe seleccionar una actividad");
         }else{
-            divValidacion.hide();
-            divValidacion.html("");
-            validacion = true;
+        	if($('#txtIdTipificacion').val() === ""){
+                divValidacion.show();
+                divValidacion.focus();
+                /* OSINE_SFS-610 - INICIO */
+                divValidacion.html("* Debe Ingresar una Tipificaci&oacute;n v&aacute;lida");
+                /* OSINE_SFS-610 - FIN */
+            }else{
+                divValidacion.hide();
+                divValidacion.html("");
+                validacion = true;
+            }
         }
+        
         if(validacion){
             $.ajax({
                 url: baseURL + "pages/mantenimiento/baseLegal/registrarTipificacion",
                 type: 'post',
                 async: false,
                 data: {
-                    idTipificacion: $('#txtIdTipificacion').val(),
+                    idActividad: $("#cmbActividad").val(),
+                	idTipificacion: $('#txtIdTipificacion').val(),
                     idObligacion: $('#idObligacion').val(),
                     codTrazabilidad:$('#codTrazabilidad').val()
                 },
@@ -4163,6 +4257,7 @@ var nuevaObligacionNormativa = (function() {
                         nuevoBL.txtSancionTipificacionObligacion.val('');
                         nuevoBL.txtBaseLegalTipificacionObligacion.val('');
                         nuevaObligacionNormativa.obtenerTipificacion($('#txtIdTipificacion').val());
+                        $("#cmbActividad").val("-1").trigger("change");
                         $('#dvTipSan input[type=checkbox]').each(function(index) {
                             $(this).attr('checked',false);
                         });
@@ -4251,7 +4346,7 @@ var nuevaObligacionNormativa = (function() {
                         $("#txtTipifOblNor").val('');
                         $('#txtIdTipificacion').val('');
 // 05-11-2015                        
-                        cargaInicial.obtenerTipificacionToCriterio($('#idInfraccion').val());
+                        //cargaInicial.obtenerTipificacionToCriterio($('#idInfraccion').val());
 //                        
                         nuevoBL.txtDescripcionTipificacionOblig.val('');
                         nuevoBL.txtSancionTipificacionObligacion.val('');
@@ -4289,19 +4384,22 @@ var nuevaObligacionNormativa = (function() {
      */
     function gridTipificacion() {
     	/* OSINE_SFS-610 INICIO */
-        var colNames = ['idTipificacion','C&oacute;digo Tipificaci&oacute;n', 'Descripci&oacute;n Infracción', 'Sanci&oacute;n','','concatIdTipoSancion'];
+        var colNames = ['idTipificacion','idActividad','Actividad','Cod. Tipificaci&oacute;n', 'Descripci&oacute;n Infracción', 'Sanci&oacute;n','','concatIdTipoSancion'];
         /* OSINE_SFS-610 FIN */
         var colModel = [
             {name: "idTipificacion", hidden: true, width: 200, sortable: false, align: "center"},
-            {name: "codTipificacion", width: 300, sortable: false, align: "center"},
+            {name: "idActividad", hidden: true, width: 200, sortable: false, align: "center"},
+            {name: "descripcionActividad", width: 300, sortable: false, align: "center"},
+            {name: "codTipificacion", width: 150, sortable: false, align: "center"},
             {name: "descripcion", width: 600, sortable: false, align: "center"},
-            {name: "descSancionEspecifica", width: 200, sortable: false, align: "center",formatter:"fmtDescripSancion"},
-            {name: "sancionMonetaria", width: 200, sortable: false, align: "center",hidden:true},
+            {name: "descSancionEspecifica", width: 100, sortable: false, align: "center",formatter:"fmtDescripSancion"},
+            {name: "sancionMonetaria", width: 100, sortable: false, align: "center",hidden:true},
             {name: "concatIdTipoSancion", formatter:"fmtConcatIdTipoSancion",hidden:true}
         ];
         
         $("#gridTipificacion").html("");
-        var url = baseURL + "pages/mantenimiento/baseLegal/findTipificacion";
+        //var url = baseURL + "pages/mantenimiento/baseLegal/findTipificacion";
+        var url = baseURL + "pages/mantenimiento/baseLegal/findTipificacionPorObligacion";
         var postData = {idObligacion:-1};
             
         var grid = $("<table>", {
@@ -4332,14 +4430,13 @@ var nuevaObligacionNormativa = (function() {
             },
             onRightClickRow: function(rowid, iRow, iCol, e) {
                 var row = grid.jqGrid('getRowData', rowid);
-                
                 $('#linkEliminarTipificacion').attr('onClick', 'nuevaObligacionNormativa.confirmEliminarTipificacion("' + rowid + '")');
-                
+                    
                 if($('#divEnlaceTagEliminarTipificacionObligacion input').html()!=null){
-                    $('#contextMenuTipificacion li a[value="EL-GRIDTIPIFICACIONOBLIGACION"]').html($('#divEnlaceTagEliminarTipificacionObligacion').html());               
+                	$('#contextMenuTipificacion li a[value="EL-GRIDTIPIFICACIONOBLIGACION"]').html($('#divEnlaceTagEliminarTipificacionObligacion').html());               
                 }else {
-                 	  $('#contextMenuTipificacion li a[value="EL-GRIDTIPIFICACIONOBLIGACION"]').remove();
-                 	 $('#contextMenuTipificacion').parent().css('opacity',0);
+                	$('#contextMenuTipificacion li a[value="EL-GRIDTIPIFICACIONOBLIGACION"]').remove();
+                    $('#contextMenuTipificacion').parent().css('opacity',0);
                 }
             },
             loadComplete: function(data) {
@@ -4380,11 +4477,13 @@ var nuevaObligacionNormativa = (function() {
         
         var URL = baseURL + "pages/mantenimiento/baseLegal/eliminarObligacionTipificacion";
         var data = {
+        	idActividad: row.idActividad,
 			idTipificacion:row.idTipificacion, 
 			idObligacion: $('#idObligacion').val(),
 			codTrazabilidad:$('#codTrazabilidad').val()
         };
         $.get(URL,data, function(data) {
+        	debugger;
             if (data.resultado == 0) {    
 // 05-11-2015
             	cargaInicial.obtenerTipificacionToCriterio($('#idObligacion').val());
@@ -4433,10 +4532,10 @@ var nuevaObligacionNormativa = (function() {
 
                 if(ui.item == null){
 
-                    
                     var URL = baseURL + "pages/mantenimiento/baseLegal/findTipificacionCodigo";
                     $.get( URL,{codigo:$("#txtTipifOblNor").val()},
-                    function(data) {                                                
+                    function(data) {            
+                    	debugger;
                         if(data.idTipificacion !== null){
                             nuevoBL.txtIdTipificacion.val(data.idTipificacion);
                             nuevoBL.txtDescripcionTipificacionOblig.val(data.descripcion);
@@ -4473,16 +4572,17 @@ var nuevaObligacionNormativa = (function() {
      */
     function gridCriterio() {
 // 05-11-2015    	
-    	var nombres = ['IdTipiCriterio','IdCriterio', 'IdTipificacion', 'Cod. Tipificación', 'Descripción del Incumplimiento', 'Sanción Específica','','Base Legal','','concatIdTipoSancion'];
+    	var nombres = ['IdTipiCriterio','IdCriterio', 'IdTipificacion', 'Actividad' ,'Cod. Tip.', 'Descripción del Incumplimiento', 'Sanción Específica','','Base Legal','','concatIdTipoSancion'];
         var columnas = [
             {name: "idObliTipiCriterio", width: 20, hidden: true, sortable: false, align: "center"},
             {name: "idCriterio", width: 20, hidden: true, sortable: false, align: "center"},
             {name: "idTipificacion", width: 20, hidden: true, sortable: false, align: "center"},
-            {name: "codigoTipificacion", width: 150,sortable: false, align: "center"},
+            {name: "descripcionActividad", width: 220,sortable: false, align: "center"},
+            {name: "codigoTipificacion", width: 80,sortable: false, align: "center"},
             {name: "descripcionCriterio", width: 450, sortable: false, align: "center"},
             {name: "descSancionEspecifica", width: 200, sortable: false, align: "center",formatter:"fmtDescripSancion"},
             {name: "sancionEspecifica", width: 200, sortable: false, align: "center",hidden:true},
-            {name: "basesLegales", width: 450, sortable: false, align: "center"},
+            {name: "basesLegales", width: 300, sortable: false, align: "center"},
             {name: "sancionMonetaria", width: 200, sortable: false, align: "center",hidden:true},
             {name: "concatIdTipoSancion", formatter:"fmtConcatIdTipoSancion",hidden:true}
         ];
@@ -5366,6 +5466,7 @@ var nuevaObligacionNormativa = (function() {
     	eliminarBaseLegalAsociada:eliminarBaseLegalAsociada,
     	eliminarBaseLegalAsociadaConfirm:eliminarBaseLegalAsociadaConfirm,
     	eliminarConfiguracionConfirm:eliminarConfiguracionConfirm,
+    	obtenerListaConfiguracionesCompleta:obtenerListaConfiguracionesCompleta,
     	/*Rsis 14 - Inicio*/
     	eliminarIncumplimiento:eliminarIncumplimiento,
     	/*Rsis 14 - Fin*/
@@ -5410,11 +5511,13 @@ var nuevaObligacionNormativa = (function() {
 var cargaInicial=(function(){
 	function constructor(){
 		obtenerTipoAnexos();
+		obtenerNumeroDisposicion();
+		obtenerTipoDisposicion();
 		$("#btnAgregarNormaTecnica").css("display","none");
 		obtenertipoNormaLegal();
 		obtenerSiglas();
 		
-		var tipoAnexo = $("#cmbHideTipoAnexoBaseLegal").val();				
+		var tipoAnexo = $("#cmbHideTipoAnexoBaseLegal").val();	
 		obtenerTipoNormaTecnica();
 		obtenerNormaLegalPadre();
 		/*Rsis 11 - Inicio*/
@@ -5444,6 +5547,33 @@ var cargaInicial=(function(){
 		  }
 									
 		});
+
+		$("#cmbNumeroDisposicion").attr("disabled","disabled");
+		$("#cmbTipoDisposicion").attr("disabled","disabled");
+		
+		$("#cmbNumeroDisposicion").change(function(){
+			if($("#cmbNumeroDisposicion option:selected").text() == "--Seleccione--"){
+				$("#cmbTipoDisposicion").attr("disabled","disabled");
+				$("#cmbTipoDisposicion").val(-1);
+			}else{
+				$("#cmbTipoDisposicion").prop("disabled",false);
+			}
+		});
+		
+		$("#cmbActividad").change(function(){
+			if($("#cmbActividad option:selected").text() == '--Seleccione--'){
+				$("#txtTipifOblNor").attr("disabled","disabled");
+				$("#txtTipifOblNor").val('');
+				$("#divTipSan").html("");
+                nuevoBL.txtIdTipificacion.val("");
+                nuevoBL.txtDescripcionTipificacionOblig.val("");
+                nuevoBL.txtSancionTipificacionObligacion.val("");
+                nuevoBL.txtBaseLegalTipificacionObligacion.val("");
+			}else{
+				$("#txtTipifOblNor").attr("disabled",false);
+			}
+		});
+		
 		/*Rsis 12 - Inicio*/
 //		obtenerCriticidadObligacion();
 		/*jsifuentes - Inicio*/
@@ -5482,10 +5612,85 @@ var cargaInicial=(function(){
 		//Fin MYC-7 Cambio de Alcance
 		
 	}
+	
+	function obtenerSancionesPorTipificacion(idTipificacion) {
+        $.ajax({
+            url:baseURL + "pages/mantenimiento/baseLegal/obtenerSancionesPorTipificacion",
+            type:'get',
+            async:false,
+            data:{
+            	idObligacion: $('#idObligacion').val(),
+                idTipificacion: idTipificacion,
+                ajax: 'true'
+            },
+            success:function(data){
+                if(data.resultado == 0){
+                    $('#txtIdTipificacion').val(data.tipificacion.idTipificacion);
+                    var html='';
+                    for(var x = 0; x < data.tipificacion.listaTipificacionSancion.length;x++){
+                        var idTipoSancion = data.tipificacion.listaTipificacionSancion[x].tipoSancion.idTipoSancion;
+                        var descripcionSancion = data.tipificacion.listaTipificacionSancion[x].tipoSancion.descripcion;   
+                        html += '<div style="float:left; margin-right:10px; padding: 5px 25px;width:215px;">';
+                        html += '<input id="rdProceso' + idTipoSancion + '" type="checkbox" name="proceso" value="' + idTipoSancion + '" class="checkbox" />';
+                        html += '<label for="rdProceso' + idTipoSancion + '" class="checkbox">' + descripcionSancion + '</label>';
+                        html += '</div>';
+                    }
+                    $('#divEtapa').html(html);
+                    $("#divEtapa").css('display','inline-block');
+                    $('#divProcesosCriterio').css('display','block');
+                }else{
+                    $('#divProcesosCriterio').css('display','none');
+                }
+            },
+            error:errorAjax
+        });
+    }
 	/**
      * 
      * @returns {undefined}
      */
+	function obtenerNumeroDisposicion() {
+        $.getJSON("mantenimiento/baseLegal/obtenerNumeroDisposicion", {
+            ajax: 'true',
+            async: false
+        }, function(data) {
+            var html = '<option value="-1">--Seleccione--</option>';
+            var len = data.length;
+            var codigo= [];
+            for (var i = 0; i < len; i++) {
+                if (data[i].idMaestroColumna == $('#cmbHideNroDisposicion').val()) {
+                    html += '<option value="' + data[i].idMaestroColumna + '" codigo="'+data[i].codigo+'" selected="selected">'
+                            + data[i].descripcion + '</option>';
+                } else {
+                	 html+='<option value="'+data[i].idMaestroColumna+'" codigo="'+data[i].codigo+'">'+data[i].descripcion+'</option>';
+                }
+            }
+            $('#cmbNumeroDisposicion').html(html);
+        	});  
+     }
+	/**
+     * 
+     * @returns {undefined}
+     */
+	function obtenerTipoDisposicion() {
+        $.getJSON("mantenimiento/baseLegal/obtenerTipoDisposicion", {
+            ajax: 'true',
+            async: false
+        }, function(data) {
+            var html = '<option value="-1">--Seleccione--</option>';
+            var len = data.length;
+            var codigo= [];
+            for (var i = 0; i < len; i++) {
+                if (data[i].idMaestroColumna == $('#cmbHideTipoDisposicion').val()) {
+                    html += '<option value="' + data[i].idMaestroColumna + '" codigo="'+data[i].codigo+'" selected="selected">'
+                            + data[i].descripcion + '</option>';
+                } else {
+                	 html+='<option value="'+data[i].idMaestroColumna+'" codigo="'+data[i].codigo+'">'+data[i].descripcion+'</option>';
+                }
+            }
+            $('#cmbTipoDisposicion').html(html);
+        	});  
+     }
     function obtenertipoNormaLegal() {
         $.getJSON("mantenimiento/baseLegal/obtenerTipoNormaLegal", {
             //idActividad: idActividad,
@@ -5774,11 +5979,11 @@ var cargaInicial=(function(){
             if(len>0){
             	for (var i = 0; i < len; i++) {
                 	if (data[i].idTipificacion == $('#cmbTipiCriterio').val()) {
-                        html += '<option value="' + data[i].idTipificacion + '" selected="selected">'
-                                + data[i].codTipificacion + '</option>';
+                        html += '<option value="' + data[i].idObliTipi + '" selected="selected">'
+                                + data[i].codTipificacion + '-' + data[i].descripcionActividad  + '</option>';
                     } else {
-                        html += '<option value="' + data[i].idTipificacion + '">'
-                                + data[i].codTipificacion + '</option>';
+                        html += '<option value="' + data[i].idObliTipi + '">'
+                        		+ data[i].codTipificacion + '-' + data[i].descripcionActividad  + '</option>';
                     }
                 }
             }
@@ -5826,8 +6031,9 @@ var cargaInicial=(function(){
 // 05-11-2015    	
     	obtenerTipificacionToCriterio:obtenerTipificacionToCriterio,
     	obtenerTipificacion:obtenerTipificacion,
-    	obtenerNumeroAnexos:obtenerNumeroAnexos
-//
+    	obtenerNumeroAnexos:obtenerNumeroAnexos,
+    	obtenerSancionesPorTipificacion:obtenerSancionesPorTipificacion 
+    	//		
     };
 })();
 var validaNuevaBaseLegal = (function() {
@@ -6625,7 +6831,9 @@ $(function() {
         divBotonesGridObligaciones:$('#divBotonesGridObligaciones'),
         /*----------------------------Relaciones------------------------------------*/
         btnGuardarRelacionObligacion:$('#btnRelacionesObligacion'),
-        
+        /*----------------------------Disposicion------------------------------------*/
+        cmbNumeroDisposicion : $("#cmbNumeroDisposicion"),
+        cmbTipoDisposicion : $("#cmbTipoDisposicion")
     };
 });
 $(function() {
@@ -6747,6 +6955,7 @@ $('#cmbNormaLegal').change(function(){
 	gestionBaseLegal.validaArticuloBaseLegal();
 	$('#chkModificatoria').removeAttr('disabled');
 	$('#chkConcordancia').removeAttr('disabled');
+	$("#cmbNumeroDisposicion").removeAttr("disabled");
 	//Inicio MYC-7 Cambio de Alcance
     $('#cmbTipAneBaseLegal').removeAttr('disabled');
     $('#cmbNorTecBaseLegal').removeAttr('disabled');

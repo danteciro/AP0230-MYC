@@ -1,4 +1,4 @@
-package gob.osinergmin.myc.domain.dto;
+﻿package gob.osinergmin.myc.domain.dto;
 
 import gob.osinergmin.myc.domain.PghTipificacion;
 
@@ -41,8 +41,36 @@ public class TipificacionDTO {
     List<TipificacionSancionDTO> listaTipificacionSancion = new ArrayList<TipificacionSancionDTO>();
     
     private String tieneSanc;
+    
+    private Long idActividad;
+    private String descripcionActividad;
+    private Long idObliTipi;
 
-    public String getDescTipiPadre() {
+    public Long getIdActividad() {
+		return idActividad;
+	}
+
+	public void setIdActividad(Long idActividad) {
+		this.idActividad = idActividad;
+	}
+
+	public Long getIdObliTipi() {
+		return idObliTipi;
+	}
+
+	public void setIdObliTipi(Long idObliTipi) {
+		this.idObliTipi = idObliTipi;
+	}
+
+	public String getDescripcionActividad() {
+		return descripcionActividad;
+	}
+
+	public void setDescripcionActividad(String descripcionActividad) {
+		this.descripcionActividad = descripcionActividad;
+	}
+
+	public String getDescTipiPadre() {
         return descTipiPadre;
     }
 

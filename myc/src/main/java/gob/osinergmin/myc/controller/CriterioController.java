@@ -1,4 +1,4 @@
-package gob.osinergmin.myc.controller;
+﻿package gob.osinergmin.myc.controller;
 
 import gob.osinergmin.myc.common.util.MycUtil;
 import gob.osinergmin.myc.domain.base.BaseConstantesOutBean;
@@ -16,6 +16,7 @@ import gob.osinergmin.myc.service.business.CriterioServiceNeg;
 import gob.osinergmin.myc.service.business.DetalleCriterioServiceNeg;
 import gob.osinergmin.myc.service.business.MaestroColumnaServiceNeg;
 import gob.osinergmin.myc.service.business.ObliTipiServiceNeg;
+import gob.osinergmin.myc.service.business.ObligacionTipificacionServiceNeg;
 import gob.osinergmin.myc.service.business.TipificacionSancionServiceNeg;
 import gob.osinergmin.myc.service.business.TipificacionServiceNeg;
 import gob.osinergmin.myc.service.business.TipoSancionServiceNeg;
@@ -31,7 +32,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession; 
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,6 +64,9 @@ public class CriterioController {
 	
 	@Inject
 	private TipoSancionServiceNeg tipoSancionServiceNeg;
+	
+	@Autowired
+    private ObligacionTipificacionServiceNeg obligacionTipificacionServiceNeg;
 	
 	@Inject
 	private TipificacionServiceNeg tipificacionServiceNeg;
@@ -336,7 +340,20 @@ public class CriterioController {
 //
     	LOG.info("procesando registrar Criterio");
         Map<String,Object> retorno = new HashMap<String,Object>();
+        Long idActividad = null;
         try{
+        	//el id que se recibe del campo idTipificacion es el ID de la tabla pgh_obligacion_tipificacion,se consultara nuevamente para poder obtener el verdadero idTipificacion y el idActividad
+        	List<TipificacionDTO> listTipificaciones = new ArrayList<TipificacionDTO>();
+        	listTipificaciones=obligacionTipificacionServiceNeg.listarTipificacionPorObligacion(idObligacion);
+        	for (TipificacionDTO tipificacionDTO : listTipificaciones) {
+        		Long idObliTipi = tipificacionDTO.getIdObliTipi();
+				if( idObliTipi.equals(idTipificacion)){
+					idTipificacion = tipificacionDTO.getIdTipificacion();
+					idActividad = tipificacionDTO.getIdActividad();
+					break;
+				}
+			}
+        	
         	//setear usuario
         	UsuarioDTO usuarioDTO = new UsuarioDTO();
             usuarioDTO.setCodigo(ConstantesWeb.getUSUARIO(request));
@@ -364,6 +381,9 @@ public class CriterioController {
 	            	criterio.setTipoCriterio(tipoCriterioMaestro);	
 	        	}        	
 	//        	
+	        	if(idActividad != 0){
+	        		criterio.setIdActividad(idActividad);
+	        	}
 	        	criterio.setSancionMonetaria(sancionMonetaria);     
 	        	TipificacionSancionDTO tipiSancion = new TipificacionSancionDTO();
 	        	tipiSancion.setIdTipificacion(idTipificacion);
@@ -395,6 +415,10 @@ public class CriterioController {
 	            	tipoCriterioMaestro.setIdMaestroColumna(tipoCriterio);
 	            	criterio.setTipoCriterio(tipoCriterioMaestro);	
 	        	}        	
+	        	
+	        	if(idActividad != 0){
+	        		criterio.setIdActividad(idActividad);
+	        	}
 	//        	
 	        	criterio.setSancionMonetaria(sancionMonetaria);     
 	        	TipificacionSancionDTO tipiSancion = new TipificacionSancionDTO();

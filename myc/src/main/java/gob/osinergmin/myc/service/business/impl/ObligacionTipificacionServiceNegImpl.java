@@ -73,6 +73,16 @@ public class ObligacionTipificacionServiceNegImpl implements ObligacionTipificac
     
     @Override
     @Transactional
+    public List<TipificacionDTO> listarTipificacionPorObligacion(Long idObligacion) {
+        LOG.info("Funcion: Listar Tipificacion-- Service Impl -- Clase: listarTipificacion");
+        LOG.info("-- idObligacion = "+idObligacion);
+        ObligacionTipificacionDTO obligacionTipificacion = new ObligacionTipificacionDTO();
+        obligacionTipificacion.setIdObligacion(idObligacion);
+        return obligacionTipificacionDAO.findTipificacionPorObligacion(obligacionTipificacion);
+    }
+    
+    @Override
+    @Transactional
     public List<TipificacionDTO> listarTipificacion(Long idObligacion, Long idTipificacion) {
         LOG.info("Funcion: Listar Tipificacion-- Service Impl -- Clase: listarTipificacion");
         LOG.info("-- idObligacion = "+idObligacion);
@@ -82,4 +92,19 @@ public class ObligacionTipificacionServiceNegImpl implements ObligacionTipificac
         obligacionTipificacion.setIdTipificacion(idTipificacion);
         return obligacionTipificacionDAO.findTificacion(obligacionTipificacion);
     }
+    
+    @Override
+    @Transactional
+    public List<TipificacionDTO> listarTipificacion(Long idObligacion, Long idTipificacion,Long idActividad) {
+        LOG.info("Funcion: Listar Tipificacion-- Service Impl -- Clase: listarTipificacion");
+        LOG.info("-- idObligacion = "+idObligacion);
+        LOG.info("-- idTipificacion = "+idTipificacion);
+        LOG.info("-- idTipificacion = "+idActividad);
+        ObligacionTipificacionDTO obligacionTipificacion = new ObligacionTipificacionDTO();
+        obligacionTipificacion.setIdObligacion(idObligacion);
+        obligacionTipificacion.setIdTipificacion(idTipificacion);
+        obligacionTipificacion.setIdActividad(idActividad);
+        return obligacionTipificacionDAO.findTificacion(obligacionTipificacion);
+    }
+    
 }

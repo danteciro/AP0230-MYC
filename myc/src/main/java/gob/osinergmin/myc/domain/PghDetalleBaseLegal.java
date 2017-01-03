@@ -108,6 +108,12 @@ public class PghDetalleBaseLegal extends ColumAddObligacionesTmp {
     @Basic(optional = false)
     @Column(name = "ESTADO")
     private String estado;
+    @Column(name = "ID_NRO_DISPOSICION")
+    private Long idNumeroDisposicion;
+    @Column(name = "ID_TIPO_DISPOSICION")
+    private Long idTipoDisposicion;
+    @Column(name = "FLG_DISPOSICION")
+    private String flgDisposicion;
     @JoinColumn(name = "ID_BASE_LEGAL", referencedColumnName = "ID_BASE_LEGAL")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private PghBaseLegal idBaseLegal;
@@ -242,7 +248,33 @@ public class PghDetalleBaseLegal extends ColumAddObligacionesTmp {
         this.inciso1Anexo = inciso1Anexo;
     }
 
-    public String getInciso2Anexo() {
+    public Long getIdNumeroDisposicion() {
+		return idNumeroDisposicion;
+	}
+
+	public void setIdNumeroDisposicion(Long idNumeroDisposicion) {
+		this.idNumeroDisposicion = idNumeroDisposicion;
+	}
+
+	public Long getIdTipoDisposicion() {
+		return idTipoDisposicion;
+	}
+
+	public void setIdTipoDisposicion(Long idTipoDisposicion) {
+		this.idTipoDisposicion = idTipoDisposicion;
+	}
+
+	
+
+	public String getFlgDisposicion() {
+		return flgDisposicion;
+	}
+
+	public void setFlgDisposicion(String flgDisposicion) {
+		this.flgDisposicion = flgDisposicion;
+	}
+
+	public String getInciso2Anexo() {
         return inciso2Anexo;
     }
 

@@ -15,6 +15,7 @@ import gob.osinergmin.myc.domain.dto.TipificacionSancionDTO;
 import gob.osinergmin.myc.domain.dto.UsuarioDTO;
 import gob.osinergmin.myc.service.dao.CrudDAO;
 import gob.osinergmin.myc.service.dao.ObligacionTipificacionDAO;
+import gob.osinergmin.myc.util.Constantes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ import javax.inject.Inject;
 import javax.persistence.Query;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.jfree.util.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -104,7 +106,7 @@ public class ObligacionTipificacionDAOImpl implements ObligacionTipificacionDAO{
         log.info("-- parametros idTipificacion : " + obligacionTipificacion.getIdTipificacion());
         List<TipificacionDTO> listaTipificacion = new ArrayList<TipificacionDTO>();
 		try {
-        StringBuilder jpql = new StringBuilder();
+		StringBuilder jpql = new StringBuilder();
         jpql.append(" select t ");
         jpql.append(" from PghObligacionTipificacion ot "
                 + " inner join ot.idTipificacion t");
@@ -116,6 +118,9 @@ public class ObligacionTipificacionDAOImpl implements ObligacionTipificacionDAO{
         }
         if(obligacionTipificacion.getIdTipificacion() != null){
             jpql.append(" and ot.idTipificacion.idTipificacion = ").append(obligacionTipificacion.getIdTipificacion());
+        }
+        if(obligacionTipificacion.getIdActividad() != null){
+        	jpql.append(" and ot.idActividad = ").append(obligacionTipificacion.getIdActividad());
         }
         String queryString = jpql.toString();
         Query query = crud.getEm().createQuery(queryString);
@@ -154,10 +159,69 @@ public class ObligacionTipificacionDAOImpl implements ObligacionTipificacionDAO{
     }
     
     @Override
+    public List<TipificacionDTO> findTipificacionPorObligacion(ObligacionTipificacionDTO obligacionTipificacion){
+        log.info("-- ObligacionTipificacionDAO - findTificacion --");
+        log.info("-- parametros idObligacion : " + obligacionTipificacion.getIdObligacion());
+        log.info("-- parametros idTipificacion : " + obligacionTipificacion.getIdTipificacion());
+        List<TipificacionDTO> listaTipificacion = new ArrayList<TipificacionDTO>();
+		try {
+		StringBuilder jpql = new StringBuilder();
+        jpql.append("select ot.id_tipificacion,t.cod_tipificacion,t.descripcion,t.sancion_monetaria,ot.id_obli_tipi,ot.id_actividad,ot.id_obligacion,(select a.nombre from mdi_actividad a where a.id_actividad = ot.id_actividad and a.estado = '1') ");
+        jpql.append("from pgh_obligacion_tipificacion ot ");
+        jpql.append("inner join pgh_tipificacion t on t.id_tipificacion = ot.id_tipificacion ");
+        jpql.append("where ot.id_obligacion = " + obligacionTipificacion.getIdObligacion() + " and ot.estado = '1' ");
+        jpql.append("and t.estado = '1'");
+        System.out.println("QUERY : " + jpql.toString());
+        Query queryObliTipi = crud.getEm().createNativeQuery(jpql.toString());
+   	    List<Object[]> resultado = queryObliTipi.getResultList(); 
+        System.out.println(resultado.size());
+        
+        for (Object[] objeto : resultado) {
+        	TipificacionDTO tipificacion = new TipificacionDTO();
+        	tipificacion.setIdTipificacion(Long.parseLong(objeto[0].toString()));
+        	tipificacion.setCodTipificacion(objeto[1].toString());
+        	tipificacion.setDescripcion(objeto[2].toString());
+        	tipificacion.setSancionMonetaria(objeto[3].toString());
+        	tipificacion.setIdObliTipi(Long.parseLong(objeto[4].toString()));
+        	tipificacion.setIdActividad(Long.parseLong(objeto[5] == null ? Constantes.CONSTANTE_VALOR_CERO : objeto[5].toString()));
+        	tipificacion.setDescripcionActividad(objeto[7] == null ? Constantes.CONSTANTE_VACIO : objeto[7].toString());
+        	listaTipificacion.add(tipificacion);
+		}
+        
+	        for(TipificacionDTO reg:listaTipificacion){
+	            jpql = new StringBuilder();
+	            jpql.append(" select ts ");
+	            jpql.append(" from PghTipificacionSancion ts ");
+	            jpql.append(" where ts.estado=1 ");
+	            jpql.append("and ts.nivel= (select mc.idMaestroColumna from MdiMaestroColumna mc where mc.estado='1' and mc.mdiMaestroTabla.mdiMaestroTablaPK.dominio='NIVEL_TIPIFICACION' and mc.mdiMaestroTabla.mdiMaestroTablaPK.aplicacion='MYC') ");
+	            jpql.append("and ts.pghTipificacion.idTipificacion=").append(reg.getIdTipificacion());
+	            String queryString = jpql.toString();
+	            Query query = crud.getEm().createQuery(queryString);
+	            List<TipificacionSancionDTO> lista = TipificacionSancionBuilder.getListaTipificacionSancion(query.getResultList());	            
+	            reg.setListaTipificacionSancion(lista);
+	            String abreviaturaConcatenada="";
+		        if(!lista.isEmpty()){
+		            String[] s = new String[lista.size()];
+		            int cont=0;
+		            for(TipificacionSancionDTO maestra : lista){
+		            	s[cont]=maestra.getTipoSancion().getAbreviatura()==null?"":maestra.getTipoSancion().getAbreviatura().toString();cont++;}
+		            abreviaturaConcatenada = StringUtils.join(s, ",");
+		        }
+		        reg.setSancionEspecifica(abreviaturaConcatenada);
+	        }
+        
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+        return listaTipificacion;
+    }
+    
+    @Override
     public List<ObligacionTipificacionDTO> findObligacionTipificacion(ObligacionTipificacionDTO obligacionTipificacion){
         log.info("-- ObligacionTipificacionDAO - findObligacionTipificacion --");
         log.info("-- parametros idObligacion : " + obligacionTipificacion.getIdObligacion());
         log.info("-- parametros idTipificacion : " + obligacionTipificacion.getIdTipificacion());
+        log.info("-- parametros idActividad : " + obligacionTipificacion.getIdActividad());
         StringBuilder jpql = new StringBuilder();
         jpql.append(" select ot ");
         jpql.append(" from PghObligacionTipificacion ot ");
@@ -168,6 +232,9 @@ public class ObligacionTipificacionDAOImpl implements ObligacionTipificacionDAO{
         }
         if(obligacionTipificacion.getIdTipificacion() != null){
             jpql.append(" and ot.idTipificacion.idTipificacion = ").append(obligacionTipificacion.getIdTipificacion());
+        }
+        if(obligacionTipificacion.getIdActividad() != null){
+            jpql.append(" and ot.idActividad = ").append(obligacionTipificacion.getIdActividad());
         }
         String queryString = jpql.toString();
         Query query = crud.getEm().createQuery(queryString);

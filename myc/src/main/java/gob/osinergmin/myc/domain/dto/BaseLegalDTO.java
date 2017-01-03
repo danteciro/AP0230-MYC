@@ -1,4 +1,4 @@
-package gob.osinergmin.myc.domain.dto;
+﻿package gob.osinergmin.myc.domain.dto;
 
 import java.util.Date;
 import java.util.List;
@@ -107,6 +107,10 @@ import java.util.List;
     private String estadoObligacion;
     
     private Long correlativo;
+    
+    private Long numeroDisposicion;
+    private Long tipoDisposicion;
+    private String flgDisposicion;
 
     
     private List<DetalleNormaTecnicaDTO> detalleNormaTecnica;
@@ -117,6 +121,30 @@ import java.util.List;
 
 	public void setFlagPadre(String flagPadre) {
 		this.flagPadre = flagPadre;
+	}
+
+	public Long getNumeroDisposicion() {
+		return numeroDisposicion;
+	}
+
+	public void setNumeroDisposicion(Long numeroDisposicion) {
+		this.numeroDisposicion = numeroDisposicion;
+	}
+
+	public Long getTipoDisposicion() {
+		return tipoDisposicion;
+	}
+
+	public void setTipoDisposicion(Long tipoDisposicion) {
+		this.tipoDisposicion = tipoDisposicion;
+	}
+
+	public String getFlgDisposicion() {
+		return flgDisposicion;
+	}
+
+	public void setFlgDisposicion(String flgDisposicion) {
+		this.flgDisposicion = flgDisposicion;
 	}
 
 	public Long getIdBaseLegalPadre() {

@@ -20,6 +20,8 @@ public interface MaestroColumnaServiceNeg {
     public List<MaestroColumnaDTO> listarComponente() throws Exception;
     public List<MaestroColumnaDTO> listarSigla();
     public List<MaestroColumnaDTO> listarTipoAnexo();
+    public List<MaestroColumnaDTO> listarNumeroDisposicion();
+    public List<MaestroColumnaDTO> listarTipoDisposicion();
     /*Rsis 11 - Inicio*/
     public List<MaestroColumnaDTO> listarMedidaSeguridad();
     public List<MaestroColumnaDTO> listarAccionInfraccion();

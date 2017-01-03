@@ -39,7 +39,7 @@
             <div id="tabNewBaseLegal" style="width:990px;">
                 <ul>
                     <li id="tab1"><a href="#newBaseLegal">Base Legal</a></li>
-                    <li id="tab2"><a href="#newObligacionNormativa">ObligaciÃ³n Normativa</a></li>
+                    <li id="tab2"><a href="#newObligacionNormativa">Obligación Normativa</a></li>
 
                 </ul>
                 <div id="newBaseLegal">
@@ -53,7 +53,7 @@
 
                                 <div class="filaForm">
 <!-- 05/11/2015 -->
-                                     <div id="divDescCodigoBaseLegal" class="lblc" style="width:140px;display:inline-block;;"><label for="txtCodBaseLegal">CÃ³digo Base Legal:</label></div>
+                                     <div id="divDescCodigoBaseLegal" class="lblc" style="width:140px;display:inline-block;;"><label for="txtCodBaseLegal">Código Base Legal:</label></div>
 <!-- 2 -->                                    
                                     <div style="width:200px;">
                                         <input id="txtidBaseLegal" name="idBaseLegal" value="${baseLegal.idBaseLegal}" type="text" maxlength="100" style="display: none;"/>
@@ -96,11 +96,11 @@
                                 
                                 <div class="filaForm">
                                 
-                                    <div class="lblc" style="width:140px;" ><label for="txtNumBaseLegal" >NÃºmero(*):</label></div>
+                                    <div class="lblc" style="width:140px;" ><label for="txtNumBaseLegal" >Número(*):</label></div>
                                     <div style="width:200px;">
                                         <input id="txtNumBaseLegal" name="numeroNormaLegal" value="${baseLegal.numeroNormaLegal}" validate="[SN][O]" type="text" maxlength="5" >
                                     </div>
-                                    <div class="lblc"><label for="txtAnioBaseLegal">AÃ±o:</label></div>
+                                    <div class="lblc"><label for="txtAnioBaseLegal">Año:</label></div>
                                     <div style="width:200px;">
                                         <input id="txtAnioBaseLegal" name="anioNormaLegal" value="${baseLegal.anioNormaLegal}" validate=""  placeholder="--2000--" style="width:160px;" maxlength="4">
                                     </div>
@@ -118,7 +118,7 @@
                                         <div style="width:200px;">
                                             <input id="dateFecVigencia" value="${fechaVigenciaNormaLegalController}" name="fechaEntradaVigenciaNormaLegal" type="text" readonly>
                                         </div>
-                                        <div class="lblc" ><label for="dateFecPublicacion" >Fecha PublicaciÃ³n: </label></div>
+                                        <div class="lblc" ><label for="dateFecPublicacion" >Fecha Publicación: </label></div>
                                         <div style="width:200px;">
                                             <input id="dateFecPublicacion" value="${fechaPublicacionNormaLegalController}" name="fechaPublicacionNormaLegal" type="text" readonly>
                                         </div>
@@ -141,7 +141,7 @@
                                         <!--fin upload-->
                                     </div>
                                     <div class="filaForm">
-                                        <div class="lblc" style="vertical-align:top;width:140px;"><label for="txtaTitBaseLegal">TÃ­tulo:</label></div>
+                                        <div class="lblc" style="vertical-align:top;width:140px;"><label for="txtaTitBaseLegal">Título:</label></div>
                                         <div>
                                             <!-- PR119 - Item 22 - Inicio -->
                                             <%--<textarea id="txtaTitBaseLegal" value="${baseLegal.tituloNormaLegal}" name="tituloNormaLegal"  maxlength="200" style="height:17px;width:773px;">${baseLegal.tituloNormaLegal}</textarea> --%>
@@ -161,10 +161,10 @@
                                 </div>
                                 <div id="divDetalleBaseLegalHijo">
                                 <fieldset>
-                                    <legend> ArtÃ­culo </legend>
+                                    <legend> Artículo </legend>
                                     <div class="filaForm">
                                     	<input id="txtidDetalleBaseLegal" name="idDetalleBaseLegal" value="${detalleBaseLegal.idDetalleBaseLegal}" type="text" maxlength="100" style="display: none;"/>
-                                        <div class="lblc" style="width:127px;"><label for="txtArtBaseLegal"><strong>ArtÃ­culo:</strong></label></div>
+                                        <div class="lblc" style="width:127px;"><label for="txtArtBaseLegal"><strong>Artículo:</strong></label></div>
                                         <div style="width:200px;">
                                             <input id="txtArtBaseLegal" value="${detalleBaseLegal.articuloNormaLegal}" name="articuloNormaLegal" validate="[SN]" type="text" maxlength="3">
                                         </div>
@@ -190,10 +190,11 @@
                                         </div>
                                     </div>
                                 </fieldset>
-                                <div class="filaForm" >
+                                
+								<div class="filaForm" >
 
-
-                                </div>
+                                </div> 
+                                
                                 <fieldset>
                                     <legend>Anexo</legend> 
                                     <div class="filaForm">
@@ -207,7 +208,7 @@
                                        
                                         <!--Rsis 1 - Inicio -->
 											<div class="lblc">
-												<label id="lblNumeroAnexo" for="cmbNumeroAnexo" style="display:none;"><strong>NÂ°:</strong></label>
+												<label id="lblNumeroAnexo" for="cmbNumeroAnexo" style="display:none;"><strong>N°:</strong></label>
 											</div>
 											<div style="width: 200px;">
 												<input id="cmbHideNumeroAnexo"
@@ -221,7 +222,7 @@
                                     </div>
                                     <div id="divAnexoBaseLegal" style="display:none;">
                                         <div class="filaForm">
-                                            <div class="lblc" style="width:127px;"><label for="txtArtAneBaseLegal"><Strong>ArtÃ­culo:</Strong></label></div>
+                                            <div class="lblc" style="width:127px;"><label for="txtArtAneBaseLegal"><Strong>Artículo:</Strong></label></div>
                                             <div style="width:200px;">
                                                 <input id="txtArtAneBaseLegal" value="${detalleBaseLegal.articuloAnexo}" name="articuloAnexo" validate="[SN]" type="text" maxlength="3">
                                             </div>
@@ -244,14 +245,42 @@
                                     </div>
                                 </fieldset>
 
-
                                 <div class="filaForm" >
 
                                 </div>      
+                                
+                                <div class="filaForm" >
+
+
+                                </div>
                                 <fieldset>
-                                    <legend>Norma TÃ©cnica</legend>
+                                    <legend>Disposición Complementaria</legend> 
+                                    <div class="filaForm">
+                                        <div class="lblc" style="width:127px;"><label for="cmbNumeroDisposicion"><Strong>Nº de Disposición:</Strong></label></div>
+                                        <div style="width:200px;">
+                                        	<input id="cmbHideNroDisposicion" value="${detalleBaseLegal.numeroDisposicion}" style="display:none;"/>
+                                            <select id="cmbNumeroDisposicion" name="numeroDisposicion" validate="" >
+                                            </select>
+											
+                                        </div>
+                                        
+                                        <div class="lblc"><label for="cmbTipoDisposicion"><Strong>Tipo Disposición:</Strong></label></div>
+                                        <div style="width:200px;">
+                                        	<input id="cmbHideTipoDisposicion" value="${detalleBaseLegal.tipoDisposicion}" style="display:none;"/>
+                                            <select id="cmbTipoDisposicion" name="tipoDisposicion" validate="" >
+                                            </select>
+											
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div class="filaForm" >
+
+
+                                </div>
+                                <fieldset>
+                                    <legend>Norma Técnica</legend>
                                     <div class="filaForm" style="height:50px;" >
-                                        <div class="lblc" style="vertical-align:top;width:127px"><label for="cmbNorTecBaseLegal" ><strong>Tipo de Norma TÃ©cnica:</strong></label> </div>
+                                        <div class="lblc" style="vertical-align:top;width:127px"><label for="cmbNorTecBaseLegal" ><strong>Tipo de Norma Técnica:</strong></label> </div>
                                         <div class="lble" style="width:200px;vertical-align: top;" >
                                             <input id="cmbHideNormaTecnicaBaseLegal" value="${detalleBaseLegal.tipoNormaTecnica}" style="display:none;">
                                             <select id="cmbNorTecBaseLegal" name="tipoNormaTecnica" validate="" >
@@ -315,7 +344,7 @@
                                                       <div class="filaForm">
                                     <br>
                                     <br>
-                                    <div class="lblc" style="width:140px;vertical-align: top;"><label for="txtDesConcatenado" >DescripciÃ³n Base Legal:</label></div>
+                                    <div class="lblc" style="width:140px;vertical-align: top;"><label for="txtDesConcatenado" >Descripción Base Legal:</label></div>
                                     <div style="">
                                     
                                         <textarea id="txtDesConcatenado" name="" maxlength="2000"  style="width:781px;vertical-align:bottom;" value="${baseLegal.descripcionGeneralBaseLegal}" rows="3">${baseLegal.descripcionGeneralBaseLegal}</textarea>
@@ -330,7 +359,7 @@
 <!-- 	                                	<div style="width:140px;"><label for=""> </label></div> -->
 		                                <div style="width:200px;" >
 											<input id="chkCrearObligacion" type="checkbox" name="obligacion" value="${baseLegal.obligacion}" >
-											<label for="chkCrearObligacion" class="checkbox">ObligaciÃ³n</label>
+											<label for="chkCrearObligacion" class="checkbox">Obligación</label>
 										</div>
 	                                </div>
 									<div class="filaForm titCustomize">Listado de Obligaciones Asociadas:</div>
@@ -400,14 +429,14 @@
                             <!-- PR119 - Item 18 - Fin -->
                             
                             <div id="divMensajeValidacionObl" class="errorMensaje" tabindex='1' style="display: none" ></div>
-                            <div id="divMensajeValOblNor" class="errorMensaje" tabindex='1' style="display: none" >Se debe registrar la ObligaciÃ³n Normativa</div>
+                            <div id="divMensajeValOblNor" class="errorMensaje" tabindex='1' style="display: none" >Se debe registrar la Obligación Normativa</div>
                             <div class="filaForm">
                             <div style="width:23%;">
                             <div style="width:200px;display: none;">
                             <input id="idObligacion" name="idObligacion" style="display:none;"/>
                                         <input id="codBaseLegal" name="codigoBaseLegal" validate="" type="text" maxlength="100" />
                                     </div>
-                                    <div id="lblCodigo" class="slcta"><label for="txtCodOblNor">CÃ³digo ObligaciÃ³n Normativa:</label></div>
+                                    <div id="lblCodigo" class="slcta"><label for="txtCodOblNor">Código Obligación Normativa:</label></div>
                                     
                                 </div>
                                 <div style="width:57%;">
@@ -425,7 +454,7 @@
                                 <div style="width:100%;" class="filaForm" ></div>
                             <div class="filaForm">   
                                 <div style="width:23%;" class="vat">
-                                    <div class="slcta" ><label for="txtDesOblNor">DescripciÃ³n ObligaciÃ³n Normativa(*):</label></div>
+                                    <div class="slcta" ><label for="txtDesOblNor">Descripción Obligación Normativa(*):</label></div>
                                 </div>
                                 <div style="width:57%">
                                     <textarea id="txtDesOblNor" validate="[O]" rows="4" class="" name="descripcionObligacion" style="width:95%" maxlength="4000"></textarea>
@@ -435,7 +464,7 @@
 			                    
 			                    
 			                    <div class="filaForm" >
-			                    <div class="lble" class="vam" style="width:23%;"><label for="cmbCriOblNor">Criticidad de ObligaciÃ³n Normativa:</label></div> 
+			                    <div class="lble" class="vam" style="width:23%;"><label for="cmbCriOblNor">Criticidad de Obligación Normativa:</label></div> 
 			                    <div class="vam">
        																<input id="cmbHideCriticidadObligacion" value="" style="display:none;"/>
                        <select id="cmbCriOblNor" validate="" name="criticidadObligacion">
@@ -456,12 +485,12 @@
                                 <div style="width:100%;"><br></div>
                                 <div ></div>                               
                                         <div style="text-align:center;">
-                                        <button id="btnNuevaOblNor" type="button" title="Registrar ObligaciÃ³n Normativa" class="btnSimple">Guardar</button>
+                                        <button id="btnNuevaOblNor" type="button" title="Registrar Obligación Normativa" class="btnSimple">Guardar</button>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <button id="btnCerrarOblNor" title="Cerrar" class="btnSimple" type="button" >Cerrar</button>
 			                    	<button id="btnCerrarOblNorVerDetalle" title="Cerrar" class="" style="display:none;">Cerrar</button></div>
                                 	
-			                    	<!--<button id="btnGuardarNuevo" type="button" title="Registrar Nueva ObligaciÃ³n Normativa" class="btnSimple">Guardar y Nuevo</button>-->     
+			                    	<!--<button id="btnGuardarNuevo" type="button" title="Registrar Nueva Obligación Normativa" class="btnSimple">Guardar y Nuevo</button>-->     
 			           </form>
          </div>
                                 
@@ -476,14 +505,14 @@
                                         <ul>
                                             <!--Rsis 11 - Inicio-->
                                             <!--
-                                            <li><a href="#tabTip">TipificaciÃ³n</a></li>
+                                            <li><a href="#tabTip">Tipificación</a></li>
                                             <li><a href="#tabPau">Criterios</a></li>
                                             <li><a href="#tabDes">Descripciones</a></li>
                                             <li><a href="#tabReferencia">Referenciar Base Legal</a></li>
-                                            <li><a href="#tabAsignar">Tipo de SupervisiÃ³n</a></li>
+                                            <li><a href="#tabAsignar">Tipo de Supervisión</a></li>
                                             <li><a href="#tabRelaciones">Temas</a></li>
                                             -->
-                                        	<li id="tabSupervision"><a href="#tabAsignar">Tipo de SupervisiÃ³n</a></li>
+                                        	<li id="tabSupervision"><a href="#tabAsignar">Tipo de Supervisión</a></li>
                                             <li id="tabSanciones"><a href="#tabTip">Sanciones</a></li>
                                             <li id="tabDescr"><a href="#tabDes">Descripciones</a></li>
                                             <li id="tabRef"><a href="#tabReferencia">Referenciar Base Legal</a></li>                                            
@@ -497,16 +526,28 @@
                                           <div id="fldstTipificaciones">
 			                                <h3>Tipificaciones</h3>
 			                              <!-- PR119 - Item 7 - Fin --> 
-                                            <div id="tipificacionEditarObligacion">
+                                            	<div id="tipificacionEditarObligacion">
                                                 <div id="divMensajeValidacionAdicionarTipificacion" class="errorMensaje" tabindex='1' style="display: none" ></div>
                                                 <div id="divContenidoTipificacion" >
+                                                
+                                                <div class="filaForm" >
+								                    <div class="filaForm">
+		                                            <div style="width:150px;"><label for="cmbActividad">Actividad:</label></div>   
+		                                            	<div>       
+		                                                    <select style="width:290px;" id="cmbActividad" name="idActividad" class="lbld">
+						                                            <option value="">--Seleccione--</option>
+						                                    </select>
+		                                            	</div>
+		                                            </div>
+				                       			</div>    
+                                                
                                                 <div class="filaForm">
-                                                    <div style="width:150px;"><label for="txtTipifOblNor">TipificaciÃ³n:</label></div>   
+                                                    <div style="width:150px;"><label for="txtTipifOblNor">Tipificación:</label></div>   
                                                     <div>
                                                         <input type="text" id="txtIdTipificacion" name="value" style="display: none" />
-                                                        <input type="text" id="txtTipifOblNor" validate="" name="tipificacionObligacion" style="width:100px;" maxlength="20">
+                                                        <input type="text" id="txtTipifOblNor" validate="" name="tipificacionObligacion" disabled="disabled" style="width:100px;" maxlength="20">
                                                     </div>
-                                                    <div class="lblc" style="width:160px;"><label for="txtDesTipifOblNor">DescripciÃ³n de la InfracciÃ³n:</label></div>   
+                                                    <div class="lblc" style="width:160px;"><label for="txtDesTipifOblNor">Descripción de la Infracción:</label></div>   
                                                     <div>
                                                         <!-- PR119 - Item 7 - Inicio -->
                                                         <!--<input type="text" id="txtDesTipifOblNor" name="value" style="width:416px;" disabled="disabled" maxlength="500"/>-->
@@ -516,7 +557,7 @@
                                                 </div>
                                                 <div class="filaForm">
 
-                                                    <div style="width:150px;"><label for="spinhastaOblNor">SanciÃ³n Monetaria (Hasta):</label></div>   
+                                                    <div style="width:150px;"><label for="spinhastaOblNor">Sanción Monetaria (Hasta):</label></div>   
                                                     <div>
                                                         <input id="spinhastaOblNor" name="value" style="width:95px;">
                                                     </div>
@@ -563,7 +604,7 @@
                                             </div>
                                             
                                             <div class="filaForm" style="display: none">
-                                                <div class="lble vat" style="width:200px;"><label for="txtDescObligacionNormativaGuia">DescripciÃ³n ObligaciÃ³n Normativa (Guia):</label></div>
+                                                <div class="lble vat" style="width:200px;"><label for="txtDescObligacionNormativaGuia">Descripción Obligación Normativa (Guia):</label></div>
                                                 <div>
                                                     <textarea maxlength="500" style="height:40px;width: 706px;" class="" name="descripcionGuiaObligacion" id="txtDescObligacionNormativaGuia"></textarea>
                                                 </div>
@@ -604,7 +645,7 @@
                                             
                                             <!-- PR119 - Item 07 - Inicio -->
                                        		<h3>Criterio</h3> 
-                                            <!-- pestaÃ±a unida -->
+                                            <!-- pestaña unida -->
                                            <div id="criterioEditarObligacion">
                                             <div id="divMensajeValidacionOblCriterio" class="errorMensaje" style="display:none;" tabindex="1"></div>
                                            <!-- PR119 - Item 07 - Fin -->
@@ -612,9 +653,9 @@
 <!-- 05/11/2015 -->
                                             <form id="formCriterio">                     
                                             <div class="filaForm">
-                                            <div style="width:150px;"><label for="cmbTipiCriterio">TipificaciÃ³n:</label></div>   
+                                            <div style="width:150px;"><label for="cmbTipiCriterio">Tipificación:</label></div>   
                                             	<div>                                                	
-                                                    <select style="width:120px;" id="cmbTipiCriterio" name="idTipificacion" class="lbld" validate="[O]" >
+                                                    <select style="width:290px;" id="cmbTipiCriterio" name="idTipificacion" class="lbld" validate="[O]" >
 				                                            <option value="">--Seleccione--</option>
 				                                    </select>
                                             	</div>
@@ -632,7 +673,7 @@
                     						
                     						<div class="filaForm">
 
-                                                    <div style="width:150px;"><label for="txtSancionMonetariaCriterio">SanciÃ³n Monetaria (Hasta):</label></div>   
+                                                    <div style="width:150px;"><label for="txtSancionMonetariaCriterio">Sanción Monetaria (Hasta):</label></div>   
                                                     <div>
                                                         <input type="text" id="txtSancionMonetariaCriterio" name="sancionMonetaria" style="width:95px;"  maxlength="12">
                                                     </div>
@@ -687,7 +728,7 @@
                                         <div id="tabDes">
                                             <div class="filaForm">
                                            					<input id="idDetalleObligacion" style="display:none;" />
-                                                <div class="lble vat" style="width:180px;"><label for="txtDescObligacionNormativaActa">DescripciÃ³n ObligaciÃ³n Normativa (Acta y DeclaraciÃ³n Jurada):</label></div>
+                                                <div class="lble vat" style="width:180px;"><label for="txtDescObligacionNormativaActa">Descripción Obligación Normativa (Acta y Declaración Jurada):</label></div>
                                                 <div>
                                                     <textarea style="width: 670px;" rows="3" class="" name="descripcionActaObligacion" id="txtDescObligacionNormativaActa" maxlength="4000"></textarea>
                                                 </div>
@@ -706,7 +747,7 @@
                                             </div>
                                             
                                             <div class="filaForm" style="display: none">
-                                                <div class="lble vat" style="width:200px;"><label for="txtDescObligacionNormativaGuia">DescripciÃ³n ObligaciÃ³n Normativa (Guia):</label></div>
+                                                <div class="lble vat" style="width:200px;"><label for="txtDescObligacionNormativaGuia">Descripción Obligación Normativa (Guia):</label></div>
                                                 <div>
                                                     <textarea maxlength="500" style="height:40px;width: 706px;" class="" name="descripcionGuiaObligacion" id="txtDescObligacionNormativaGuia"></textarea>
                                                 </div>
@@ -758,7 +799,7 @@
                                                     <li><a href="#divStepUno">Rubros</a></li>
                                                     <li><a href="#divStepDos">Tipo de Proceso</a></li>
                                                     <li><a href="#divSteptres">Obligaciones Tipo</a></li>
-                                                    <li><a href="#divStepCuatro">ConfirmaciÃ³n</a></li>
+                                                    <li><a href="#divStepCuatro">Confirmación</a></li>
                                                 </ul>
                                                 <div>
                                                     <div id="divStepUno">
@@ -832,7 +873,7 @@
                                         </div>
                                         <div id="tabRelaciones" style="height: 360px;width:880px;overflow: hidden;">
                                             <div style="width:55%;float:left;">
-                                                <div ><label for="cmbTipOblNor">Tema de ObligaciÃ³n Normativa:</label></div>
+                                                <div ><label for="cmbTipOblNor">Tema de Obligación Normativa:</label></div>
                                             </div>
                                             <div style="width:10%;float:left;"></div>
                                             <div style="width:35%;float:right;"></div>
@@ -856,15 +897,15 @@
 						<div id="tabMedidaSeguridad"
 							style="height: auto; width: 880px; overflow: hidden;">
 							<div id="fldstMedidaSeguridad">
-								<h3>InfracciÃ³n</h3>
+								<h3>Infracción</h3>
 								
 								<div id="seguridadInfracion">
 									<div id="divMensajeValMedidaSeg" class="errorMensaje" tabindex='1' style="display: none" ></div>
 									<div class="filaForm">
 										<input id="idInfraccion" style="display: none;" />
 										<div class="lble vat" style="width: 180px;">
-											<label for="txtDescInfraccion">DescripciÃ³n de
-												InfracciÃ³n(*):</label>
+											<label for="txtDescInfraccion">Descripción de
+												Infracción(*):</label>
 										</div>
 										<div>
 											<textarea style="width: 625px;" rows="3" class=""
@@ -998,11 +1039,11 @@
             </fieldset>
         </div>
         
-        <!--Dialog de ConfirmaciÃ³n -->
+        <!--Dialog de Confirmación -->
         <div id="dialogConfirmacionRegistroBaseLegal" class="dialog" style="display: none;"
              title="Confirmaci&oacute;n">
             <p> <span class="ui-icon ui-icon-alert" id="icon"></span>
-                Â¿Desea registrar la base legal?
+                ¿Desea registrar la base legal?
             </p>
             <div id="botones"> 
                 <button id="btnConfirmacionSiBaseLegal" type="button"  class="btnSimple">Aceptar</button>
@@ -1012,8 +1053,8 @@
         <div id="dialogConfirmacionSalirBaseLegal" class="dialog" style="display: none;"
              title="Confirmaci&oacute;n">
             <p> <span class="ui-icon ui-icon-alert" id="icon"></span>
-                Â¿EstÃ¡ seguro de cerrar la pantalla?
-                No se guardara ningÃºn cambio
+                ¿Está seguro de cerrar la pantalla?
+                No se guardara ningún cambio
             </p>
             <div id="botones"> 
                 <button id="btnConfirmacionSalirSiBaseLegal" type="button"  class="btnSimple">Aceptar</button>
@@ -1027,9 +1068,9 @@
 	            <p> <span class="ui-icon ui-icon-alert" id="icon"></span>
 	            <!-- OSINE_SFS-610 - Inicio -->
 	            <!-- 
-	                Â¿Desea actualizar la base legal con codigo: <span>${baseLegal.codigoBaseLegal}</span> ?
+	                ¿Desea actualizar la base legal con codigo: <span>${baseLegal.codigoBaseLegal}</span> ?
 	                -->
-	                Â¿Desea actualizar la base legal con c&oacute;digo: <span>${baseLegal.codigoBaseLegal}</span> ?
+	                ¿Desea actualizar la base legal con c&oacute;digo: <span>${baseLegal.codigoBaseLegal}</span> ?
 	            <!-- OSINE_SFS-610 - Fin -->
 	            </p>
              </div>
@@ -1042,7 +1083,7 @@
         <div id="dialogConfirmacionObligacionNormativaTipificacion" class="dialog" style="display: none;"
              title="Confirmaci&oacute;n">
             <p> <span class="ui-icon ui-icon-alert" id="icon"></span>
-                Â¿Esta seguro de guardar la obligaciÃ³n sin una tipificaciÃ³n?  
+                ¿Esta seguro de guardar la obligación sin una tipificación?  
             </p>
             <div id="botones"> 
                 <button id="btnConfirmacionSiObligacionNormativaTipificacion" type="button"  class="btnSimple">Aceptar</button>
@@ -1052,7 +1093,7 @@
         <div id="dialogConfirmacionObligacionNormativa" class="dialog" style="display: none;"
              title="Confirmaci&oacute;n">
             <p> <span class="ui-icon ui-icon-alert" id="icon"></span>
-                Â¿Desea registrar la ObligaciÃ³n Normativa?
+                ¿Desea registrar la Obligación Normativa?
             </p>
             <div id="botones" style="width:390px;"> 
                 <button id="btnConfirmacionSiObligacionNormativa" type="button"  class="btnSimple">Aceptar</button>                    
@@ -1063,7 +1104,7 @@
         <div id="dialogConfirmacionObligacionNormativaNuevo" class="dialog" style="display: none;"
              title="Confirmaci&oacute;n">
             <p> <span class="ui-icon ui-icon-alert" id="icon"></span>
-                Â¿Desea registrar la ObligaciÃ³n Normativa?
+                ¿Desea registrar la Obligación Normativa?
             </p>
             <div id="botones"> 
                 <button id="btnConfirmacionSiObligacionNormativaNuevo" type="button"  class="btnSimple">Aceptar</button>
@@ -1074,7 +1115,7 @@
         <div id="dialogCargarNuevaOblNor" style="display:none;overflow: hidden; text-align:center;">
             <div id="divMensajeValidacionObligacionArchivo" class="errorMensaje"  style="display: none;" ></div>
             <form id="formFileOblNor"  action="/myc/pages/documentoAdjunto/subirArchivoObligacion" method="post" enctype="multipart/form-data" encoding="multipart/form-data" >
-<!--                    <input id="Â°desImagen" name="fileNormaLegal" type="file" />-->
+<!--                    <input id="°desImagen" name="fileNormaLegal" type="file" />-->
                     <input id="fileNuevaOblNor"   name="archivos[0]" placeholder="" value="" type="file" validate="[O]" />
                     <input id="file_NuevaOblNor" type="hidden" validate="[O]" />
                     <button id="botoGuardarFile" class="btnSimple" title="Subir Archivo" type="button">Guardar Archivo</button>
@@ -1135,9 +1176,9 @@
                         <form id="formCriterio" class="tac"> 
                             <div class="form">                                
                                 <div class="filaForm">
-                                    <div class="lble vam"><label for="txtDescCriterio">BÃºsqueda Criterio:</label></div>
+                                    <div class="lble vam"><label for="txtDescCriterio">Búsqueda Criterio:</label></div>
                                     <div class="vam">
-                                        <input id="txtDescCriterio" placeholder="Ingrese DescripciÃ³n del Criterio" name="txtDescCriterio" type="text" maxlength="2000" style="width: 465px;" />
+                                        <input id="txtDescCriterio" placeholder="Ingrese Descripción del Criterio" name="txtDescCriterio" type="text" maxlength="2000" style="width: 465px;" />
                                     </div>
                                 </div>
                             </div>
@@ -1159,7 +1200,7 @@
             <div id="divMensajeValidacionCriterio" class="errorMensaje" tabindex='1' style="display: none" ></div>
             <div style="margin:auto; display:table;">
                 <div class="filaForm">
-                    <div class="lble vat" style="width:94px;"><label>DescripciÃ³n(*):</label></div>
+                    <div class="lble vat" style="width:94px;"><label>Descripción(*):</label></div>
                     <div><textarea id="nueva_DescripcionPauta" name="comentario" rows="2" style="width: 430px;" validate="[O]" maxlength="500"></textarea></div>  
                 </div>
             </div>
@@ -1185,10 +1226,10 @@
                         </div>
 
                         <div class="filaForm">
-                            <div class="lble vat" style="width:94px;"><label>SanciÃ³n EspecÃ­fica:</label></div>
+                            <div class="lble vat" style="width:94px;"><label>Sanción Específica:</label></div>
                             <input id="detalleSancionEspecifica" style="display:none;"/>
                             <div><textarea id="nueva_Pauta" name="pauta" class="" rows="1" style="width: 400px;" validate="[O]" maxlength="500"></textarea></div>
-<!--                            <div style="vertical-align: top;"><a id="btnSancionEspecifica" title="Agregar SanciÃ³n EspecÃ­fica"></a></div>-->
+<!--                            <div style="vertical-align: top;"><a id="btnSancionEspecifica" title="Agregar Sanción Específica"></a></div>-->
                         </div>
                         <div id="botones" class="filaForm"><button id="btnSancionEspecificaAgrega" >Agregar</button></div>
                         <div class="filaForm" style="display:none;">
@@ -1206,7 +1247,7 @@
                     <div id="divMensajeValidacionCriterioArchivo" class="errorMensaje" tabindex='1' style="display: none" ></div>
                     <div style="margin:auto; display:table;">
                         <div class="filaForm">
-                            <div class="lble" style="width:94px;"><label>TÃ­tulo:</label></div>
+                            <div class="lble" style="width:94px;"><label>Título:</label></div>
                             <div><input id="nueva_TituloPauta" name="titulo" type="text" class="textoMayusculas" style="width:430px;" validate="[O]" maxlength="200"/></div>
                         </div>	
 
@@ -1262,7 +1303,7 @@
         </div>
         <!-- dialog asociarBaseLegal -->
         <div id="dialogAsociarBaseLegal" class="dialog tac"  title="Asociar Base Legal" style="display:none;margin: 0px 20px;"></div>
-        <div id="dialogAsociarObligacion" class="dialog tac"  title="Asociar ObligaciÃ³n" style="display:none;margin: 0px 20px;"></div>
+        <div id="dialogAsociarObligacion" class="dialog tac"  title="Asociar Obligación" style="display:none;margin: 0px 20px;"></div>
         
         
         <div id="dialogDependenciaCriterio" style="display:none;overflow: hidden;">
