@@ -1,2 +1,3 @@
 SET SERVEROUTPUT ON
+@datos/01_SCRIPT_DML_MYC_DATOS.sql
 commit;

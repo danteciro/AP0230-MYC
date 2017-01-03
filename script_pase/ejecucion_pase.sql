@@ -1,3 +1,3 @@
 SET SERVEROUTPUT ON
-@datos/01_SCRIPT_DDL_OSI.sql
+@datos/01_SCRIPT_DDL_MYC.sql
 commit;
