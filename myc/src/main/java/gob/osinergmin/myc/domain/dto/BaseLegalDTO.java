@@ -1,4 +1,4 @@
-﻿package gob.osinergmin.myc.domain.dto;
+﻿package gob.osinergmin.myc.domain.dto; 
 
 import java.util.Date;
 import java.util.List;
