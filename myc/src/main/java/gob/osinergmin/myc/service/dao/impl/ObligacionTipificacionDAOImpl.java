@@ -23,8 +23,6 @@ import javax.inject.Inject;
 import javax.persistence.Query;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
-import org.jfree.util.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
