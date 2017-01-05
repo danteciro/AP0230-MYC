@@ -1,3 +1,3 @@
 SET SERVEROUTPUT ON
-@datos/01_SCRIPT_DML_MYC_DATOS.sql
+@datos/AP0230 - Plan MYC_Ejecucion_Datos_BD.sql
 commit;
