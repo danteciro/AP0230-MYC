@@ -5,8 +5,8 @@ ALTER TABLE PGH_OBLIGACION_TIPIFICACION ADD ID_ACTIVIDAD NUMBER(10);
 ALTER TABLE PGH_OBLI_TIPI_CRITERIO ADD ID_ACTIVIDAD NUMBER(10);
  
 
-COMMENT ON COLUMN PGH_DETALLE_BASE_LEGAL.ID_TIPO_DISPOSICION IS 'Identificador creado para determinar el tipo de disposición(MDI_MAESTRO_COLUMNA,''TIPO_DISPOSICION'').';
-COMMENT ON COLUMN PGH_DETALLE_BASE_LEGAL.ID_NRO_DISPOSICION IS 'Identificador creado para determinar el número de disposición (MDI_MAESTRO_COLUMNA, ''NRO_DISPOSICION'').';
-COMMENT ON COLUMN PGH_DETALLE_BASE_LEGAL.FLG_DISPOSICION IS 'Indicador para determinar si es una base legal de disposición (Si:1, No: Null).';
-COMMENT ON COLUMN PGH_OBLIGACION_TIPIFICACION.ID_ACTIVIDAD IS 'Identificador para determinar qué actividad está asociada a la obligación y tipificación(TABLA MDI_ACTIVIDAD)';
-COMMENT ON COLUMN PGH_OBLI_TIPI_CRITERIO.ID_ACTIVIDAD IS 'Identificador para determinar qué actividad está asociada a la obligación, tipificación y criterio(TABLA MDI_ACTIVIDAD)';
+COMMENT ON COLUMN PGH_DETALLE_BASE_LEGAL.ID_TIPO_DISPOSICION IS 'Identificador creado para determinar el tipo de disposicion(MDI_MAESTRO_COLUMNA,''TIPO_DISPOSICION'').';
+COMMENT ON COLUMN PGH_DETALLE_BASE_LEGAL.ID_NRO_DISPOSICION IS 'Identificador creado para determinar el numero de disposicion (MDI_MAESTRO_COLUMNA, ''NRO_DISPOSICION'').';
+COMMENT ON COLUMN PGH_DETALLE_BASE_LEGAL.FLG_DISPOSICION IS 'Indicador para determinar si es una base legal de disposicion (Si:1, No: Null).';
+COMMENT ON COLUMN PGH_OBLIGACION_TIPIFICACION.ID_ACTIVIDAD IS 'Identificador para determinar que actividad esta asociada a la obligacion y tipificacion(TABLA MDI_ACTIVIDAD)';
+COMMENT ON COLUMN PGH_OBLI_TIPI_CRITERIO.ID_ACTIVIDAD IS 'Identificador para determinar que actividad esta asociada a la obligacion, tipificacion y criterio(TABLA MDI_ACTIVIDAD)';
