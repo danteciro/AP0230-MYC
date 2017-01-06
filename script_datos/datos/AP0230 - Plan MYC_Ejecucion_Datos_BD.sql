@@ -16,44 +16,44 @@ values
 insert into mdi_maestro_columna
   (descripcion, codigo, id_maestro_columna, dominio, fecha_creacion, usuario_creacion, terminal_creacion, aplicacion, estado)
 values
-  ('Unica', 'NDISP00', 1282, 'NRO_DISPOSICION', SYSDATE, 'SYSTEM', '10.10.200.36', 'MYC', '1');
+  ('Unica', 'NDISP00', mdi_maestro_columna_seq.nextval, 'NRO_DISPOSICION', SYSDATE, 'SYSTEM', '10.10.200.36', 'MYC', '1');
 insert into mdi_maestro_columna
   (descripcion, codigo, id_maestro_columna, dominio, fecha_creacion, usuario_creacion, terminal_creacion, aplicacion, estado)
 values
-  ('Primera', 'NDISP01', 1283, 'NRO_DISPOSICION', SYSDATE, 'SYSTEM', '10.10.200.36', 'MYC', '1');
+  ('Primera', 'NDISP01', mdi_maestro_columna_seq.nextval, 'NRO_DISPOSICION', SYSDATE, 'SYSTEM', '10.10.200.36', 'MYC', '1');
 insert into mdi_maestro_columna
   (descripcion, codigo, id_maestro_columna, dominio, fecha_creacion, usuario_creacion, terminal_creacion, aplicacion, estado)
 values
-  ('Segunda', 'NDISP02', 1284, 'NRO_DISPOSICION', SYSDATE, 'SYSTEM', '10.10.200.36', 'MYC', '1');
+  ('Segunda', 'NDISP02', mdi_maestro_columna_seq.nextval, 'NRO_DISPOSICION', SYSDATE, 'SYSTEM', '10.10.200.36', 'MYC', '1');
 insert into mdi_maestro_columna
   (descripcion, codigo, id_maestro_columna, dominio, fecha_creacion, usuario_creacion, terminal_creacion, aplicacion, estado)
 values
-  ('Tercera', 'NDISP03', 1285, 'NRO_DISPOSICION', SYSDATE, 'SYSTEM', '10.10.200.36', 'MYC', '1');
+  ('Tercera', 'NDISP03', mdi_maestro_columna_seq.nextval, 'NRO_DISPOSICION', SYSDATE, 'SYSTEM', '10.10.200.36', 'MYC', '1');
 insert into mdi_maestro_columna
   (descripcion, codigo, id_maestro_columna, dominio, fecha_creacion, usuario_creacion, terminal_creacion, aplicacion, estado)
 values
-  ('Cuarta', 'NDISP04', 1286, 'NRO_DISPOSICION', SYSDATE, 'SYSTEM', '10.10.200.36', 'MYC', '1');
+  ('Cuarta', 'NDISP04', mdi_maestro_columna_seq.nextval, 'NRO_DISPOSICION', SYSDATE, 'SYSTEM', '10.10.200.36', 'MYC', '1');
 insert into mdi_maestro_columna
   (descripcion, codigo, id_maestro_columna, dominio, fecha_creacion, usuario_creacion, terminal_creacion, aplicacion, estado)
 values
-  ('Quinta', 'NDISP05', 1287, 'NRO_DISPOSICION', SYSDATE, 'SYSTEM', '10.10.200.36', 'MYC', '1');  
+  ('Quinta', 'NDISP05', mdi_maestro_columna_seq.nextval, 'NRO_DISPOSICION', SYSDATE, 'SYSTEM', '10.10.200.36', 'MYC', '1');  
 insert into mdi_maestro_columna
   (descripcion, codigo, id_maestro_columna, dominio, fecha_creacion, usuario_creacion, terminal_creacion, aplicacion, estado)
 values
-  ('Final', 'TDISP00', 1288, 'TIPO_DISPOSICION', SYSDATE, 'SYSTEM', '10.10.200.36', 'MYC', '1');
+  ('Final', 'TDISP00', mdi_maestro_columna_seq.nextval, 'TIPO_DISPOSICION', SYSDATE, 'SYSTEM', '10.10.200.36', 'MYC', '1');
 insert into mdi_maestro_columna
   (descripcion, codigo, id_maestro_columna, dominio, fecha_creacion, usuario_creacion, terminal_creacion, aplicacion, estado)
 values
-  ('Transitoria', 'TDISP01', 1289, 'TIPO_DISPOSICION', SYSDATE, 'SYSTEM', '10.10.200.36', 'MYC', '1');
+  ('Transitoria', 'TDISP01', mdi_maestro_columna_seq.nextval, 'TIPO_DISPOSICION', SYSDATE, 'SYSTEM', '10.10.200.36', 'MYC', '1');
 insert into mdi_maestro_columna
   (descripcion, codigo, id_maestro_columna, dominio, fecha_creacion, usuario_creacion, terminal_creacion, aplicacion, estado)
 values
-  ('Modificatoria', 'TDISP02', 1290, 'TIPO_DISPOSICION', SYSDATE, 'SYSTEM', '10.10.200.36', 'MYC', '1');
+  ('Modificatoria', 'TDISP02', mdi_maestro_columna_seq.nextval, 'TIPO_DISPOSICION', SYSDATE, 'SYSTEM', '10.10.200.36', 'MYC', '1');
   
 insert into mdi_maestro_columna
   (descripcion, codigo, id_maestro_columna, dominio, fecha_creacion, usuario_creacion, terminal_creacion, aplicacion, estado)
 values
-  ('Derogatoria', 'TDISP03', 1291, 'TIPO_DISPOSICION', SYSDATE, 'SYSTEM', '10.10.200.36', 'MYC', '1');
+  ('Derogatoria', 'TDISP03', mdi_maestro_columna_seq.nextval, 'TIPO_DISPOSICION', SYSDATE, 'SYSTEM', '10.10.200.36', 'MYC', '1');
   
   
 
