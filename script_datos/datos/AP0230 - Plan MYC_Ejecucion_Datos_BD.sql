@@ -1,4 +1,4 @@
-
+ 
 /* MAESTRO TABLA */
 insert into mdi_maestro_tabla
   (descripcion, dominio, usuario_actualizacion, usuario_creacion, fecha_creacion, fecha_actualizacion, terminal_actualizacion, terminal_creacion, es_editable, aplicacion)
