@@ -98,6 +98,7 @@ public class ObligacionNormativaServiceNegImpl implements ObligacionNormativaSer
 				relacion.setIdBaseLegal(idBaseLegal);
 				relacion.setIdObligacion(registro.getIdObligacion());
 				relacion.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
+				relacion.setCodTrazabilidad(obligacionNormativaDTO.getCodTrazabilidad());
 				relacion = obligacionBaseLegalDAO.creaRelacionOblBl(relacion, usuarioDTO);
 //				
 				//en caso exista documento adjunto

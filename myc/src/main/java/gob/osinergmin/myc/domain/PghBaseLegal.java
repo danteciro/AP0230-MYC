@@ -104,15 +104,15 @@ public class PghBaseLegal extends ColumAddObligacionesTmp  {
     @JoinColumn(name = "ID_DOCUMENTO_ADJUNTO", referencedColumnName = "ID_DOCUMENTO_ADJUNTO")
     @ManyToOne(fetch = FetchType.LAZY)
     private MdiDocumentoAdjunto idDocumentoAdjunto;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idBaseLegalOri", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "idBaseLegalOri", fetch = FetchType.LAZY)
     private List<PghListadoBaseLegal> pghListadoBaseLegalList;
     @OneToMany(mappedBy = "idBaseLegalDest", fetch = FetchType.LAZY)
     private List<PghListadoBaseLegal> pghListadoBaseLegalList1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idBaseLegal", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "idBaseLegal", fetch = FetchType.LAZY)
     private List<PghDetalleBaseLegal> pghDetalleBaseLegalList;
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pghBaseLegal", fetch = FetchType.LAZY)
 //    private List<PghObligacionBaseLegal> pghObligacionBaseLegalList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idBaseLegal", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "idBaseLegal", fetch = FetchType.LAZY)
     private List<PghObligacionBaseLegal> pghObligacionBaseLegalList;
     //campo flag
     @Transient

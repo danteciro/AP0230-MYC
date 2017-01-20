@@ -25,6 +25,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  *
@@ -144,7 +146,13 @@ public class ConcursoController {
                 retorno.put("mensaje", Constantes.CONSTANTE_MSJE_YA_EXISTE+" Concurso con los mismos Numero y Nombre.");
             }else{
                 UsuarioDTO usuarioDTO = new UsuarioDTO();
-                usuarioDTO.setCodigo("00002");
+                try{
+                	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+                	String usuario = ConstantesWeb.getUSUARIO(request);
+                	usuarioDTO.setCodigo(usuario);
+                }catch(Exception e){
+                	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
+                }
                 usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
 
                 concursoDTO.setNumeroConcurso(numeroConcurso);
@@ -193,7 +201,13 @@ public class ConcursoController {
                 retorno.put("mensaje", Constantes.CONSTANTE_MSJE_YA_EXISTE+" Concurso con los mismos Numero y Nombre.");
             }else{
                 UsuarioDTO usuarioDTO = new UsuarioDTO();
-                usuarioDTO.setCodigo("00002");
+                try{
+                	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+                	String usuario = ConstantesWeb.getUSUARIO(request);
+                	usuarioDTO.setCodigo(usuario);
+                }catch(Exception e){
+                	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
+                }
                 usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
 
                 concursoDTO.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);

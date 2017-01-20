@@ -79,7 +79,11 @@ public class ObligacionNormativaDAOImpl implements ObligacionNormativaDAO{
 		try{
             PghObligacion registroDAO = crud.find(obligacionNormativaDTO.getIdObligacion(), PghObligacion.class);
             registroDAO.setEstado(obligacionNormativaDTO.getEstado());
-            crud.update(registroDAO);
+            if(registroDAO.getCodTrazabilidad() != null && registroDAO.getCodTrazabilidad() != ""){
+            	crud.updateWithHistory(registroDAO);
+            }else{
+            	crud.update(registroDAO);
+            }
             retorno=ObligacionNormativaBuilder.toObligacionDto(registroDAO);
         }catch(Exception e){
             
@@ -389,7 +393,7 @@ public class ObligacionNormativaDAOImpl implements ObligacionNormativaDAO{
 			if(!existe){
 				PghConfObligacion pghCnfObligacion=CnfObligacionBuilder.getConfObligacion(cnfOblgDTO);
 				pghCnfObligacion.setDatosAuditoria(usuarioDTO);
-                                if(pghCnfObligacion.getCodAccion()!=null && !pghCnfObligacion.getCodTrazabilidad().equals("")){
+                                if(!pghCnfObligacion.getCodTrazabilidad().equals("")){
                                     crud.createWithHistory(pghCnfObligacion);
                                 }else{
                                     crud.create(pghCnfObligacion);

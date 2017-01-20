@@ -147,7 +147,7 @@ public class Constantes {
 	public static final String MANTENIMIENTO_CONSULTAR = "consultar";
 	
 	/* OSINE_SFS-1232 - REQF- - Inicio */
-	
+	public static final String USUARIO_LOGIN_DEFAULT = "SYSTEM";
 	
 
 }

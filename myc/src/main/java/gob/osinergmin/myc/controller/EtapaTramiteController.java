@@ -27,6 +27,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  *
@@ -113,7 +115,13 @@ public class EtapaTramiteController {
             EtapaDTO etapaDTO = new EtapaDTO();
             
             UsuarioDTO usuarioDTO = new UsuarioDTO();
-            usuarioDTO.setCodigo("00002");
+            try{
+            	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+            	String usuario = ConstantesWeb.getUSUARIO(request);
+            	usuarioDTO.setCodigo(usuario);
+            }catch(Exception e){
+            	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
+            }
             usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
             
             etapaDTO.setIdProceso(new Long(idProceso));
@@ -159,7 +167,13 @@ public class EtapaTramiteController {
             if( (listEtapa == null || listEtapa.size()==0) || listEtapa.get(0).getIdEtapa().equals(etapaDTO.getIdEtapa()) ){
             
                 UsuarioDTO usuarioDTO = new UsuarioDTO();
-                usuarioDTO.setCodigo("00002");
+                try{
+                	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+                	String usuario = ConstantesWeb.getUSUARIO(request);
+                	usuarioDTO.setCodigo(usuario);
+                }catch(Exception e){
+                	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
+                }
                 usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
 
                 etapaDTO.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);

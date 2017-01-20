@@ -50,6 +50,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -84,7 +86,13 @@ public class RequisitoController {
         
         try{
             UsuarioDTO usuarioDTO = new UsuarioDTO();
-            usuarioDTO.setCodigo("00001");//TODO por completar
+            try{
+            	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+            	String usuario = ConstantesWeb.getUSUARIO(request);
+            	usuarioDTO.setCodigo(usuario);
+            }catch(Exception e){
+            	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
+            }
             usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
             requisitoDTO.setEstado(Constantes.CONSTANTE_ESTADO_INACTIVO);
             GuardarRequisitoInRO in=new GuardarRequisitoInRO();
@@ -148,7 +156,7 @@ public class RequisitoController {
         
         try{
             UsuarioDTO usuarioDTO = new UsuarioDTO();
-            usuarioDTO.setCodigo("00001");//TODO por completar
+            usuarioDTO.setCodigo(ConstantesWeb.getUSUARIO(request));//TODO por completar
             usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
             requisitoDTO.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
             GuardarRequisitoInRO in=new GuardarRequisitoInRO();
@@ -246,7 +254,7 @@ public class RequisitoController {
         
         try{
             UsuarioDTO usuarioDTO = new UsuarioDTO();
-            usuarioDTO.setCodigo("00001");//TODO por completar
+            usuarioDTO.setCodigo(ConstantesWeb.getUSUARIO(request));//TODO por completar
             usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
             requisitoDTO.setIdRequisito(null);
             requisitoDTO.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);           

@@ -406,6 +406,7 @@ public class CriterioServiceNegImpl implements CriterioServiceNeg {
         	tipif.setIdTipificacion(idTipificacion);
         	relacion.setTipificacion(tipif);
         	relacion.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
+        	relacion.setCodTrazabilidad(criterio.getCodTrazabilidad());
         	relacion = obliTipiCriterioDAO.crearRelacion(relacion, usuarioDTO);
 //
         	

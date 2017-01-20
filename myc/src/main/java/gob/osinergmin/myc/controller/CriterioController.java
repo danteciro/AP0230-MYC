@@ -1,4 +1,4 @@
-package gob.osinergmin.myc.controller; 
+package gob.osinergmin.myc.controller;
 
 import gob.osinergmin.myc.common.util.MycUtil;
 import gob.osinergmin.myc.domain.base.BaseConstantesOutBean;
@@ -32,7 +32,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession; 
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +42,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 
 /**
@@ -336,7 +338,7 @@ public class CriterioController {
     }
     @RequestMapping(value="/registrarCriterio", method= RequestMethod.POST)
 //05-11-2015
-    public @ResponseBody Map<String,Object> registrarCriterio(String basesLegales,String descripcion,Long idObligacion,Long tipoCriterio,String sancionMonetaria,Long idTipificacion,String[] listaSanciones,HttpServletRequest request){
+    public @ResponseBody Map<String,Object> registrarCriterio(String codTrazabilidad,String basesLegales,String descripcion,Long idObligacion,Long tipoCriterio,String sancionMonetaria,Long idTipificacion,String[] listaSanciones,HttpServletRequest request){
 //
     	LOG.info("procesando registrar Criterio");
         Map<String,Object> retorno = new HashMap<String,Object>();
@@ -388,7 +390,8 @@ public class CriterioController {
 	        	TipificacionSancionDTO tipiSancion = new TipificacionSancionDTO();
 	        	tipiSancion.setIdTipificacion(idTipificacion);
 	        	criterio.setTipiSancion(tipiSancion);
-	        	criterio.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);        	
+	        	criterio.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);  
+	        	criterio.setCodTrazabilidad(codTrazabilidad);
 	        	criterio = criterioServiceNeg.guardaCriterioMaestro(criterio,usuarioDTO,idTipificacion,listaSanciones);  
 	        	
 	        	String mensaje = controlMessagesStaticEntity(ConstantesWeb.mensajes.MSG_OPERATION_SUCCESS_CREATE, ConstantesWeb.mensajes.MSG_ENTITY_CRITERIO);
@@ -424,7 +427,8 @@ public class CriterioController {
 	        	TipificacionSancionDTO tipiSancion = new TipificacionSancionDTO();
 	        	tipiSancion.setIdTipificacion(idTipificacion);
 	        	criterio.setTipiSancion(tipiSancion);
-	        	criterio.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);        	
+	        	criterio.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO); 
+	        	criterio.setCodTrazabilidad(codTrazabilidad);
 	        	criterio = criterioServiceNeg.guardaCriterioMaestro(criterio,usuarioDTO,idTipificacion,listaSanciones);  
 	        	
 	        	String mensaje = controlMessagesStaticEntity(ConstantesWeb.mensajes.MSG_OPERATION_SUCCESS_CREATE, ConstantesWeb.mensajes.MSG_ENTITY_CRITERIO);
@@ -478,11 +482,12 @@ public class CriterioController {
 
 
 	private UsuarioDTO getUsuario(HttpSession session) {
-//		UsuarioDTO usuarioView = (UsuarioDTO) sesion.getAttribute(Constantes.SESION_USUARIO);
         UsuarioDTO usuarioDTO = new UsuarioDTO();
         try {
-            usuarioDTO.setCodigo("00002");
-            usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
+        	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        	String usuario = ConstantesWeb.getUSUARIO(request);
+        	usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
+            usuarioDTO.setCodigo(usuario);
         } catch (Exception e) {
             e.printStackTrace();
         }

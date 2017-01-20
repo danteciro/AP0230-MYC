@@ -112,7 +112,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.apache.commons.lang.StringUtils;
 /**
  *
@@ -197,12 +198,14 @@ public class MantenimientoBaseLegalController {
     }
     
     private UsuarioDTO getUsuario(HttpSession sesion) {
-        //	UsuarioDTO usuarioView = (UsuarioDTO) sesion.getAttribute(Constantes.SESION_USUARIO);
         UsuarioDTO usuarioDTO = new UsuarioDTO();
         try {
-            usuarioDTO.setCodigo("00002");
-            usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
+        	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        	String usuario = ConstantesWeb.getUSUARIO(request);
+        	usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
+        	usuarioDTO.setCodigo(usuario);
         } catch (Exception e) {
+        	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
             e.printStackTrace();
         }
         return usuarioDTO;
@@ -712,7 +715,7 @@ public class MantenimientoBaseLegalController {
      */
     @RequestMapping(value = "/eliminarIncumplimiento", method = RequestMethod.POST)
     public @ResponseBody
-    Map<String, Object> eliminarIncumplimiento(Long idEscenearioIncumplimiento, HttpSession session) {
+    Map<String, Object> eliminarIncumplimiento(String codTrazabilidad,Long idEscenearioIncumplimiento, HttpSession session) {
     	
         Map<String, Object> map = new HashMap<String, Object>();
         UsuarioDTO usuarioDTO = getUsuario(session);
@@ -720,6 +723,7 @@ public class MantenimientoBaseLegalController {
         LOG.info("-- idIncumplimiento = " + idEscenearioIncumplimiento);
         IncumplimientoDTO incumplimientoDTO = new IncumplimientoDTO();
         incumplimientoDTO.setId_esce_incumplimiento(idEscenearioIncumplimiento);
+        incumplimientoDTO.setCod_trazabilidad(codTrazabilidad);
         incumplimientoDTO  = incumplimientoServiceNeg.eliminarIncumplimiento(incumplimientoDTO,usuarioDTO);
         if (incumplimientoDTO!=null) {            
             String mensaje=controlMessagesStaticEntity(ConstantesWeb.mensajes.MSG_OPERATION_SUCCESS_CREATE_RELATION,ConstantesWeb.mensajes.MSG_OPERATION_FAIL_DELETE);
@@ -1001,6 +1005,7 @@ public class MantenimientoBaseLegalController {
         try {
             ObliTipiDTO criterio = new ObliTipiDTO();
             criterio.setIdObliTipiCriterio(idCriterio);
+            criterio.setCodTrazabilidad(codTrazabilidad);
 
           //setear usuario
             UsuarioDTO usuarioDTO = new UsuarioDTO();
@@ -1622,6 +1627,8 @@ public class MantenimientoBaseLegalController {
                     baseLegalDTO.setEstado(estado);
                     String descSinEspacio = baseLegalDTO.getDescripcionGeneralBaseLegal();
                     baseLegalDTO.setDescripcionGeneralBaseLegal(descSinEspacio.trim());
+                    String codigoTrazabilidad = generarCodTrazabilidad();
+                    baseLegalDTO.setCodTrazabilidad(codigoTrazabilidad);
                     BaseLegalDTO retorno=baseLegalService.guardaBaseLegal(baseLegalDTO,usuarioDTO);
                     //jsifuentes inicio
                     retorno.setListaBasesLegales(baseLegalDTO.getListaBasesLegales());
@@ -1630,7 +1637,7 @@ public class MantenimientoBaseLegalController {
 //                   String mensaje=controlMessagesEntity(ConstantesWeb.mensajes.MSG_OPERATION_SUCCESS_CREATE,ConstantesWeb.mensajes.MSG_ENTITY_BASELEGAL,retorno.getCodigoBaseLegal());
                     String mensaje=controlMessagesStaticEntity(ConstantesWeb.mensajes.MSG_OPERATION_SUCCESS_CREATE,ConstantesWeb.mensajes.MSG_ENTITY_BASELEGAL);
     // 05-11-2015                
-                    String codigoTrazabilidad = generarCodTrazabilidad();
+                    //String codigoTrazabilidad = generarCodTrazabilidad();
                     salida.put("baseLegal", retorno);
                     salida.put("codTrazabilidad",codigoTrazabilidad);
     // 05-11-2015

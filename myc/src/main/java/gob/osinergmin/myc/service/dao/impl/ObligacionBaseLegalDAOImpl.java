@@ -5,6 +5,7 @@
 package gob.osinergmin.myc.service.dao.impl;
 
 import gob.osinergmin.myc.common.util.MycUtil;
+import gob.osinergmin.myc.domain.PghBaseLegal;
 import gob.osinergmin.myc.domain.PghObligacionBaseLegal;
 import gob.osinergmin.myc.domain.builder.ObligacionBaseLegalBuilder;
 import gob.osinergmin.myc.domain.dto.BaseLegalDTO;
@@ -227,6 +228,7 @@ public class ObligacionBaseLegalDAOImpl implements ObligacionBaseLegalDAO{
 		ObligacionBaseLegalDTO retorno=null;
 		Query query=null;
 		try {
+			PghBaseLegal registroBaseLegal = crud.find(baseLegalDTO.getIdBaseLegal(), PghBaseLegal.class);
 			/** Cambia de Estado al Listado de Obligaciones **/
 	        StringBuilder jpql = new StringBuilder();
 	        jpql.append("SELECT p From PghObligacionBaseLegal p where p.estado='1' ");
@@ -250,7 +252,12 @@ public class ObligacionBaseLegalDAOImpl implements ObligacionBaseLegalDAO{
 	        	PghObligacionBaseLegal regListado = crud.findBlOblg(idOblBl, idBaseLegal, idObligacion);
 	        	regListado.setEstado(baseLegalDTO.getEstado());
 	        	regListado.setDatosAuditoria(usuarioDTO);
-	            crud.update(regListado);
+	        	regListado.setCodTrazabilidad(registroBaseLegal.getCodTrazabilidad());
+	        	if(regListado.getCodTrazabilidad() != null){
+	        		crud.updateWithHistory(regListado);
+	        	}else{
+	        		crud.update(regListado);
+	        	}
 	        }
 			
 		} catch (Exception e) {

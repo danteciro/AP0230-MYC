@@ -143,8 +143,13 @@ public class IncumplimientoDAOImpl implements IncumplimientoDAO{
                  
                  PghEscenarioIncumplimiento pghEscenarioIncumplimiento=crud.find(incumplimientoDTO.getId_esce_incumplimiento(), PghEscenarioIncumplimiento.class);
                  pghEscenarioIncumplimiento.setDatosAuditoria(usuarioDTO);
-                 pghEscenarioIncumplimiento.setEstado(Constantes.CONSTANTE_ESTADO_INACTIVO);                 
-                 crud.update(pghEscenarioIncumplimiento);
+                 pghEscenarioIncumplimiento.setEstado(Constantes.CONSTANTE_ESTADO_INACTIVO);  
+                 pghEscenarioIncumplimiento.setCodTrazabilidad(incumplimientoDTO.getCod_trazabilidad());
+                 if(incumplimientoDTO.getCod_trazabilidad() != null){
+                	 crud.updateWithHistory(pghEscenarioIncumplimiento);
+                 }else{
+                	 crud.update(pghEscenarioIncumplimiento);
+                 }
                  
                  registro = IncumplimientoBuilder.toIncumplimientoDto(pghEscenarioIncumplimiento);
                  LOG.info("(Cambiar Estado Rubro Opcion DAO Impl) retorno: "+registro.toString());

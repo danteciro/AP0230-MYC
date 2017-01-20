@@ -43,6 +43,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  *
@@ -105,7 +107,13 @@ public class ParametroController {
          
          try{
          UsuarioDTO usuarioDTO = new UsuarioDTO();
-         usuarioDTO.setCodigo("00001");//TODO por completar
+         try{
+         	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+         	String usuario = ConstantesWeb.getUSUARIO(request);
+         	usuarioDTO.setCodigo(usuario);
+         }catch(Exception e){
+         	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
+         }
          usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
          parametroDTO.setEstado(Constantes.CONSTANTE_ESTADO_INACTIVO);
          GuardarParametroDinamicoInRO in =new GuardarParametroDinamicoInRO();
@@ -152,7 +160,13 @@ public class ParametroController {
 		            
 		             ValorParametroDTO valorParametroDTOList=new ValorParametroDTO();
 		        	 UsuarioDTO usuarioDTOList = new UsuarioDTO();
-		        	 usuarioDTOList.setCodigo("00001");//TODO por completar
+		        	 try{
+		                	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		                	String usuario = ConstantesWeb.getUSUARIO(request);
+		                	usuarioDTO.setCodigo(usuario);
+		                }catch(Exception e){
+		                	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
+		                }
 		        	 usuarioDTOList.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
 		        	 valorParametroDTOList.setEstado(Constantes.CONSTANTE_ESTADO_INACTIVO);
 		        	 valorParametroDTOList.setIdValorParametro(listado.get(0).getIdValorParametro());
@@ -221,7 +235,13 @@ public class ParametroController {
          try{
         	 
          UsuarioDTO usuarioDTO = new UsuarioDTO();
-         usuarioDTO.setCodigo("00001");//TODO por completar
+         try{
+         	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+         	String usuario = ConstantesWeb.getUSUARIO(request);
+         	usuarioDTO.setCodigo(usuario);
+         }catch(Exception e){
+         	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
+         }
          usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
          parametroDTO.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
          
@@ -409,7 +429,13 @@ public class ParametroController {
         
         try{
             UsuarioDTO usuarioDTO = new UsuarioDTO();
-            usuarioDTO.setCodigo("00001");//TODO por completar
+            try{
+            	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+            	String usuario = ConstantesWeb.getUSUARIO(request);
+            	usuarioDTO.setCodigo(usuario);
+            }catch(Exception e){
+            	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
+            }
             usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
             parametroDTO.setIdParametroDinamico(null);
             parametroDTO.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
@@ -463,7 +489,13 @@ public class ParametroController {
         
         try{
             UsuarioDTO usuarioDTO = new UsuarioDTO();
-            usuarioDTO.setCodigo("00001");//TODO por completar
+            try{
+            	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+            	String usuario = ConstantesWeb.getUSUARIO(request);
+            	usuarioDTO.setCodigo(usuario);
+            }catch(Exception e){
+            	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
+            }
             usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
             valorParametroDTO.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
             GuardarValorParametroInRO in =new GuardarValorParametroInRO();
@@ -547,7 +579,13 @@ public class ParametroController {
          try{
         	 
          UsuarioDTO usuarioDTO = new UsuarioDTO();
-         usuarioDTO.setCodigo("00001");//TODO por completar
+         try{
+         	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+         	String usuario = ConstantesWeb.getUSUARIO(request);
+         	usuarioDTO.setCodigo(usuario);
+         }catch(Exception e){
+         	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
+         }
          usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
          valorParametroDTO.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
          GuardarValorParametroInRO in =new GuardarValorParametroInRO();
@@ -596,7 +634,13 @@ public class ParametroController {
          Map<String,Object> retorno = new HashMap<String,Object>();
          
          UsuarioDTO usuarioDTO = new UsuarioDTO();
-         usuarioDTO.setCodigo("00001");//TODO por completar
+         try{
+         	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+         	String usuario = ConstantesWeb.getUSUARIO(request);
+         	usuarioDTO.setCodigo(usuario);
+         }catch(Exception e){
+         	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
+         }
          usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
          valorParametroDTO.setEstado(Constantes.CONSTANTE_ESTADO_INACTIVO);
          GuardarValorParametroInRO in =new GuardarValorParametroInRO();
@@ -648,7 +692,13 @@ public class ParametroController {
 	     valorParametroDTO.setIdParametroDinamico(idDinamico);
 	     
 	     UsuarioDTO usuarioDTO = new UsuarioDTO();
-	     usuarioDTO.setCodigo("00001");
+	     try{
+         	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+         	String usuario = ConstantesWeb.getUSUARIO(request);
+         	usuarioDTO.setCodigo(usuario);
+         }catch(Exception e){
+         	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
+         }
 	     usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
 	        
 	     in.setValorParametro(valorParametroDTO);

@@ -419,7 +419,7 @@
                     	<div id="toggCabeceraObligacion" >
                     	<div id="cabeceraObligacion" >
                         <form id="frmNuevaOblNorm" >
-                            <input name="codTrazabilidad" type="hidden" value="${codTrazabilidad}">
+                            <input id="codTrazabilidadObligacion" name="codTrazabilidad" type="hidden" value="${codTrazabilidad}">
 <!-- 05/11/2015 -->
                             <input id="txtidBaseLegalByObligacion" name="idBaseLegal" style="display:none;"  value="${baseLegal.idBaseLegal}" />
                             <!-- PR119 - Item 18 - Inicio -->

@@ -19,6 +19,8 @@ public class ObliTipiDTO {
 	private String sancionEspecifica;
 	private Long idActividad;
 	private String descripcionActividad;
+	private String codTrazabilidad;
+	private String codAccion;
 	private List<TipificacionSancionDTO> TipificacionSancion;
 //	
 	public String getDescripcionCriterio() {
@@ -46,6 +48,18 @@ public class ObliTipiDTO {
 		this.codigoTipificacion = codigoTipificacion;
 	}
 	
+	public String getCodTrazabilidad() {
+		return codTrazabilidad;
+	}
+	public void setCodTrazabilidad(String codTrazabilidad) {
+		this.codTrazabilidad = codTrazabilidad;
+	}
+	public String getCodAccion() {
+		return codAccion;
+	}
+	public void setCodAccion(String codAccion) {
+		this.codAccion = codAccion;
+	}
 	public CriterioDTO getCriterio() {
 		return criterio;
 	}

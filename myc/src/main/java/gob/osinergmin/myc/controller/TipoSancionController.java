@@ -24,6 +24,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 /**
 *
 * @author dmedrano
@@ -110,7 +112,13 @@ public class TipoSancionController {
         Map<String,Object> retorno = new HashMap<String,Object>();
         try{
             UsuarioDTO usuarioDTO = new UsuarioDTO();
-            usuarioDTO.setCodigo("00002");
+            try{
+            	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+            	String usuario = ConstantesWeb.getUSUARIO(request);
+            	usuarioDTO.setCodigo(usuario);
+            }catch(Exception e){
+            	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
+            }
             usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
             
             registro.setIdTipoSancion(null);
@@ -134,7 +142,13 @@ public class TipoSancionController {
         Map<String,Object> retorno = new HashMap<String,Object>();
         try{
             UsuarioDTO usuarioDTO = new UsuarioDTO();
-            usuarioDTO.setCodigo("00002");
+            try{
+            	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+            	String usuario = ConstantesWeb.getUSUARIO(request);
+            	usuarioDTO.setCodigo(usuario);
+            }catch(Exception e){
+            	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
+            }
             usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
             
             registro.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
@@ -157,7 +171,13 @@ public class TipoSancionController {
         Map<String,Object> retorno = new HashMap<String,Object>();
         try{
             UsuarioDTO usuarioDTO = new UsuarioDTO();
-            usuarioDTO.setCodigo("00002");
+            try{
+            	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+            	String usuario = ConstantesWeb.getUSUARIO(request);
+            	usuarioDTO.setCodigo(usuario);
+            }catch(Exception e){
+            	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
+            }
             usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
             
             //registro = tipoSancionServiceNeg.eliminarTipoSancion(registro, usuarioDTO);

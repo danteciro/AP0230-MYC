@@ -33,6 +33,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  *
@@ -93,7 +95,13 @@ public class RequisitoProcedimientoController {
         
         try{
             UsuarioDTO usuarioDTO = new UsuarioDTO();
-            usuarioDTO.setCodigo("00001");//TODO por completar
+            try{
+            	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+            	String usuario = ConstantesWeb.getUSUARIO(request);
+            	usuarioDTO.setCodigo(usuario);
+            }catch(Exception e){
+            	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
+            }
             usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
             
             procedimientoDTO.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
@@ -134,7 +142,13 @@ public class RequisitoProcedimientoController {
         Map<String,Object> retorno = new HashMap<String,Object>();
         try{
             UsuarioDTO usuarioDTO = new UsuarioDTO();
-            usuarioDTO.setCodigo("00001");//TODO por completar
+            try{
+            	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+            	String usuario = ConstantesWeb.getUSUARIO(request);
+            	usuarioDTO.setCodigo(usuario);
+            }catch(Exception e){
+            	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
+            }
             usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
             registroDTO.setEstado(Constantes.CONSTANTE_ESTADO_INACTIVO);
             GuardarCnfRequProcedimientoInRO in=new GuardarCnfRequProcedimientoInRO();

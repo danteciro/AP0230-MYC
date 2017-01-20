@@ -432,7 +432,6 @@ var gestionBaseLegal = (function() {
               });
           });
           $("#btnEliminarBaseLegal").click(function(){
-        	  
         	  var idBaseLegal=$('#txtidBaseLegal').val();
         	  gestionBaseLegal.confirmEliminarBaseLegal(idBaseLegal);
 
@@ -501,7 +500,7 @@ var gestionBaseLegal = (function() {
     }
     
     function getEliminarBaseLegal(id) {
-        var URL = baseURL + "pages/mantenimiento/baseLegal/eliminaBaseLegal";
+    	var URL = baseURL + "pages/mantenimiento/baseLegal/eliminaBaseLegal";
         $.get(URL,{idBaseLegal:id}, function(data) {
             if (data.resultado == 0) {
                 mensajeGrowl("success",data.mensaje);
@@ -1768,6 +1767,7 @@ concatenaDescripcionBaseLegal();
                         $('#txtidDetalleBaseLegal').val(data.baseLegal.idDetalleBaseLegal);
                         $('#codTrazabilidadNuevo').val(data.codTrazabilidad);
                         $('#codTrazabilidad').val(data.codTrazabilidad);
+                        $('#codTrazabilidadObligacion').val(data.codTrazabilidad);
                         $('#btnEditarBaseLegal').css('display','inline-block');
                         $('#btnNuevaBaseLegal').css('display','none');
                         $('#txtidBaseLegalByObligacion').val(data.baseLegal.idBaseLegal);
@@ -3590,7 +3590,6 @@ var nuevaObligacionNormativa = (function() {
                 for (var i = 0; i < len; i++) {
                 	html+='<option value="'+data.filas[i].idActividad+'" codigo="'+data.filas[i].nombreActividad+'">'+data.filas[i].nombreActividad+'</option>';
                 }
-                debugger;
                 $('#cmbActividad').html(html);
                 if(len == 1){
                 	$('#cmbActividad').val(data.filas[0].idActividad).trigger("change");
@@ -4483,7 +4482,6 @@ var nuevaObligacionNormativa = (function() {
 			codTrazabilidad:$('#codTrazabilidad').val()
         };
         $.get(URL,data, function(data) {
-        	debugger;
             if (data.resultado == 0) {    
 // 05-11-2015
             	cargaInicial.obtenerTipificacionToCriterio($('#idObligacion').val());
@@ -4535,7 +4533,6 @@ var nuevaObligacionNormativa = (function() {
                     var URL = baseURL + "pages/mantenimiento/baseLegal/findTipificacionCodigo";
                     $.get( URL,{codigo:$("#txtTipifOblNor").val()},
                     function(data) {            
-                    	debugger;
                         if(data.idTipificacion !== null){
                             nuevoBL.txtIdTipificacion.val(data.idTipificacion);
                             nuevoBL.txtDescripcionTipificacionOblig.val(data.descripcion);
@@ -6605,6 +6602,7 @@ var validaNuevaBaseLegal = (function() {
             type: 'post',
             async: false,
             data: {
+            	codTrazabilidad:$("#codTrazabilidad").val(),
             	descripcion:$('#txtIncumplimientoCriterio').val(),
             	idObligacion:$('#idObligacion').val(),
             	tipoCriterio:$('#cmbTipoCriterio').val(),           	
@@ -6983,14 +6981,15 @@ function eliminarIncumplimiento (rowid){
 }
 /*Rsis 14 - Fin*/
 
-function procEliminarIncumplimiento(id){		
+function procEliminarIncumplimiento(id){	
     $.ajax({
         url:baseURL + "pages/mantenimiento/baseLegal/eliminarIncumplimiento",
         	
         type:'post',
         async:false,
         data:{
-        	idEscenearioIncumplimiento:id            	
+        	idEscenearioIncumplimiento:id,
+        	codTrazabilidad: $("#codTrazabilidad").val()
         },
         beforeSend:muestraLoading,
         success:function(data){

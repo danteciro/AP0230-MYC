@@ -16,9 +16,9 @@ public class CriterioDTO {
     private String descripcion;
     /** Id de la tipificacion asociada**/
     private Long idTipificacion;
-    /** código de la Obligacion**/
+    /** cÃ³digo de la Obligacion**/
     private Long idObligacion;
-    /** código de la actividad **/
+    /** cÃ³digo de la actividad **/
     private Long idActividad;
     private String sancionMonetaria;
     

@@ -57,7 +57,7 @@ public class BaseLegalDAOImpl implements BaseLegalDAO {
             PghBaseLegal registroDAO = crud.find(baseLegalDTO.getIdBaseLegal(), PghBaseLegal.class);
             registroDAO.setEstado(baseLegalDTO.getEstado());
             registroDAO.setDatosAuditoria(usuarioDTO);
-            crud.update(registroDAO);
+            crud.updateWithHistory(registroDAO);
             
             /** Cambia de Estado al Detalle **/
             StringBuilder jpql = new StringBuilder();
@@ -71,9 +71,9 @@ public class BaseLegalDAOImpl implements BaseLegalDAO {
             	PghDetalleBaseLegal detalleUpdate = crud.find(obj.getIdDetalleBaseLegal(), PghDetalleBaseLegal.class);
             	detalleUpdate.setEstado(baseLegalDTO.getEstado());
                 detalleUpdate.setDatosAuditoria(usuarioDTO);
-                crud.update(detalleUpdate);
+                detalleUpdate.setCodTrazabilidad(registroDAO.getCodTrazabilidad());
+                crud.updateWithHistory(detalleUpdate);
             }
-            
             
             /** Cambia de Estado a la Lista **/
             StringBuilder jpqlList = new StringBuilder();
@@ -89,10 +89,10 @@ public class BaseLegalDAOImpl implements BaseLegalDAO {
             	PghListadoBaseLegal regListado = crud.find(obj.getIdListadoBaseLegal(), PghListadoBaseLegal.class);
             	regListado.setEstado(baseLegalDTO.getEstado());
             	regListado.setDatosAuditoria(usuarioDTO);
-                crud.update(regListado);
+            	regListado.setCodTrazabilidad(registroDAO.getCodTrazabilidad());
+                crud.updateWithHistory(regListado);
             }
             
-    
             retorno=BaseLegalBuilder.toBaseLegalDto(registroDAO);
         }catch(Exception e){
             e.printStackTrace();
@@ -184,10 +184,10 @@ public class BaseLegalDAOImpl implements BaseLegalDAO {
 //			String codBaseLegal= MycUtil.generaCodigoBaseLegal(codigoBaseLegal);
 			//
 //			baseLegalDTO.setCodigoBaseLegal(codigoBaseLegal);
-                        baseLegalDTO.setEstado(estado);
+            baseLegalDTO.setEstado(estado);
 			PghBaseLegal baseLegal=BaseLegalBuilder.getBaseLegal(baseLegalDTO);
 			baseLegal.setDatosAuditoria(usuarioDTO);
-			PghBaseLegal pghBaseLegal= crud.create(baseLegal);
+			PghBaseLegal pghBaseLegal= crud.createWithHistory(baseLegal);
 // 05-11-2015			
 			codTrazabilidadRetorno = pghBaseLegal.getCodTrazabilidad();
 //			
@@ -197,7 +197,8 @@ public class BaseLegalDAOImpl implements BaseLegalDAO {
 				baseLegalDTO.setIdBaseLegal(pghBaseLegal.getIdBaseLegal());
 				detalleBaseLegal=DetalleBaseLegalBuilder.getDetalleBaseLegal(baseLegalDTO);
 				detalleBaseLegal.setDatosAuditoria(usuarioDTO);
-				crud.create(detalleBaseLegal);
+				detalleBaseLegal.setCodTrazabilidad(baseLegalDTO.getCodTrazabilidad());
+				crud.createWithHistory(detalleBaseLegal);
 // 05-11-2015				
 				idDetalleBaseLegalRetorno = detalleBaseLegal.getIdDetalleBaseLegal();				
 //				
@@ -209,9 +210,10 @@ public class BaseLegalDAOImpl implements BaseLegalDAO {
 				for(BaseLegalConcordanciaDTO obj :baseLegalConcordanciaDTO){
 					obj.setEstado(estado);
 					obj.setIdBaseLegalOrigen(pghBaseLegal.getIdBaseLegal());
+					obj.setCodTrazabilidad(baseLegalDTO.getCodTrazabilidad());
 					PghListadoBaseLegal pghListadoBaseLegal = BaseLegalConcordanciaBuilder.getBaseLegalConcordancia(obj);
 					pghListadoBaseLegal.setDatosAuditoria(usuarioDTO);
-					crud.create(pghListadoBaseLegal);
+					crud.createWithHistory(pghListadoBaseLegal);
 				}			
 			}
 			
@@ -221,11 +223,12 @@ public class BaseLegalDAOImpl implements BaseLegalDAO {
 				for(ObligacionBaseLegalDTO obj :ObligacionBaseLegalDTO){
 					obj.setEstado(estado);
 					obj.setIdBaseLegal(pghBaseLegal.getIdBaseLegal());
+					obj.setCodTrazabilidad(baseLegalDTO.getCodTrazabilidad());
 //					Long id = crud.findSequence("PGH_OBL_BASE_LEGAL_SEQ");
 //					obj.setIdOblBase(id);
 					PghObligacionBaseLegal pghListadoObligacionBaseLegal = ObligacionBaseLegalBuilder.getObligacionBaseLegal(obj);
 					pghListadoObligacionBaseLegal.setDatosAuditoria(usuarioDTO);
-					crud.create(pghListadoObligacionBaseLegal);
+					crud.createWithHistory(pghListadoObligacionBaseLegal);
 				}			
 			}
 // 05-11-2015			
@@ -239,7 +242,8 @@ public class BaseLegalDAOImpl implements BaseLegalDAO {
 					obj.setIdDetalleBaseLegal(detalleBaseLegal.getIdDetalleBaseLegal());
 					PghDetalleNormaTecnica pghDetalleNormaTecnica = DetalleNormaTecnicaBuilder.getDetalleNormaTecnica(obj);
 					pghDetalleNormaTecnica.setDatosAuditoria(usuarioDTO);
-					crud.create(pghDetalleNormaTecnica);
+					pghDetalleNormaTecnica.setCodTrazabilidad(baseLegalDTO.getCodTrazabilidad());
+					crud.createWithHistory(pghDetalleNormaTecnica);
 				}
 				
 			}
@@ -948,9 +952,9 @@ public class BaseLegalDAOImpl implements BaseLegalDAO {
 					obj.setIdDetalleBaseLegal(baseLegalDTO.getIdDetalleBaseLegal());
 					PghDetalleNormaTecnica pghDetalleNormaTecnica = DetalleNormaTecnicaBuilder.getDetalleNormaTecnica(obj);
 					pghDetalleNormaTecnica.setDatosAuditoria(usuarioDTO);
-					crud.create(pghDetalleNormaTecnica);
+					pghDetalleNormaTecnica.setCodTrazabilidad(baseLegalDTO.getCodTrazabilidad());
+					crud.createWithHistory(pghDetalleNormaTecnica);
 				}
-				
 			}
 			//jsifuentes fin
     			

@@ -322,9 +322,9 @@ public class ObliTipiCriterioDAOImpl implements ObliTipiCriterioDAO{
             PghObliTipiCriterio obliTipiCriterio = ObliTipiCriterioBuilder.getObliTipiCriterio(relacion);
             obliTipiCriterio.setDatosAuditoria(usuarioDTO);
             if(obliTipiCriterio.getIdObliTipiCriterio()!=null){
-                crud.update(obliTipiCriterio);
+            	crud.update(obliTipiCriterio);
             }else{
-                crud.create(obliTipiCriterio);
+            	crud.create(obliTipiCriterio);
             }  
 
             LOG.info("create relacion Obli Tipi Criterio registro ingresado ID: "+obliTipiCriterio.getIdObliTipiCriterio());
