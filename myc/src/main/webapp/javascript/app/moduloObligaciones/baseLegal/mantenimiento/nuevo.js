@@ -516,7 +516,8 @@ var gestionBaseLegal = (function() {
     function verBaseLegalCompleta(){
     	
     	if(flagBaseLegal=="ver"){
-    		
+    		nuevoBL.cmbNumeroDisposicion.attr('disabled','disabled');
+    		nuevoBL.cmbTipoDisposicion.attr('disabled','disabled');
     		nuevoBL.txtArticuloNormaLegal.attr('disabled','disabled');
     		$('#divDescCodigoBaseLegal').css('display','inline-block');//Descripcion código base legal
     		$('#txtCodigoBaseLegalNuevo').css('display','block');//Text código base legal
@@ -640,10 +641,22 @@ var gestionBaseLegal = (function() {
 	    		nuevoBL.divAnexoNormaLegal.css("display","none");
 	    	}
         	
-        	if(nuevoBL.txtArticuloAnexoNormaLegal.val()!=''){
+        	$("#cmbNumeroDisposicion").removeAttr("disabled");
+        	if($("#cmbHideNroDisposicion").val() != -1 && $("#cmbHideNroDisposicion").val() != ''){
+        		$("#cmbTipoDisposicion").removeAttr("disabled");
+        	}
+        	
+        	//inicial
+        	/*if(nuevoBL.txtArticuloAnexoNormaLegal.val()!=''){
         		nuevoBL.txtIncisoUnoAnexoNormaLegal.removeAttr('disabled');
         		validaArticuloAnexoBaseLegal();
+        	}*/
+        	
+        	//modificado
+        	if(nuevoBL.txtArticuloAnexoNormaLegal.val()!=''){
+        		nuevoBL.txtIncisoUnoAnexoNormaLegal.removeAttr('disabled');
         	}
+        	validaArticuloAnexoBaseLegal();
         	    
         	if(nuevoBL.txtIncisoUnoAnexoNormaLegal.val()!=''){
         		nuevoBL.txtIncisoDosAnexoNormaLegal.removeAttr('disabled');
@@ -1621,7 +1634,7 @@ concatenaDescripcionBaseLegal();
 //        	nuevoBL.cmbNumeroAnexo.addClass("error");
 //        }
         
-        if($('#txtArtAneBaseLegal').val()=="" && $('#cmbTipAneBaseLegal option:selected').text() != '--Seleccione--'){
+        if($('#txtArtAneBaseLegal').val()=="" && $('#cmbTipAneBaseLegal option:selected').text() != '--Seleccione--' && $("#cmbNumeroDisposicion option:selected").text() == '--Seleccione--'){
         	mensajeValidacion += "* Debe ingresar un valor en el campo Artículo del Anexo <br>";
         	nuevoBL.txtArticuloAnexoNormaLegal.addClass("error");
         }
@@ -1633,17 +1646,19 @@ concatenaDescripcionBaseLegal();
         if($('#chkNormaLegalPadre').is(':checked')){
         	
         }else{
-        	if($('#cmbNorTecBaseLegal option:selected').text() != '--Seleccione--' && nuevoBL.txtArticuloNormaLegal.val()=="" && $('#cmbTipAneBaseLegal option:selected').text() == '--Seleccione--'){
-        		if(nuevoBL.txtArticuloNormaLegal.val()=="" && $('#cmbTipAneBaseLegal').val()=="-1"){
-        			mensajeValidacion += "* Debe ingresar un valor en el campo Artículo o Debe seleccionar un Tipo de Anexo <br>";
+        	if($('#cmbNorTecBaseLegal option:selected').text() != '--Seleccione--' && nuevoBL.txtArticuloNormaLegal.val()=="" && $('#cmbTipAneBaseLegal option:selected').text() == '--Seleccione--' && $("#cmbNumeroDisposicion option:selected").text() == '--Seleccione--'){
+        		if(nuevoBL.txtArticuloNormaLegal.val()=="" && $('#cmbTipAneBaseLegal').val()=="-1" && $("#cmbNumeroDisposicion").val() == "-1"){
+        			mensajeValidacion += "* Debe ingresar un valor en el campo Artículo o Tipo de Anexo o Nº de Disposición<br>";
         			nuevoBL.txtArticuloNormaLegal.addClass("error");
         			$('#cmbTipAneBaseLegal').addClass("error");
+        			$('#cmbNumeroDisposicion').addClass("error");
         		}
 	        }
-	        if($('#cmbNorTecBaseLegal option:selected').text() == '--Seleccione--' && nuevoBL.txtArticuloNormaLegal.val()=="" && $('#cmbTipAneBaseLegal option:selected').text() == '--Seleccione--'){
-	    			mensajeValidacion += "* Debe ingresar un valor en el campo Artículo o Debe seleccionar un Tipo de Anexo <br>";
+        	if($('#cmbNorTecBaseLegal option:selected').text() == '--Seleccione--' && nuevoBL.txtArticuloNormaLegal.val()=="" && $('#cmbTipAneBaseLegal option:selected').text() == '--Seleccione--' && $("#cmbNumeroDisposicion option:selected").text() == '--Seleccione--'){
+    			mensajeValidacion += "* Debe ingresar un valor en el campo Artículo o Tipo de Anexo o Nº de Disposición<br>";
 	    			nuevoBL.txtArticuloNormaLegal.addClass("error");
 	    			$('#cmbTipAneBaseLegal').addClass("error");
+	    			$('#cmbNumeroDisposicion').addClass("error");
 	        }
         }        
 //		  Fin MYC-7 Cambio de Alcance
@@ -1939,6 +1954,20 @@ concatenaDescripcionBaseLegal();
         	// Fin MYC-7 Cambio de Alcance
         }
 
+      //campos de disposición
+        var NumeroDisposicion = $("#cmbNumeroDisposicion option:selected").text();
+        var TipoDisposicion = $("#cmbTipoDisposicion option:selected").text();
+        var DisposicionValidado;
+        if(NumeroDisposicion == '--Seleccione--'){
+        	DisposicionValidado = "";
+        }else{
+        	if( TipoDisposicion != '--Seleccione--' ){
+        		DisposicionValidado = " " + NumeroDisposicion + " Disposición Complementaria " + TipoDisposicion + " del Reglamento aprobado por ";
+        	}else{
+        		DisposicionValidado = " " + NumeroDisposicion + " Disposición Complementaria del Reglamento aprobado por ";
+        	}
+        }
+        
         var ArticuloAnexo = $("#txtArtAneBaseLegal").val();
         var ArticuloAnexoValidado;
         var Letra5 = ArticuloAnexo.charAt(0);
@@ -2062,6 +2091,25 @@ concatenaDescripcionBaseLegal();
         } else {
             concatenado = "";
         }
+        
+      //verificando si se debe de concatenar los datos de la disposición
+        if (NumeroDisposicion != "--Seleccione--" && TipoAnexo == "--Seleccione--" && NormaTecnica == "--Seleccione--"){
+        	concatenado = DisposicionValidado + 
+        			SiglaNormaLegal + NumeroValidado + AnoValidado + SiglaValidado + ModificatoriasValidado + DescripcionConcordanciaValidada;
+        } else if (NumeroDisposicion != "--Seleccione--" && TipoAnexo != "--Seleccione--" && NormaTecnica == "--Seleccione--"){
+        	concatenado = DisposicionValidado + 
+			SiglaNormaLegal + NumeroValidado + AnoValidado + SiglaValidado + ModificatoriasValidado + DescripcionConcordanciaValidada;
+        }else if (NumeroDisposicion != "--Seleccione--" && TipoAnexo == "--Seleccione--" && NormaTecnica != "--Seleccione--"){
+        	concatenado = DisposicionValidado +
+			SiglaNormaLegal + NumeroValidado + AnoValidado + SiglaValidado + ModificatoriasValidado +
+			NormaTecnicaValidada + DescripcionNormaTecnica + DescripcionConcordanciaValidada;
+        }else if (NumeroDisposicion != "--Seleccione--" && TipoAnexo != "--Seleccione--"  && NormaTecnica != "--Seleccione--"){
+        	concatenado = DisposicionValidado +
+        			SiglaNormaLegal + NumeroValidado + AnoValidado + SiglaValidado + ModificatoriasValidado +
+        			NormaTecnicaValidada + DescripcionNormaTecnica + DescripcionConcordanciaValidada;
+        }
+        
+        
         if(flagBaseLegal=="ver"){
         	concatenado = "";
         }
@@ -2553,6 +2601,14 @@ concatenaDescripcionBaseLegal();
     	});
     	
     	nuevoBL.chkConcordancia.change(function(){
+    		concatenaDescripcionBaseLegal();
+    	});
+    	
+    	nuevoBL.cmbNumeroDisposicion.change(function(){
+    		concatenaDescripcionBaseLegal();
+    	});
+    	
+    	nuevoBL.cmbTipoDisposicion.change(function(){
     		concatenaDescripcionBaseLegal();
     	});
     	
@@ -5410,6 +5466,8 @@ var nuevaObligacionNormativa = (function() {
 var cargaInicial=(function(){
 	function constructor(){
 		obtenerTipoAnexos();
+		obtenerNumeroDisposicion();
+		obtenerTipoDisposicion();
 		$("#btnAgregarNormaTecnica").css("display","none");
 		obtenertipoNormaLegal();
 		obtenerSiglas();
@@ -5444,6 +5502,33 @@ var cargaInicial=(function(){
 		  }
 									
 		});
+		
+		$("#cmbNumeroDisposicion").attr("disabled","disabled");
+		$("#cmbTipoDisposicion").attr("disabled","disabled");
+		
+		$("#cmbNumeroDisposicion").change(function(){
+			if($("#cmbNumeroDisposicion option:selected").text() == "--Seleccione--"){
+				$("#cmbTipoDisposicion").attr("disabled","disabled");
+				$("#cmbTipoDisposicion").val(-1);
+			}else{
+				$("#cmbTipoDisposicion").prop("disabled",false);
+			}
+		});
+		
+		$("#cmbActividad").change(function(){
+			if($("#cmbActividad option:selected").text() == '--Seleccione--'){
+				$("#txtTipifOblNor").attr("disabled","disabled");
+				$("#txtTipifOblNor").val('');
+				$("#divTipSan").html("");
+                nuevoBL.txtIdTipificacion.val("");
+                nuevoBL.txtDescripcionTipificacionOblig.val("");
+                nuevoBL.txtSancionTipificacionObligacion.val("");
+                nuevoBL.txtBaseLegalTipificacionObligacion.val("");
+			}else{
+				$("#txtTipifOblNor").attr("disabled",false);
+			}
+		});
+		
 		/*Rsis 12 - Inicio*/
 //		obtenerCriticidadObligacion();
 		/*jsifuentes - Inicio*/
@@ -5482,6 +5567,54 @@ var cargaInicial=(function(){
 		//Fin MYC-7 Cambio de Alcance
 		
 	}
+	
+	/**
+     * 
+     * @returns {undefined}
+     */
+	function obtenerNumeroDisposicion() {
+        $.getJSON("mantenimiento/baseLegal/obtenerNumeroDisposicion", {
+            ajax: 'true',
+            async: false
+        }, function(data) {
+            var html = '<option value="-1">--Seleccione--</option>';
+            var len = data.length;
+            var codigo= [];
+            for (var i = 0; i < len; i++) {
+                if (data[i].idMaestroColumna == $('#cmbHideNroDisposicion').val()) {
+                    html += '<option value="' + data[i].idMaestroColumna + '" codigo="'+data[i].codigo+'" selected="selected">'
+                            + data[i].descripcion + '</option>';
+                } else {
+                	 html+='<option value="'+data[i].idMaestroColumna+'" codigo="'+data[i].codigo+'">'+data[i].descripcion+'</option>';
+                }
+            }
+            $('#cmbNumeroDisposicion').html(html);
+        	});  
+     }
+	/**
+     * 
+     * @returns {undefined}
+     */
+	function obtenerTipoDisposicion() {
+        $.getJSON("mantenimiento/baseLegal/obtenerTipoDisposicion", {
+            ajax: 'true',
+            async: false
+        }, function(data) {
+            var html = '<option value="-1">--Seleccione--</option>';
+            var len = data.length;
+            var codigo= [];
+            for (var i = 0; i < len; i++) {
+                if (data[i].idMaestroColumna == $('#cmbHideTipoDisposicion').val()) {
+                    html += '<option value="' + data[i].idMaestroColumna + '" codigo="'+data[i].codigo+'" selected="selected">'
+                            + data[i].descripcion + '</option>';
+                } else {
+                	 html+='<option value="'+data[i].idMaestroColumna+'" codigo="'+data[i].codigo+'">'+data[i].descripcion+'</option>';
+                }
+            }
+            $('#cmbTipoDisposicion').html(html);
+        	});  
+     }
+	
 	/**
      * 
      * @returns {undefined}
@@ -6625,7 +6758,9 @@ $(function() {
         divBotonesGridObligaciones:$('#divBotonesGridObligaciones'),
         /*----------------------------Relaciones------------------------------------*/
         btnGuardarRelacionObligacion:$('#btnRelacionesObligacion'),
-        
+        /*----------------------------Disposicion------------------------------------*/
+        cmbNumeroDisposicion : $("#cmbNumeroDisposicion"),
+        cmbTipoDisposicion : $("#cmbTipoDisposicion")
     };
 });
 $(function() {
@@ -6747,6 +6882,7 @@ $('#cmbNormaLegal').change(function(){
 	gestionBaseLegal.validaArticuloBaseLegal();
 	$('#chkModificatoria').removeAttr('disabled');
 	$('#chkConcordancia').removeAttr('disabled');
+	$("#cmbNumeroDisposicion").removeAttr("disabled");
 	//Inicio MYC-7 Cambio de Alcance
     $('#cmbTipAneBaseLegal').removeAttr('disabled');
     $('#cmbNorTecBaseLegal').removeAttr('disabled');

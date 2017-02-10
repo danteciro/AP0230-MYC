@@ -1229,13 +1229,26 @@ public class BaseLegalDAOImpl implements BaseLegalDAO {
 		try {
 
 			StringBuilder jpql = new StringBuilder();
-			jpql.append("select p.id_base_legal,p.codigo_base_legal,trim(p.descripcion),p.estado,p.flag_padre  from pgh_base_legal p ");
+			jpql.append("select id_base_legal,codigo_base_legal,descripcion,estado,flag_padre from(");
+			jpql.append("select p.id_base_legal,p.codigo_base_legal,trim(p.descripcion) as descripcion,p.estado,p.flag_padre  from pgh_base_legal p ");
 			jpql.append("left join pgh_detalle_base_legal d on p.id_base_legal = d.id_base_legal and d.estado='1' ");
 			jpql.append("where p.estado='1' ");
+			jpql.append("and d.flg_disposicion is null ");
 			jpql.append("and p.id_base_legal_padre ='"+row_id+"' ");			
 			// OSINE_SFS-480 - REQF-0007 - Inicio
 			//jpql.append("order by to_number(d.articulo),d.inciso_1,d.inciso_2,d.id_tipo_anexo,to_number(d.articulo_anexo),d.inciso_1_anexo,d.inciso_2_anexo ,p.descripcion ");
 			jpql.append("order by to_number(d.articulo),nps_ordenar_numeral_fun(d.inciso_1) nulls first,nps_ordenar_numeral_fun(d.inciso_2) nulls first,d.id_tipo_anexo,to_number(d.articulo_anexo),nps_ordenar_numeral_fun(d.inciso_1_anexo) nulls first,nps_ordenar_numeral_fun(d.inciso_2_anexo) nulls first,p.descripcion ");
+			jpql.append(")");
+			//agregando la consulta para disposiciones
+			jpql.append("union all ");
+			jpql.append("select id_base_legal,codigo_base_legal,descripcion,estado,flag_padre from(");
+			jpql.append("select d.flg_disposicion,p.id_base_legal,p.codigo_base_legal,trim(p.descripcion) as descripcion,p.estado,p.flag_padre  from pgh_base_legal p ");
+			jpql.append("left join pgh_detalle_base_legal d on p.id_base_legal = d.id_base_legal and d.estado='1' ");
+			jpql.append("where p.estado='1' ");
+			jpql.append("and p.id_base_legal_padre ='"+row_id+"' ");	
+			jpql.append("and d.flg_disposicion is not null ");
+			jpql.append("order by  d.id_nro_disposicion asc ");
+			jpql.append(")");
 			// OSINE_SFS-480 - REQF-0007 - Fin
 			Query query=crud.getEm().createNativeQuery(jpql.toString());
 			LOG.info("query : " + jpql.toString());

@@ -107,9 +107,36 @@ import java.util.List;
     private String estadoObligacion;
     
     private Long correlativo;
-
     
-    private List<DetalleNormaTecnicaDTO> detalleNormaTecnica;
+    private Long numeroDisposicion;
+    private Long tipoDisposicion;
+    private String flgDisposicion;
+    
+    public Long getNumeroDisposicion() {
+		return numeroDisposicion;
+	}
+
+	public void setNumeroDisposicion(Long numeroDisposicion) {
+		this.numeroDisposicion = numeroDisposicion;
+	}
+
+	public Long getTipoDisposicion() {
+		return tipoDisposicion;
+	}
+
+	public void setTipoDisposicion(Long tipoDisposicion) {
+		this.tipoDisposicion = tipoDisposicion;
+	}
+
+	public String getFlgDisposicion() {
+		return flgDisposicion;
+	}
+
+	public void setFlgDisposicion(String flgDisposicion) {
+		this.flgDisposicion = flgDisposicion;
+	}
+
+	private List<DetalleNormaTecnicaDTO> detalleNormaTecnica;
         
     public String getFlagPadre() {
 		return flagPadre;

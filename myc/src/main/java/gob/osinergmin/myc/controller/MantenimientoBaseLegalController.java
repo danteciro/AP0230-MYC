@@ -88,6 +88,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -325,6 +327,52 @@ public class MantenimientoBaseLegalController {
         }
         return listTipoAnexo;
     }    
+    
+    /**
+     * 
+     * @return 
+     */
+    @RequestMapping(value = "/obtenerTipoDisposicion", method = RequestMethod.GET)
+    public @ResponseBody
+    List<MaestroColumnaDTO> obtenerTipoDisposicion() {
+        List<MaestroColumnaDTO> listTipoDisposicion = new ArrayList<MaestroColumnaDTO>();
+        try{
+        	listTipoDisposicion=maestroColumnaService.listarTipoDisposicion();
+        	//ordenando los datos por el código
+        	Collections.sort(listTipoDisposicion, new Comparator<MaestroColumnaDTO>() {
+        	    @Override
+        	    public int compare(MaestroColumnaDTO o1, MaestroColumnaDTO o2) {
+        	        return o1.getCodigo().compareTo(o2.getCodigo());
+        	    }
+        	});
+        }catch(Exception e){
+            LOG.info("error al procesar obtenerTipoDisposicion " +e);
+        }
+        return listTipoDisposicion;
+    }
+    /**
+     * 
+     * @return 
+     */
+    @RequestMapping(value = "/obtenerNumeroDisposicion", method = RequestMethod.GET)
+    public @ResponseBody
+    List<MaestroColumnaDTO> obtenerNumeroDisposicion() {
+        List<MaestroColumnaDTO> listNumeroDisposicion = new ArrayList<MaestroColumnaDTO>();
+        try{
+        	listNumeroDisposicion=maestroColumnaService.listarNumeroDisposicion();
+        	//ordenando los datos por el código
+        	Collections.sort(listNumeroDisposicion, new Comparator<MaestroColumnaDTO>() {
+        	    @Override
+        	    public int compare(MaestroColumnaDTO o1, MaestroColumnaDTO o2) {
+        	        return o1.getCodigo().compareTo(o2.getCodigo());
+        	    }
+        	});
+        }catch(Exception e){
+            LOG.info("error al procesar obtenerNumeroDisposicion " +e);
+        }
+        return listNumeroDisposicion;
+    } 
+    
     /***        
     * @param codigo
     * @return 

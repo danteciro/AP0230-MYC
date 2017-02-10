@@ -244,7 +244,33 @@
                                     </div>
                                 </fieldset>
 
-
+								<div class="filaForm" >		
+	                            </div>      		
+	                                		
+	                            <div class="filaForm" >		                                
+								</div>
+								
+								<fieldset>		
+	                                    <legend>Disposición Complementaria</legend> 		
+	                                    <div class="filaForm">		
+	                                        <div class="lblc" style="width:127px;"><label for="cmbNumeroDisposicion"><Strong>Nº de Disposición:</Strong></label></div>		
+	                                        <div style="width:200px;">		
+	                                        	<input id="cmbHideNroDisposicion" value="${detalleBaseLegal.numeroDisposicion}" style="display:none;"/>		
+	                                            <select id="cmbNumeroDisposicion" name="numeroDisposicion" validate="" >		
+	                                            </select>		
+														
+	                                        </div>		
+	                                        		
+	                                        <div class="lblc"><label for="cmbTipoDisposicion"><Strong>Tipo Disposición:</Strong></label></div>		
+	                                        <div style="width:200px;">		
+	                                        	<input id="cmbHideTipoDisposicion" value="${detalleBaseLegal.tipoDisposicion}" style="display:none;"/>		
+	                                            <select id="cmbTipoDisposicion" name="tipoDisposicion" validate="" >		
+	                                            </select>		
+														
+	                                        </div>		
+	                                    </div>		
+	                             </fieldset>
+								
                                 <div class="filaForm" >
 
                                 </div>      
