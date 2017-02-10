@@ -29,8 +29,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
 *
@@ -131,13 +129,7 @@ public class ObligacionTipoController {
 	        
 	        try{
 	            UsuarioDTO usuarioDTO = new UsuarioDTO();
-	            try{
-                	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-                	String usuario = ConstantesWeb.getUSUARIO(request);
-                	usuarioDTO.setCodigo(usuario);
-                }catch(Exception e){
-                	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
-                }
+	            usuarioDTO.setCodigo("00001");//TODO por completar
 	            usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
 	            GuardarObligacionTipoInRO in =new GuardarObligacionTipoInRO();
 	            in.setObligacionTipo(obligacionTipoDTO);
@@ -168,13 +160,7 @@ public class ObligacionTipoController {
 	        
 	        try{
 	            UsuarioDTO usuarioDTO = new UsuarioDTO();
-	            try{
-                	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-                	String usuario = ConstantesWeb.getUSUARIO(request);
-                	usuarioDTO.setCodigo(usuario);
-                }catch(Exception e){
-                	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
-                }
+	            usuarioDTO.setCodigo("00001");//TODO por completar
 	            usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
 	            obligacionTipoDTO.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
 	            GuardarObligacionTipoInRO in =new GuardarObligacionTipoInRO();
@@ -211,13 +197,7 @@ public class ObligacionTipoController {
 	        
 	        try{
 	            UsuarioDTO usuarioDTO = new UsuarioDTO();
-	            try{
-                	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-                	String usuario = ConstantesWeb.getUSUARIO(request);
-                	usuarioDTO.setCodigo(usuario);
-                }catch(Exception e){
-                	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
-                }
+	            usuarioDTO.setCodigo("00001");//TODO por completar
 	            usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
 	            obligacionTipoDTO.setEstado(Constantes.CONSTANTE_ESTADO_INACTIVO);
 	            GuardarObligacionTipoInRO in =new GuardarObligacionTipoInRO();           

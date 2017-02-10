@@ -3,7 +3,6 @@ package gob.osinergmin.myc.domain.builder;
 import java.util.ArrayList;
 import java.util.List;
 
-import gob.osinergmin.myc.domain.MdiActividad;
 import gob.osinergmin.myc.domain.PghCriterio;
 import gob.osinergmin.myc.domain.PghObliTipiCriterio;
 import gob.osinergmin.myc.domain.PghObligacion;
@@ -35,9 +34,6 @@ public class ObliTipiCriterioBuilder {
 				PghObligacion obligacion = new PghObligacion();
 				obligacion.setIdObligacion(obliCriteTipi.getObligacion().getIdObligacion());
 				objeto.setIdObligacion(obligacion);
-			}
-			if(obliCriteTipi.getIdActividad() != null){
-				objeto.setIdActividad(obliCriteTipi.getIdActividad());
 			}
 			objeto.setEstado(obliCriteTipi.getEstado());			
 			
@@ -112,9 +108,7 @@ public class ObliTipiCriterioBuilder {
                 if(obj[5]!=null){
                 	obliTipiDTO.setSancionMonetaria(obj[5].toString());
                 }
-                if(obj[6]!=null){
-                	obliTipiDTO.setDescripcionActividad(obj[6].toString());
-                }
+//
                 retorno.add(obliTipiDTO);
             }
         }

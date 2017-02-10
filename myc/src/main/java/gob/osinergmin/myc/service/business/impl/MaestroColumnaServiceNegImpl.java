@@ -191,26 +191,6 @@ public class MaestroColumnaServiceNegImpl implements MaestroColumnaServiceNeg{
 	        }
 	        return listado;
 	    }
-	    @Override
-	    public List<MaestroColumnaDTO> listarNumeroDisposicion(){
-	        List<MaestroColumnaDTO> listado = null;
-	        try{
-	        	listado=maestroColumnaDAO.findNumeroDisposicion();
-	        }catch(Exception e){
-	            LOG.error(e.getMessage());
-	        }
-	        return listado;
-	    }
-	    @Override
-	    public List<MaestroColumnaDTO> listarTipoDisposicion(){
-	        List<MaestroColumnaDTO> listado = null;
-	        try{
-	        	listado=maestroColumnaDAO.findTipoDisposicion();
-	        }catch(Exception e){
-	            LOG.error(e.getMessage());
-	        }
-	        return listado;
-	    }
 	    /*Rsis 11 - Inicio*/
 	    @Override
 	    public List<MaestroColumnaDTO> listarMedidaSeguridad(){

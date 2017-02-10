@@ -39,12 +39,6 @@ public class ObliTipiCriterioServiceNegImpl implements ObliTipiServiceNeg {
 		return lista;
 	}
 	@Override
-	public List<ObliTipiDTO> obtenerRelacionesObligacion(ObliTipiDTO obliTipiDTO) {
-		List<ObliTipiDTO> lista = null;
-		lista=obliTipiCriterioDAO.obtenerRelacionesCompletasToObligacion(obliTipiDTO);
-		return lista;
-	}
-	@Override
 	public ObliTipiDTO guardaRelacion(ObliTipiDTO relacion,UsuarioDTO usuarioDTO) {
 		return obliTipiCriterioDAO.crearRelacion(relacion,usuarioDTO);
 	}

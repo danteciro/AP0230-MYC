@@ -16,10 +16,9 @@ public class CriterioDTO {
     private String descripcion;
     /** Id de la tipificacion asociada**/
     private Long idTipificacion;
-    /** cÃ³digo de la Obligacion**/
+    /** código de la Obligacion**/
     private Long idObligacion;
-    /** cÃ³digo de la actividad **/
-    private Long idActividad;
+    
     private String sancionMonetaria;
     
     private String estado;
@@ -42,14 +41,6 @@ public class CriterioDTO {
 
 	public List<TipificacionSancionDTO> getListaTipificacionSancion() {
 		return listaTipificacionSancion;
-	}
-
-	public Long getIdActividad() {
-		return idActividad;
-	}
-
-	public void setIdActividad(Long idActividad) {
-		this.idActividad = idActividad;
 	}
 
 	public void setListaTipificacionSancion(

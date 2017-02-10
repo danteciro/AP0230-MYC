@@ -17,29 +17,13 @@ public class ObliTipiDTO {
 	private String basesLegales;
 	private String sancionMonetaria;
 	private String sancionEspecifica;
-	private Long idActividad;
-	private String descripcionActividad;
-	private String codTrazabilidad;
-	private String codAccion;
 	private List<TipificacionSancionDTO> TipificacionSancion;
 //	
 	public String getDescripcionCriterio() {
 		return descripcionCriterio;
 	}
-	public String getDescripcionActividad() {
-		return descripcionActividad;
-	}
-	public void setDescripcionActividad(String descripcionActividad) {
-		this.descripcionActividad = descripcionActividad;
-	}
 	public void setDescripcionCriterio(String descripcionCriterio) {
 		this.descripcionCriterio = descripcionCriterio;
-	}
-	public Long getIdActividad() {
-		return idActividad;
-	}
-	public void setIdActividad(Long idActividad) {
-		this.idActividad = idActividad;
 	}
 	public String getCodigoTipificacion() {
 		return codigoTipificacion;
@@ -48,18 +32,6 @@ public class ObliTipiDTO {
 		this.codigoTipificacion = codigoTipificacion;
 	}
 	
-	public String getCodTrazabilidad() {
-		return codTrazabilidad;
-	}
-	public void setCodTrazabilidad(String codTrazabilidad) {
-		this.codTrazabilidad = codTrazabilidad;
-	}
-	public String getCodAccion() {
-		return codAccion;
-	}
-	public void setCodAccion(String codAccion) {
-		this.codAccion = codAccion;
-	}
 	public CriterioDTO getCriterio() {
 		return criterio;
 	}

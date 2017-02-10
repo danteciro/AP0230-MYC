@@ -19,16 +19,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  *
@@ -150,13 +146,7 @@ public class TramiteController {
             TramiteDTO tramiteDTO = new TramiteDTO();
             
             UsuarioDTO usuarioDTO = new UsuarioDTO();
-            try{
-            	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-            	String usuario = ConstantesWeb.getUSUARIO(request);
-            	usuarioDTO.setCodigo(usuario);
-            }catch(Exception e){
-            	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
-            }
+            usuarioDTO.setCodigo("00002");
             usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
             
             tramiteDTO.setIdEtapa(new Long(idEtapa));

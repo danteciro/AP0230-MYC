@@ -19,7 +19,5 @@ public interface ObligacionTipificacionServiceNeg {
     public ObligacionTipificacionDTO eliminarObligacionTipificacion(ObligacionTipificacionDTO obligacionTipificacionDTO);
     
     public List<TipificacionDTO> listarTipificacion(Long idObligacion);
-    public List<TipificacionDTO> listarTipificacionPorObligacion(Long idObligacion);
     public List<TipificacionDTO> listarTipificacion(Long idObligacion, Long idTipificacion);
-    public List<TipificacionDTO> listarTipificacion(Long idObligacion, Long idTipificacion,Long idActividad);
 }

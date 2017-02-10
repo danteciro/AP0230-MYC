@@ -29,7 +29,6 @@ public interface ObliTipiCriterioDAO {
 	ObliTipiDTO findObliTipiCriterio(ObliTipiDTO obliCritetipiAntiguo);
 // 05-11-2015	
 	public List<ObliTipiDTO> obtenerRelacionesToObligacion(ObliTipiDTO obliTipiDTO);
-	public List<ObliTipiDTO> obtenerRelacionesCompletasToObligacion(ObliTipiDTO obliTipiDTO);
 //
 	
 }

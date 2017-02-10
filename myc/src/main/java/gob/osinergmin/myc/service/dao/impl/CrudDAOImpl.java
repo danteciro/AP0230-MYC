@@ -103,20 +103,11 @@ public class CrudDAOImpl implements CrudDAO {
             m = registro.getClass().getMethod("set"+atributoId,Long.class);
             m.invoke(registro,new Long(0));
             //set estado
-            try{
-            	m = registro.getClass().getMethod("setEstado",String.class);
-            	m.invoke(registro,Constantes.CONSTANTE_ESTADO_INACTIVO);
-            }catch(Exception e){
-            	m = registro.getClass().getMethod("setEstado",Character.class);
-            	m.invoke(registro,Constantes.CONSTANTE_ESTADO_INACTIVO.charAt(0));
-            }
+            m = registro.getClass().getMethod("setEstado",String.class);
+            m.invoke(registro,Constantes.CONSTANTE_ESTADO_INACTIVO);
             //setIdPadre
-            try{
-            	m = registro.getClass().getMethod("setIdPadre",Long.class);
-            	m.invoke(registro,id);
-            }catch(Exception e){
-            	e.printStackTrace();
-            }
+            m = registro.getClass().getMethod("setIdPadre",Long.class);
+            m.invoke(registro,id);
             //set codAccion
             m = registro.getClass().getMethod("setCodAccion",String.class);
             m.invoke(registro,Constantes.CONSTANTE_TRAZABILIDAD_NUEVO);

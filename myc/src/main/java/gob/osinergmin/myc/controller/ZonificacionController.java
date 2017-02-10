@@ -25,8 +25,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  *
@@ -95,13 +93,7 @@ public class ZonificacionController {
                 retorno.put("mensaje", Constantes.CONSTANTE_MSJE_YA_EXISTE+" Zonificaci&oacute;n.");
             }else{
                 UsuarioDTO usuarioDTO = new UsuarioDTO();
-                try{
-                	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-                	String usuario = ConstantesWeb.getUSUARIO(request);
-                	usuarioDTO.setCodigo(usuario);
-                }catch(Exception e){
-                	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
-                }
+                usuarioDTO.setCodigo("00002");
                 usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
 
                 zonificacionDTO.setNombre(nombreZonificacion);
@@ -135,13 +127,7 @@ public class ZonificacionController {
                 retorno.put("mensaje", Constantes.CONSTANTE_MSJE_YA_EXISTE+" Zonificaci&oacute;n.");
             }else{
                 UsuarioDTO usuarioDTO = new UsuarioDTO();
-                try{
-                	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-                	String usuario = ConstantesWeb.getUSUARIO(request);
-                	usuarioDTO.setCodigo(usuario);
-                }catch(Exception e){
-                	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
-                }
+                usuarioDTO.setCodigo("00002");
                 usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
 
                 zonificacionDTO.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);

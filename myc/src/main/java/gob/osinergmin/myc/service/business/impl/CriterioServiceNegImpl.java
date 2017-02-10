@@ -401,12 +401,10 @@ public class CriterioServiceNegImpl implements CriterioServiceNeg {
         	CriterioDTO criter = new CriterioDTO();
         	criter.setIdCriterio(criterioRetorno.getIdCriterio());
         	relacion.setCriterio(criter);
-        	relacion.setIdActividad(criterio.getIdActividad());
         	TipificacionDTO tipif = new TipificacionDTO();
         	tipif.setIdTipificacion(idTipificacion);
         	relacion.setTipificacion(tipif);
         	relacion.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
-        	relacion.setCodTrazabilidad(criterio.getCodTrazabilidad());
         	relacion = obliTipiCriterioDAO.crearRelacion(relacion, usuarioDTO);
 //
         	

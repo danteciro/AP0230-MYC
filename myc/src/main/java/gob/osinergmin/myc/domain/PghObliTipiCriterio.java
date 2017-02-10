@@ -22,7 +22,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -46,7 +45,6 @@ public class PghObliTipiCriterio extends Auditoria {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
     @Column(name = "ID_OBLI_TIPI_CRITERIO")
     @SequenceGenerator(name = "PGH_OBLI_TIPI_CRITERIO_ID", sequenceName = "PGH_OBLI_TIPI_CRITERIO_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PGH_OBLI_TIPI_CRITERIO_ID")
@@ -57,8 +55,6 @@ public class PghObliTipiCriterio extends Auditoria {
     @JoinColumn(name = "ID_TIPIFICACION", referencedColumnName = "ID_TIPIFICACION")
     @ManyToOne(fetch = FetchType.LAZY)
     private PghTipificacion idTipificacion;
-    @Column(name = "ID_ACTIVIDAD")
-    private Long idActividad;
     @JoinColumn(name = "ID_OBLIGACION", referencedColumnName = "ID_OBLIGACION")
     @ManyToOne(fetch = FetchType.LAZY)
     private PghObligacion idObligacion;
@@ -121,16 +117,7 @@ public class PghObliTipiCriterio extends Auditoria {
         this.idCriterio = idCriterio;
     }
 
-
-	public Long getIdActividad() {
-		return idActividad;
-	}
-
-	public void setIdActividad(Long idActividad) {
-		this.idActividad = idActividad;
-	}
-
-	@Override
+    @Override
     public int hashCode() {
         int hash = 0;
         hash += (idObliTipiCriterio != null ? idObliTipiCriterio.hashCode() : 0);

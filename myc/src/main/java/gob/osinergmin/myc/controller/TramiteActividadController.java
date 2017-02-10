@@ -40,8 +40,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
 *
@@ -136,13 +134,7 @@ public class TramiteActividadController {
         Map<String,Object> retorno = new HashMap<String,Object>();
         try{
             UsuarioDTO usuarioDTO = new UsuarioDTO();
-            try{
-            	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-            	String usuario = ConstantesWeb.getUSUARIO(request);
-            	usuarioDTO.setCodigo(usuario);
-            }catch(Exception e){
-            	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
-            }
+            usuarioDTO.setCodigo("00001");//TODO por completar
             usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
             tramiteActividad.setIdTramiteActivdad(null);
             tramiteActividad.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
@@ -169,13 +161,7 @@ public class TramiteActividadController {
         Map<String,Object> retorno = new HashMap<String,Object>();
         try{
             UsuarioDTO usuarioDTO = new UsuarioDTO();
-            try{
-            	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-            	String usuario = ConstantesWeb.getUSUARIO(request);
-            	usuarioDTO.setCodigo(usuario);
-            }catch(Exception e){
-            	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
-            }
+            usuarioDTO.setCodigo("00001");//TODO por completar
             usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
             tramiteActividad.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
             tramiteActividad.setActividad(new ActividadDTO(tramiteActividad.getActividades().get(0).getIdActividad()));
@@ -203,13 +189,7 @@ public class TramiteActividadController {
         Map<String,Object> retorno = new HashMap<String,Object>();
         try{
             UsuarioDTO usuarioDTO = new UsuarioDTO();
-            try{
-            	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-            	String usuario = ConstantesWeb.getUSUARIO(request);
-            	usuarioDTO.setCodigo(usuario);
-            }catch(Exception e){
-            	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
-            }
+            usuarioDTO.setCodigo("00001");//TODO por completar
             usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
             tramiteActividad.setEstado(Constantes.CONSTANTE_ESTADO_INACTIVO);
             GuardarTramiteActividadInRO in=new GuardarTramiteActividadInRO();

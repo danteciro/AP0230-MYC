@@ -88,8 +88,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -112,8 +110,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
+
 import org.apache.commons.lang.StringUtils;
 /**
  *
@@ -198,14 +195,12 @@ public class MantenimientoBaseLegalController {
     }
     
     private UsuarioDTO getUsuario(HttpSession sesion) {
+        //	UsuarioDTO usuarioView = (UsuarioDTO) sesion.getAttribute(Constantes.SESION_USUARIO);
         UsuarioDTO usuarioDTO = new UsuarioDTO();
         try {
-        	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        	String usuario = ConstantesWeb.getUSUARIO(request);
-        	usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
-        	usuarioDTO.setCodigo(usuario);
+            usuarioDTO.setCodigo("00002");
+            usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
         } catch (Exception e) {
-        	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
             e.printStackTrace();
         }
         return usuarioDTO;
@@ -330,50 +325,6 @@ public class MantenimientoBaseLegalController {
         }
         return listTipoAnexo;
     }    
-    /**
-     * 
-     * @return 
-     */
-    @RequestMapping(value = "/obtenerTipoDisposicion", method = RequestMethod.GET)
-    public @ResponseBody
-    List<MaestroColumnaDTO> obtenerTipoDisposicion() {
-        List<MaestroColumnaDTO> listTipoDisposicion = new ArrayList<MaestroColumnaDTO>();
-        try{
-        	listTipoDisposicion=maestroColumnaService.listarTipoDisposicion();
-        	//ordenando los datos por el código
-        	Collections.sort(listTipoDisposicion, new Comparator<MaestroColumnaDTO>() {
-        	    @Override
-        	    public int compare(MaestroColumnaDTO o1, MaestroColumnaDTO o2) {
-        	        return o1.getCodigo().compareTo(o2.getCodigo());
-        	    }
-        	});
-        }catch(Exception e){
-            LOG.info("error al procesar obtenerTipoDisposicion " +e);
-        }
-        return listTipoDisposicion;
-    }
-    /**
-     * 
-     * @return 
-     */
-    @RequestMapping(value = "/obtenerNumeroDisposicion", method = RequestMethod.GET)
-    public @ResponseBody
-    List<MaestroColumnaDTO> obtenerNumeroDisposicion() {
-        List<MaestroColumnaDTO> listNumeroDisposicion = new ArrayList<MaestroColumnaDTO>();
-        try{
-        	listNumeroDisposicion=maestroColumnaService.listarNumeroDisposicion();
-        	//ordenando los datos por el código
-        	Collections.sort(listNumeroDisposicion, new Comparator<MaestroColumnaDTO>() {
-        	    @Override
-        	    public int compare(MaestroColumnaDTO o1, MaestroColumnaDTO o2) {
-        	        return o1.getCodigo().compareTo(o2.getCodigo());
-        	    }
-        	});
-        }catch(Exception e){
-            LOG.info("error al procesar obtenerNumeroDisposicion " +e);
-        }
-        return listNumeroDisposicion;
-    }    
     /***        
     * @param codigo
     * @return 
@@ -455,7 +406,7 @@ public class MantenimientoBaseLegalController {
     List<TipificacionDTO> obtenerTipificacionToCriterio(Long idObligacion) {
         List<TipificacionDTO> listTipificaciones = new ArrayList<TipificacionDTO>();
         try{
-        	listTipificaciones=obligacionTipificacionServiceNeg.listarTipificacionPorObligacion(idObligacion);
+        	listTipificaciones=obligacionTipificacionServiceNeg.listarTipificacion(idObligacion);
         }catch(Exception e){
             LOG.info("error al procesar listado de Tipificaciones " +e);
         }
@@ -490,7 +441,7 @@ public class MantenimientoBaseLegalController {
      */
     @RequestMapping(value = "/registrarTipificacion", method = RequestMethod.POST)
     public @ResponseBody
-    Map<String, Object> registrarTipificacion(Long idActividad,Long idTipificacion, Long idObligacion,String codTrazabilidad,HttpServletRequest request, HttpSession session) {
+    Map<String, Object> registrarTipificacion(Long idTipificacion, Long idObligacion,String codTrazabilidad,HttpServletRequest request, HttpSession session) {
         LOG.info("procesando POST para RequestMapping /registrarTipificacion POST -- registrarTipificacion");
         LOG.info("-- idTipificacion = "+idTipificacion);
         LOG.info("-- idObligacion = "+idObligacion);
@@ -502,12 +453,11 @@ public class MantenimientoBaseLegalController {
             UsuarioDTO usuarioDTO = getUsuario(session);
 
             obligacionTipificacionDTO = new ObligacionTipificacionDTO();
-            obligacionTipificacionDTO.setIdActividad(idActividad);
             obligacionTipificacionDTO.setIdTipificacion(idTipificacion);
             obligacionTipificacionDTO.setIdObligacion(idObligacion);
             obligacionTipificacionDTO.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
             obligacionTipificacionDTO.setCodTrazabilidad(codTrazabilidad);
-            List<TipificacionDTO> listaTipificacoion = obligacionTipificacionServiceNeg.listarTipificacion(idObligacion, idTipificacion,idActividad);
+            List<TipificacionDTO> listaTipificacoion = obligacionTipificacionServiceNeg.listarTipificacion(idObligacion, idTipificacion);
             LOG.info("-- listaTipificacoion = " + listaTipificacoion.size());
             if (listaTipificacoion.isEmpty()) {
                 obligacionTipificacionServiceNeg.guardaObligacionTipificacion(obligacionTipificacionDTO, usuarioDTO);
@@ -621,41 +571,6 @@ public class MantenimientoBaseLegalController {
         map.put("filas", listaTipificacionPaginada);
         return map;
     }
-    
-    @RequestMapping(value = "/findTipificacionPorObligacion", method = RequestMethod.GET)
-    public @ResponseBody
-    Map<String, Object> findTipificacionPorObligacion(int rows, int page, String sidx,
-            String sord, Long idObligacion, HttpSession session) {
-        Map<String, Object> map = new HashMap<String, Object>();
-        LOG.info("procesando GET para RequestMapping /findTipificacion ");
-        LOG.info("-- idObligacion = " + idObligacion);
-
-        List<TipificacionDTO> listaTipificacion = obligacionTipificacionServiceNeg.listarTipificacionPorObligacion(idObligacion);
-        Long contador = new Long(listaTipificacion.size());
-        int indiceInicial = (page - 1) * rows;
-        int indiceFinal = indiceInicial + rows;
-        List<TipificacionDTO> listaTipificacionPaginada = new ArrayList<TipificacionDTO>();
-        listaTipificacionPaginada = listaTipificacion.subList(
-                indiceInicial, indiceFinal > listaTipificacion
-                .size() ? listaTipificacion.size()
-                : indiceFinal);
-        Long numeroFilas = (contador / rows);
-        if ((contador % rows) > 0) {
-            numeroFilas = numeroFilas + 1L;
-        }
-//        if(idTipificacion != null && idTipificacion != ""){
-//            for (TipificacionDTO tipificacionDTO : listaTipificacionPaginada) {
-//               if(tipificacionDTO.getIdTipificacion().equals(new Long(idTipificacion))){
-//                    tipificacionDTO.setSeleccionado("1");
-//                }
-//            }
-//        }
-        map.put("total", numeroFilas);
-        map.put("pagina", page);
-        map.put("registros", contador);
-        map.put("filas", listaTipificacionPaginada);
-        return map;
-    }
     /*PR OSINE_119 - Item 14 - Inicio*/
     /**
      * Método que realiza la búsqueda de incumplimientos
@@ -715,7 +630,7 @@ public class MantenimientoBaseLegalController {
      */
     @RequestMapping(value = "/eliminarIncumplimiento", method = RequestMethod.POST)
     public @ResponseBody
-    Map<String, Object> eliminarIncumplimiento(String codTrazabilidad,Long idEscenearioIncumplimiento, HttpSession session) {
+    Map<String, Object> eliminarIncumplimiento(Long idEscenearioIncumplimiento, HttpSession session) {
     	
         Map<String, Object> map = new HashMap<String, Object>();
         UsuarioDTO usuarioDTO = getUsuario(session);
@@ -723,7 +638,6 @@ public class MantenimientoBaseLegalController {
         LOG.info("-- idIncumplimiento = " + idEscenearioIncumplimiento);
         IncumplimientoDTO incumplimientoDTO = new IncumplimientoDTO();
         incumplimientoDTO.setId_esce_incumplimiento(idEscenearioIncumplimiento);
-        incumplimientoDTO.setCod_trazabilidad(codTrazabilidad);
         incumplimientoDTO  = incumplimientoServiceNeg.eliminarIncumplimiento(incumplimientoDTO,usuarioDTO);
         if (incumplimientoDTO!=null) {            
             String mensaje=controlMessagesStaticEntity(ConstantesWeb.mensajes.MSG_OPERATION_SUCCESS_CREATE_RELATION,ConstantesWeb.mensajes.MSG_OPERATION_FAIL_DELETE);
@@ -783,11 +697,10 @@ public class MantenimientoBaseLegalController {
      */
     @RequestMapping(value = "/eliminarObligacionTipificacion", method = RequestMethod.GET)
     public @ResponseBody
-    Map<String, Object> eliminarObligacionTipificacion(Long idActividad,Long idObligacion, Long idTipificacion, String codTrazabilidad, HttpServletRequest request, HttpSession session) {
+    Map<String, Object> eliminarObligacionTipificacion(Long idObligacion, Long idTipificacion, String codTrazabilidad, HttpServletRequest request, HttpSession session) {
         LOG.info("procesando GET para RequestMapping /eliminarTipificacion GET ");
         LOG.info("-- idObligacion = " + idObligacion);
         LOG.info("-- idTipificacion = " + idTipificacion);
-        LOG.info("-- idTipificacion = " + idActividad);
         LOG.info("-- CodTrazabilidad = " + codTrazabilidad);
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -795,15 +708,13 @@ public class MantenimientoBaseLegalController {
             ObligacionTipificacionDTO obligacionTipificacionDTO  = new ObligacionTipificacionDTO();
             obligacionTipificacionDTO.setIdObligacion(idObligacion);
             obligacionTipificacionDTO.setIdTipificacion(idTipificacion);
-            obligacionTipificacionDTO.setIdActividad(idActividad);
             obligacionTipificacionDTO.setCodTrazabilidad(codTrazabilidad);
             
             ObliTipiDTO filter = new ObliTipiDTO();
             filter.setIdObligacion(idObligacion);
             filter.setIdTipificacion(idTipificacion);
-            filter.setIdActividad(idActividad);
-            List<ObliTipiDTO> existeCriteAsoc= obliTipiCriterioServiceNeg.obtenerRelacionesObligacion(filter);
-            if(existeCriteAsoc.size() == 0){
+            List<ObliTipiDTO> existeCriteAsoc= obliTipiCriterioServiceNeg.obtenerRelaciones(filter);
+            if(existeCriteAsoc!=null){
             	obligacionTipificacionServiceNeg.eliminarObligacionTipificacion(obligacionTipificacionDTO);
             	String mensaje=controlMessagesStaticEntity(ConstantesWeb.mensajes.MSG_OPERATION_SUCCESS_DELETE_RELATION,ConstantesWeb.mensajes.MSG_ENTITY_TIPIFICACION);
                 map.put(ConstantesWeb.VV_MENSAJE, mensaje);
@@ -811,7 +722,7 @@ public class MantenimientoBaseLegalController {
             }else{
             	String mensaje="No se puede eliminar tipificación mientras existan criterios asociados";
                 map.put(ConstantesWeb.VV_MENSAJE, mensaje);
-                map.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_ERROR);
+                map.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_ADVERTENCIA);
             }
             
             
@@ -825,40 +736,6 @@ public class MantenimientoBaseLegalController {
 	    
         }
 
-        return map;
-    }
-    
-    @RequestMapping(value = "/obtenerSancionesPorTipificacion", method = RequestMethod.GET)
-    public @ResponseBody
-    Map<String, Object> obtenerSancionesPorTipificacion(Long idObligacion, Long idTipificacion, HttpServletRequest request, HttpSession session, Model model) {
-    	LOG.info("procesando GET para RequestMapping MantemientoBaseLegalController/obtenerSancionesPorTipificacion");
-        LOG.info("-- idTipificacion = " + idTipificacion);
-        Map<String, Object> map = new HashMap<String, Object>();
-        TipificacionDTO tipificacion=new TipificacionDTO();
-        
-      //el id que se recibe del campo idTipificacion es el ID de la tabla pgh_obligacion_tipificacion,se consultara nuevamente para poder obtener el verdadero idTipificacion y el idActividad
-    	List<TipificacionDTO> listTipificaciones = new ArrayList<TipificacionDTO>();
-    	listTipificaciones=obligacionTipificacionServiceNeg.listarTipificacionPorObligacion(idObligacion);
-    	for (TipificacionDTO tipificacionDTO : listTipificaciones) {
-    		Long idObliTipi = tipificacionDTO.getIdObliTipi();
-			if( idObliTipi.equals(idTipificacion)){
-				idTipificacion = tipificacionDTO.getIdTipificacion();
-				break;
-			}
-		}
-        
-        try {
-        	if(idTipificacion!=null){
-        		tipificacion = tipificacionService.obtenerTipificacionCriterio(idTipificacion);
-        	}
-            
-            map.put("tipificacion", tipificacion);
-            map.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_EXITO);
-        } catch (Exception e) {
-            LOG.error(e.getMessage(), e);
-            map.put(ConstantesWeb.VV_MENSAJE, e.getMessage());
-            map.put(ConstantesWeb.VV_RESULTADO, ConstantesWeb.VV_ERROR);
-        }
         return map;
     }
     
@@ -1005,7 +882,6 @@ public class MantenimientoBaseLegalController {
         try {
             ObliTipiDTO criterio = new ObliTipiDTO();
             criterio.setIdObliTipiCriterio(idCriterio);
-            criterio.setCodTrazabilidad(codTrazabilidad);
 
           //setear usuario
             UsuarioDTO usuarioDTO = new UsuarioDTO();
@@ -1467,7 +1343,7 @@ public class MantenimientoBaseLegalController {
         
         ObliTipiDTO obliTipiDTO = new ObliTipiDTO();
         obliTipiDTO.setIdObligacion(idObligacion);
-        List<ObliTipiDTO> listaRelaciones = obliTipiServiceNeg.obtenerRelacionesObligacion(obliTipiDTO);
+        List<ObliTipiDTO> listaRelaciones = obliTipiServiceNeg.obtenerRelaciones(obliTipiDTO);
         Long contador = new Long(listaRelaciones.size());
         int indiceInicial = (page - 1) * rows;
         int indiceFinal = indiceInicial + rows;
@@ -1627,8 +1503,6 @@ public class MantenimientoBaseLegalController {
                     baseLegalDTO.setEstado(estado);
                     String descSinEspacio = baseLegalDTO.getDescripcionGeneralBaseLegal();
                     baseLegalDTO.setDescripcionGeneralBaseLegal(descSinEspacio.trim());
-                    String codigoTrazabilidad = generarCodTrazabilidad();
-                    baseLegalDTO.setCodTrazabilidad(codigoTrazabilidad);
                     BaseLegalDTO retorno=baseLegalService.guardaBaseLegal(baseLegalDTO,usuarioDTO);
                     //jsifuentes inicio
                     retorno.setListaBasesLegales(baseLegalDTO.getListaBasesLegales());
@@ -1637,7 +1511,7 @@ public class MantenimientoBaseLegalController {
 //                   String mensaje=controlMessagesEntity(ConstantesWeb.mensajes.MSG_OPERATION_SUCCESS_CREATE,ConstantesWeb.mensajes.MSG_ENTITY_BASELEGAL,retorno.getCodigoBaseLegal());
                     String mensaje=controlMessagesStaticEntity(ConstantesWeb.mensajes.MSG_OPERATION_SUCCESS_CREATE,ConstantesWeb.mensajes.MSG_ENTITY_BASELEGAL);
     // 05-11-2015                
-                    //String codigoTrazabilidad = generarCodTrazabilidad();
+                    String codigoTrazabilidad = generarCodTrazabilidad();
                     salida.put("baseLegal", retorno);
                     salida.put("codTrazabilidad",codigoTrazabilidad);
     // 05-11-2015
@@ -2636,27 +2510,6 @@ public class MantenimientoBaseLegalController {
 	            }
 	            
             }
-        }catch(Exception ex){
-        	LOG.error("error controller",ex);
-        }
-        
-        return listaResultado;
-    }
-    @RequestMapping(value = "/listarConfObligacionCompleta", method = RequestMethod.GET)
-    public @ResponseBody
-	Map<String, Object> listarConfObligacionCompleta(Long idObligacion) {
-		LOG.info("Funcion: listado de Configuraciones para la obligacion: "+idObligacion);
-        Map<String, Object> listaResultado = new HashMap<String, Object>();
-        ObligacionFilter filtro = new ObligacionFilter();
-        filtro.setIdObligacion(idObligacion);
-        try{
-        	List<CnfObligacionDTO> listado;
-        	int[] auxiliar=new int[1];
-            auxiliar[0]=0;
-	        listado=obligacionNormativaService.findObligacionById(filtro, auxiliar);
-	        if(listado!=null){
-	        	listaResultado.put("filas", listado);
-	        }
         }catch(Exception ex){
         	LOG.error("error controller",ex);
         }

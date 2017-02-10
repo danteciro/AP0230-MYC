@@ -10,10 +10,6 @@ package gob.osinergmin.myc.util;
  */
 public class Constantes {
     public static final String CONSTANTE_ESTADO_ACTIVO = "1";
-    public static final String CONSTANTE_VALOR_UNO = "1";
-    public static final String CONSTANTE_VALOR_CERO = "0";
-    public static final String CONSTANTE_VACIO = "";
-    public static final Long CONSTANTE_VALOR_COMBO_NO_SELECCIONADO = new Long(-1);
     /*Rsis 13 - Inicio*/
     //public static final char CONSTANTE_ESTADO_ACTIVO_INFRACCION = '1';
     /*Rsis 13 - Inicio*/
@@ -147,7 +143,7 @@ public class Constantes {
 	public static final String MANTENIMIENTO_CONSULTAR = "consultar";
 	
 	/* OSINE_SFS-1232 - REQF- - Inicio */
-	public static final String USUARIO_LOGIN_DEFAULT = "SYSTEM";
+	
 	
 
 }

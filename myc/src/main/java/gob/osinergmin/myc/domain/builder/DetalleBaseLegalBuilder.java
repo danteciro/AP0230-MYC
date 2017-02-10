@@ -4,7 +4,6 @@ import gob.osinergmin.myc.domain.PghBaseLegal;
 import gob.osinergmin.myc.domain.PghDetalleBaseLegal;
 import gob.osinergmin.myc.domain.dto.BaseLegalDTO;
 import gob.osinergmin.myc.domain.dto.DetalleBaseLegalDTO;
-import gob.osinergmin.myc.util.Constantes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +35,6 @@ public class DetalleBaseLegalBuilder {
 		registro.setConcordancias(registroDTO.getConcordancia());
 		registro.setDescripcion(registroDTO.getDescripcionGeneralBaseLegal());
 		registro.setEstado(registroDTO.getEstado());
-		registro.setIdNumeroDisposicion(registroDTO.getNumeroDisposicion());
-		registro.setIdTipoDisposicion(registroDTO.getTipoDisposicion());
-		registro.setFlgDisposicion(String.valueOf(registroDTO.getNumeroDisposicion()).equals("-1") ? null : Constantes.CONSTANTE_VALOR_UNO);
 		/*Rsis 1 - Inicio*/
 		registro.setNumeroAnexo(registroDTO.getNumeroAnexo());
 		/*Rsis 1 - Fin*/
@@ -116,9 +112,6 @@ public class DetalleBaseLegalBuilder {
 			registroDTO.setModificatoria(registro.getModificatorias());
 			registroDTO.setConcordancia(registro.getConcordancias());
 			registroDTO.setDescripcionGeneralBaseLegal(registro.getDescripcion());
-			registroDTO.setTipoDisposicion(registro.getIdTipoDisposicion());
-			registroDTO.setNumeroDisposicion(registro.getIdNumeroDisposicion());
-			registroDTO.setFlgDisposicion(registro.getFlgDisposicion());
 			registroDTO.setEstado(registro.getEstado());
 			registroDTO.setUsuarioCreacion(registro.getUsuarioCreacion());
 			registroDTO.setTerminalCreacion(registro.getTerminalCreacion());

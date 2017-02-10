@@ -50,13 +50,6 @@ public class DetalleBaseLegalDTO {
     /*Rsis 1 - Inicio*/
     /** numero de Anexo de la base Legal**/
     private String numeroAnexo;
-    /** id del número de disposición **/
-    private Long numeroDisposicion;
-    /** id del tipo de disposición **/
-    private Long tipoDisposicion;
-    /** flag que determina si la base legal presenta disposición**/
-    private String flgDisposicion;
-    
     /*Rsis 1 - Fin*/
     /**
      * Campos de Auditoria * 
@@ -71,32 +64,10 @@ public class DetalleBaseLegalDTO {
     /** listado de bases legales **/
     private List<BaseLegalDTO> listaBasesLegales;
     
-
-	public Long getNumeroDisposicion() {
-		return numeroDisposicion;
-	}
-
-	public void setNumeroDisposicion(Long numeroDisposicion) {
-		this.numeroDisposicion = numeroDisposicion;
-	}
-
-	public Long getTipoDisposicion() {
-		return tipoDisposicion;
-	}
-
-	public void setTipoDisposicion(Long tipoDisposicion) {
-		this.tipoDisposicion = tipoDisposicion;
-	}
-
-	public String getFlgDisposicion() {
-		return flgDisposicion;
-	}
-
-	public void setFlgDisposicion(String flgDisposicion) {
-		this.flgDisposicion = flgDisposicion;
-	}
-
-	public Long getIdDetalleBaseLegal() {
+    
+    
+        
+    public Long getIdDetalleBaseLegal() {
 		return idDetalleBaseLegal;
 	}
 

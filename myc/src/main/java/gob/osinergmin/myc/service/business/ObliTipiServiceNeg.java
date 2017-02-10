@@ -10,7 +10,6 @@ public interface ObliTipiServiceNeg {
 	ObliTipiDTO obtenerRelacion(Long idCriterio);
 
 	List<ObliTipiDTO> obtenerRelaciones(ObliTipiDTO obliTipiDTO);
-	List<ObliTipiDTO> obtenerRelacionesObligacion(ObliTipiDTO obliTipiDTO);
 
 	ObliTipiDTO guardaRelacion(ObliTipiDTO relacion, UsuarioDTO usuarioDTO);
 

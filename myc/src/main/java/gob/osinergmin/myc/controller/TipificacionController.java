@@ -32,8 +32,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  *
@@ -253,13 +251,7 @@ public class TipificacionController {
                 retorno.put("mensaje", Constantes.CONSTANTE_MSJE_YA_EXISTE+" Tipificaci&oacute;n con el mismo c&oacute;digo y base legal.");
             }else{
                 UsuarioDTO usuarioDTO = new UsuarioDTO();
-                try{
-                	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-                	String usuario = ConstantesWeb.getUSUARIO(request);
-                	usuarioDTO.setCodigo(usuario);
-                }catch(Exception e){
-                	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
-                }
+                usuarioDTO.setCodigo("00002");
                 usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
 
                 tipificacionDTO.setIdTipificacion(null);
@@ -316,13 +308,7 @@ public class TipificacionController {
             TipificacionSancionDTO tipificacionSancionDTO = new TipificacionSancionDTO();
             
             UsuarioDTO usuarioDTO = new UsuarioDTO();
-            try{
-            	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-            	String usuario = ConstantesWeb.getUSUARIO(request);
-            	usuarioDTO.setCodigo(usuario);
-            }catch(Exception e){
-            	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
-            }
+            usuarioDTO.setCodigo("00002");
             usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
             
             tipificacionSancionDTO.setIdTipiSanc(null);
@@ -356,13 +342,7 @@ public class TipificacionController {
                 retorno.put("mensaje", "No se puede editar la tipificaci&oacute;n con el mismo c&oacute;digo y base legal");
             }else{
                 UsuarioDTO usuarioDTO = new UsuarioDTO();
-                try{
-                	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-                	String usuario = ConstantesWeb.getUSUARIO(request);
-                	usuarioDTO.setCodigo(usuario);
-                }catch(Exception e){
-                	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
-                }
+                usuarioDTO.setCodigo("00002");
                 usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
 
                 tipificacionDTO.setIdTipificacion(new Long(idTipificacion));

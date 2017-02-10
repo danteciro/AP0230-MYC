@@ -7,7 +7,6 @@ import gob.osinergmin.myc.domain.ui.BaseLegalFilter;
 import gob.osinergmin.myc.service.business.BaseLegalServiceNeg;
 import gob.osinergmin.myc.service.business.ObligacionBaseLegalServiceNeg;
 import gob.osinergmin.myc.service.business.ObligacionNormativaServiceNeg;
-import gob.osinergmin.myc.util.Constantes;
 import gob.osinergmin.myc.util.ConstantesWeb;
 
 import java.beans.PropertyEditorSupport;
@@ -34,8 +33,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 
 /**
@@ -207,17 +204,9 @@ public class DialogBusquedaAvanzadaBaseLegalController {
             
             ObligacionBaseLegalDTO registro = null;
             LOG.info("bases legales = "+idObligacion);
-            
             UsuarioDTO usuarioDTO = new UsuarioDTO();
-            try{
-            	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-            	String usuario = ConstantesWeb.getUSUARIO(request);
-            	usuarioDTO.setCodigo(usuario);
-            }catch(Exception e){
-            	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
-            }
+            usuarioDTO.setCodigo("00002");
             usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
-            
             System.out.println("bases legales = "+basesLegales);
             String[] basesLegalesOld = basesLegales;
             for (int i = 0; i < basesLegales.length; i++) {

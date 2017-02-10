@@ -420,7 +420,7 @@ public class DocumentoAdjuntoController {
                     
                     //GUARDADO DE documentoAdjunto en BD
                     UsuarioDTO usuarioDTO = new UsuarioDTO();
-                    usuarioDTO.setCodigo(ConstantesWeb.getUSUARIO(request));//TODO por completar
+                    usuarioDTO.setCodigo("00001");//TODO por completar
                     usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
                     
                     documentoAdjunto.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
@@ -462,7 +462,7 @@ public class DocumentoAdjuntoController {
         Map<String, Object> salida = new HashMap<String, Object>();
         try {
             UsuarioDTO usuarioDTO = new UsuarioDTO();
-            usuarioDTO.setCodigo(ConstantesWeb.getUSUARIO(request));//TODO por completar
+            usuarioDTO.setCodigo("00001");//TODO por completar
             usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
 
             GuardarDocumentoAdjuntoInRO in=new GuardarDocumentoAdjuntoInRO();
@@ -489,7 +489,7 @@ public class DocumentoAdjuntoController {
         Map<String, Object> salida = new HashMap<String, Object>();
         try {
             UsuarioDTO usuarioDTO = new UsuarioDTO();
-            usuarioDTO.setCodigo(ConstantesWeb.getUSUARIO(request));//TODO por completar
+            usuarioDTO.setCodigo("00001");//TODO por completar
             usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
 
             GuardarDocumentoAdjuntoInRO in=new GuardarDocumentoAdjuntoInRO();

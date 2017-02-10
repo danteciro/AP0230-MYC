@@ -39,8 +39,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 
 /**
@@ -101,13 +99,7 @@ public class ProcedimientoController {
         
         try{
             UsuarioDTO usuarioDTO = new UsuarioDTO();
-            try{
-            	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-            	String usuario = ConstantesWeb.getUSUARIO(request);
-            	usuarioDTO.setCodigo(usuario);
-            }catch(Exception e){
-            	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
-            }
+            usuarioDTO.setCodigo("00001");//TODO por completar
             usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
             procedimientoDTO.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);
             GuardarProcedimientoInRO in=new GuardarProcedimientoInRO();
@@ -135,13 +127,7 @@ public class ProcedimientoController {
         
         try{
             UsuarioDTO usuarioDTO = new UsuarioDTO();
-            try{
-            	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-            	String usuario = ConstantesWeb.getUSUARIO(request);
-            	usuarioDTO.setCodigo(usuario);
-            }catch(Exception e){
-            	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
-            }
+            usuarioDTO.setCodigo("00001");//TODO por completar
             usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
             procedimeintoDTO.setEstado(Constantes.CONSTANTE_ESTADO_INACTIVO);
             GuardarProcedimientoInRO in=new GuardarProcedimientoInRO();
@@ -169,13 +155,7 @@ public class ProcedimientoController {
         LOG.info("--------->plazoresolvr="+procedimientoDTO.getPlazoResolver());
         try{
             UsuarioDTO usuarioDTO = new UsuarioDTO();
-            try{
-            	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-            	String usuario = ConstantesWeb.getUSUARIO(request);
-            	usuarioDTO.setCodigo(usuario);
-            }catch(Exception e){
-            	usuarioDTO.setCodigo(Constantes.USUARIO_LOGIN_DEFAULT);
-            }
+            usuarioDTO.setCodigo("00001");//TODO por completar
             usuarioDTO.setTerminal(Inet4Address.getLocalHost().getHostAddress().toString());
             procedimientoDTO.setIdProcedimiento(null);
             procedimientoDTO.setEstado(Constantes.CONSTANTE_ESTADO_ACTIVO);

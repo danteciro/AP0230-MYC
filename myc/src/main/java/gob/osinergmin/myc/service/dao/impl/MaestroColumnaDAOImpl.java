@@ -284,56 +284,6 @@ public class MaestroColumnaDAOImpl implements MaestroColumnaDAO{
 		    }
 		    @Override
 		    @Transactional(readOnly=true)
-		    public List<MaestroColumnaDTO> findNumeroDisposicion() throws Exception{
-		    	LOG.info("entro findNumeroDisposicion");
-	        	List<MaestroColumnaDTO> listaMaestroColumnaDTO = null;
-	        	try{
-			        	
-			        	List<MdiMaestroColumna> listaMaestroColumna = null;
-		                Map<String, Object> parameters = new HashMap<String, Object>();
-		                String dominio="NRO_DISPOSICION";
-		                String aplicacion="MYC";
-		                parameters.put("dominio", dominio);
-		                parameters.put("aplicacion", aplicacion);
-		                LOG.info("parametros: "+parameters);
-		                listaMaestroColumna = crud.findByNamedQuery("MdiMaestroColumna.findByDominioAplicacion", parameters);   
-		                LOG.info("NUMERO DISPOSICION BD"+listaMaestroColumna);
-		                listaMaestroColumnaDTO = MaestroColumnaBuilder.getMaestroColumnaDTOList(listaMaestroColumna);
-				        LOG.info("NUMERO DISPOSICION DTO: "+listaMaestroColumnaDTO +"NUMERO DISPOSICION BD"+listaMaestroColumna);
-
-			        }catch(Exception e){
-			        	LOG.error("error", e);
-			        }
-			        return listaMaestroColumnaDTO;
-
-		    }
-		    @Override
-		    @Transactional(readOnly=true)
-		    public List<MaestroColumnaDTO> findTipoDisposicion() throws Exception{
-		    	LOG.info("entro findTipoDisposicion");
-	        	List<MaestroColumnaDTO> listaMaestroColumnaDTO = null;
-	        	try{
-			        	
-			        	List<MdiMaestroColumna> listaMaestroColumna = null;
-		                Map<String, Object> parameters = new HashMap<String, Object>();
-		                String dominio="TIPO_DISPOSICION";
-		                String aplicacion="MYC";
-		                parameters.put("dominio", dominio);
-		                parameters.put("aplicacion", aplicacion);
-		                LOG.info("parametros: "+parameters);
-		                listaMaestroColumna = crud.findByNamedQuery("MdiMaestroColumna.findByDominioAplicacion", parameters);   
-		                LOG.info("TIPO DISPOSICION BD"+listaMaestroColumna);
-		                listaMaestroColumnaDTO = MaestroColumnaBuilder.getMaestroColumnaDTOList(listaMaestroColumna);
-				        LOG.info("TIPO DISPOSICION DTO: "+listaMaestroColumnaDTO +"TIPO DISPOSICION BD"+listaMaestroColumna);
-
-			        }catch(Exception e){
-			        	LOG.error("error", e);
-			        }
-			        return listaMaestroColumnaDTO;
-
-		    }
-		    @Override
-		    @Transactional(readOnly=true)
 		    public List<MaestroColumnaDTO> findTipoAnexo() throws Exception{
 		    	LOG.info("entro findTipoAnexo");
 	        	List<MaestroColumnaDTO> listaMaestroColumnaDTO = null;

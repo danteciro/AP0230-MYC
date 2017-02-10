@@ -186,7 +186,7 @@ public class ObliTipiCriterioDAOImpl implements ObliTipiCriterioDAO{
 			LOG.info("key Tipificacion xxx> "+obliTipiDTO.getIdTipificacion());
 			LOG.info("key Obligacion xxx> "+obliTipiDTO.getIdObligacion());
 			StringBuilder jpql = new StringBuilder();			
-	        jpql.append(" select c.idObliTipiCriterio, c.idCriterio.idCriterio , c.idCriterio.descripcion, c.idTipificacion.codTipificacion, c.idCriterio.basesLegales,c.idCriterio.sancionMonetaria");
+	        jpql.append(" select  c.idObliTipiCriterio, c.idCriterio.idCriterio , c.idCriterio.descripcion, c.idTipificacion.codTipificacion, c.idCriterio.basesLegales,c.idCriterio.sancionMonetaria");
 	        jpql.append(" from PghObliTipiCriterio c");
 	        jpql.append(" where 1=1 ");
 	        jpql.append(" and c.estado=1 ");
@@ -198,9 +198,6 @@ public class ObliTipiCriterioDAOImpl implements ObliTipiCriterioDAO{
 	        }
 	        if(obliTipiDTO.getIdObligacion()!= null){
 	            jpql.append(" and c.idObligacion = ").append(obliTipiDTO.getIdObligacion());
-	        }
-	        if(obliTipiDTO.getIdActividad() != null){
-	        	jpql.append(" and c.idActividad = ").append(obliTipiDTO.getIdActividad());
 	        }
 	        String queryString = jpql.toString();
 	        Query query = crud.getEm().createQuery(queryString);
@@ -243,76 +240,6 @@ public class ObliTipiCriterioDAOImpl implements ObliTipiCriterioDAO{
         return retorno;
 	}	
 	
-	@Override
-	public List<ObliTipiDTO> obtenerRelacionesCompletasToObligacion(ObliTipiDTO obliTipiDTO) {
-		List<ObliTipiDTO> retorno = null;
-		try {
-			LOG.info("key Tipificacion xxx> "+obliTipiDTO.getIdTipificacion());
-			LOG.info("key Obligacion xxx> "+obliTipiDTO.getIdObligacion());
-			StringBuilder jpql = new StringBuilder();	
-			jpql.append("select otc.id_obli_tipi_criterio,otc.id_criterio,c.descripcion,t.cod_tipificacion,c.bases_legales,c.sancion_monetaria,a.nombre,otc.id_tipificacion ");
-			jpql.append("from pgh_obli_tipi_criterio otc ");
-			jpql.append("inner join pgh_criterio c on (c.id_criterio = otc.id_criterio and c.estado = '1') ");
-			jpql.append("inner join pgh_tipificacion t on (t.id_tipificacion = otc.id_tipificacion and t.estado = '1') ");
-			jpql.append("left join mdi_actividad a on (a.id_actividad = otc.id_actividad and a.estado = '1') ");
-			jpql.append("where ");
-			jpql.append("otc.estado = '1' ");
-	        
-	        if(obliTipiDTO.getIdCriterio()!= null){
-	            jpql.append(" and otc.id_criterio = ").append(obliTipiDTO.getIdCriterio());
-	        }
-	        if(obliTipiDTO.getIdTipificacion()!= null){
-	            jpql.append(" and otc.id_tipificacion = ").append(obliTipiDTO.getIdTipificacion());
-	        }
-	        if(obliTipiDTO.getIdObligacion()!= null){
-	            jpql.append(" and otc.id_obligacion = ").append(obliTipiDTO.getIdObligacion());
-	        }
-	        if(obliTipiDTO.getIdActividad() != null){
-	        	jpql.append(" and otc.id_actividad = ").append(obliTipiDTO.getIdActividad());
-	        }
-	        System.out.println("QUERY : " + jpql.toString());
-	        String queryString = jpql.toString();
-	        Query query = crud.getEm().createNativeQuery(queryString);
-	        List<Object []> lstObliTipiCriterio= query.getResultList();
-	        LOG.info("lista de criteriostipificacion"+lstObliTipiCriterio);
-	        
-	        if(lstObliTipiCriterio!=null){
-	        	retorno=ObliTipiCriterioBuilder.toListObliTipiCriDto(lstObliTipiCriterio);
-	        }
-	        if(retorno!=null){
-	        	int count=0;
-	        	for(ObliTipiDTO reg:retorno){
-	        		count++;
-		            jpql = new StringBuilder();
-		            jpql.append(" select ts ");
-		            jpql.append(" from PghTipificacionSancion ts ");
-		            jpql.append(" where ts.estado=1 ");
-		            jpql.append("and ts.nivel= (select mc.idMaestroColumna from MdiMaestroColumna mc where mc.estado='1' and mc.mdiMaestroTabla.mdiMaestroTablaPK.dominio='NIVEL_CRITERIO' and mc.mdiMaestroTabla.mdiMaestroTablaPK.aplicacion='MYC') ");
-		            jpql.append("and ts.idCriterio.idCriterio=").append(reg.getIdCriterio());
-		            String queryStringDetalle = jpql.toString();
-		            Query queryDetalle = crud.getEm().createQuery(queryStringDetalle);
-		            List<TipificacionSancionDTO> lista = TipificacionSancionBuilder.getListaTipificacionSancion(queryDetalle.getResultList());	            
-		            reg.setTipificacionSancion(lista);
-		            String abreviaturaConcatenada="";
-			        if(!lista.isEmpty()){
-			            String[] s = new String[lista.size()];
-			            int cont=0;
-			            for(TipificacionSancionDTO maestra : lista){
-			            	s[cont]=maestra.getTipoSancion().getAbreviatura()==null?"":maestra.getTipoSancion().getAbreviatura().toString();
-			            	cont++;
-			            }
-			            abreviaturaConcatenada = StringUtils.join(s, ",");
-			        }
-			        reg.setSancionEspecifica(abreviaturaConcatenada);
-		        }
-	        }
-	        	        	        
-		} catch (Exception e) {
-			e.printStackTrace();
-		}		
-        return retorno;
-	}
-	
 //	
 	@Override
 	public ObliTipiDTO crearRelacion(ObliTipiDTO relacion,UsuarioDTO usuarioDTO) {
@@ -322,9 +249,9 @@ public class ObliTipiCriterioDAOImpl implements ObliTipiCriterioDAO{
             PghObliTipiCriterio obliTipiCriterio = ObliTipiCriterioBuilder.getObliTipiCriterio(relacion);
             obliTipiCriterio.setDatosAuditoria(usuarioDTO);
             if(obliTipiCriterio.getIdObliTipiCriterio()!=null){
-            	crud.update(obliTipiCriterio);
+                crud.update(obliTipiCriterio);
             }else{
-            	crud.create(obliTipiCriterio);
+                crud.create(obliTipiCriterio);
             }  
 
             LOG.info("create relacion Obli Tipi Criterio registro ingresado ID: "+obliTipiCriterio.getIdObliTipiCriterio());
