@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author lbarboza
  */
 @Entity
-@Table(name = "PGH_OBLIGACION_TIPIFICACION")
+@Table(name = "PGH_OBLIGACION_TIPIFICACION") 
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "PghObligacionTipificacion.findAll", query = "SELECT p FROM PghObligacionTipificacion p"),
