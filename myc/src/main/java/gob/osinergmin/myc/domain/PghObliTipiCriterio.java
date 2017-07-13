@@ -55,6 +55,8 @@ public class PghObliTipiCriterio extends Auditoria {
     @JoinColumn(name = "ID_TIPIFICACION", referencedColumnName = "ID_TIPIFICACION")
     @ManyToOne(fetch = FetchType.LAZY)
     private PghTipificacion idTipificacion;
+    @Column(name = "ID_ACTIVIDAD")
+    private Long idActividad;
     @JoinColumn(name = "ID_OBLIGACION", referencedColumnName = "ID_OBLIGACION")
     @ManyToOne(fetch = FetchType.LAZY)
     private PghObligacion idObligacion;
@@ -76,6 +78,14 @@ public class PghObliTipiCriterio extends Auditoria {
         this.fechaCreacion = fechaCreacion;
         this.terminalCreacion = terminalCreacion;
     }
+    
+    public Long getIdActividad() {
+		return idActividad;
+	}
+
+	public void setIdActividad(Long idActividad) {
+		this.idActividad = idActividad;
+	}
 
     public Long getIdObliTipiCriterio() {
         return idObliTipiCriterio;

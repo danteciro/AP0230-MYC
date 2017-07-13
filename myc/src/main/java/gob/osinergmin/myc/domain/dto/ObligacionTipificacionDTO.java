@@ -9,6 +9,7 @@ package gob.osinergmin.myc.domain.dto;
  * @author lbarboza
  */
 public class ObligacionTipificacionDTO {
+	private Long idActividad;
     private Long idObligacion;
     private Long idTipificacion;
     private String estado;
@@ -18,7 +19,15 @@ public class ObligacionTipificacionDTO {
     
     private String CodTrazabilidad;
 
-    public String getCodTrazabilidad() {
+    public Long getIdActividad() {
+		return idActividad;
+	}
+
+	public void setIdActividad(Long idActividad) {
+		this.idActividad = idActividad;
+	}
+
+	public String getCodTrazabilidad() {
         return CodTrazabilidad;
     }
 

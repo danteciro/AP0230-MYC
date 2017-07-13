@@ -19,6 +19,9 @@ public class CriterioDTO {
     /** código de la Obligacion**/
     private Long idObligacion;
     
+    /** código de la actividad **/
+    private Long idActividad;
+    
     private String sancionMonetaria;
     
     private String estado;
@@ -46,6 +49,14 @@ public class CriterioDTO {
 	public void setListaTipificacionSancion(
 			List<TipificacionSancionDTO> listaTipificacionSancion) {
 		this.listaTipificacionSancion = listaTipificacionSancion;
+	}
+	
+	public Long getIdActividad() {
+		return idActividad;
+	}
+
+	public void setIdActividad(Long idActividad) {
+		this.idActividad = idActividad;
 	}
 
 	public TipificacionSancionDTO getTipiSancion() {

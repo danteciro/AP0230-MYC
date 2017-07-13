@@ -41,8 +41,36 @@ public class TipificacionDTO {
     List<TipificacionSancionDTO> listaTipificacionSancion = new ArrayList<TipificacionSancionDTO>();
     
     private String tieneSanc;
+    
+    private Long idActividad;
+    private String descripcionActividad;
+    private Long idObliTipi;
+    
+    public Long getIdActividad() {
+		return idActividad;
+	}
 
-    public String getDescTipiPadre() {
+	public void setIdActividad(Long idActividad) {
+		this.idActividad = idActividad;
+	}
+
+	public String getDescripcionActividad() {
+		return descripcionActividad;
+	}
+
+	public void setDescripcionActividad(String descripcionActividad) {
+		this.descripcionActividad = descripcionActividad;
+	}
+
+	public Long getIdObliTipi() {
+		return idObliTipi;
+	}
+
+	public void setIdObliTipi(Long idObliTipi) {
+		this.idObliTipi = idObliTipi;
+	}
+
+	public String getDescTipiPadre() {
         return descTipiPadre;
     }
 

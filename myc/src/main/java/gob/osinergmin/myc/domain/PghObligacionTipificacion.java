@@ -53,6 +53,8 @@ public class PghObligacionTipificacion extends ColumAddObligacionesTmp {
     @NotNull
     @Column(name = "ESTADO")
     private String estado;
+    @Column(name = "ID_ACTIVIDAD")
+    private Long idActividad;
 //    @JoinColumn(name = "ID_TIPIFICACION", referencedColumnName = "ID_TIPIFICACION", insertable = false, updatable = false)
 //    @ManyToOne(optional = false)
 //    private PghTipificacion pghTipificacion;
@@ -94,7 +96,15 @@ public class PghObligacionTipificacion extends ColumAddObligacionesTmp {
         return idObliTipi;
     }
 
-    public void setIdObliTipi(Long idObliTipi) {
+    public Long getIdActividad() {
+		return idActividad;
+	}
+
+	public void setIdActividad(Long idActividad) {
+		this.idActividad = idActividad;
+	}
+
+	public void setIdObliTipi(Long idObliTipi) {
         this.idObliTipi = idObliTipi;
     }
 

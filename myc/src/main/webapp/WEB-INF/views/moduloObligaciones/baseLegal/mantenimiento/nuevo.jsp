@@ -526,11 +526,21 @@
                                             <div id="tipificacionEditarObligacion">
                                                 <div id="divMensajeValidacionAdicionarTipificacion" class="errorMensaje" tabindex='1' style="display: none" ></div>
                                                 <div id="divContenidoTipificacion" >
+                                                <div class="filaForm" >
+											                    <div class="filaForm">
+					                                            <div style="width:150px;"><label for="cmbActividad">Actividad:</label></div>   
+					                                            	<div>       
+					                                                    <select style="width:290px;" id="cmbActividad" name="idActividad" class="lbld">
+									                                            <option value="">--Seleccione--</option>
+									                                    </select>
+					                                            	</div>
+					                                            </div>
+							                       			</div>
                                                 <div class="filaForm">
                                                     <div style="width:150px;"><label for="txtTipifOblNor">Tipificación:</label></div>   
                                                     <div>
                                                         <input type="text" id="txtIdTipificacion" name="value" style="display: none" />
-                                                        <input type="text" id="txtTipifOblNor" validate="" name="tipificacionObligacion" style="width:100px;" maxlength="20">
+                                                        <input type="text" id="txtTipifOblNor" validate="" name="tipificacionObligacion" disabled="disabled" style="width:100px;" maxlength="20" />
                                                     </div>
                                                     <div class="lblc" style="width:160px;"><label for="txtDesTipifOblNor">Descripción de la Infracción:</label></div>   
                                                     <div>
@@ -640,7 +650,7 @@
                                             <div class="filaForm">
                                             <div style="width:150px;"><label for="cmbTipiCriterio">Tipificación:</label></div>   
                                             	<div>                                                	
-                                                    <select style="width:120px;" id="cmbTipiCriterio" name="idTipificacion" class="lbld" validate="[O]" >
+                                                    <select style="width:290px;" id="cmbTipiCriterio" name="idTipificacion" class="lbld" validate="[O]" >
 				                                            <option value="">--Seleccione--</option>
 				                                    </select>
                                             	</div>

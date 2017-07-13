@@ -114,6 +114,7 @@ public class PghBaseLegal extends ColumAddObligacionesTmp  {
 //    private List<PghObligacionBaseLegal> pghObligacionBaseLegalList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idBaseLegal", fetch = FetchType.LAZY)
     private List<PghObligacionBaseLegal> pghObligacionBaseLegalList;
+    
     //campo flag
     @Transient
     private Long tieneAct;

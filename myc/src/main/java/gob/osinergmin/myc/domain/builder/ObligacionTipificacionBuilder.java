@@ -32,6 +32,7 @@ public class ObligacionTipificacionBuilder {
             registro.setIdObliTipi(obligacionTipificacionDTO.getIdObliTipi());
             registro.setIdObligacion(new PghObligacion(obligacionTipificacionDTO.getIdObligacion()));
             registro.setIdTipificacion(new PghTipificacion(obligacionTipificacionDTO.getIdTipificacion()));
+            registro.setIdActividad(obligacionTipificacionDTO.getIdActividad());
             registro.setEstado(obligacionTipificacionDTO.getEstado());
             if(obligacionTipificacionDTO.getCodTrazabilidad()!=null){
                 registro.setCodTrazabilidad(obligacionTipificacionDTO.getCodTrazabilidad());

@@ -64,7 +64,8 @@ var gestionBaseLegal = (function() {
     	$('#txtaTitBaseLegal').alphanum(charAllow);
     	//--
     	$('#cmbTipiCriterio').change(function(){
-    			cargaInicial.obtenerTipificacion($('#cmbTipiCriterio').val());
+    		//cargaInicial.obtenerTipificacion($('#cmbTipiCriterio').val());
+			cargaInicial.obtenerSancionesPorTipificacion($('#cmbTipiCriterio').val());
     	});
     	
     	$('#btnGuardarObliTipiCriterio').click(function(){
@@ -3569,11 +3570,41 @@ var nuevaObligacionNormativa = (function() {
                     $('#contextCnfOblg').puicontextmenu({
                         //target: $('#gridObligacionNormativa').find('tr').not('.ui-subgrid,.ui-subgrid tr')
                         target: $('#gridCnfOblgacion')
-                    });                    
+                    });
+                  //cargando las actividades de la obligación
+                    nuevaObligacionNormativa.obtenerListaConfiguracionesCompleta();
                 }
             }
         });
     }
+    function obtenerListaConfiguracionesCompleta() {
+        $.getJSON("mantenimiento/baseLegal/listarConfObligacionCompleta", {
+            ajax: 'true',
+            idObligacion:$('#idObligacion').val(),
+            async: false
+        }, function(data) {
+        	var html = '';
+            try{
+            	html = '<option value="-1">--Seleccione--</option>';
+                var len = data.filas.length;
+                var codigo= [];
+                for (var i = 0; i < len; i++) {
+                	html+='<option value="'+data.filas[i].idActividad+'" codigo="'+data.filas[i].nombreActividad+'">'+data.filas[i].nombreActividad+'</option>';
+                }
+                debugger;
+                $('#cmbActividad').html(html);
+                if(len == 1){
+                	$('#cmbActividad').val(data.filas[0].idActividad).trigger("change");
+                }
+                if(len > 1){
+                	$("#cmbActividad").val("-1").trigger("change");
+                }
+            }catch(error){
+            	html = '<option value="-1">--Seleccione--</option>';
+            	$('#cmbActividad').html(html);
+            }
+        });  
+     }
     function eliminarConfiguracionConfirm(rowid){
     	/* modif jpiro 20150106 - ini */
         confirm.start();
@@ -4183,16 +4214,22 @@ var nuevaObligacionNormativa = (function() {
     function agregarTipificacion() {
         var validacion = false;
         var divValidacion = $('#divMensajeValidacionAdicionarTipificacion');
-        if($('#txtIdTipificacion').val() === ""){
-            divValidacion.show();
+        if($("#cmbActividad").val() == '-1'){
+        	divValidacion.show();
             divValidacion.focus();
-            /* OSINE_SFS-610 - INICIO */
-            divValidacion.html("* Debe Ingresar una Tipificaci&oacute;n v&aacute;lida");
-            /* OSINE_SFS-610 - FIN */
+            divValidacion.html("* Debe seleccionar una actividad");
         }else{
-            divValidacion.hide();
-            divValidacion.html("");
-            validacion = true;
+        	if($('#txtIdTipificacion').val() === ""){
+                divValidacion.show();
+                divValidacion.focus();
+                /* OSINE_SFS-610 - INICIO */
+                divValidacion.html("* Debe Ingresar una Tipificaci&oacute;n v&aacute;lida");
+                /* OSINE_SFS-610 - FIN */
+            }else{
+                divValidacion.hide();
+                divValidacion.html("");
+                validacion = true;
+            }
         }
         if(validacion){
             $.ajax({
@@ -4200,7 +4237,8 @@ var nuevaObligacionNormativa = (function() {
                 type: 'post',
                 async: false,
                 data: {
-                    idTipificacion: $('#txtIdTipificacion').val(),
+                	idActividad: $("#cmbActividad").val(),
+                	idTipificacion: $('#txtIdTipificacion').val(),
                     idObligacion: $('#idObligacion').val(),
                     codTrazabilidad:$('#codTrazabilidad').val()
                 },
@@ -4219,6 +4257,7 @@ var nuevaObligacionNormativa = (function() {
                         nuevoBL.txtSancionTipificacionObligacion.val('');
                         nuevoBL.txtBaseLegalTipificacionObligacion.val('');
                         nuevaObligacionNormativa.obtenerTipificacion($('#txtIdTipificacion').val());
+                        $("#cmbActividad").val("-1").trigger("change");
                         $('#dvTipSan input[type=checkbox]').each(function(index) {
                             $(this).attr('checked',false);
                         });
@@ -4307,7 +4346,7 @@ var nuevaObligacionNormativa = (function() {
                         $("#txtTipifOblNor").val('');
                         $('#txtIdTipificacion').val('');
 // 05-11-2015                        
-                        cargaInicial.obtenerTipificacionToCriterio($('#idInfraccion').val());
+                        //cargaInicial.obtenerTipificacionToCriterio($('#idInfraccion').val());
 //                        
                         nuevoBL.txtDescripcionTipificacionOblig.val('');
                         nuevoBL.txtSancionTipificacionObligacion.val('');
@@ -4345,19 +4384,22 @@ var nuevaObligacionNormativa = (function() {
      */
     function gridTipificacion() {
     	/* OSINE_SFS-610 INICIO */
-        var colNames = ['idTipificacion','C&oacute;digo Tipificaci&oacute;n', 'Descripci&oacute;n Infracción', 'Sanci&oacute;n','','concatIdTipoSancion'];
+    	var colNames = ['idTipificacion','idActividad','Actividad','Cod. Tipificaci&oacute;n', 'Descripci&oacute;n Infracción', 'Sanci&oacute;n','','concatIdTipoSancion'];
         /* OSINE_SFS-610 FIN */
         var colModel = [
             {name: "idTipificacion", hidden: true, width: 200, sortable: false, align: "center"},
-            {name: "codTipificacion", width: 300, sortable: false, align: "center"},
+            {name: "idActividad", hidden: true, width: 200, sortable: false, align: "center"},
+            {name: "descripcionActividad", width: 300, sortable: false, align: "center"},
+            {name: "codTipificacion", width: 150, sortable: false, align: "center"},
             {name: "descripcion", width: 600, sortable: false, align: "center"},
-            {name: "descSancionEspecifica", width: 200, sortable: false, align: "center",formatter:"fmtDescripSancion"},
-            {name: "sancionMonetaria", width: 200, sortable: false, align: "center",hidden:true},
+            {name: "descSancionEspecifica", width: 100, sortable: false, align: "center",formatter:"fmtDescripSancion"},
+            {name: "sancionMonetaria", width: 100, sortable: false, align: "center",hidden:true},
             {name: "concatIdTipoSancion", formatter:"fmtConcatIdTipoSancion",hidden:true}
         ];
         
         $("#gridTipificacion").html("");
-        var url = baseURL + "pages/mantenimiento/baseLegal/findTipificacion";
+        //var url = baseURL + "pages/mantenimiento/baseLegal/findTipificacion";
+        var url = baseURL + "pages/mantenimiento/baseLegal/findTipificacionPorObligacion";
         var postData = {idObligacion:-1};
             
         var grid = $("<table>", {
@@ -4436,7 +4478,8 @@ var nuevaObligacionNormativa = (function() {
         
         var URL = baseURL + "pages/mantenimiento/baseLegal/eliminarObligacionTipificacion";
         var data = {
-			idTipificacion:row.idTipificacion, 
+        	idActividad: row.idActividad,
+        	idTipificacion:row.idTipificacion, 
 			idObligacion: $('#idObligacion').val(),
 			codTrazabilidad:$('#codTrazabilidad').val()
         };
@@ -4529,16 +4572,17 @@ var nuevaObligacionNormativa = (function() {
      */
     function gridCriterio() {
 // 05-11-2015    	
-    	var nombres = ['IdTipiCriterio','IdCriterio', 'IdTipificacion', 'Cod. Tipificación', 'Descripción del Incumplimiento', 'Sanción Específica','','Base Legal','','concatIdTipoSancion'];
+    	var nombres = ['IdTipiCriterio','IdCriterio', 'IdTipificacion', 'Actividad' ,'Cod. Tip.', 'Descripción del Incumplimiento', 'Sanción Específica','','Base Legal','','concatIdTipoSancion'];
         var columnas = [
             {name: "idObliTipiCriterio", width: 20, hidden: true, sortable: false, align: "center"},
             {name: "idCriterio", width: 20, hidden: true, sortable: false, align: "center"},
             {name: "idTipificacion", width: 20, hidden: true, sortable: false, align: "center"},
-            {name: "codigoTipificacion", width: 150,sortable: false, align: "center"},
+            {name: "descripcionActividad", width: 220,sortable: false, align: "center"},
+            {name: "codigoTipificacion", width: 80,sortable: false, align: "center"},
             {name: "descripcionCriterio", width: 450, sortable: false, align: "center"},
             {name: "descSancionEspecifica", width: 200, sortable: false, align: "center",formatter:"fmtDescripSancion"},
             {name: "sancionEspecifica", width: 200, sortable: false, align: "center",hidden:true},
-            {name: "basesLegales", width: 450, sortable: false, align: "center"},
+            {name: "basesLegales", width: 300, sortable: false, align: "center"},
             {name: "sancionMonetaria", width: 200, sortable: false, align: "center",hidden:true},
             {name: "concatIdTipoSancion", formatter:"fmtConcatIdTipoSancion",hidden:true}
         ];
@@ -5422,6 +5466,7 @@ var nuevaObligacionNormativa = (function() {
     	eliminarBaseLegalAsociada:eliminarBaseLegalAsociada,
     	eliminarBaseLegalAsociadaConfirm:eliminarBaseLegalAsociadaConfirm,
     	eliminarConfiguracionConfirm:eliminarConfiguracionConfirm,
+    	obtenerListaConfiguracionesCompleta:obtenerListaConfiguracionesCompleta,
     	/*Rsis 14 - Inicio*/
     	eliminarIncumplimiento:eliminarIncumplimiento,
     	/*Rsis 14 - Fin*/
@@ -5472,7 +5517,8 @@ var cargaInicial=(function(){
 		obtenertipoNormaLegal();
 		obtenerSiglas();
 		
-		var tipoAnexo = $("#cmbHideTipoAnexoBaseLegal").val();				
+		//var tipoAnexo = $("#cmbHideTipoAnexoBaseLegal").val();
+		var tipoAnexo = $("#cmbHideTipoAnexoBaseLegal").val();	
 		obtenerTipoNormaTecnica();
 		obtenerNormaLegalPadre();
 		/*Rsis 11 - Inicio*/
@@ -5567,6 +5613,39 @@ var cargaInicial=(function(){
 		//Fin MYC-7 Cambio de Alcance
 		
 	}
+	
+	function obtenerSancionesPorTipificacion(idTipificacion) {
+        $.ajax({
+            url:baseURL + "pages/mantenimiento/baseLegal/obtenerSancionesPorTipificacion",
+            type:'get',
+            async:false,
+            data:{
+            	idObligacion: $('#idObligacion').val(),
+                idTipificacion: idTipificacion,
+                ajax: 'true'
+            },
+            success:function(data){
+                if(data.resultado == 0){
+                    $('#txtIdTipificacion').val(data.tipificacion.idTipificacion);
+                    var html='';
+                    for(var x = 0; x < data.tipificacion.listaTipificacionSancion.length;x++){
+                        var idTipoSancion = data.tipificacion.listaTipificacionSancion[x].tipoSancion.idTipoSancion;
+                        var descripcionSancion = data.tipificacion.listaTipificacionSancion[x].tipoSancion.descripcion;   
+                        html += '<div style="float:left; margin-right:10px; padding: 5px 25px;width:215px;">';
+                        html += '<input id="rdProceso' + idTipoSancion + '" type="checkbox" name="proceso" value="' + idTipoSancion + '" class="checkbox" />';
+                        html += '<label for="rdProceso' + idTipoSancion + '" class="checkbox">' + descripcionSancion + '</label>';
+                        html += '</div>';
+                    }
+                    $('#divEtapa').html(html);
+                    $("#divEtapa").css('display','inline-block');
+                    $('#divProcesosCriterio').css('display','block');
+                }else{
+                    $('#divProcesosCriterio').css('display','none');
+                }
+            },
+            error:errorAjax
+        });
+    }
 	
 	/**
      * 
@@ -5907,11 +5986,11 @@ var cargaInicial=(function(){
             if(len>0){
             	for (var i = 0; i < len; i++) {
                 	if (data[i].idTipificacion == $('#cmbTipiCriterio').val()) {
-                        html += '<option value="' + data[i].idTipificacion + '" selected="selected">'
-                                + data[i].codTipificacion + '</option>';
+                        html += '<option value="' + data[i].idObliTipi + '" selected="selected">'
+                        + data[i].codTipificacion + '-' + data[i].descripcionActividad  + '</option>';
                     } else {
-                        html += '<option value="' + data[i].idTipificacion + '">'
-                                + data[i].codTipificacion + '</option>';
+                        html += '<option value="' + data[i].idObliTipi + '">'
+                                + data[i].codTipificacion + '-' + data[i].descripcionActividad + '</option>';
                     }
                 }
             }
@@ -5959,7 +6038,8 @@ var cargaInicial=(function(){
 // 05-11-2015    	
     	obtenerTipificacionToCriterio:obtenerTipificacionToCriterio,
     	obtenerTipificacion:obtenerTipificacion,
-    	obtenerNumeroAnexos:obtenerNumeroAnexos
+    	obtenerNumeroAnexos:obtenerNumeroAnexos,
+    	obtenerSancionesPorTipificacion:obtenerSancionesPorTipificacion
 //
     };
 })();
